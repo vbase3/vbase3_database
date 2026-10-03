@@ -1,7 +1,7 @@
 # VBASE3: Comparative Immunogenomics Database & WebAssembly Analytics Suite
 
 [![GitHub Pages](https://img.shields.io/badge/Web_Portals-Live_on_GitHub_Pages-blue.svg)](https://vbase3.github.io/vbase3_database/)
-[![Zenodo](https://zenodo.org/badge/DOI/10.5281/zenodo.22923344.svg)](https://doi.org/10.5281/zenodo.22923344)
+[![Zenodo](https://zenodo.org/badge/DOI/10.5281/zenodo.22923345.svg)](https://doi.org/10.5281/zenodo.22923345)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 **VBASE3** is an open, systematic comparative immunogenomics database and high-performance WebAssembly analysis suite for antigen receptor genes (B-cell antibodies and T-cell receptors) across jawed vertebrates (*Gnathostomata*).
@@ -100,7 +100,7 @@ open http://localhost:8000/index.html
 
 ## 📜 Citation, License & Archival Deposit
 
-- **Archival Release (Zenodo)**: [DOI 10.5281/zenodo.22923344](https://doi.org/10.5281/zenodo.22923344)
+- **Archival Release (Zenodo)**: [DOI 10.5281/zenodo.22923345](https://doi.org/10.5281/zenodo.22923345)
 - **License**: [MIT License](LICENSE)
 - **Trust & Open Data Provenance**: [`TRUST.md`](TRUST.md) and [`docs/DATA_PROVENANCE_AND_SOURCES.md`](docs/DATA_PROVENANCE_AND_SOURCES.md)
 - **Citation**: See [`CITATION.cff`](CITATION.cff)
