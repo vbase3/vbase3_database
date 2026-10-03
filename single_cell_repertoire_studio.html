@@ -3186,7 +3186,17 @@ EIVLTQSPGTLSLSPGERATLSCRASQSVSSSYLAWYQQKPGQAPRLLIYGASSRATGIPDRFSGSGSGTDFTLTISRLE
         full += "C" + cdr3;
       }
 
-      if (isHeavy) {
+      const isTcr = d.receptor_type === "TCR" || (d.v_h && d.v_h.includes("TRB")) || (vGene && (vGene.includes("TRB") || vGene.includes("TRA")));
+
+      if (isTcr) {
+        if (full.endsWith("F")) {
+          const afterF = jFr4.replace(/^[^F]*F/, "");
+          full += afterF;
+        } else {
+          const fIdx = jFr4.indexOf("F");
+          full += (fIdx >= 0 ? jFr4.substring(fIdx) : jFr4);
+        }
+      } else if (isHeavy) {
         if (full.endsWith("W")) {
           const afterW = jFr4.replace(/^[^W]*W/, "");
           full += afterW;
