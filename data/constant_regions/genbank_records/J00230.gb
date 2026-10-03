@@ -1,0 +1,217 @@
+ID   J00230; SV 1; linear; gDNA; STD; HUM; 2009 BP.
+XX
+AC   J00230; V00554;
+XX
+DT   15-MAY-1995 (Rel. 199520-1, arrived in LIGM-DB)
+DT   05-MAR-2019 (Rel. 201910-2, Last updated, Version 30)
+XX
+DE   Human Ig germline H-chain G-E-A region B: gamma-2 constant region, 3' end.
+XX
+KW   antigen receptor; Immunoglobulin superfamily (IgSF); immunoglobulin (IG);
+KW   IG-Heavy; IG-Heavy-Gamma; constant; joining; IG-Heavy-Gamma-2-IGHG2;
+KW   IMGT reference sequence; regular; gDNA; undefined; functional; C-gene.
+XX
+OS   Homo sapiens (human)
+OC   cellular organisms; Eukaryota; Opisthokonta; Metazoa; Eumetazoa; Bilateria;
+OC   Deuterostomia; Chordata; Craniata; Vertebrata; Gnathostomata; Teleostomi;
+OC   Euteleostomi; Sarcopterygii; Dipnotetrapodomorpha; Tetrapoda; Amniota;
+OC   Mammalia; Theria; Eutheria; Boreoeutheria; Euarchontoglires; Primates;
+OC   Haplorrhini; Simiiformes; Catarrhini; Hominoidea; Hominidae; Homininae;
+OC   Homo; Homo sapiens.
+XX
+RN   [1]
+RC   NIH-MGC Project
+RP   1-2009
+RA   Moore S., Alexander L., Brownstein M., Guan L., Lobo S., Meng Y.,
+RA   Tanaguchi M., Wang Z., Yu J., Prange C., Schreiber K., Shenmen C.,
+RA   Wagner L., Bala M., Barbazuk S., Barber S., Babakaiff R., Beland J.,
+RA   Chun E., Del Rio L., Gibson S., Hanson R., Kirkpatrick R., Liu J.,
+RA   Matsuo C., Mayo M., Santos R.R., Stott J., Tsai M., Wong D., Siddiqui A.,
+RA   Holt R., Jones S.J., Marra M.A.;
+RT   ;
+RL   Submitted (07-JUN-2007) to the INSDC.
+RL   BC Cancer Agency, Canada's Michael Smith Genome Sciences Centre, Suite 100,
+RL   570 West 7th Avenue, Vancouver, British Columbia V5Z 4S6, Canada
+XX
+RN   [2]
+RP   896-1256
+RX   PUBMED; 6329676.
+RA   Krawinkel U., Rabbitts T.H.;
+RT   "Comparison of the hinge-coding segments in human immunoglobulin gamma
+RT   heavy chain genes and the linkage of the gamma 2 and gamma 4 subclass
+RT   genes";
+RL   EMBO J. 1(4):403-407(1982).
+XX
+RN   [2]
+RP   1749-1937
+RX   PUBMED; 6329676.
+RA   Krawinkel U., Rabbitts T.H.;
+RT   "Comparison of the hinge-coding segments in human immunoglobulin gamma
+RT   heavy chain genes and the linkage of the gamma 2 and gamma 4 subclass
+RT   genes";
+RL   EMBO J. 1(4):403-407(1982).
+XX
+RN   [3]
+RP   475-1071
+RX   DOI; 10.1016/0092-8674(82)90183-0.
+RX   PUBMED; 6811139.
+RA   Takahashi N., Ueda S., Obata M., Nikaido T., Nakai S., Honjo T.;
+RT   "Structure of human immunoglobulin gamma genes: implications for evolution
+RT   of a gene family";
+RL   Cell 29(2):671-679(1982).
+XX
+RN   [3]
+RP   1179-1330
+RX   DOI; 10.1016/0092-8674(82)90183-0.
+RX   PUBMED; 6811139.
+RA   Takahashi N., Ueda S., Obata M., Nikaido T., Nakai S., Honjo T.;
+RT   "Structure of human immunoglobulin gamma genes: implications for evolution
+RT   of a gene family";
+RL   Cell 29(2):671-679(1982).
+XX
+RN   [3]
+RP   1461-1524
+RX   DOI; 10.1016/0092-8674(82)90183-0.
+RX   PUBMED; 6811139.
+RA   Takahashi N., Ueda S., Obata M., Nikaido T., Nakai S., Honjo T.;
+RT   "Structure of human immunoglobulin gamma genes: implications for evolution
+RT   of a gene family";
+RL   Cell 29(2):671-679(1982).
+XX
+DR   ENA; J00230.
+XX
+CC   IMGT/LIGM-DB annotation level: by annotators
+CC   
+CC   On Mar 2, 2000 this sequence version replaced gi:32759.
+CC   [2] also reports sequences for gamma-3, gamma-4, and a gamma
+CC   pseudogene. Most of this sequence is 95% homologous with gamma-4.
+CC   The hinge exons are only 70% homologous. The authors estimate that
+CC   gamma-2 and gamma-4 diverged 6.6 million years ago. The authors in
+CC   [1] speculate that intron-mediated domain transfer played an
+CC   important role in the evolution of human gamma genes. They also
+CC   report the hinge regions of gamma-1, gamma-3, gamma-4, and a
+CC   pseudo-gamma gene. [1] estimates the divergence of the human gamma
+CC   genes to be between 7.7 and 4.4 million years ago. This entry is
+CC   part of a multigene region containing the gamma-2, gamma-4,
+CC   epsilon-1, and alpha-2 genes. The relative locations of the four
+CC   genes were determined by Flanagan and Rabbitts (Nature 300, 709-713
+CC   (1982)). They refer to this gene group as region B. The region A
+CC   genes are gamma-3, gamma-1, pseudo-epsilon, alpha-1. Flanagan and
+CC   Rabbits also determined the general locations of the two regions.
+CC   They place region A between the JH/mu/delta region and region B.
+CC   Complete source information:
+CC   Human fetal liver DNA, library of T. Maniatis [3] and Lawn et al
+CC   [2],[1]; clones p-gamma-2RPA3 [2], 5A [3], and Ig-gamma-2-15 [1].
+XX
+FH   Key                 Location/Qualifiers
+FH   
+FT   C-GENE              1..>2009
+FT                       /partial
+FT                       /db_xref="taxon:9606"
+FT                       /functional
+FT                       /IMGT_allele="IGHG2*01"
+FT                       /IMGT_gene="IGHG2"
+FT                       /IMGT_map="14q32.33"
+FT                       /mol_type="genomic DNA"
+FT                       /organism="Homo sapiens"
+FT   3'UTR               1..215
+FT   ACCEPTOR-SPLICE     213..217
+FT   C-GENE-UNIT         216..>2009
+FT                       /partial
+FT                       /db_xref="GDB:119338"
+FT                       /db_xref="GOA:P01859"
+FT                       /db_xref="HGNC:5526"
+FT                       /db_xref="HSSP:P01857"
+FT                       /db_xref="InterPro:IPR003006"
+FT                       /db_xref="InterPro:IPR003597"
+FT                       /db_xref="InterPro:IPR007110"
+FT                       /db_xref="InterPro:IPR013783"
+FT                       /db_xref="UniProtKB/Swiss-Prot:P01859"
+FT                       /protein_id="AAB59393.1"
+FT   CH1                 216..509
+FT                       /codon_start=3
+FT                       /translation="STKGPSVFPLAPCSRSTSESTAALGCLVKDYFPEPVTVSWN
+FT                       SGALTSGVHTFPAVLQSSGLYSLSSVVTVPSSNFGTQTYTCNVDHKPSNTKVDKT
+FT                       V"
+FT   DONOR-SPLICE        509..511
+FT   INTRON              510..901
+FT   ACCEPTOR-SPLICE     899..903
+FT   H                   902..937
+FT                       /codon_start=3
+FT                       /translation="RKCCVECPPCP"
+FT                       /splice-expected-nt="g"
+FT                       /splice-expectedcodon="gag [E]"
+FT                       /splicing-frame="sf1"
+FT   DONOR-SPLICE        937..939
+FT   INTRON              938..1055
+FT   ACCEPTOR-SPLICE     1053..1057
+FT   CH2                 1056..1382
+FT                       /codon_start=3
+FT                       /translation="PPVAGPSVFLFPPKPKDTLMISRTPEVTCVVVDVSHEDPEV
+FT                       QFNWYVDGVEVHNAKTKPREEQFNSTFRVVSVLTVVHQDWLNGKEYKCKVSNKGL
+FT                       PAPIEKTISKTK"
+FT                       /splice-expected-nt="g"
+FT                       /splice-expectedcodon="gca [A]"
+FT                       /splicing-frame="sf1"
+FT   DONOR-SPLICE        1382..1384
+FT   INTRON              1383..1479
+FT   ACCEPTOR-SPLICE     1477..1481
+FT   CH3-CHS             1480..1799
+FT                       /codon_start=3
+FT                       /translation="QPREPQVYTLPPSREEMTKNQVSLTCLVKGFYPSDIAVEWE
+FT                       SNGQPENNYKTTPPMLDSDGSFFLYSKLTVDKSRWQQGNVFSCSVMHEALHNHYT
+FT                       QKSLSLSPGK"
+FT                       /splice-expected-nt="g"
+FT                       /splice-expectedcodon="ggg [G]"
+FT                       /splicing-frame="sf1"
+FT   CH3                 1480..1793
+FT                       /codon_start=3
+FT                       /translation="QPREPQVYTLPPSREEMTKNQVSLTCLVKGFYPSDIAVEWE
+FT                       SNGQPENNYKTTPPMLDSDGSFFLYSKLTVDKSRWQQGNVFSCSVMHEALHNHYT
+FT                       QKSLSLSP"
+FT   CHS                 1794..1799
+FT                       /translation="GK"
+FT                       /IMGT_note="For complete translation nucleotide G at 
+FT                       position 1794 has been included in CH-S"
+FT   INT-DONOR-SPLICE    1794..1796
+FT   INTRON              1800..>2009
+FT                       /partial
+FT   STOP-CODON          1800..1802
+FT   POLYA_SIGNAL        1903..1908
+XX
+SQ   Sequence 2009 BP; 410 A; 700 C; 568 G; 331 T; 0 other;
+     agctttctgg ggcgagccgg gcctgacttt ggctttgggg cagggagtgg gctaaggtga        60
+     ggcaggtggc gccagccagg tgcacaccca atgcccgtga gcccagacac tggaccctgc       120
+     ctggaccctc gtggatagac aagaaccgag gggcctctgc gcctgggccc agctctgtcc       180
+     cacaccgcgg tcacatggca ccacctctct tgcagcctcc accaagggcc catcggtctt       240
+     ccccctggcg ccctgctcca ggagcacctc cgagagcaca gccgccctgg gctgcctggt       300
+     caaggactac ttccccgaac cggtgacggt gtcgtggaac tcaggcgctc tgaccagcgg       360
+     cgtgcacacc ttcccagctg tcctacagtc ctcaggactc tactccctca gcagcgtggt       420
+     gaccgtgccc tccagcaact tcggcaccca gacctacacc tgcaacgtag atcacaagcc       480
+     cagcaacacc aaggtggaca agacagttgg tgagaggcca gctcagggag ggagggtgtc       540
+     tgctggaagc caggctcagc cctcctgcct ggacgcaccc cggctgtgca gccccagccc       600
+     agggcagcaa ggcaggcccc atctgtctcc tcacccggag gcctctgccc gccccactca       660
+     tgctcaggga gagggtcttc tggctttttc caccaggctc caggcaggca caggctgggt       720
+     gcccctaccc caggcccttc acacacaggg gcaggtgctt ggctcagacc tgccaaaagc       780
+     catatccggg aggaccctgc ccctgaccta agccgacccc aaaggccaaa ctgtccactc       840
+     cctcagctcg gacaccttct ctcctcccag atccgagtaa ctcccaatct tctctctgca       900
+     gagcgcaaat gttgtgtcga gtgcccaccg tgcccaggta agccagccca ggcctcgccc       960
+     tccagctcaa ggcgggacag gtgccctaga gtagcctgca tccagggaca ggccccagct      1020
+     gggtgctgac acgtccacct ccatctcttc ctcagcacca cctgtggcag gaccgtcagt      1080
+     cttcctcttc cccccaaaac ccaaggacac cctcatgatc tcccggaccc ctgaggtcac      1140
+     gtgcgtggtg gtggacgtga gccacgaaga ccccgaggtc cagttcaact ggtacgtgga      1200
+     cggcgtggag gtgcataatg ccaagacaaa gccacgggag gagcagttca acagcacgtt      1260
+     ccgtgtggtc agcgtcctca ccgttgtgca ccaggactgg ctgaacggca aggagtacaa      1320
+     gtgcaaggtc tccaacaaag gcctcccagc ccccatcgag aaaaccatct ccaaaaccaa      1380
+     aggtgggacc cgcggggtat gagggccaca tggacagagg ccggctcggc ccaccctctg      1440
+     ccctgggagt gaccgctgtg ccaacctctg tccctacagg gcagccccga gaaccacagg      1500
+     tgtacaccct gcccccatcc cgggaggaga tgaccaagaa ccaggtcagc ctgacctgcc      1560
+     tggtcaaagg cttctacccc agcgacatcg ccgtggagtg ggagagcaat gggcagccgg      1620
+     agaacaacta caagaccaca cctcccatgc tggactccga cggctccttc ttcctctaca      1680
+     gcaagctcac cgtggacaag agcaggtggc agcaggggaa cgtcttctca tgctccgtga      1740
+     tgcatgaggc tctgcacaac cactacacgc agaagagcct ctccctgtct ccgggtaaat      1800
+     gagtgccacg gccggcaagc ccccgctccc caggctctcg gggtcgcgtg aggatgcttg      1860
+     gcacgtaccc cgtgtacata cttcccaggc acccagcatg gaaataaagc acccagcgct      1920
+     gccctgggcc cctgcgagac tgtgatggtt ctttccgtgg gtcaggccga gtctgaggcc      1980
+     tgagtggcat gagggaggca gagtgggtc                                        2009
+//

@@ -1,0 +1,20 @@
+{
+  "name": "dnaplot_wasm",
+  "type": "module",
+  "collaborators": [
+    "Werner Mueller"
+  ],
+  "description": "WebAssembly bindings for DNAPLOT V(D)J sequence analysis",
+  "version": "0.1.0",
+  "license": "MIT",
+  "files": [
+    "dnaplot_wasm_bg.wasm",
+    "dnaplot_wasm.js",
+    "dnaplot_wasm.d.ts"
+  ],
+  "main": "dnaplot_wasm.js",
+  "types": "dnaplot_wasm.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}

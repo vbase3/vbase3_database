@@ -1,0 +1,217 @@
+ID   AF354264; SV 1; linear; cDNA; STD; MAM; 1654 BP.
+XX
+AC   AF354264;
+XX
+DT   05-DEC-2001 (Rel. 200149-3, arrived in LIGM-DB)
+DT   30-MAY-2018 (Rel. 201822-3, Last updated, Version 10)
+XX
+DE   Canis familiaris immunoglobulin gamma heavy chain A mRNA, complete cds.
+XX
+KW   antigen receptor; Immunoglobulin superfamily (IgSF); immunoglobulin (IG);
+KW   IG-Heavy; constant; variable; diversity; joining; IG-Heavy-Gamma-1-IGHG1;
+KW   IMGT reference sequence; regular; cDNA; undefined; rearranged; productive;
+KW   L-V-D-J-C-sequence.
+XX
+OS   Canis lupus familiaris (dog)
+OC   Gnathostomata; Teleostomi; Euteleostomi; Sarcopterygii;
+OC   Dipnotetrapodomorpha; Tetrapoda; Amniota; Mammalia; Theria; Eutheria;
+OC   Boreoeutheria; Laurasiatheria; Carnivora; Caniformia; Canidae; Canis;
+OC   Canis lupus; Canis lupus familiaris.
+XX
+RN   [1]
+RP   1-1654
+RX   DOI; 10.1016/S0165-2427(01)00318-X.
+RX   PUBMED; 11457479.
+RA   Tang L., Sampson C., Dreitz M.J., McCall C.;
+RT   "Cloning and characterization of cDNAs encoding four different canine
+RT   immunoglobulin gamma chains";
+RL   Vet. Immunol. Immunopathol. 80(3-4):259-270(2001).
+XX
+RN   [2]
+RP   1-1654
+RA   Tang L., Sampson C.;
+RT   ;
+RL   Submitted (28-FEB-2001) to the INSDC.
+RL   Allergy and Immunology, Heska Corp., 1613 Prospect Parkway, Fort Collins,
+RL   CO 80525, USA
+XX
+DR   ENA; AF354264.
+XX
+CC   IMGT/LIGM-DB annotation level: by annotators
+XX
+FH   Key                 Location/Qualifiers
+FH   
+FT   L-V-D-J-C-SEQUENCE  1..1654
+FT                       /db_xref="taxon:9615"
+FT                       /organism="Canis lupus familiaris"
+FT                       /productive
+FT   5'UTR               1..69
+FT   L-V-D-J-C-REGION    70..1473
+FT                       /translation="MESVFCWVFLVVILKGVQGEVQLVESGGDLVKPGGSLRLSC
+FT                       VASGFTFSSYYMHWIRQAPGKGLQRVAHIRGDGRTTHYADAMKGRFTISRDNAKN
+FT                       TLYLQMNSLTVEDTAIYYCVKDIYYGVGDYWGQGTLVTVSSASTTAPSVFPLAPS
+FT                       CGSTSGSTVALACLVSGYFPEPVTVSWNSGSLTSGVHTFPSVLQSSGLHSLSSMV
+FT                       TVPSSRWPSETFTCNVVHPASNTKVDKPVFNECRCTDTPPCPVPEPLGGPSVLIF
+FT                       PPKPKDILRITRTPEVTCVVLDLGREDPEVQISWFVDGKEVHTAKTQSREQQFNG
+FT                       TYRVVSVLPIEHQDWLTGKEFKCRVNHIDLPSPIERTISKARGRAHKPSVYVLPP
+FT                       SPKELSSSDTVSITCLIKDFYPPDIDVEWQSNGQQEPERKHRMTPPQLDEDGSYF
+FT                       LYSKLSVDKSRWQQGDPFTCAVMHETLQNHYTDLSLSHSPGK"
+FT   V-D-J-C-REGION      127..1473
+FT                       /translation="EVQLVESGGDLVKPGGSLRLSCVASGFTFSSYYMHWIRQAP
+FT                       GKGLQRVAHIRGDGRTTHYADAMKGRFTISRDNAKNTLYLQMNSLTVEDTAIYYC
+FT                       VKDIYYGVGDYWGQGTLVTVSSASTTAPSVFPLAPSCGSTSGSTVALACLVSGYF
+FT                       PEPVTVSWNSGSLTSGVHTFPSVLQSSGLHSLSSMVTVPSSRWPSETFTCNVVHP
+FT                       ASNTKVDKPVFNECRCTDTPPCPVPEPLGGPSVLIFPPKPKDILRITRTPEVTCV
+FT                       VLDLGREDPEVQISWFVDGKEVHTAKTQSREQQFNGTYRVVSVLPIEHQDWLTGK
+FT                       EFKCRVNHIDLPSPIERTISKARGRAHKPSVYVLPPSPKELSSSDTVSITCLIKD
+FT                       FYPPDIDVEWQSNGQQEPERKHRMTPPQLDEDGSYFLYSKLSVDKSRWQQGDPFT
+FT                       CAVMHETLQNHYTDLSLSHSPGK"
+FT   L-V-D-J-REGION      70..480
+FT                       /translation="MESVFCWVFLVVILKGVQGEVQLVESGGDLVKPGGSLRLSC
+FT                       VASGFTFSSYYMHWIRQAPGKGLQRVAHIRGDGRTTHYADAMKGRFTISRDNAKN
+FT                       TLYLQMNSLTVEDTAIYYCVKDIYYGVGDYWGQGTLVTVSS"
+FT   L-V-D-REGION        70..434
+FT                       /translation="MESVFCWVFLVVILKGVQGEVQLVESGGDLVKPGGSLRLSC
+FT                       VASGFTFSSYYMHWIRQAPGKGLQRVAHIRGDGRTTHYADAMKGRFTISRDNAKN
+FT                       TLYLQMNSLTVEDTAIYYCVKDIYY"
+FT   L-V-REGION          70..422
+FT                       /translation="MESVFCWVFLVVILKGVQGEVQLVESGGDLVKPGGSLRLSC
+FT                       VASGFTFSSYYMHWIRQAPGKGLQRVAHIRGDGRTTHYADAMKGRFTISRDNAKN
+FT                       TLYLQMNSLTVEDTAIYYCVK"
+FT   L-REGION            70..126
+FT                       /translation="MESVFCWVFLVVILKGVQG"
+FT   INIT-CODON          70..72
+FT   V-D-J-REGION        127..480
+FT                       /translation="EVQLVESGGDLVKPGGSLRLSCVASGFTFSSYYMHWIRQAP
+FT                       GKGLQRVAHIRGDGRTTHYADAMKGRFTISRDNAKNTLYLQMNSLTVEDTAIYYC
+FT                       VKDIYYGVGDYWGQGTLVTVSS"
+FT                       /CDR_length="[8.8.11]"
+FT                       /FR_length="[25.17.38.11]"
+FT   V-REGION            127..422
+FT                       /translation="EVQLVESGGDLVKPGGSLRLSCVASGFTFSSYYMHWIRQAP
+FT                       GKGLQRVAHIRGDGRTTHYADAMKGRFTISRDNAKNTLYLQMNSLTVEDTAIYYC
+FT                       VK"
+FT                       /IMGT_allele="IGHV3-67*01"
+FT                       /IMGT_gene="IGHV3-67"
+FT                       /Videntity="91.55% (271/296 nt)"
+FT   FR1-IMGT            127..201
+FT                       /translation="EVQLVESGGDLVKPGGSLRLSCVAS"
+FT                       /AA_IMGT="AA 1 to 26, AA 10 is missing"
+FT   1st-CYS             190..192
+FT   CDR1-IMGT           202..225
+FT                       /translation="GFTFSSYY"
+FT                       /AA_IMGT="AA 27 to 38, AA 31, 32, 33 and 34 are 
+FT                       missing"
+FT   FR2-IMGT            226..276
+FT                       /translation="MHWIRQAPGKGLQRVAH"
+FT                       /AA_IMGT="AA 39 to 55"
+FT   CONSERVED-TRP       232..234
+FT   CDR2-IMGT           277..300
+FT                       /translation="IRGDGRTT"
+FT                       /AA_IMGT="AA 56 to 65, AA 60 and 61 are missing"
+FT   FR3-IMGT            301..414
+FT                       /translation="HYADAMKGRFTISRDNAKNTLYLQMNSLTVEDTAIYYC"
+FT                       /AA_IMGT="AA 66 to 104, AA 73 is missing"
+FT   2nd-CYS             412..414
+FT   CDR3-IMGT           415..447
+FT                       /translation="VKDIYYGVGDY"
+FT                       /AA_IMGT="AA 105 to 117, AA 111 and 112 are missing"
+FT   JUNCTION            412..450
+FT                       /translation="CVKDIYYGVGDYW"
+FT                       /in_frame
+FT   3'V-REGION          412..422
+FT                       /translation="CVK"
+FT   (N-D)-J-REGION      423..480
+FT                       /codon_start=2
+FT                       /translation="IYYGVGDYWGQGTLVTVSS"
+FT   (N-D)-REGION        423..441
+FT                       /codon_start=2
+FT                       /translation="IYYGVG"
+FT   N1-REGION           423..426
+FT                       /codon_start=2
+FT   D-REGION            427..434
+FT                       /translation="YY"
+FT                       /IMGT_allele="IGHD2*01"
+FT                       /IMGT_gene="IGHD2"
+FT   N2-REGION           435..441
+FT                       /codon_start=2
+FT                       /translation="VG"
+FT   5'J-REGION          442..450
+FT                       /translation="DYW"
+FT   J-REGION            442..480
+FT                       /translation="DYWGQGTLVTVSS"
+FT                       /IMGT_allele="IGHJ4*01"
+FT                       /IMGT_gene="IGHJ4"
+FT   J-TRP               448..450
+FT   FR4-IMGT            448..480
+FT                       /translation="WGQGTLVTVSS"
+FT                       /AA_IMGT="AA 118 to 128"
+FT   C-REGION            481..1473
+FT                       /translation="ASTTAPSVFPLAPSCGSTSGSTVALACLVSGYFPEPVTVSW
+FT                       NSGSLTSGVHTFPSVLQSSGLHSLSSMVTVPSSRWPSETFTCNVVHPASNTKVDK
+FT                       PVFNECRCTDTPPCPVPEPLGGPSVLIFPPKPKDILRITRTPEVTCVVLDLGRED
+FT                       PEVQISWFVDGKEVHTAKTQSREQQFNGTYRVVSVLPIEHQDWLTGKEFKCRVNH
+FT                       IDLPSPIERTISKARGRAHKPSVYVLPPSPKELSSSDTVSITCLIKDFYPPDIDV
+FT                       EWQSNGQQEPERKHRMTPPQLDEDGSYFLYSKLSVDKSRWQQGDPFTCAVMHETL
+FT                       QNHYTDLSLSHSPGK"
+FT                       /functional
+FT                       /IMGT_allele="IGHG1*01"
+FT                       /IMGT_gene="IGHG1"
+FT   CH1                 481..771
+FT                       /translation="ASTTAPSVFPLAPSCGSTSGSTVALACLVSGYFPEPVTVSW
+FT                       NSGSLTSGVHTFPSVLQSSGLHSLSSMVTVPSSRWPSETFTCNVVHPASNTKVDK
+FT                       P"
+FT   SPLICE-FIRST-CODON  481..483
+FT                       /splicing-frame="sf1"
+FT   H                   772..813
+FT                       /translation="VFNECRCTDTPPCP"
+FT   CH2                 814..1143
+FT                       /translation="VPEPLGGPSVLIFPPKPKDILRITRTPEVTCVVLDLGREDP
+FT                       EVQISWFVDGKEVHTAKTQSREQQFNGTYRVVSVLPIEHQDWLTGKEFKCRVNHI
+FT                       DLPSPIERTISKAR"
+FT   CH3-CHS             1144..1473
+FT                       /translation="GRAHKPSVYVLPPSPKELSSSDTVSITCLIKDFYPPDIDVE
+FT                       WQSNGQQEPERKHRMTPPQLDEDGSYFLYSKLSVDKSRWQQGDPFTCAVMHETLQ
+FT                       NHYTDLSLSHSPGK"
+FT   CH3                 1144..1467
+FT                       /translation="GRAHKPSVYVLPPSPKELSSSDTVSITCLIKDFYPPDIDVE
+FT                       WQSNGQQEPERKHRMTPPQLDEDGSYFLYSKLSVDKSRWQQGDPFTCAVMHETLQ
+FT                       NHYTDLSLSHSP"
+FT   CHS                 1468..1473
+FT                       /translation="GK"
+FT                       /IMGT_note="for complete translation nucleotide G at 
+FT                       position 1469 has been included in CHS"
+FT   INT-DONOR-SPLICE    1468..1470
+FT   3'UTR               1474..1654
+FT   STOP-CODON          1474..1476
+XX
+SQ   Sequence 1654 BP; 396 A; 512 C; 428 G; 318 T; 0 other;
+     ggcacgagcc agcccccagg atccccaggt gaccccattc agtgctcagg acacaacaca        60
+     gacaccacca tggagtctgt gttctgctgg gttttccttg tcgttatttt aaaaggtgtc       120
+     cagggtgagg tgcagttggt ggagtctggg ggagacctgg tgaagcctgg ggggtccctg       180
+     agactctcct gtgtggcctc tggattcacc ttcagttcgt actacatgca ttggatccgc       240
+     caggctccag ggaaggggct tcagcgggtc gcacatatta gaggtgatgg aaggactaca       300
+     cactacgcag acgctatgaa gggccgattc accatctcca gagacaacgc caagaacacg       360
+     ctgtatctgc agatgaatag cctgacagtc gaagacacgg ctatttatta ctgtgtaaag       420
+     gacatatact atggggtcgg ggactattgg ggccagggaa ccctggtcac cgtctcctca       480
+     gcctccacca cggccccctc ggttttccca ctggccccca gctgcgggtc cacttccggc       540
+     tccacggtgg ccctggcctg cctggtgtca ggctacttcc ccgagcctgt aactgtgtcc       600
+     tggaattccg gctccttgac cagcggtgtg cacaccttcc cgtccgtcct gcagtcctca       660
+     gggcttcact ccctcagcag catggtgaca gtgccctcca gcaggtggcc cagcgagacc       720
+     ttcacctgca acgtggtcca cccagccagc aacactaaag tagacaagcc agtgttcaat       780
+     gaatgcagat gcactgatac acccccatgc ccagtccctg aacctctggg agggccttcg       840
+     gtcctcatct ttcccccgaa acccaaggac atcctcagga ttacccgaac acccgaggtc       900
+     acctgtgtgg tgttagatct gggccgtgag gaccctgagg tgcagatcag ctggttcgtg       960
+     gatggtaagg aggtgcacac agccaagacc cagtctcgtg agcagcagtt caacggcacc      1020
+     taccgtgtgg tcagcgtcct ccccattgag caccaggact ggctcacagg gaaggagttc      1080
+     aagtgcagag tcaaccacat agacctcccg tctcccatcg agaggaccat ctctaaggcc      1140
+     agagggaggg cccataagcc cagtgtgtat gtcctgccgc catccccaaa ggagttgtca      1200
+     tccagtgaca cagtcagcat cacctgcctg ataaaagact tctacccacc tgacattgat      1260
+     gtggagtggc agagcaatgg acagcaggag cccgagagga agcaccgcat gaccccgccc      1320
+     cagctggacg aggacgggtc ctacttcctg tacagcaagc tctctgtgga caagagccgc      1380
+     tggcagcagg gagacccctt cacatgtgcg gtgatgcatg aaactctaca gaaccactac      1440
+     acagatctat ccctctccca ttctccgggt aaatgagcaa cacgcccggc acccagcaag      1500
+     ccccccaccc ttggctctca ggatcccctg aggacacctg agcccctgtc cctgtgtaca      1560
+     taaccctggg taggcaccca tcatgaaata aagcacccag cactgccctg ggccctgcaa      1620
+     aaaaaaaaaa aaaaaaaaaa aaaaaaaaaa aaaa                                  1654
+//

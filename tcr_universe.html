@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TCRbase Universe — Comparative αβ and γδ T-Cell Receptor Manifold</title>
+  <link rel="stylesheet" href="css/fonts.css">
+  <script src="js/d3.v7.min.js"></script>
+  <link rel="stylesheet" href="css/universe.css">
+  <style>
+    .tcrbase-pill-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 9px;
+      border-radius: 9999px;
+      font-size: 11px;
+      font-weight: 600;
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      color: #34d399;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating Restore Pills -->
+  <button id="restoreHeaderBtn" class="floating-panel-pill pill-top-left" style="display:none;" title="Restore Header & Controls">🌌 Controls</button>
+  <a id="floatingHomeBtn" href="index.html" class="floating-panel-pill pill-top-left-home" style="display:none;" title="Return to Portal Home">🏠 Portal Home</a>
+  <button id="restoreInspectorBtn" class="floating-panel-pill pill-top-right" title="Open Query Inspector">🔬 Query Inspector</button>
+  <button id="restoreLegendBtn" class="floating-panel-pill pill-bottom-left" style="display:none;" title="Restore Legend">📑 Legend</button>
+  <button id="restoreTcrDjBtn" class="floating-panel-pill pill-bottom-dj" style="display:none;" title="Open TCR D & J Elements Catalog">🧬 TCR D & J Elements (<span id="pillDjCountBadge">100</span>)</button>
+  <button id="restoreAlignmentBtn" class="floating-panel-pill pill-bottom-align" style="display:none;" title="Open Sequence Alignment Drawer">🧬 Alignment (<span id="alignCountBadge">0</span>)</button>
+
+  <!-- TCR D & J Elements Repertoire Drawer -->
+  <div id="tcrDjDrawer" class="collapsed">
+    <div class="dj-drawer-header">
+      <div class="dj-drawer-title-row">
+        <span class="dj-drawer-title">🧬 TCRbase D & J Elements Repertoire</span>
+        <span class="dj-tab-pill active" id="tabDjD">Diversity Elements (TRBD & TRDD • <span id="countDGenes">9</span>)</span>
+        <span class="dj-tab-pill" id="tabDjJ">Joining Elements (TRAJ, TRBJ, TRGJ, TRDJ • <span id="countJGenes">91</span>)</span>
+      </div>
+      <div class="dj-drawer-actions">
+        <input type="text" id="tcrDjSearch" placeholder="🔍 Filter gene, motif..." style="font-size:11.5px; padding:4px 8px; width:170px; background:#0f172a; border:1px solid #334155; border-radius:6px; color:#fff;" />
+        <select id="tcrDjSpeciesFilter" style="font-size:11.5px; padding:4px 8px; background:#0f172a; border:1px solid #334155; border-radius:6px; color:#fff;">
+          <option value="all">All Species</option>
+          <option value="human">Human</option>
+          <option value="mouse">Mouse</option>
+        </select>
+        <select id="tcrDjLocusFilter" style="font-size:11.5px; padding:4px 8px; background:#0f172a; border:1px solid #334155; border-radius:6px; color:#fff;">
+          <option value="all">All Loci (TRA/B/G/D)</option>
+          <option value="TRB">TRB (TCR Beta)</option>
+          <option value="TRA">TRA (TCR Alpha)</option>
+          <option value="TRD">TRD (TCR Delta)</option>
+          <option value="TRG">TRG (TCR Gamma)</option>
+        </select>
+        <button id="copyTcrDjFastaBtn" class="drawer-action-btn" title="Copy visible TCR D/J elements as FASTA">📋 Copy FASTA</button>
+        <button class="panel-minimize-btn" id="closeTcrDjBtn" title="Close Drawer">✕</button>
+      </div>
+    </div>
+    <div id="tcrDjBody" class="dj-drawer-body"></div>
+  </div>
+
+  <!-- Sequence Alignment Drawer (Canonical Gapped Alignment) -->
+  <div id="alignmentDrawer" class="collapsed">
+    <div class="alignment-header">
+      <div class="alignment-title-row">
+        <span class="alignment-title">🧬 IMGT Sequence Alignment</span>
+        <span id="alignModeBadge" class="align-mode-badge single">Single Sequence</span>
+        <span id="alignSelectionCount" style="font-size:11.5px; color:#94a3b8; margin-left:8px;">0 genes</span>
+      </div>
+      <div class="alignment-actions">
+        <button id="copyAlignmentFastaBtn" class="drawer-action-btn" title="Copy selection as FASTA">📋 Copy FASTA</button>
+        <button id="clearSelectionBtn" class="drawer-action-btn" title="Clear selection">🧹 Clear</button>
+        <button class="panel-minimize-btn" id="closeAlignmentBtn" title="Minimize Alignment Drawer">✕</button>
+      </div>
+    </div>
+    <div id="alignmentBody" class="alignment-body"></div>
+  </div>
+
+  <!-- Top Left Header & Controls -->
+  <div id="header">
+    <div class="title-row">
+      <div style="display:flex; align-items:center; gap:12px;">
+        <a href="index.html" title="Return to VBASE3 Central Hub" style="display:flex; align-items:center; text-decoration:none;">
+          <img src="images/vbase3_logo.jpg" alt="VBASE3 Logo" style="height:44px; width:auto; border-radius:6px; box-shadow:0 2px 10px rgba(0,0,0,0.5); object-fit:contain; background:#ffffff; padding:2px; cursor:pointer;" />
+        </a>
+        <div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <h1 style="margin:0; font-size:1.35rem;">🧬 VBASE3 <span style="color:#64748b; font-weight:400; font-size:16px;">•</span> <span style="color:#10b981;">TCRbase</span></h1>
+            <span class="tcrbase-pill-badge" style="background:rgba(16,185,129,0.15); border:1px solid #10b981; color:#10b981;">αβ & γδ TCR</span>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex; align-items:center; gap:8px;">
+        <a href="https://doi.org/10.5281/zenodo.22923344" target="_blank" rel="noopener" class="hub-back-btn" style="background:rgba(217,119,6,0.25); border:1px solid rgba(245,158,11,0.5); color:#fbbf24; text-decoration:none;" title="Download complete database tables and catalogs from Zenodo">📦 Zenodo Data ↗</a>
+      <a href="index.html" class="hub-back-btn" title="Return to Portal Home">🏠 Portal Home</a>
+        <button class="panel-minimize-btn" id="closeHeaderBtn" title="Minimize Controls">✕</button>
+      </div>
+    </div>
+    <div class="subtitle">Vertebrate T-Cell Receptor Universe (3,114 Genes • 9 D-Genes • 91 J-Genes) • αβ & γδ Chains across 31 Species • Systematic Clan & Orthogroup Naming<br><span style="color:#10b981; font-size:11px; opacity:0.9;">✨ Human-AI Collaborative Experiment: Werner Müller &amp; Google Antigravity (Gemini Models)</span></div>
+    
+    <!-- Unified VBASE3 Portals Bar -->
+    <div class="vbase-portal-nav" style="display:flex; gap:6px; margin-bottom:12px; background:rgba(15,23,42,0.85); border:1px solid #334155; border-radius:8px; padding:3px; flex-wrap:wrap;">
+      <a href="index.html" class="portal-nav-tab" style="flex:1; min-width:105px; text-align:center; padding:6px 10px; border-radius:6px; font-size:12px; font-weight:700; text-decoration:none; display:flex; align-items:center; justify-content:center; gap:6px; background:rgba(37,99,235,0.35); border:1px solid #3b82f6; color:#bfdbfe; transition:all 0.2s;" title="Return to Main Overview">
+        <span>🏠 Portal Home</span>
+      </a>
+      <a href="vgene_pacmap_universe.html" class="portal-nav-tab" style="flex:1; min-width:110px; text-align:center; padding:6px 10px; border-radius:6px; font-size:12px; font-weight:600; text-decoration:none; display:flex; align-items:center; justify-content:center; gap:6px; background:transparent; color:#94a3b8; border:1px solid transparent; transition:all 0.2s;">
+        <span>🛡️ BCRbase</span>
+        <span style="font-size:10px; opacity:0.75; font-weight:400;">(Antibodies)</span>
+      </a>
+      <a href="tcr_universe.html" class="portal-nav-tab active" style="flex:1; min-width:110px; text-align:center; padding:6px 10px; border-radius:6px; font-size:12px; font-weight:700; text-decoration:none; display:flex; align-items:center; justify-content:center; gap:6px; background:#059669; color:#ffffff; box-shadow:0 2px 8px rgba(5,150,105,0.4);">
+        <span>🧬 TCRbase</span>
+        <span style="font-size:10px; opacity:0.85; font-weight:500;">(TCRs)</span>
+      </a>
+    </div>
+    
+    <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; margin-bottom:10px;">
+      <span id="wasmBadge" class="wasm-badge wasm-active" title="Dual Execution: Toggle between in-browser WASM and server Native Rust">
+        <span class="wasm-badge-pulse"></span>
+        <span id="engineBadgeText">⚡ Client WASM: Active (In-Browser)</span>
+      </span>
+
+      <div class="engine-switcher" title="Toggle Execution Engine">
+        <button id="btnEngineWasm" class="engine-btn active wasm" onclick="switchExecutionEngine('wasm')">⚡ Client WASM</button>
+        <button id="btnEngineNative" class="engine-btn" onclick="switchExecutionEngine('native')">🚀 Server Native Rust</button>
+        <button id="btnOpenBenchmark" class="engine-btn bench-btn" onclick="openBenchmarkModal()">📊 Benchmark</button>
+      </div>
+    </div>
+
+    <!-- Catalog Switcher -->
+    <div class="dataset-switcher-row" style="display:flex; align-items:center; gap:8px; margin-bottom:10px; flex-wrap:wrap;">
+      <span style="font-size:11.5px; color:#94a3b8; font-weight:600;">Reference Catalog:</span>
+      <select id="universeDatasetSelect" class="dataset-select" style="background:#0d1623; color:#f0f6fc; border:1px solid rgba(16,185,129,0.3); border-radius:6px; padding:4px 8px; font-size:11.5px; font-family:'Inter', sans-serif;">
+        <option value="tcrbase_pacmap_data.json" selected>🧬 TCRbase Universe (Comparative αβ & γδ TCR • 3,114 Genes • 31 Species)</option>
+        <option value="vgene_pacmap_data.json">🌌 VBASE3 Vertebrate Universe (Stratum 4 Manifold: 32 Benchmark Taxa • 2,048 Points)</option>
+        <option value="vbase2_pacmap_data.json">🏛️ VBASE2 Legacy Universe (Human & Mouse • 1,052 Genes)</option>
+      </select>
+      <div style="margin-left:auto; display:flex; gap:10px; align-items:center;">
+        <a href="tcr_repertoire.html" style="font-size:11px; color:#34d399; text-decoration:none; display:inline-flex; align-items:center; gap:3px; font-weight:600;">📊 Single-Cell Repertoire ↗</a>
+        <a href="vgene_pacmap_universe.html" style="font-size:11px; color:#38bdf8; text-decoration:none; display:inline-flex; align-items:center; gap:3px; font-weight:500;">Switch to VBASE3 ↗</a>
+      </div>
+    </div>
+    
+    <div class="kpi-row">
+      <div class="kpi-item"><span class="kpi-val" id="kpiGenes">3,114</span><span class="kpi-lbl">Vertebrate TCR Genes</span></div>
+      <div class="kpi-item"><span class="kpi-val" id="kpiSpecies">31</span><span class="kpi-lbl">Vertebrate Species</span></div>
+      <div class="kpi-item"><span class="kpi-val" id="kpiDj" style="color:#c084fc;">9 D / 91 J</span><span class="kpi-lbl">TCR D & J Elements</span></div>
+      <div class="kpi-item"><span class="kpi-val" id="kpiLoci" style="color:#34d399;">4 Loci</span><span class="kpi-lbl">αβ & γδ (TRA/B/G/D)</span></div>
+    </div>
+
+    <div class="controls">
+      <label style="font-size:12px; color:#94a3b8;">Hierarchy & Color: </label>
+      <select id="colorSelect">
+        <option value="chain" selected>Locus / Chain (TRA, TRB, TRG, TRD)</option>
+        <option value="clan">Systematic Evolutionary Clan (Clans 1–8 per Locus)</option>
+        <option value="orthogroup">Evolutionary Orthogroup (≥75% Homology Cluster)</option>
+        <option value="clade">Taxonomic Clade (Mammals, Birds, Reptiles, Amphibians, Fish, Sharks)</option>
+        <option value="species">Species / Organism (31 Vertebrate Models)</option>
+      </select>
+      <label style="font-size:12px; color:#34d399; font-weight:600; margin-left:6px;">Focus Species: </label>
+      <select id="speciesFilterSelect" class="dataset-select" style="background:#062319; color:#34d399; border:1px solid #059669; border-radius:6px; padding:4px 8px; font-size:11.5px; font-family:'Inter', sans-serif;">
+        <option value="all" selected>🌍 All 31 Vertebrate Species (3,114)</option>
+        <option value="cow">🐄 Cow (Bos taurus • 327)</option>
+        <option value="sheep">🐑 Sheep (Ovis aries • 299)</option>
+        <option value="mouse">🐁 Mouse (Mus musculus • 290)</option>
+        <option value="human">👤 Human (Homo sapiens • 283)</option>
+        <option value="zebrafish">🐟 Zebrafish (Danio rerio • 275)</option>
+        <option value="orangutan">🦧 Orangutan (Pongo abelii • 194)</option>
+        <option value="rhesus">🐒 Rhesus Macaque (Macaca mulatta • 186)</option>
+        <option value="gorilla">🦍 Gorilla (Gorilla gorilla • 164)</option>
+        <option value="chimpanzee">🐵 Chimpanzee (Pan troglodytes • 142)</option>
+        <option value="rabbit">🐇 Rabbit (Oryctolagus cuniculus • 141)</option>
+        <option value="ferret">🦡 Ferret (Mustela putorius • 106)</option>
+        <option value="naked_mole_rat">🐀 Naked Mole-Rat (Heterocephalus glaber • 90)</option>
+        <option value="cat">🐈 Cat (Felis catus • 85)</option>
+        <option value="dog">🐕 Dog (Canis lupus familiaris • 71)</option>
+        <option value="cynomolgus">🐒 Cynomolgus (Macaca fascicularis • 60)</option>
+        <option value="turtle">🐢 Turtle (Chrysemys picta • 59)</option>
+        <option value="bat">🦇 Bat (Myotis lucifugus • 51)</option>
+        <option value="horse">🐎 Horse (Equus caballus • 48)</option>
+        <option value="trout">🐟 Trout (Oncorhynchus mykiss • 37)</option>
+        <option value="pig">🐖 Pig (Sus scrofa • 35)</option>
+        <option value="camel">🐫 Camel (Camelus dromedarius • 34)</option>
+        <option value="chicken">🐓 Chicken (Gallus gallus • 33)</option>
+        <option value="dolphin">🐬 Dolphin (Tursiops truncatus • 25)</option>
+        <option value="platypus">🦆 Platypus (Ornithorhynchus anatinus • 25)</option>
+        <option value="nurse_shark">🦈 Nurse Shark (Ginglymostoma cirratum • 22)</option>
+        <option value="opossum">🦝 Opossum (Monodelphis domestica • 11)</option>
+        <option value="frog">🐸 Frog (Xenopus tropicalis • 8)</option>
+        <option value="elephant_shark">🦈 Elephant Shark (Callorhinchus milii • 7)</option>
+      </select>
+      <input type="text" id="geneSearch" placeholder="🔍 Search systematic ID (e.g. HSA_TRAV_C8), legacy name (TRAV1-1), species..." />
+      <button id="resetZoom" title="Press 'F' key anytime to reset and center map">Reset View (F)</button>
+      <button id="btnOpenTcrDjDrawer" class="btn-primary" style="background:#2d1b4e; color:#c084fc; border: 1px solid #a855f7;" title="Explore TCR Diversity (TRBD, TRDD) and Joining (TRAJ, TRBJ, TRGJ, TRDJ) Elements">🧬 TCR D & J Elements</button>
+      <button id="btnOpenAlignmentDrawer" class="btn-primary" style="background:#1e3a5f; color:#38bdf8; border-color:#38bdf8;" title="View Alignment of Selected / Filtered TCR Genes">🧬 Alignment Table</button>
+      <a href="human_tcr_analyzer.html" class="btn-primary" style="background:#064e3b; color:#34d399; border: 1px solid #059669; text-decoration:none; display:inline-flex; align-items:center; gap:4px;" title="Open Dedicated Human TCR Repertoire & Clonotype Analyzer">👤 Human TCR Analyzer</a>
+      <a href="mouse_tcr_analyzer.html" class="btn-primary" style="background:#064e3b; color:#34d399; border: 1px solid #059669; text-decoration:none; display:inline-flex; align-items:center; gap:4px;" title="Open Dedicated Mouse TCR Repertoire & Clonotype Analyzer">🐁 Mouse TCR Analyzer</a>
+      <button id="toggleInspectorBtn" class="btn-primary">🔬 Query Inspector</button>
+    </div>
+    <div id="selectionBanner"></div>
+  </div>
+
+  <!-- Bottom Left Legend Panel -->
+  <div id="legend" class="legend"></div>
+
+
+
+  <!-- Tooltip -->
+  <div id="tooltip"></div>
+
+  <!-- Universal TCR Sequence Inspector & Projection Engine Panel -->
+  <div id="inspectorPanel" class="collapsed">
+    <div class="inspector-header">
+      <div class="inspector-title">🔬 TCRbase Sequence Projection Engine</div>
+      <button class="close-btn" id="closeInspectorBtn" title="Close Panel">✕</button>
+    </div>
+    <div class="inspector-desc">
+      Paste unknown human or mouse T-cell receptor sequence (DNA or Protein). The engine automatically identifies TCR locus (TRA, TRB, TRG, TRD), closest TCRbase germline, and projects the query directly onto the 2D TCR manifold!
+    </div>
+    
+    <div style="font-size:11px; color:#64748b; margin-bottom:4px; font-weight:600;">VERTEBRATE BENCHMARK SAMPLES:</div>
+    <div class="sample-pills">
+      <div class="sample-pill" onclick="loadSample('tcr_1g4_tra')">🟢 Human 1G4 TCRα (TRAV21*01 • NY-ESO-1)</div>
+      <div class="sample-pill" onclick="loadSample('tcr_1g4_trb')">🔵 Human 1G4 TCRβ (TRBV6-5*01 • NY-ESO-1)</div>
+      <div class="sample-pill" onclick="loadSample('tcr_mouse_2b4')">🟠 Murine 2B4 TCRα (TRAV14-1 • Cytochrome C)</div>
+      <div class="sample-pill" onclick="loadSample('tcr_bovine_trdv')">🟡 Bovine TRDV1 (Ruminant γδ Expansion)</div>
+      <div class="sample-pill" onclick="loadSample('tcr_zebrafish_trav')">🐟 Zebrafish TRAV (Teleost Fish)</div>
+      <div class="sample-pill" onclick="loadSample('tcr_chicken_tra')">🐔 Chicken TRA (Avian)</div>
+      <div class="sample-pill" onclick="loadSample('tcr_shark_nar')">🦈 Nurse Shark NAR-TCR (Cartilaginous Single-Domain)</div>
+    </div>
+
+    <textarea id="seqTextarea" placeholder="Paste human or mouse TCR nucleotide or amino acid sequence..."></textarea>
+    
+    <div class="action-bar">
+      <button id="analyzeBtn" class="btn-primary" style="flex:1;">🚀 Analyze & Project onto TCRbase</button>
+      <button id="clearBtn" style="background:#21262d;">Clear</button>
+    </div>
+
+    <!-- Live Analysis & Manifold Locator Card -->
+    <div id="analysisHUD">
+      <div class="hud-title-row">
+        <div class="hud-beacon-alert">
+          <span style="display:inline-block; width:9px; height:9px; border-radius:50%; background:#34d399; box-shadow:0 0 8px #34d399;"></span>
+          TCRbase Manifold Coordinates Projected!
+        </div>
+        <div id="hudCoordBadge" style="font-family:'Fira Code', monospace; font-size:11px; color:#38bdf8;">(x: 0, y: 0)</div>
+      </div>
+
+      <div style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:10px;">
+        <span id="hudSpeciesBadge" class="badge badge-species">Species: -</span>
+        <span id="hudChainBadge" class="badge badge-chain">Chain: -</span>
+        <span id="hudFamilyBadge" class="badge badge-family">Family: -</span>
+        <span id="hudClanBadge" class="badge badge-clan">Clan: -</span>
+        <span id="hudShmBadge" class="badge badge-low">0 SHM</span>
+      </div>
+
+      <div class="hud-grid">
+        <div class="hud-box">
+          <div class="hud-label">Closest TCRbase V-Gene</div>
+          <div class="hud-value" id="hudVGene" style="color:#58a6ff;">-</div>
+          <div style="font-size:10.5px; color:#94a3b8; margin-top:2px;" id="hudVIdent">-</div>
+        </div>
+        <div class="hud-box">
+          <div class="hud-label">Diversity Element (D)</div>
+          <div class="hud-value" id="hudDGene" style="color:#f59e0b;">-</div>
+          <div style="font-size:10.5px; color:#94a3b8; margin-top:2px;" id="hudDFrame">-</div>
+        </div>
+        <div class="hud-box">
+          <div class="hud-label">Joining Element (J) & Boundary</div>
+          <div class="hud-value" id="hudJGene" style="color:#34d399;">-</div>
+          <div style="font-size:10.5px; color:#94a3b8; margin-top:2px;" id="hudJBoundary">Canonical Boundary Verified</div>
+        </div>
+        <div class="hud-box">
+          <div class="hud-label">Junctional CDR3</div>
+          <div class="hud-value" id="hudCdr3" style="color:#fb7185; font-family:'Fira Code', monospace; font-size:12px;">-</div>
+          <div style="font-size:10.5px; color:#94a3b8; margin-top:2px;" id="hudCdr3Len">Length: 0</div>
+        </div>
+      </div>
+
+      <!-- Domain Architecture Ribbon -->
+      <div style="font-size:11px; color:#94a3b8; font-weight:600; margin-bottom:4px;">DOMAIN ARCHITECTURE & JUNCTIONS:</div>
+      <div id="hudRibbon" class="ribbon-frame"></div>
+    </div>
+  </div>
+
+  <!-- Performance Benchmark Modal -->
+  <div id="benchmarkModal" class="benchmark-modal-backdrop" style="display:none;">
+    <div class="benchmark-modal-dialog">
+      <div class="benchmark-modal-header">
+        <div class="benchmark-modal-title">
+          <span>📊 Live Performance Benchmark: Client WASM vs. Server Native Rust</span>
+        </div>
+        <button class="benchmark-close-btn" onclick="closeBenchmarkModal()">✕</button>
+      </div>
+      <div class="benchmark-modal-desc">
+        Direct side-by-side throughput and latency comparison between single-threaded in-browser WebAssembly (V8 engine) and native multi-threaded Rust compiled for Apple M4 Pro (16-Core Rayon SIMD).
+      </div>
+
+      <!-- Release Note: Benchmark disabled in the WASM-only version -->
+      <div style="background:rgba(245, 158, 11, 0.1); border:1px solid rgba(245, 158, 11, 0.3); border-radius:8px; padding:10px 14px; margin-bottom:14px; font-size:11.5px; color:#fde68a; display:flex; align-items:flex-start; gap:9px; line-height:1.45;">
+        <span style="font-size:14px; line-height:1; flex-shrink:0;">ℹ️</span>
+        <div>
+          <strong>Release Note: Benchmark disabled in the WASM only version.</strong> When running the web portals solely in a browser without the local native Rust daemon, live server benchmarking is disabled. Canonical benchmark metrics measured on an Apple M4 Pro (16-Core Rayon SIMD vs. Client WASM) are displayed below and documented in Manuscript Appendix Figure App 11.
+        </div>
+      </div>
+
+      <div class="benchmark-metrics-grid">
+        <div class="metric-card">
+          <div class="metric-title">⚡ Client WebAssembly</div>
+          <div class="metric-val wasm" id="benchWasmThroughput">~18.5 seq/s</div>
+          <div class="metric-sub" id="benchWasmLatency">Avg Latency: ~54.0 ms</div>
+          <div class="metric-sub">100% In-Browser • Zero Network Traffic</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-title">🚀 Server Native Rust</div>
+          <div class="metric-val native" id="benchNativeThroughput">8,989 queries/s</div>
+          <div class="metric-sub" id="benchNativeLatency">Avg Latency: 0.11 ms (111 µs)</div>
+          <div class="metric-sub">Apple M4 Pro • 16-Core Rayon Parallelism</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-title">🔥 Native Speedup</div>
+          <div class="metric-val speedup" id="benchSpeedupFactor">485x FASTER</div>
+          <div class="metric-sub">Sub-millisecond high-throughput screening</div>
+          <div class="metric-sub">18.9M pairwise germline comps/sec</div>
+        </div>
+      </div>
+
+      <div class="benchmark-breakdown-box">
+        <div style="font-weight:600; color:#f0f6fc; margin-bottom:6px;">📈 Detailed Component Breakdown</div>
+        <table class="benchmark-table">
+          <thead>
+            <tr>
+              <th>Operation</th>
+              <th>Client WASM (In-Browser)</th>
+              <th>Server Native Rust (M4 Pro)</th>
+              <th>Speedup</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Sequence Landmark Detection & Germline Alignment</strong></td>
+              <td id="benchAlignWasm">~18.5 seqs / sec (54 ms)</td>
+              <td id="benchAlignNative"><strong>8,989 queries / sec</strong> (0.11 ms)</td>
+              <td style="color:#34d399; font-weight:700;" id="benchAlignSpeedup">🚀 485x</td>
+            </tr>
+            <tr>
+              <td><strong>All-vs-All Germline Pairwise Comparisons</strong></td>
+              <td>~38,900 comps / sec</td>
+              <td><strong>18,905,000 comps / sec</strong></td>
+              <td style="color:#34d399; font-weight:700;">🚀 485x</td>
+            </tr>
+            <tr>
+              <td><strong>PaCMAP 2D Projection (100 Seqs)</strong></td>
+              <td id="benchPacmapWasm">~13.9 ms (~7,180 seqs/s)</td>
+              <td id="benchPacmapNative"><strong>5.3 ms</strong> (~18,750 seqs/s)</td>
+              <td style="color:#34d399; font-weight:700;" id="benchPacmapSpeedup">🚀 2.6x</td>
+            </tr>
+            <tr>
+              <td><strong>Execution Architecture</strong></td>
+              <td>Single-threaded WebAssembly in Web Worker/V8</td>
+              <td>16-thread Rayon Work-Stealing + NEON SIMD</td>
+              <td style="color:#38bdf8;">Hardware-Native</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-top:14px; flex-wrap:wrap; gap:10px;">
+        <div style="font-size:11.5px; color:#94a3b8;" id="benchStatusText">
+          Ready to run fresh live comparison on your machine.
+        </div>
+        <div style="display:flex; gap:8px;">
+          <button id="runLiveBenchmarkBtn" class="engine-btn bench-btn" style="padding:6px 14px; font-size:12px;" onclick="runSideBySideBenchmark()">⚡ Run Fresh Live Benchmark</button>
+          <button class="engine-btn" style="padding:6px 14px; font-size:12px;" onclick="closeBenchmarkModal()">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <svg id="canvas" width="100%" height="100%"></svg>
+
+  <!-- Configure dataset to load TCRbase data -->
+  <script>
+    window.DATASET_FILE = "tcrbase_pacmap_data.json";
+  </script>
+  <!-- Load Main Logic as ES Module -->
+  <script type="module" src="js/universe.js"></script>
+</body>
+</html>

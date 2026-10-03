@@ -1,0 +1,36 @@
+{
+  "human": {
+    "heavy": {
+      "total_sequences": 269190468,
+      "num_v_genes": 90,
+      "file": "data/airr_precomputed/airr_human_heavy.json"
+    },
+    "kappa": {
+      "total_sequences": 4743682,
+      "num_v_genes": 37,
+      "file": "data/airr_precomputed/airr_human_kappa.json"
+    },
+    "lambda": {
+      "total_sequences": 6482356,
+      "num_v_genes": 34,
+      "file": "data/airr_precomputed/airr_human_lambda.json"
+    }
+  },
+  "mouse": {
+    "heavy": {
+      "total_sequences": 1950167,
+      "num_v_genes": 179,
+      "file": "data/airr_precomputed/airr_mouse_heavy.json"
+    },
+    "kappa": {
+      "total_sequences": 2596,
+      "num_v_genes": 48,
+      "file": "data/airr_precomputed/airr_mouse_kappa.json"
+    },
+    "lambda": {
+      "total_sequences": 35420,
+      "num_v_genes": 3,
+      "file": "data/airr_precomputed/airr_mouse_lambda.json"
+    }
+  }
+}

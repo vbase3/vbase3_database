@@ -1,0 +1,70 @@
+ID   E02824; SV 1; linear; cDNA; PAT; MAM; 318 BP.
+XX
+AC   E02824;
+XX
+DT   28-SEP-2000 (Rel. 200039-4, arrived in LIGM-DB)
+DT   11-JAN-2010 (Rel. 201002-1, Last updated, Version 3)
+XX
+DE   DNA encoding constant region of immunoglobulin lambda chain.
+XX
+KW   antigen receptor; Immunoglobulin superfamily (IgSF); immunoglobulin (IG);
+KW   chimeric; IG-Light; IG-Light-Lambda-IGL; constant; patent; cDNA; undefined.
+XX
+OS   Canis lupus familiaris (dog)
+OC   Gnathostomata; Teleostomi; Euteleostomi; Sarcopterygii;
+OC   Dipnotetrapodomorpha; Tetrapoda; Amniota; Mammalia; Theria; Eutheria;
+OC   Boreoeutheria; Laurasiatheria; Carnivora; Caniformia; Canidae; Canis;
+OC   Canis lupus; Canis lupus familiaris.
+XX
+RN   [1]
+RP   1-318
+RA   Osterhaus A.D.;
+RT   "Monoclonal antibodies to HiV-1 gp120, cell lines producing them and
+RT   corresponding epitope structures.";
+RL   Patent number EP0581353-A/6, 02-FEB-1994.
+RL   NEDERLANDEN STAAT (NL).
+XX
+DR   ENA; E02824.
+XX
+CC   IMGT/LIGM-DB annotation level: keyword level
+CC   
+CC   OS   (dog)
+CC   PN   JP 1991083579-A/1
+CC   PD   09-APR-1991
+CC   PF   25-AUG-1989 JP 1989219889
+CC   PI   EDA YASUYUKI, MAEDA HIROAKI, KURUMI KAZUHIKO, TOKIYOSHI YUKIO
+CC   PC   C12N5/26,A61K39/395,A61K39/395,C07K7/10,C07K15/12,C12N15/08,
+CC   PC   C12N15/13,
+CC   PC   C12P21/00,C12P21/08,G01N33/577,(C12P21/00,C12R1:185),
+CC   PC   (C12P21/00,C12R1:91);
+CC   CC   strandedness: Double;
+CC   CC   topology: Linear;
+CC   CC   hypothetical: No;
+CC   CC   anti-sense: No;
+CC   CC   *source: cell_type=Hybridoma;
+CC   CC   *source: cell_line=CM-S6;
+CC   CC   *source: clone=S6-61;
+CC   FH   Key             Location/Qualifiers
+CC   FH
+CC   FT   cds             1..318
+CC   FT                   /product="constant region of immunoglobulin
+CC   FT                   lambda chain"
+CC   FT   mat_peptide     1..315
+CC   FT                   /product="constant region of immunoglobulin
+CC   FT                   lambda chain"
+XX
+FH   Key             Location/Qualifiers (from EMBL)
+FH   
+FT   source          1..318
+FT                   /organism="Canis lupus familiaris"
+FT                   /mol_type="unassigned RNA"
+FT                   /db_xref="taxon:9615"
+XX
+SQ   Sequence 318 BP; 69 A; 115 C; 91 G; 43 T; 0 other;
+     cagcccaagg cctccccctc ggtcacactc ttcccgccct cctctgagga gctcggcgcc        60
+     aacaaggcca ccctggtgtg cctcatcagc gacttctacc ccagcggcgt gacggtggcc       120
+     tggaaggcaa gcggcagccc cgtcacccag ggcgtggaga ccaccaagcc ctccaagcag       180
+     agcaacaaca agtacgcggc cagcagctac ctgagcctga cgcctgacaa gtggaaatct       240
+     cacagcagct tcagctgcct ggtcacgcac gaggggagca ccgtggagaa gaaggtggcc       300
+     cccgcagagt gctcttag                                                     318
+//

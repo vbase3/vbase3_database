@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VBASE2 Legacy Universe — Curated Human & Mouse Antibody V-Genes</title>
+  <link rel="stylesheet" href="css/fonts.css">
+  <script src="js/d3.v7.min.js"></script>
+  <link rel="stylesheet" href="css/universe.css">
+  <style>
+    .vbase2-pill-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 9px;
+      border-radius: 9999px;
+      font-size: 11px;
+      font-weight: 600;
+      background: rgba(245, 158, 11, 0.15);
+      border: 1px solid rgba(245, 158, 11, 0.4);
+      color: #fbbf24;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating Restore Pills (Visible when panels are minimized) -->
+  <button id="restoreHeaderBtn" class="floating-panel-pill pill-top-left" style="display:none;" title="Restore Header & Controls">🌌 Controls</button>
+  <a id="floatingHomeBtn" href="index.html" class="floating-panel-pill pill-top-left-home" style="display:none;" title="Return to Portal Home">🏠 Portal Home</a>
+  <button id="restoreInspectorBtn" class="floating-panel-pill pill-top-right" title="Open Query Inspector">🔬 Query Inspector</button>
+  <button id="restoreLegendBtn" class="floating-panel-pill pill-bottom-left" style="display:none;" title="Restore Legend">📑 Legend</button>
+  <button id="restoreEvoBtn" class="floating-panel-pill pill-bottom-evo" style="display:none;" title="Restore Evolution Movie Bar">⏳ Evolution Movie</button>
+  <button id="restoreAlignmentBtn" class="floating-panel-pill pill-bottom-align" style="display:none;" title="Open Sequence Alignment Drawer">🧬 Alignment (<span id="alignCountBadge">0</span>)</button>
+
+  <!-- Sequence Alignment Drawer (IMGT 1..104 Canonical Gapped Alignment) -->
+  <div id="alignmentDrawer" class="collapsed">
+    <div class="alignment-header">
+      <div class="alignment-title-row">
+        <span class="alignment-title">🧬 IMGT Sequence Alignment</span>
+        <span id="alignModeBadge" class="align-mode-badge single">Single Sequence</span>
+        <span id="alignSelectionCount" style="font-size:11.5px; color:#94a3b8; margin-left:8px;">0 genes</span>
+      </div>
+      <div class="alignment-actions">
+        <button id="copyAlignmentFastaBtn" class="drawer-action-btn" title="Copy selection as FASTA">📋 Copy FASTA</button>
+        <button id="clearSelectionBtn" class="drawer-action-btn" title="Clear selection">🧹 Clear</button>
+        <button class="panel-minimize-btn" id="closeAlignmentBtn" title="Minimize Alignment Drawer">✕</button>
+      </div>
+    </div>
+    <div id="alignmentBody" class="alignment-body"></div>
+  </div>
+
+  <!-- Top Left Header & Controls -->
+  <div id="header">
+    <div class="title-row">
+      <div style="display:flex; align-items:center; gap:12px;">
+        <a href="index.html" title="Return to VBASE3 Central Hub" style="display:flex; align-items:center; text-decoration:none;">
+          <img src="images/vbase3_logo.jpg" alt="VBASE3 Logo" style="height:38px; width:auto; border-radius:6px; box-shadow:0 2px 10px rgba(0,0,0,0.5); object-fit:contain; background:#ffffff; padding:2px; cursor:pointer;" />
+        </a>
+        <div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <h1 style="margin:0;">🏛️ VBASE2 Mouse & Human Universe</h1>
+            <span class="vbase2-pill-badge">VBASE2 Legacy</span>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex; align-items:center; gap:8px;">
+        <a href="https://doi.org/10.5281/zenodo.22923344" target="_blank" rel="noopener" class="hub-back-btn" style="background:rgba(217,119,6,0.25); border:1px solid rgba(245,158,11,0.5); color:#fbbf24; text-decoration:none;" title="Download complete database tables and catalogs from Zenodo">📦 Zenodo Data ↗</a>
+      <a href="index.html" class="hub-back-btn" title="Return to Portal Home">🏠 Portal Home</a>
+        <button class="panel-minimize-btn" id="closeHeaderBtn" title="Minimize Controls (leaves small icon)">✕</button>
+      </div>
+    </div>
+    <div class="subtitle">Curated Human & Mouse Heavy and Light Chains (1,052 Genes) • <a href="https://doi.org/10.1016/0167-5699(84)90034-3" target="_blank" rel="noopener" style="color:#38bdf8; text-decoration:underline;">Renate Dildrop (1984) ↗</a> Murine Families • Native Rust PaCMAP</div>
+    
+    <!-- Unified VBASE3 Portals Bar -->
+    <div class="vbase-portal-nav" style="display:flex; gap:6px; margin-bottom:12px; background:rgba(15,23,42,0.85); border:1px solid #334155; border-radius:8px; padding:3px; flex-wrap:wrap;">
+      <a href="index.html" class="portal-nav-tab" style="flex:1; min-width:95px; text-align:center; padding:5px 8px; border-radius:6px; font-size:11.5px; font-weight:700; text-decoration:none; display:flex; align-items:center; justify-content:center; gap:4px; background:rgba(37,99,235,0.35); border:1px solid #3b82f6; color:#bfdbfe; transition:all 0.2s;" title="Return to Main Overview">
+        <span>🏠 Portal Home</span>
+      </a>
+      <a href="vgene_pacmap_universe.html" class="portal-nav-tab" style="flex:1; min-width:85px; text-align:center; padding:5px 8px; border-radius:6px; font-size:11.5px; font-weight:600; text-decoration:none; display:flex; align-items:center; justify-content:center; gap:4px; background:transparent; color:#94a3b8;">
+        <span>🛡️ BCRbase</span>
+      </a>
+      <a href="tcr_universe.html" class="portal-nav-tab" style="flex:1; min-width:85px; text-align:center; padding:5px 8px; border-radius:6px; font-size:11.5px; font-weight:600; text-decoration:none; display:flex; align-items:center; justify-content:center; gap:4px; background:transparent; color:#94a3b8;">
+        <span>🧬 TCRbase</span>
+      </a>
+      <a href="vbase2_universe.html" class="portal-nav-tab active" style="flex:1; min-width:85px; text-align:center; padding:5px 8px; border-radius:6px; font-size:11.5px; font-weight:700; text-decoration:none; display:flex; align-items:center; justify-content:center; gap:4px; background:#6366f1; color:#fff;">
+        <span>🌐 VBASE2</span>
+      </a>
+      <a href="rosetta_stone.html" class="portal-nav-tab" style="flex:1; min-width:95px; text-align:center; padding:5px 8px; border-radius:6px; font-size:11.5px; font-weight:600; text-decoration:none; display:flex; align-items:center; justify-content:center; gap:4px; background:rgba(245,158,11,0.15); border:1px solid rgba(245,158,11,0.3); color:#fbbf24;" title="Rosetta Stone Cross-Reference System">
+        <span>🏛️ Rosetta Stone</span>
+      </a>
+    </div>
+    
+    <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; margin-bottom:10px;">
+      <span id="wasmBadge" class="wasm-badge wasm-active" title="Dual Execution: Toggle between in-browser WASM and server Native Rust">
+        <span class="wasm-badge-pulse"></span>
+        <span id="engineBadgeText">⚡ Client WASM: Active (In-Browser)</span>
+      </span>
+
+      <div class="engine-switcher" title="Toggle Execution Engine">
+        <button id="btnEngineWasm" class="engine-btn active wasm" onclick="switchExecutionEngine('wasm')">⚡ Client WASM</button>
+        <button id="btnEngineNative" class="engine-btn" onclick="switchExecutionEngine('native')">🚀 Server Native Rust</button>
+        <button id="btnOpenBenchmark" class="engine-btn bench-btn" onclick="openBenchmarkModal()">📊 Benchmark</button>
+      </div>
+    </div>
+
+    <!-- Catalog Switcher -->
+    <div class="dataset-switcher-row" style="display:flex; align-items:center; gap:8px; margin-bottom:10px; flex-wrap:wrap;">
+      <span style="font-size:11.5px; color:#94a3b8; font-weight:600;">Reference Catalog:</span>
+      <select id="universeDatasetSelect" class="dataset-select" style="background:#0d1623; color:#f0f6fc; border:1px solid rgba(56,189,248,0.3); border-radius:6px; padding:4px 8px; font-size:11.5px; font-family:'Inter', sans-serif;">
+        <option value="vbase2_pacmap_data.json" selected>🏛️ VBASE2 Legacy Universe (Human & Mouse • 1,052 Genes)</option>
+        <option value="vgene_pacmap_data.json">🌌 VBASE3 Vertebrate Universe (Stratum 4 Manifold: 32 Benchmark Taxa • 2,048 Points)</option>
+        <option value="tcrbase_pacmap_data.json">🧬 TCRbase Universe (Comparative αβ & γδ TCR • 826 Genes)</option>
+      </select>
+      <a href="tcr_universe.html" style="font-size:11px; color:#34d399; text-decoration:none; margin-left:auto; display:inline-flex; align-items:center; gap:3px; font-weight:500;">TCRbase Portal ↗</a>
+    </div>
+    
+    <div class="kpi-row">
+      <div class="kpi-item"><span class="kpi-val" id="kpiGenes">1,052</span><span class="kpi-lbl">Curated V-Genes</span></div>
+      <div class="kpi-item"><span class="kpi-val" id="kpiSpecies">2</span><span class="kpi-lbl">Human & Mouse</span></div>
+      <div class="kpi-item"><span class="kpi-val">498 Hum / 554 Mus</span><span class="kpi-lbl">Species Breakdown</span></div>
+      <div class="kpi-item"><span class="kpi-val" id="kpiFamilies" style="color:#34d399;">-</span><span class="kpi-lbl">V-Gene Families</span></div>
+    </div>
+
+    <div class="controls">
+      <label style="font-size:12px; color:#94a3b8;">Hierarchy & Color: </label>
+      <select id="colorSelect">
+        <option value="hierarchical" selected>Hierarchical (Species & Chain → Family)</option>
+        <option value="vbase2_class">VBASE2 Functional Class (Class I / II / III)</option>
+        <option value="family">V-Gene Family (Renate Dildrop Murine & IMGT)</option>
+        <option value="clan">Ancestral Clan & Subgroup</option>
+        <option value="species">Species (Human vs Mouse)</option>
+        <option value="chain">Chain / Locus Type</option>
+      </select>
+      <input type="text" id="geneSearch" placeholder="🔍 Search gene (systematic ID, humIGHV..., musIGHV..., J558)..." />
+      <button id="resetZoom" title="Press 'F' key anytime to reset and center map">Reset View (F)</button>
+      <button id="toggleInspectorBtn" class="btn-primary">🔬 Query Inspector</button>
+    </div>
+    <div id="selectionBanner"></div>
+  </div>
+
+  <!-- Universal Antibody Sequence Inspector & Projection Engine Panel -->
+  <div id="inspectorPanel" class="collapsed">
+    <div class="inspector-header">
+      <div class="inspector-title">🔬 VBASE2 Sequence Projection Engine</div>
+      <button class="close-btn" id="closeInspectorBtn" title="Close Panel">✕</button>
+    </div>
+    <div class="inspector-desc">
+      Paste unknown human or mouse antibody sequence (DNA or Protein). The engine automatically identifies chain, Dildrop/IMGT family, closest VBASE2 germline, and projects the query directly onto the 2D VBASE2 manifold!
+    </div>
+    
+    <div style="font-size:11px; color:#64748b; margin-bottom:4px; font-weight:600;">QUICK TEST EXAMPLES (HUMAN & MOUSE):</div>
+    <div class="sample-pills">
+      <div class="sample-pill" onclick="loadSample('trastuzumab')">🔵 Trastuzumab VH [humIGHV021 / IGHV3]</div>
+      <div class="sample-pill" onclick="loadSample('pertuzumab')">🟣 Pertuzumab VL [humIGKV015 / IGKV1]</div>
+      <div class="sample-pill" onclick="loadSample('mouse_186')">🟢 Mouse B1-8 Germline [musIGHV029 / V186.2]</div>
+      <div class="sample-pill" onclick="loadSample('mouse_186_w33l')">⚡ Mouse B1-8 Matured [W33L High Affinity]</div>
+    </div>
+
+    <textarea id="seqTextarea" placeholder="Paste human or mouse antibody nucleotide or amino acid sequence..."></textarea>
+    
+    <div class="action-bar">
+      <button id="analyzeBtn" class="btn-primary" style="flex:1;">🚀 Analyze & Project onto VBASE2</button>
+      <button id="clearBtn" style="background:#21262d;">Clear</button>
+    </div>
+
+    <!-- Live Analysis & Manifold Locator Card -->
+    <div id="analysisHUD">
+      <div class="hud-title-row">
+        <div class="hud-beacon-alert">
+          <span style="display:inline-block; width:9px; height:9px; border-radius:50%; background:#34d399; box-shadow:0 0 8px #34d399;"></span>
+          VBASE2 Manifold Coordinates Projected!
+        </div>
+        <div id="hudCoordBadge" style="font-family:'Fira Code', monospace; font-size:11px; color:#38bdf8;">(x: 0, y: 0)</div>
+      </div>
+
+      <div style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:10px;">
+        <span id="hudSpeciesBadge" class="badge badge-species">Species: -</span>
+        <span id="hudChainBadge" class="badge badge-chain">Chain: -</span>
+        <span id="hudFamilyBadge" class="badge badge-family">Family: -</span>
+        <span id="hudClanBadge" class="badge badge-clan">Clan: -</span>
+        <span id="hudShmBadge" class="badge badge-low">0 SHM</span>
+      </div>
+
+      <div class="hud-grid">
+        <div class="hud-box">
+          <div class="hud-label">Closest VBASE2 V-Gene</div>
+          <div class="hud-value" id="hudVGene" style="color:#58a6ff;">-</div>
+          <div style="font-size:10.5px; color:#94a3b8; margin-top:2px;" id="hudVIdent">-</div>
+        </div>
+        <div class="hud-box">
+          <div class="hud-label">Diversity Element (D)</div>
+          <div class="hud-value" id="hudDGene" style="color:#f59e0b;">-</div>
+          <div style="font-size:10.5px; color:#94a3b8; margin-top:2px;" id="hudDFrame">-</div>
+        </div>
+        <div class="hud-box">
+          <div class="hud-label">Joining Element (J) & Boundary</div>
+          <div class="hud-value" id="hudJGene" style="color:#34d399;">-</div>
+          <div style="font-size:10.5px; color:#94a3b8; margin-top:2px;" id="hudJBoundary">Canonical Boundary Verified</div>
+        </div>
+        <div class="hud-box">
+          <div class="hud-label">Junctional CDR3</div>
+          <div class="hud-value" id="hudCdr3" style="color:#fb7185; font-family:'Fira Code', monospace; font-size:12px;">-</div>
+          <div style="font-size:10.5px; color:#94a3b8; margin-top:2px;" id="hudCdr3Len">Length: 0</div>
+        </div>
+      </div>
+
+      <!-- Domain Architecture Ribbon -->
+      <div style="font-size:11px; color:#94a3b8; font-weight:600; margin-bottom:4px;">DOMAIN ARCHITECTURE & JUNCTIONS:</div>
+      <div id="hudRibbon" class="ribbon-frame"></div>
+    </div>
+  </div>
+
+  <!-- Bottom Left Multi-Select Legend Panel -->
+  <div id="legend" class="legend"></div>
+
+  <!-- Tooltip -->
+  <div id="tooltip"></div>
+
+  <!-- Main Canvas Container -->
+  <div id="canvas-container"></div>
+
+  <!-- Dual Execution Live Benchmark Modal -->
+  <div id="benchmarkModal" class="benchmark-modal-overlay" style="display:none;" onclick="if(event.target===this) closeBenchmarkModal();">
+    <div class="benchmark-modal-card">
+      <div class="benchmark-modal-header">
+        <div class="benchmark-modal-title">
+          <span>📊 Live Performance Benchmark: Client WASM vs. Server Native Rust</span>
+        </div>
+        <button class="benchmark-close-btn" onclick="closeBenchmarkModal()">✕</button>
+      </div>
+      <div class="benchmark-modal-desc">
+        Direct side-by-side throughput and latency comparison between single-threaded in-browser WebAssembly (V8 engine) and native multi-threaded Rust compiled for Apple M4 Pro (16-Core Rayon SIMD).
+      </div>
+
+      <!-- Release Note: Benchmark disabled in the WASM-only version -->
+      <div style="background:rgba(245, 158, 11, 0.1); border:1px solid rgba(245, 158, 11, 0.3); border-radius:8px; padding:10px 14px; margin-bottom:14px; font-size:11.5px; color:#fde68a; display:flex; align-items:flex-start; gap:9px; line-height:1.45;">
+        <span style="font-size:14px; line-height:1; flex-shrink:0;">ℹ️</span>
+        <div>
+          <strong>Release Note: Benchmark disabled in the WASM only version.</strong> When running the web portals solely in a browser without the local native Rust daemon, live server benchmarking is disabled. Canonical benchmark metrics measured on an Apple M4 Pro (16-Core Rayon SIMD vs. Client WASM) are displayed below and documented in Manuscript Appendix Figure App 11.
+        </div>
+      </div>
+
+      <div class="benchmark-metrics-grid">
+        <div class="metric-card">
+          <div class="metric-title">⚡ Client WebAssembly</div>
+          <div class="metric-val wasm" id="benchWasmThroughput">~18.5 seq/s</div>
+          <div class="metric-sub" id="benchWasmLatency">Avg Latency: ~54.0 ms</div>
+          <div class="metric-sub">100% In-Browser • Zero Network Traffic</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-title">🚀 Server Native Rust</div>
+          <div class="metric-val native" id="benchNativeThroughput">8,989 queries/s</div>
+          <div class="metric-sub" id="benchNativeLatency">Avg Latency: 0.11 ms (111 µs)</div>
+          <div class="metric-sub">Apple M4 Pro • 16-Core Rayon Parallelism</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-title">🔥 Native Speedup</div>
+          <div class="metric-val speedup" id="benchSpeedupFactor">485x FASTER</div>
+          <div class="metric-sub">Sub-millisecond high-throughput screening</div>
+          <div class="metric-sub">18.9M pairwise germline comps/sec</div>
+        </div>
+      </div>
+
+      <div class="benchmark-breakdown-box">
+        <div style="font-weight:600; color:#f0f6fc; margin-bottom:6px;">📈 Detailed Component Breakdown</div>
+        <table class="benchmark-table">
+          <thead>
+            <tr>
+              <th>Operation</th>
+              <th>Client WASM (In-Browser)</th>
+              <th>Server Native Rust (M4 Pro)</th>
+              <th>Speedup</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Sequence Landmark Detection & Germline Alignment</strong></td>
+              <td id="benchAlignWasm">~18.5 seqs / sec (54 ms)</td>
+              <td id="benchAlignNative"><strong>8,989 queries / sec</strong> (0.11 ms)</td>
+              <td style="color:#34d399; font-weight:700;" id="benchAlignSpeedup">🚀 485x</td>
+            </tr>
+            <tr>
+              <td><strong>All-vs-All Germline Pairwise Comparisons</strong></td>
+              <td>~38,900 comps / sec</td>
+              <td><strong>18,905,000 comps / sec</strong></td>
+              <td style="color:#34d399; font-weight:700;">🚀 485x</td>
+            </tr>
+            <tr>
+              <td><strong>PaCMAP 2D Projection (100 Seqs)</strong></td>
+              <td id="benchPacmapWasm">~13.9 ms (~7,180 seqs/s)</td>
+              <td id="benchPacmapNative"><strong>5.3 ms</strong> (~18,750 seqs/s)</td>
+              <td style="color:#34d399; font-weight:700;" id="benchPacmapSpeedup">🚀 2.6x</td>
+            </tr>
+            <tr>
+              <td><strong>Execution Architecture</strong></td>
+              <td>Single-threaded WebAssembly in Web Worker/V8</td>
+              <td>16-thread Rayon Work-Stealing + NEON SIMD</td>
+              <td style="color:#38bdf8;">Hardware-Native</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-top:14px; flex-wrap:wrap; gap:10px;">
+        <div style="font-size:11.5px; color:#94a3b8;" id="benchStatusText">
+          Ready to run fresh live comparison on your machine.
+        </div>
+        <div style="display:flex; gap:8px;">
+          <button id="runLiveBenchmarkBtn" class="engine-btn bench-btn" style="padding:6px 14px; font-size:12px;" onclick="runSideBySideBenchmark()">⚡ Run Fresh Live Benchmark</button>
+          <button class="engine-btn" style="padding:6px 14px; font-size:12px;" onclick="closeBenchmarkModal()">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <svg id="canvas" width="100%" height="100%"></svg>
+
+  <!-- Configure dataset to load VBASE2 data -->
+  <script>
+    window.DATASET_FILE = "vbase2_pacmap_data.json";
+  </script>
+  <!-- Load Main Logic as ES Module -->
+  <script type="module" src="js/universe.js"></script>
+</body>
+</html>

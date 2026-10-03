@@ -1,0 +1,71 @@
+ID   M23325; SV 1; linear; gDNA; STD; HUM; 125 BP.
+XX
+AC   M23325;
+XX
+DT   15-MAY-1995 (Rel. 199520-1, arrived in LIGM-DB)
+DT   17-JAN-2013 (Rel. 201303-4, Last updated, Version 15)
+XX
+DE   Homo sapiens germline T cell receptor delta chain gene, D1 region.
+XX
+KW   antigen receptor; Immunoglobulin superfamily (IgSF); T cell receptor (TR);
+KW   TR-Delta-TRD; diversity; IMGT reference sequence; regular; gDNA; germline;
+KW   functional; D-gene.
+XX
+OS   Homo sapiens (human)
+OC   cellular organisms; Eukaryota; Opisthokonta; Metazoa; Eumetazoa; Bilateria;
+OC   Deuterostomia; Chordata; Craniata; Vertebrata; Gnathostomata; Teleostomi;
+OC   Euteleostomi; Sarcopterygii; Dipnotetrapodomorpha; Tetrapoda; Amniota;
+OC   Mammalia; Theria; Eutheria; Boreoeutheria; Euarchontoglires; Primates;
+OC   Haplorrhini; Simiiformes; Catarrhini; Hominoidea; Hominidae; Homininae;
+OC   Homo; Homo sapiens.
+XX
+RN   [1]
+RP   1-125
+RA   Lin W.L., Kuzmak J., Pappas J., Chernajovsky Y., Platsoucas C.D.,
+RA   Oleszak E.L.;
+RT   "Amplification of T-cell receptor alpha- and beta-chain transcripts from
+RT   mouse spleen lymphocytes by the nonpalindromic adaptor-polymerase chain
+RT   reaction (NPA-PCR)";
+RL   Unpublished.
+XX
+DR   EMBL-ALIGN; ALIGN_000320.
+DR   ENA; M23325.
+DR   GDB; 9954213.
+XX
+CC   IMGT/LIGM-DB annotation level: by annotators
+CC   
+CC   On Sep 21, 1994 this sequence version replaced gi:340876.
+XX
+FH   Key                 Location/Qualifiers
+FH   
+FT   D-GENE              1..125
+FT                       /cell_type="mononuclear"
+FT                       /db_xref="taxon:9606"
+FT                       /functional
+FT                       /IMGT_allele="TRDD1*01"
+FT                       /IMGT_gene="TRDD1"
+FT                       /IMGT_map="14q11.2"
+FT                       /mol_type="genomic DNA"
+FT                       /organism="Homo sapiens"
+FT                       /tissue_type="peripheral blood"
+FT   5'UTR               1..53
+FT   D-GENE-UNIT         26..100
+FT   5'D-RS              26..53
+FT   5'D-NONAMER         26..34
+FT   5'D-SPACER          35..46
+FT   5'D-HEPTAMER        47..53
+FT   D-REGION            54..61
+FT                       /translation="EI"
+FT                       /IMGT_allele="TRDD1*01"
+FT                       /IMGT_gene="TRDD1"
+FT   3'UTR               62..125
+FT   3'D-RS              62..100
+FT   3'D-HEPTAMER        62..68
+FT   3'D-SPACER          69..91
+FT   3'D-NONAMER         92..100
+XX
+SQ   Sequence 125 BP; 49 A; 25 C; 12 G; 39 T; 0 other;
+     tactccatgt tcaaatagat atagtatttt ttcacagtaa attccccaaa gtggaaatag        60
+     tcactcaaac gaatactttt actcttttga cattaaccaa atggcttcca ataaaaatca       120
+     aacaa                                                                   125
+//

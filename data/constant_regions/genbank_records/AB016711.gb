@@ -1,0 +1,66 @@
+LOCUS       AB016711                1133 bp    mRNA    linear   MAM 25-JUL-2016
+DEFINITION  Felis catus mRNA for IgG1 heavy chain, partial cds.
+ACCESSION   AB016711
+VERSION     AB016711.1
+KEYWORDS    IgG1 heavy chain.
+SOURCE      Felis catus (domestic cat)
+  ORGANISM  Felis catus
+            Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi;
+            Mammalia; Eutheria; Laurasiatheria; Carnivora; Feliformia; Felidae;
+            Felinae; Felis.
+REFERENCE   1
+  AUTHORS   Kanai,T.H., Ueda,S. and Nakamura,T.
+  TITLE     Identification of two allelic IgG1 C(H) coding regions (Cgamma1) of
+            cat
+  JOURNAL   Vet. Immunol. Immunopathol. 73 (1), 53-62 (2000)
+   PUBMED   10678398
+REFERENCE   2  (bases 1 to 1133)
+  AUTHORS   Hosokawa,T., Ueda,S. and Nakamura,T.
+  TITLE     Direct Submission
+  JOURNAL   Submitted (02-AUG-1998) Tomoko Hosokawa, Nippon Institute for
+            Biological Science, Research Department; Shinmachi 9-2221-1, Ome,
+            Tokyo 198-0024, Japan (E-mail:hosotomo@belier.co.jp,
+            Tel:+81-428-33-1044, Fax:+81-428-32-0670)
+FEATURES             Location/Qualifiers
+     source          1..1133
+                     /organism="Felis catus"
+                     /mol_type="mRNA"
+                     /db_xref="taxon:9685"
+                     /note="Domestic short hair cat"
+     CDS             <1..1008
+                     /note="C gammer1 allele-b"
+                     /codon_start=1
+                     /product="IgG1 heavy chain"
+                     /protein_id="BAA32230.1"
+                     /db_xref="IMGT/LIGM:AB016711"
+                     /translation="ASTTAPSVFPLAPSCGTTSGATVALACLVLGYFPEPVTVSWNSG
+                     ALTSGVHTFPAVLQASGLYSLSSMVTVPSSRWLSDTFTCNVAHPPSNTKVDKTVRKTD
+                     HPPGPKPCDCPKCPPPEMLGGPSIFIFPPKPKDTLSISRTPEVTCLVVDLGPDDSDVQ
+                     ITWFVDNTQVYTAKTSPREEQFNSTYRVVSVLPILHQDWLKGKEFKCKVNSKSLPSPI
+                     ERTISKDKGQPHEPQVYVLPPAQEELSRNKVSVTCLIEGFYPSDIAVEWEITGQPEPE
+                     NNYRTTPPQLDSDGTYFLYSRLSVDRSRWQRGNTYTCSVSHEALHSHHTQKSLTQSPG
+                     K"
+     regulatory      1099..1104
+                     /regulatory_class="polyA_signal_sequence"
+ORIGIN      
+        1 gcctccacca cggccccatc ggtgttccca ctggccccca gctgcgggac cacatctggc
+       61 gccaccgtgg ccctggcctg cctggtgtta ggctacttcc ctgagccggt gaccgtgtcc
+      121 tggaactccg gcgccctgac cagcggtgtg cacaccttcc cggccgtcct gcaggcctcg
+      181 gggctgtact ctctcagcag catggtgaca gtgccctcca gcaggtggct cagtgacacc
+      241 ttcacctgca acgtggccca cccgcccagc aacaccaagg tggacaagac cgtgcgcaaa
+      301 acagaccacc caccgggacc caaaccctgc gactgtccca aatgcccacc ccctgagatg
+      361 cttggaggac cgtccatctt catctttccc ccaaaaccca aggacaccct ctcgatttcc
+      421 cggacgcccg aggtcacatg cttggtggtg gacttgggcc cagatgactc cgatgtccag
+      481 atcacatggt ttgtggataa cacccaggtg tacacagcca agacgagtcc gcgtgaggag
+      541 cagttcaaca gcacctaccg tgtggtcagt gtcctcccca tcctgcacca ggactggctc
+      601 aaggggaagg agttcaagtg caaggtcaac agcaaatccc tcccctcccc catcgagagg
+      661 accatctcca aggacaaagg acagccccac gagccccagg tgtacgtcct gcctccagcc
+      721 caggaggagc tcagcaggaa caaagtcagt gtgacctgcc tgatcgaagg cttctacccg
+      781 tctgacattg ccgtcgagtg ggagatcacc ggacagccgg agccagagaa caactaccgg
+      841 acgaccccgc cccagctgga cagcgacggg acctacttcc tgtacagcag gctctcggtg
+      901 gacaggtccc gctggcagag gggaaacacc tacacctgct cggtgtcaca cgaagctctg
+      961 cacagccacc acacacagaa atccctcacc cagtctccgg gtaaatgagc agcgcgccca
+     1021 gccccccagg aggcccccgc gggctctgag cgcccacccc tgtgtacatc ccccaccccg
+     1081 ggcaggtacc ctgcgtgaaa taaagcaccc agcactgccc tgggacctag gac
+//
+

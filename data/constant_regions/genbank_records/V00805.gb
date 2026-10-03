@@ -1,0 +1,58 @@
+ID   V00805; SV 1; linear; gDNA; STD; MUS; 90 BP.
+XX
+AC   V00805;
+XX
+DT   15-MAY-1995 (Rel. 199520-1, arrived in LIGM-DB)
+DT   18-JAN-2013 (Rel. 201303-5, Last updated, Version 11)
+XX
+DE   Part of the germ line murine gene for kappa-immunoglobulin (third exon,
+DE   J-region).
+XX
+KW   antigen receptor; Immunoglobulin superfamily (IgSF); immunoglobulin (IG);
+KW   IG-Light; IG-Light-Kappa-IGK; joining; regular; gDNA; germline; functional;
+KW   J-gene.
+XX
+OS   Mus musculus (house mouse)
+OC   Sarcopterygii; Dipnotetrapodomorpha; Tetrapoda; Amniota; Mammalia; Theria;
+OC   Eutheria; Boreoeutheria; Euarchontoglires; Glires; Rodentia; Myomorpha;
+OC   Muroidea; Muridae; Murinae; Mus; Mus; Mus musculus.
+XX
+RN   [1]
+RC   Contact ncbi-contacts@bcm.tmc.edu for more information.
+RP   1-90
+RA   Rat Genome Sequencing Consortium;
+RT   ;
+RL   Submitted (11-JUL-2003) to the INSDC.
+RL   Human Genome Sequencing Center, Department of Molecular and Human Genetics,
+RL   Baylor College of Medicine, One Baylor Plaza, Houston, TX 77030, USA
+XX
+DR   ENA; V00805.
+XX
+CC   IMGT/LIGM-DB annotation level: by annotators
+CC   
+CC   KST MMU.IGKAP.GL.2
+XX
+FH   Key                 Location/Qualifiers
+FH   
+FT   J-GENE              <1..90
+FT                       /partial
+FT                       /db_xref="taxon:10090"
+FT                       /IMGT_allele="IGKJ1*01"
+FT                       /IMGT_gene="IGKJ1"
+FT                       /mol_type="genomic DNA"
+FT                       /organism="Mus musculus"
+FT   5'UTR               1..12
+FT   J-HEPTAMER          13..19
+FT   J-REGION            20..57
+FT                       /codon_start=2
+FT                       /translation="WTFGGGTKLEIK"
+FT                       /IMGT_allele="IGKJ1*01"
+FT                       /IMGT_gene="IGKJ1"
+FT   J-PHE               27..29
+FT   DONOR-SPLICE        57..59
+FT   3'UTR               58..90
+XX
+SQ   Sequence 90 BP; 23 A; 19 C; 25 G; 23 T; 0 other;
+     gtggagtact accactgtgg tggacgttcg gtggaggcac caagctggaa atcaaacgta        60
+     agtagaatcc aaagtctctt tcttccgttg                                         90
+//

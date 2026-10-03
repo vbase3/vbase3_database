@@ -1,0 +1,163 @@
+ID   J00220; SV 1; linear; gDNA; STD; HUM; 2533 BP.
+XX
+AC   J00220;
+XX
+DT   15-MAY-1995 (Rel. 199520-1, arrived in LIGM-DB)
+DT   06-FEB-2014 (Rel. 201406-4, Last updated, Version 39)
+XX
+DE   Homo sapiens immunoglobulin alpha-1 heavy chain constant region (IGHA1)
+DE   gene, partial cds.
+XX
+KW   antigen receptor; Immunoglobulin superfamily (IgSF); immunoglobulin (IG);
+KW   IG-Heavy; IG-Heavy-Alpha; constant; IG-Heavy-Alpha-1-IGHA1;
+KW   IMGT reference sequence; regular; gDNA; undefined; functional; C-gene.
+XX
+OS   Homo sapiens (human)
+OC   cellular organisms; Eukaryota; Opisthokonta; Metazoa; Eumetazoa; Bilateria;
+OC   Deuterostomia; Chordata; Craniata; Vertebrata; Gnathostomata; Teleostomi;
+OC   Euteleostomi; Sarcopterygii; Dipnotetrapodomorpha; Tetrapoda; Amniota;
+OC   Mammalia; Theria; Eutheria; Boreoeutheria; Euarchontoglires; Primates;
+OC   Haplorrhini; Simiiformes; Catarrhini; Hominoidea; Hominidae; Homininae;
+OC   Homo; Homo sapiens.
+XX
+RN   [1]
+RP   1-2533
+RX   DOI; 10.1016/0092-8674(82)90183-0.
+RX   PUBMED; 6811139.
+RA   Takahashi N., Ueda S., Obata M., Nikaido T., Nakai S., Honjo T.;
+RT   "Structure of human immunoglobulin gamma genes: implications for evolution
+RT   of a gene family";
+RL   Cell 29(2):671-679(1982).
+XX
+DR   ENA; J00220.
+DR   GDB; 9888507.
+XX
+CC   IMGT/LIGM-DB annotation level: by annotators
+CC   
+CC   This sequence is part of a multigene region containing the
+CC   immunoglobulin heavy chain gamma-3, gamma-1, pseudo-epsilon, and
+CC   alpha-1 genes.
+XX
+FH   Key                 Location/Qualifiers
+FH   
+FT   C-GENE              1..>2533
+FT                       /partial
+FT                       /db_xref="taxon:9606"
+FT                       /functional
+FT                       /IMGT_allele="IGHA1*01"
+FT                       /IMGT_clone="cosmid Ig13; Ig-gamma3-122"
+FT                       /IMGT_gene="IGHA1"
+FT                       /IMGT_map="14q32.33"
+FT                       /mol_type="genomic DNA"
+FT                       /organism="Homo sapiens"
+FT                       /tissue_type="placenta; liver"
+FT   5'UTR               1..141
+FT   ACCEPTOR-SPLICE     139..143
+FT   C-GENE-UNIT         142..>1638
+FT                       /partial
+FT                       /db_xref="GDB:119332"
+FT                       /db_xref="GOA:P01876"
+FT                       /db_xref="HGNC:5478"
+FT                       /db_xref="InterPro:IPR003006"
+FT                       /db_xref="InterPro:IPR003597"
+FT                       /db_xref="InterPro:IPR007110"
+FT                       /db_xref="InterPro:IPR013783"
+FT                       /db_xref="PDB:1IGA"
+FT                       /db_xref="PDB:1OW0"
+FT                       /db_xref="PDB:2QEJ"
+FT                       /db_xref="UniProtKB/Swiss-Prot:P01876"
+FT                       /protein_id="AAC82528.1"
+FT   CH1                 142..447
+FT                       /codon_start=3
+FT                       /translation="SPTSPKVFPLSLCSTQPDGNVVIACLVQGFFPQEPLSVTWS
+FT                       ESGQGVTARNFPPSQDASGDLYTTSSQLTLPATQCLAGKSVTCHVKHYTNPSQDV
+FT                       TVPCP"
+FT   DONOR-SPLICE        447..449
+FT   INTRON              448..661
+FT   ACCEPTOR-SPLICE     659..663
+FT   H-CH2               662..1021
+FT                       /codon_start=3
+FT                       /translation="PSTPPTPSPSTPPTPSPSCCHPRLSLHRPALEDLLLGSEAN
+FT                       LTCTLTGLRDASGVTFTWTPSSGKSAVQGPPERDLCGCYSVSSVLPGCAEPWNHG
+FT                       KTFTCTAAYPESKTPLTATLSKS"
+FT                       /splice-expected-nt="g"
+FT                       /splice-expectedcodon="gtt [V]"
+FT                       /splicing-frame="sf1"
+FT   H                   662..717
+FT                       /codon_start=3
+FT                       /translation="PSTPPTPSPSTPPTPSPS"
+FT   CH2                 718..1021
+FT                       /translation="CCHPRLSLHRPALEDLLLGSEANLTCTLTGLRDASGVTFTW
+FT                       TPSSGKSAVQGPPERDLCGCYSVSSVLPGCAEPWNHGKTFTCTAAYPESKTPLTA
+FT                       TLSKS"
+FT   DONOR-SPLICE        1021..1023
+FT   INTRON              1022..1243
+FT   ACCEPTOR-SPLICE     1241..1245
+FT   CH3-CHS             1244..1635
+FT                       /codon_start=3
+FT                       /translation="NTFRPEVHLLPPPSEELALNELVTLTCLARGFSPKDVLVRW
+FT                       LQGSQELPREKYLTWASRQEPSQGTTTFAVTSILRVAAEDWKKGDTFSCMVGHEA
+FT                       LPLAFTQKTIDRLAGKPTHVNVSVVMAEVDGTCY"
+FT                       /splice-expected-nt="g"
+FT                       /splice-expectedcodon="gga [G]"
+FT                       /splicing-frame="sf1"
+FT   CH3                 1244..1575
+FT                       /codon_start=3
+FT                       /translation="NTFRPEVHLLPPPSEELALNELVTLTCLARGFSPKDVLVRW
+FT                       LQGSQELPREKYLTWASRQEPSQGTTTFAVTSILRVAAEDWKKGDTFSCMVGHEA
+FT                       LPLAFTQKTIDRLA"
+FT   CHS                 1576..1635
+FT                       /translation="GKPTHVNVSVVMAEVDGTCY"
+FT                       /IMGT_note="For complete translation nucleotide G at 
+FT                       position 1576 has been included in CH-S"
+FT   INT-DONOR-SPLICE    1576..1578
+FT   INTRON              1636..>2533
+FT                       /partial
+FT   STOP-CODON          1636..1638
+FT   POLYA_SIGNAL        1663..1668
+XX
+SQ   Sequence 2533 BP; 490 A; 866 C; 753 G; 424 T; 0 other;
+     ggtccaactg caggcctgtg gtgcaggagc tgtgtgacca tggggctgtc accaggcctc        60
+     tctgtgctgg gttcctccag tatagaggag aggcagtata gaggagaggg ccgcgtcctc       120
+     acagtgcatt ctgtgttcca gcatccccga ccagccccaa ggtcttcccg ctgagcctct       180
+     gcagcaccca gccagatggg aacgtggtca tcgcctgcct ggtccagggc ttcttccccc       240
+     aggagccact cagtgtgacc tggagcgaaa gcggacaggg cgtgaccgcc agaaacttcc       300
+     cacccagcca ggatgcctcc ggggacctgt acaccacgag cagccagctg accctgccgg       360
+     ccacacagtg cctagccggc aagtccgtga catgccacgt gaagcactac acgaatccca       420
+     gccaggatgt gactgtgccc tgcccaggtc agagggcagg ctggggagtg gggcggggcc       480
+     accccgtcgt gccctgacac tgcgcctgca cccgtgttcc ccacagggag ccgccccttc       540
+     actcacacca gagtggaccc cgggccgagc cccaggaggt ggtggtggac aggccaggag       600
+     gggcgaggcg ggggcatggg gaagtatgtg ctgaccagct caggccatct ctccactcca       660
+     gttccctcaa ctccacctac cccatctccc tcaactccac ctaccccatc tccctcatgc       720
+     tgccaccccc gactgtcact gcaccgaccg gccctcgagg acctgctctt aggttcagaa       780
+     gcgaacctca cgtgcacact gaccggcctg agagatgcct caggtgtcac cttcacctgg       840
+     acgccctcaa gtgggaagag cgctgttcaa ggaccacctg agcgtgacct ctgtggctgc       900
+     tacagcgtgt ccagtgtcct gccgggctgt gccgagccat ggaaccatgg gaagaccttc       960
+     acttgcactg ctgcctaccc cgagtccaag accccgctaa ccgccaccct ctcaaaatcc      1020
+     ggtgggtcca gaccctgctc ggggccctgc tcagtgctct ggtttgcaaa gcatattcct      1080
+     ggcctgcctc ctccctccca atcctgggct ccagtgctca tgccaagtac acagggaaac      1140
+     tgaggcaggc tgaggggcca ggacacagcc cggggtgccc accagagcag aggggctctc      1200
+     tcatcccctg cccagccccc tgacctggct ctctaccctc caggaaacac attccggccc      1260
+     gaggtccacc tgctgccgcc gccgtcggag gagctggccc tgaacgagct ggtgacgctg      1320
+     acgtgcctgg cacgcggctt cagccccaag gacgtgctgg ttcgctggct gcaggggtca      1380
+     caggagctgc cccgcgagaa gtacctgact tgggcatccc ggcaggagcc cagccagggc      1440
+     accaccacct tcgctgtgac cagcatactg cgcgtggcag ccgaggactg gaagaagggg      1500
+     gacaccttct cctgcatggt gggccacgag gccctgccgc tggccttcac acagaagacc      1560
+     atcgaccgct tggcgggtaa acccacccat gtcaatgtgt ctgttgtcat ggcggaggtg      1620
+     gacggcacct gctactgagc cgcccgcctg tccccacccc tgaataaact ccatgctccc      1680
+     ccaagcagcc ccacgcttcc atccggcgcc tgtctgtcca tcctcagggt ctcagcactt      1740
+     gggaaagggc cagggcatgg acagggaaga ataccccctg ccctgagcct cggggggccc      1800
+     ctggcacccc catgagactt tccaccctgg tgtgagtgtg agttgtgagt gtgagagtgt      1860
+     gtggtgcagg aggcctcgct ggtgtgagat cttaggtctg ccaaggcagg cacagcccag      1920
+     gatgggttct gagagacgca catgccccgg acagttctga gtgagcagtg gcatggccgt      1980
+     ttgtccctga gagagccgcc tctggctgta gctgggaggg aatagggagg gtaaaaggag      2040
+     caggctagcc aagaaaggcg caggtagtgg caggagcggc gagggagtga ggggctggac      2100
+     tccagggccc cactgggagg acaagctcca ggagggcccc accaccctag tgggtgggcc      2160
+     tcaggacgtc ccactgacgc atgcaggaag gggcacctcc ccttaaccac actgctctgt      2220
+     acggggcacg tgggcacagg tgcacactca cactcacata tatgcctgag ccctgcagga      2280
+     gcggaacgtt cacagcccag acccagttcc agaaaagcca ggggagtccc ctcccaagcc      2340
+     cccaagctca gcctgctccc ctaggcccct ctggcttccc tgtgtttcca ctgtgcacag      2400
+     atcaggcacc aactccacag acccctccca ggcagcccct gctccctgcc tggccaagtc      2460
+     tcccatccct tcctaagccc aactaggacc caaagcatag acagggaggg gccacgtggg      2520
+     gtggcatcag aag                                                         2533
+//

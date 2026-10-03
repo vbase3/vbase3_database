@@ -1,0 +1,265 @@
+ID   J00443; SV 1; linear; gDNA; STD; MUS; 2472 BP.
+XX
+AC   J00443;
+XX
+DT   15-MAY-1995 (Rel. 199520-1, arrived in LIGM-DB)
+DT   10-OCT-2019 (Rel. 201941-4, Last updated, Version 18)
+XX
+DE   Mouse Ig germline mu-chain C-region (D-J-C), exons 1 to 4.
+XX
+KW   antigen receptor; Immunoglobulin superfamily (IgSF); immunoglobulin (IG);
+KW   IG-Heavy; IG-Heavy-Mu; constant; IMGT reference sequence; regular; gDNA;
+KW   undefined; functional; C-gene.
+XX
+OS   Mus musculus (house mouse)
+OC   Sarcopterygii; Dipnotetrapodomorpha; Tetrapoda; Amniota; Mammalia; Theria;
+OC   Eutheria; Boreoeutheria; Euarchontoglires; Glires; Rodentia; Myomorpha;
+OC   Muroidea; Muridae; Murinae; Mus; Mus; Mus musculus.
+XX
+RN   [1]
+RP   1821-2088
+RX   DOI; 10.1016/0092-8674(80)90616-9.
+RX   PUBMED; 6771019.
+RA   Rogers J., Early P., Carter C., Calame K., Bond M., Hood L., Wall R.;
+RT   "Two mRNAs with different 3' ends encode membrane-bound and secreted forms
+RT   of immunoglobulin mu chain";
+RL   Cell 20(2):303-312(1980).
+XX
+RN   [2]
+RP   1880-2159
+RX   DOI; 10.1016/0092-8674(80)90617-0.
+RX   PUBMED; 6771020.
+RA   Early P., Rogers J., Davis M., Calame K., Bond M., Wall R., Hood L.;
+RT   "Two mRNAs can be produced from a single immunoglobulin mu gene by
+RT   alternative RNA processing pathways";
+RL   Cell 20(2):313-319(1980).
+XX
+RN   [3]
+RX   PUBMED; 8645581.
+RA   Okamoto S., Yoshikawa K., Obata Y., Shibuya M., Aoki S., Yoshida J.,
+RA   Takahashi T.;
+RT   "Monoclonal antibody against the fusion junction of a deletion-mutant
+RT   epidermal growth factor receptor";
+RL   Br. J. Cancer 73(11):1366-1372(1996).
+XX
+RN   [4]
+RP   745-817
+RX   DOI; 10.1038/284452a0.
+RX   PUBMED; 6767197.
+RA   Calame K., Rogers J., Early P., Davis M., Livant D., Wall R., Hood L.;
+RT   "Mouse Cmu heavy chain immunoglobulin gene segment contains three
+RT   intervening sequences separating domains";
+RL   Nature 284(5755):452-455(1980).
+XX
+RN   [4]
+RP   1855-1990
+RX   DOI; 10.1038/284452a0.
+RX   PUBMED; 6767197.
+RA   Calame K., Rogers J., Early P., Davis M., Livant D., Wall R., Hood L.;
+RT   "Mouse Cmu heavy chain immunoglobulin gene segment contains three
+RT   intervening sequences separating domains";
+RL   Nature 284(5755):452-455(1980).
+XX
+RN   [5]
+RP   1826-2066
+RX   PUBMED; 6776490.
+RA   Matthyssens G., Rabbitts T.H.;
+RT   "The sequence at the 3' terminus of mouse immunoglobulin secreted mu chain
+RT   messenger RNA determined from cloned cDNA";
+RL   Nucleic Acids Res. 8(4):703-713(1980).
+XX
+RN   [6]
+RP   93-2259
+RX   DOI; 10.1093/nar/8.17.3933.
+RX   PUBMED; 6255422.
+RA   Kawakami T., Takahashi N., Honjo T.;
+RT   "Complete nucleotide sequence of mouse immunoglobulin mu gene and
+RT   comparison with other immunoglobulin heavy chain genes";
+RL   Nucleic Acids Res. 8(17):3933-3945(1980).
+XX
+RN   [7]
+RP   55-452
+RX   DOI; 10.1073/pnas.77.6.3630.
+RX   PUBMED; 6251474.
+RA   Bernard O., Gough N.M.;
+RT   "Nucleotide sequence of immunoglobulin heavy chain joining segments between
+RT   translocated VH and mu constant regions genes";
+RL   Proc. Natl. Acad. Sci. U.S.A. 77(6):3630-3634(1980).
+XX
+RN   [7]
+RP   527-801
+RX   DOI; 10.1073/pnas.77.6.3630.
+RX   PUBMED; 6251474.
+RA   Bernard O., Gough N.M.;
+RT   "Nucleotide sequence of immunoglobulin heavy chain joining segments between
+RT   translocated VH and mu constant regions genes";
+RL   Proc. Natl. Acad. Sci. U.S.A. 77(6):3630-3634(1980).
+XX
+RN   [8]
+RP   1-2293
+RX   DOI; 10.1016/0378-1119(81)90102-5.
+RX   PUBMED; 6795090.
+RA   Goldberg G.I., Vanin E.F., Zrolka A.M., Blattner F.R.;
+RT   "Sequence of the gene for the constant region of the mu chain of Balb/c
+RT   mouse immunoglobulin";
+RL   Gene 15(1):33-42(1981).
+XX
+RN   [9]
+RP   2290-2472
+RX   PUBMED; 6282840.
+RA   Nikaido T., Yamawaki-Kataoka Y., Honjo T.;
+RT   "Nucleotide sequences of switch regions of immunoglobulin C epsilon and C
+RT   gamma genes and their comparison";
+RL   J Biol Chem 257(13):7322-7329(1982).
+XX
+DR   EMBL-JOIN; J00444.
+DR   ENA; J00443.
+DR   MGI; 96448; Igh-6.
+XX
+CC   IMGT/LIGM-DB annotation level: by annotators
+CC   
+CC   [3]  sites; exons only.
+CC       For an overview of the musigdjc loci see the first paragraph of
+CC   'comment' in musigdjc01.
+CC       The mRNA transcript which encodes the c-mu region also encodes
+CC   the c-delta region and is subject to a series of alternative
+CC   processing pathways. First, the mRNA can be spliced for either the
+CC   mu or delta constant heavy chain. Then it can follow two paths
+CC   within mu and possibly as many as five within delta (see musigdjc14
+CC   regarding the delta pathways). The first c-mu pathway produces the
+CC   secreted form of IgM. The secreted tail (the c-terminal
+CC   polypeptide) is encoded immediately 3' to the c-mu-4 domain and is
+CC   included in this locus. The membrane-bound form is expressed via
+CC   the second c-mu pathway: the secreted tail codons are spliced out
+CC   and the 3' membrane exons(mu-m1 & mu-m2) are translated. See
+CC   musigdjc11 for the membrane exons. Unlike many other c-h genes,
+CC   c-mu has 4 coding domains instead of 3 domains and a hinge exon.
+CC   Complete source information:
+CC   mouse (strain BALB/c) liver([8]), newborn([6],[9]) sperm([2]) DNA;
+CC   myeloma hpc76([7]) DNA; myelomas tepc183([3]), mopc 104e([4],[1]),
+CC   sp1/hl hybridoma([5]), cDNA to mRNA.
+XX
+FH   Key                 Location/Qualifiers
+FH   
+FT   C-GENE              1..>2472
+FT                       /partial
+FT                       /cell_line="J606; 2PK-3; IGE-53-569"
+FT                       /db_xref="taxon:10090"
+FT                       /dev_stage="newborn; embryo"
+FT                       /functional
+FT                       /IMGT_allele="IGHM*02"
+FT                       /IMGT_gene="IGHM"
+FT                       /IMGT_map="12F2 (58.0 cM)"
+FT                       /mol_type="genomic DNA"
+FT                       /organism="Mus musculus"
+FT                       /strain="BALB/c"
+FT                       /sub_species="domesticus"
+FT                       /tissue_lib="EcoRI"
+FT                       /tissue_type="myeloma; liver; B-cell lymphoma; 
+FT                       hybridoma"
+FT   5'UTR               1..101
+FT   ACCEPTOR-SPLICE     99..103
+FT   C-GENE-UNIT         102..>2472
+FT                       /partial
+FT                       /db_xref="GOA:P01872"
+FT                       /db_xref="InterPro:IPR003006"
+FT                       /db_xref="InterPro:IPR003597"
+FT                       /db_xref="InterPro:IPR007110"
+FT                       /db_xref="InterPro:IPR013783"
+FT                       /db_xref="UniProtKB/Swiss-Prot:P01872"
+FT                       /protein_id="AAB59650.1"
+FT   CH1                 102..416
+FT                       /codon_start=3
+FT                       /translation="SQSFPNVFPLVSCESPLSDKNLVAMGCLARDFLPSTISFTW
+FT                       NYQNNTEVIQGIRTFPTLRTGGKYLATSQVLLSPKSILEGSDEYLVCKIHYGGKN
+FT                       RDLHVPIP"
+FT   DONOR-SPLICE        416..418
+FT   INTRON              417..526
+FT   ACCEPTOR-SPLICE     524..528
+FT   CH2                 527..865
+FT                       /codon_start=3
+FT                       /translation="VAEMNPNVNVFVPPRDGFSGPAPRKSKLICEATNFTPKPIT
+FT                       VSWLKDGKLVESGFTTDPVTIENKGSTPQTYKVISTLTISEIDWLNLNVYTCRVD
+FT                       HRGLTFLKNVSSTCAA"
+FT                       /splice-expected-nt="g"
+FT                       /splice-expectedcodon="gct [A]"
+FT                       /splicing-frame="sf1"
+FT   DONOR-SPLICE        865..867
+FT   INTRON              866..1143
+FT   ACCEPTOR-SPLICE     1141..1145
+FT   CH3                 1144..1461
+FT                       /codon_start=3
+FT                       /translation="PSTDILTFTIPPSFADIFLSKSANLTCLVSNLATYETLNIS
+FT                       WASQSGEPLETKIKIMESHPNGTFSAKGVASVCVEDWNNRKEFVCTVTHRDLPSP
+FT                       QKKFISKPN"
+FT                       /splice-expected-nt="g"
+FT                       /splice-expectedcodon="agt [S]"
+FT                       /splicing-frame="sf1"
+FT   DONOR-SPLICE        1461..1463
+FT   INTRON              1462..1568
+FT   ACCEPTOR-SPLICE     1566..1570
+FT   CH4-CHS             1569..1960
+FT                       /codon_start=3
+FT                       /translation="VHKHPPAVYLLPPAREQLNLRESATVTCLVKGFSPADISVQ
+FT                       WLQRGQLLPQEKYVTSAPMPEPGAPGFYFTHSILTVTEEEWNSGETYTCVVGHEA
+FT                       LPHLVTERTVDKSTGKPTLYNVSLIMSDTGGTCY"
+FT                       /splice-expected-nt="g"
+FT                       /splice-expectedcodon="gag [E]"
+FT                       /splicing-frame="sf1"
+FT   CH4                 1569..1900
+FT                       /codon_start=3
+FT                       /translation="VHKHPPAVYLLPPAREQLNLRESATVTCLVKGFSPADISVQ
+FT                       WLQRGQLLPQEKYVTSAPMPEPGAPGFYFTHSILTVTEEEWNSGETYTCVVGHEA
+FT                       LPHLVTERTVDKST"
+FT   CHS                 1901..1960
+FT                       /translation="GKPTLYNVSLIMSDTGGTCY"
+FT                       /IMGT_note="For complete translation nucleotide G at 
+FT                       position 1901 has been included in CH-S"
+FT   INT-DONOR-SPLICE    1901..1903
+FT   3'UTR               1961..2472
+FT   STOP-CODON          1961..1963
+XX
+SQ   Sequence 2472 BP; 644 A; 707 C; 553 G; 568 T; 0 other;
+     caaggaaata gcagggtgta gaggaatctc ctgtctgaca ggaggcaaga agacagattc        60
+     ttaccccctc catttctctt ttatccctct ctggtcctca gagagtcagt ccttcccaaa       120
+     tgtcttcccc ctcgtctcct gcgagagccc cctgtctgat aagaatctgg tggccatggg       180
+     ctgcctagcc cgggacttcc tgcccagcac catttccttc acctggaact accagaacaa       240
+     cactgaagtc atccagggta tcagaacctt cccaacactg aggacagggg gcaagtacct       300
+     agccacctcg caggtgttgc tgtctcccaa gagcatcctt gaaggttcag atgaatacct       360
+     ggtatgcaaa atccactacg gaggcaaaaa cagagatctg catgtgccca ttccaggtaa       420
+     gaaccaaacc ctcccagcag gggtgcccag gcccaggcat ggcccagagg gagcagcggg       480
+     tggggcttag gccaagctga gctcacacct tgacctttca ttccagctgt cgcagagatg       540
+     aaccccaatg taaatgtgtt cgtcccacca cgggatggct tctctggccc tgcaccacgc       600
+     aagtctaaac tcatctgcga ggccacgaac ttcactccaa aaccgatcac agtatcctgg       660
+     ctaaaggatg ggaagctcgt ggaatctggc ttcaccacag atccggtgac catcgagaac       720
+     aaaggatcca caccccaaac ctacaaggtc ataagcacac ttaccatctc tgaaatcgac       780
+     tggctgaacc tgaatgtgta cacctgccgt gtggatcaca ggggtctcac cttcttgaag       840
+     aacgtgtcct ccacatgtgc tgccagtgag tggctgggat aagcccaatg cctagccctc       900
+     ccagattagg gaagtcctcc tacaattatg gccaatgcca cccgaacatg gtcatttgct       960
+     ccttgaactt tggctcccca gagtggccaa ggacaagaat gagcaatagg cagtagaggg      1020
+     gtgagaatca gctggaagga ccagcatctt cccttaagta ggtttggggg atggagacta      1080
+     agcttttttc caacttcaca actagatatg tcataacctg acacagtgtt ctcttgactg      1140
+     caggtccctc cacagacatc ctaaccttca ccatcccccc ctcctttgcc gacatcttcc      1200
+     tcagcaagtc cgctaacctg acctgtctgg tctcaaacct ggcaacctat gaaaccctga      1260
+     atatctcctg ggcttctcaa agtggtgaac cactggaaac caaaattaaa atcatggaaa      1320
+     gccatcccaa tggcaccttc agtgctaagg gtgtggctag tgtttgtgtg gaagactgga      1380
+     ataacaggaa ggaatttgtg tgtactgtga ctcacaggga tctgccttca ccacagaaga      1440
+     aattcatctc aaaacccaat ggtaggtatc cccccttccc ttcccctcca attgcaggac      1500
+     ccttcccgta cctcataggg agggcaggtc ctcttccacc ctatcctcac tactgtcttc      1560
+     atttacagag gtgcacaaac atccacctgc tgtgtacctg ctgccaccag ctcgtgagca      1620
+     actgaacctg agggagtcag ccacagtcac ctgcttggtg aagggcttct ctcctgcaga      1680
+     catcagtgtg cagtggcttc agagagggca actcttgccc caagagaagt atgtgaccag      1740
+     tgccccgatg ccagagcctg gggccccagg cttctacttt acccacagca tcctgactgt      1800
+     gacagaggag gaatggaact ccggagagac ctatacctgt gttgtaggcc acgaggccct      1860
+     gccacacctg gtgaccgaga ggaccgtgga caagtccact ggtaaaccca cactgtacaa      1920
+     tgtctccctg atcatgtctg acacaggcgg cacctgctat tgaccatgct agcgctcaac      1980
+     caggcaggcc ctgggtgtcc agttgctctg tgtatgcaaa ctaaccatgt cagagtgaga      2040
+     tgttgcattt tataaaaatt agaaataaaa aaaatccatt caaacgtcac tggttttgat      2100
+     tatacaatgc tcatgcctgc tgagacagtt gtgttttgct tgctctgcac acaccctgca      2160
+     tacttgcctc caccctagcc cttcctctac cttgccagtt tcctccttgt gtgtgaactc      2220
+     agtcaggctt acaacagaca gagtatgaac atgcgattcc tccagctact tcttgatata      2280
+     tggctgaaag cttgctaacc tggtgcaggc agcattcagg cacacatata gacacacatg      2340
+     catttataca tagatatata ggtacacatg tgtagacaca tacatgaatg tgtactcatg      2400
+     gacacacaga caaaggtaca catatataca catgagttca cgcgcacaca catgcatgga      2460
+     cacttacaaa cg                                                          2472
+//

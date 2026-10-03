@@ -1,0 +1,66 @@
+ID   M12834; SV 1; linear; gDNA; STD; MUS; 643 BP.
+XX
+AC   M12834;
+XX
+DT   15-MAY-1995 (Rel. 199520-1, arrived in LIGM-DB)
+DT   17-JAN-2013 (Rel. 201303-4, Last updated, Version 10)
+XX
+DE   Mouse T-cell receptor germline gamma chain gene C-region (C10.5).
+XX
+KW   antigen receptor; Immunoglobulin superfamily (IgSF); T cell receptor (TR);
+KW   TR-Gamma-TRG; constant; IMGT reference sequence; regular; gDNA; undefined;
+KW   functional; C-gene.
+XX
+OS   Mus musculus (house mouse)
+OC   Sarcopterygii; Dipnotetrapodomorpha; Tetrapoda; Amniota; Mammalia; Theria;
+OC   Eutheria; Boreoeutheria; Euarchontoglires; Glires; Rodentia; Myomorpha;
+OC   Muroidea; Muridae; Murinae; Mus; Mus; Mus musculus.
+XX
+RN   [1]
+RP   1-643
+RX   DOI; 10.1016/j.dci.2005.06.025.
+RX   PUBMED; 16168480.
+RA   Butler J.E., Sun J., Wertz N., Sinkora M.;
+RT   "Antibody repertoire development in swine";
+RL   Dev. Comp. Immunol. 30(1-2):199-221(2006).
+XX
+DR   EMBL-JOIN; M12836.
+DR   ENA; M12834.
+XX
+CC   IMGT/LIGM-DB annotation level: by annotators
+XX
+FH   Key                 Location/Qualifiers
+FH   
+FT   C-GENE              1..>643
+FT                       /partial
+FT                       /db_xref="taxon:10090"
+FT                       /functional
+FT                       /IMGT_allele="TRGC2*01"
+FT                       /IMGT_gene="TRGC2"
+FT                       /mol_type="genomic DNA"
+FT                       /note="C10.5"
+FT                       /organism="Mus musculus"
+FT   5'UTR               1..114
+FT   ACCEPTOR-SPLICE     112..116
+FT   EX1                 115..444
+FT                       /codon_start=3
+FT                       /translation="KRLDADISPKPTIFLPSVAETNLHKTGTYLCLLEKFFPDVI
+FT                       RVYWKEKNGNTILDSQEGDTLKTKGTYMKFSWLTVPERAMGKEHSCIVKHENNKG
+FT                       GADQEIFFPSIKK"
+FT                       /protein_id="AAA40312.1"
+FT   DONOR-SPLICE        444..446
+FT   INTRON              445..643
+XX
+SQ   Sequence 643 BP; 198 A; 124 C; 124 G; 197 T; 0 other;
+     cacccacaag tacattccaa gtttgattct acactgaggt acatgagact ctatctcaat        60
+     catagtgatt accgtcatta ttatctttat taactttcca tttttctctt acagacaaaa       120
+     ggcttgatgc agacatttcc cccaagccca ctatttttct tccttctgtt gctgaaacaa       180
+     atctccataa gactgggaca tacctttgtc tccttgaaaa gttctttccc gatgtcataa       240
+     gggtgtattg gaaagaaaag aatggcaata ctatcctgga ctcccaggaa ggggatacgc       300
+     tgaagactaa gggcacatac atgaagttta gctggcttac tgtgcctgaa agggcaatgg       360
+     ggaaagagca cagttgtatt gtcaaacatg agaacaacaa aggaggagca gatcaagaga       420
+     ttttcttccc ttcaataaag aaaggtatgt gcatgcatcc tctgaaatag agcttcctag       480
+     agaatgtgtt tggaaataac caatctttta ctacaatgta tcaataaaaa ttgttgtgac       540
+     atataatgga gccaatgcct ttatttcacc ttgtatttat tttaccatag tactaggctg       600
+     gctcaggttt tgggagaaaa gttgaaattt tttgctgaag ctt                         643
+//

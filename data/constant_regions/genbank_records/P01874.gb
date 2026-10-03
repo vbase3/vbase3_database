@@ -1,0 +1,204 @@
+LOCUS       IGHM_CANLF               450 aa            linear   MAM 10-JUN-2026
+DEFINITION  RecName: Full=Ig mu chain C region.
+ACCESSION   P01874
+VERSION     P01874.1
+DBSOURCE    UniProtKB: locus IGHM_CANLF, accession P01874;
+            class: standard.
+            created: Jul 21, 1986.
+            sequence updated: Jul 21, 1986.
+            annotation updated: Jun 10, 2026.
+            xrefs: MHDG
+            xrefs (non-sequence databases): FunCoup:P01874,
+            STRING:9615.ENSCAFP00000027249, PaxDb:9615-ENSCAFP00000027249,
+            InParanoid:P01874, Proteomes:UP000805418, GO:0042571, GO:0003823,
+            GO:0034987, GO:0019731, GO:0006958, CDD:cd07696, CDD:cd05768,
+            FunFam:2.60.40.10:FF:000998, FunFam:2.60.40.10:FF:000463,
+            FunFam:2.60.40.10:FF:001836, Gene3D:2.60.40.10, InterPro:IPR007110,
+            InterPro:IPR036179, InterPro:IPR013783, InterPro:IPR003006,
+            InterPro:IPR003597, InterPro:IPR050380, PANTHER:PTHR23411,
+            Pfam:PF07654, SMART:SM00407, SUPFAM:SSF48726, PROSITE:PS50835,
+            PROSITE:PS00290
+KEYWORDS    Direct protein sequencing; Immunoglobulin domain; Reference
+            proteome.
+SOURCE      Canis lupus familiaris (dog)
+  ORGANISM  Canis lupus familiaris
+            Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi;
+            Mammalia; Eutheria; Laurasiatheria; Carnivora; Caniformia; Canidae;
+            Canis.
+REFERENCE   1  (residues 1 to 450)
+  AUTHORS   McCumber,L.J. and Capra,J.D.
+  TITLE     The complete amino-acid sequence of a canine mu chain
+  JOURNAL   Mol Immunol 16 (8), 565-570 (1979)
+   PUBMED   117299
+  REMARK    PROTEIN SEQUENCE OF 1-177 (MOO).
+REFERENCE   2  (residues 1 to 450)
+  AUTHORS   Wasserman,R.L. and Capra,J.D.
+  TITLE     Amino acid sequence of the Fc region of a canine immunoglobulin M:
+            interspecies homology for the IgM class
+  JOURNAL   Science 200 (4346), 1159-1161 (1978)
+   PUBMED   653360
+  REMARK    PROTEIN SEQUENCE OF 178-450 (MOO).
+COMMENT     On May 8, 2006 this sequence version replaced gi:70050.
+FEATURES             Location/Qualifiers
+     source          1..450
+                     /organism="Canis lupus familiaris"
+                     /db_xref="taxon:9615"
+     Protein         <1..450
+                     /product="Ig mu chain C region"
+                     /UniProtKB_evidence="Evidence at protein level"
+     Region          <1..450
+                     /region_name="Mature chain"
+                     /note="Ig mu chain C region. /id=PRO_0000153617."
+     Region          5..101
+                     /region_name="Ig"
+                     /note="Immunoglobulin domain; cl11960"
+                     /db_xref="CDD:472250"
+     Region          23..27
+                     /region_name="Ig strand B"
+                     /note="Ig strand B [structural motif]"
+                     /db_xref="CDD:409353"
+     Region          38..42
+                     /region_name="Ig strand C"
+                     /note="Ig strand C [structural motif]"
+                     /db_xref="CDD:409353"
+     Region          68..72
+                     /region_name="Ig strand E"
+                     /note="Ig strand E [structural motif]"
+                     /db_xref="CDD:409353"
+     Region          84..89
+                     /region_name="Ig strand F"
+                     /note="Ig strand F [structural motif]"
+                     /db_xref="CDD:409353"
+     Region          97..100
+                     /region_name="Ig strand G"
+                     /note="Ig strand G [structural motif]"
+                     /db_xref="CDD:409353"
+     Region          109..208
+                     /region_name="Ig"
+                     /note="Immunoglobulin domain; cl11960"
+                     /db_xref="CDD:472250"
+     Region          129..133
+                     /region_name="Ig strand B"
+                     /note="Ig strand B [structural motif]"
+                     /db_xref="CDD:409513"
+     Region          177..181
+                     /region_name="Ig strand E"
+                     /note="Ig strand E [structural motif]"
+                     /db_xref="CDD:409513"
+     Region          191..196
+                     /region_name="Ig strand F"
+                     /note="Ig strand F [structural motif]"
+                     /db_xref="CDD:409513"
+     Region          204..207
+                     /region_name="Ig strand G"
+                     /note="Ig strand G [structural motif]"
+                     /db_xref="CDD:409513"
+     Region          219..316
+                     /region_name="IgC1_CH3_IgAEM_CH2_IgG"
+                     /note="CH3 domain (third constant Ig domain of heavy
+                     chains) in immunoglobulin heavy alpha, epsilon, and mu
+                     chains, and CH2 domain (second constant Ig domain of the
+                     gheavy chain) in immunoglobulin heavy gamma chain; member
+                     of the C1-set of Ig superfamily (IgSF); cd07696"
+                     /db_xref="CDD:409493"
+     Region          220..226
+                     /region_name="Ig strand A"
+                     /note="Ig strand A [structural motif]"
+                     /db_xref="CDD:409493"
+     Site            order(222..225,238,240,242,244,279..282,284,286..287,
+                     314..316)
+                     /site_type="other"
+                     /note="heterodimer interface [polypeptide binding]"
+                     /db_xref="CDD:409493"
+     Site            order(225,227..229)
+                     /site_type="other"
+                     /note="intrachain IgC domain interface [polypeptide
+                     binding]"
+                     /db_xref="CDD:409493"
+     Region          237..244
+                     /region_name="Ig strand B"
+                     /note="Ig strand B [structural motif]"
+                     /db_xref="CDD:409493"
+     Region          251..257
+                     /region_name="Ig strand C"
+                     /note="Ig strand C [structural motif]"
+                     /db_xref="CDD:409493"
+     Region          261..263
+                     /region_name="Ig strand C'"
+                     /note="Ig strand C' [structural motif]"
+                     /db_xref="CDD:409493"
+     Region          267..272
+                     /region_name="Ig strand D"
+                     /note="Ig strand D [structural motif]"
+                     /db_xref="CDD:409493"
+     Region          279..287
+                     /region_name="Ig strand E"
+                     /note="Ig strand E [structural motif]"
+                     /db_xref="CDD:409493"
+     Region          297..304
+                     /region_name="Ig strand F"
+                     /note="Ig strand F [structural motif]"
+                     /db_xref="CDD:409493"
+     Region          312..315
+                     /region_name="Ig strand G"
+                     /note="Ig strand G [structural motif]"
+                     /db_xref="CDD:409493"
+     Region          326..432
+                     /region_name="IgC1_CH3_IgAGD_CH4_IgAEM"
+                     /note="CH3 domain (third constant Ig domain of the heavy
+                     chain) in immunoglobulin heavy alpha, gamma, and delta
+                     chains, and CH4 domain (fourth constant Ig domain of the
+                     heavy chain) in immunoglobulin heavy alpha, epsilon, and
+                     mu chains; member of the C1-set of I; cd05768"
+                     /db_xref="CDD:409425"
+     Region          326..332
+                     /region_name="Ig strand A"
+                     /note="Ig strand A [structural motif]"
+                     /db_xref="CDD:409425"
+     Site            order(331,347,351,392,396)
+                     /site_type="other"
+                     /note="dimer interface [polypeptide binding]"
+                     /db_xref="CDD:409425"
+     Region          344..352
+                     /region_name="Ig strand B"
+                     /note="Ig strand B [structural motif]"
+                     /db_xref="CDD:409425"
+     Region          357..363
+                     /region_name="Ig strand C"
+                     /note="Ig strand C [structural motif]"
+                     /db_xref="CDD:409425"
+     Site            order(363,411,417..418,420..421,423)
+                     /site_type="other"
+                     /note="receptor binding site [polypeptide binding]"
+                     /db_xref="CDD:409425"
+     Site            367..370
+                     /site_type="other"
+                     /note="Ig strand C' [posttranslational modification]"
+                     /db_xref="CDD:409425"
+     Region          374..380
+                     /region_name="Ig strand D"
+                     /note="Ig strand D [structural motif]"
+                     /db_xref="CDD:409425"
+     Region          389..397
+                     /region_name="Ig strand E"
+                     /note="Ig strand E [structural motif]"
+                     /db_xref="CDD:409425"
+     Region          407..414
+                     /region_name="Ig strand F"
+                     /note="Ig strand F [structural motif]"
+                     /db_xref="CDD:409425"
+     Region          420..427
+                     /region_name="Ig strand G"
+                     /note="Ig strand G [structural motif]"
+                     /db_xref="CDD:409425"
+ORIGIN      
+        1 gsasapsifp lvscensnpt stvamgclar dflpgsitfs wkyeblsain strgfpsvlr
+       61 ggkyvatsqv flpsvdiiqg tdehivckvr hsbgbkqkbv plpvmltlpp evsgfipprd
+      121 affgbprksq licqasgfsp rqvwslrdgk qiesgvttne vzazakzsgp ttykvtsmlt
+      181 iqedawlsqs vftckvehrg ltfqqnassm ctsdqpvgis iftippsfas ifntksakls
+      241 clvtdlatyd svtiswtree ngalkthtni seshpngtfs amgeatvcve ewesgeqftc
+      301 tvthtdlpsv lkqtisrpkg vavhmpsvyv lppsreqldl resatlsclv tgysppdvfv
+      361 qwvqkgqpvp pdsyvtsapm pepqapglyf ahsiltvsee ewnagetytc vvaheslpnr
+      421 vtersvdkst gkptlynvsl vlsdtagzcy
+//
+

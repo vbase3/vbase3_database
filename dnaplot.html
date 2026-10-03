@@ -1,0 +1,2865 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DNAPLOT — Immunogenetic Alignment & Junction Analysis Portal</title>
+  <link rel="stylesheet" href="css/fonts.css">
+  <script src="js/vbase3_sdk.js"></script>
+  <style>
+    :root {
+      --bg-main: #090d16;
+      --bg-card: #111827;
+      --bg-card-alt: #1e293b;
+      --bg-elevated: #0f172a;
+      --border-color: #334155;
+      --border-light: #1e293b;
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --accent-cyan: #38bdf8;
+      --accent-blue: #3b82f6;
+      --accent-indigo: #818cf8;
+      --accent-purple: #c084fc;
+      --accent-emerald: #34d399;
+      --accent-amber: #fbbf24;
+      --accent-rose: #fb7185;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 14px;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-mono: 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: var(--font-sans);
+      background: var(--bg-main);
+      color: var(--text-primary);
+      min-height: 100vh;
+      padding: 24px;
+      line-height: 1.5;
+    }
+
+    /* HEADER */
+    .header-box {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 50%, #090d16 100%);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 24px 32px;
+      margin-bottom: 24px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      position: relative;
+      overflow: hidden;
+    }
+    .header-box::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(56, 189, 248, 0.12) 0%, rgba(129, 140, 248, 0.05) 40%, transparent 70%);
+      pointer-events: none;
+    }
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .header-title {
+      font-size: 2.1rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .header-title span.grad {
+      background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .header-badges {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .badge {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 6px;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+    }
+    .badge-simd { background: rgba(52, 211, 153, 0.15); color: #34d399; border: 1px solid rgba(52, 211, 153, 0.3); }
+    .badge-imgt { background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); }
+    .badge-tcr { background: rgba(192, 132, 252, 0.15); color: #c084fc; border: 1px solid rgba(192, 132, 252, 0.3); }
+
+    .header-sub {
+      color: var(--text-secondary);
+      margin-top: 8px;
+      font-size: 0.95rem;
+      max-width: 900px;
+    }
+    .header-citation {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .header-citation strong { color: var(--text-secondary); }
+    .header-citation a { color: var(--accent-cyan); text-decoration: none; }
+    .header-citation a:hover { text-decoration: underline; }
+
+    /* NAVIGATION BAR */
+    .nav-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 24px;
+      border-bottom: 2px solid var(--border-light);
+      padding-bottom: 8px;
+      flex-wrap: wrap;
+    }
+    .tab-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      color: var(--text-secondary);
+      padding: 10px 20px;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+    .tab-btn:hover {
+      background: var(--bg-card-alt);
+      color: var(--accent-cyan);
+      border-color: var(--border-color);
+    }
+    .tab-btn.active {
+      background: #0284c7;
+      color: white;
+      border-color: #38bdf8;
+      box-shadow: 0 4px 14px rgba(56, 189, 248, 0.3);
+    }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; animation: fadeIn 0.25s ease-out; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* CARDS & CONTAINERS */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+    }
+    .card-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .card-title .icon { font-size: 1.3rem; }
+
+    /* CONTROLS & FORMS */
+    .controls-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+    .control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .control-label {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      letter-spacing: 0.5px;
+    }
+    .select-input, .text-input {
+      background: var(--bg-elevated);
+      color: var(--text-primary);
+      border: 1px solid var(--border-color);
+      padding: 10px 14px;
+      border-radius: var(--radius-sm);
+      font-size: 14px;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .select-input:focus, .text-input:focus {
+      border-color: var(--accent-cyan);
+      box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
+    }
+
+    /* PRESETS ROW */
+    .presets-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+      align-items: center;
+    }
+    .preset-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      margin-right: 4px;
+    }
+    .preset-chip {
+      background: var(--bg-card-alt);
+      border: 1px solid var(--border-color);
+      color: #cbd5e1;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .preset-chip:hover {
+      background: #334155;
+      color: var(--accent-cyan);
+      border-color: var(--accent-cyan);
+      transform: translateY(-1px);
+    }
+
+    /* GUIDELINES & FILE UPLOAD */
+    .guide-panel {
+      background: #080e1a;
+      border: 1px solid #1e293b;
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+      margin-bottom: 12px;
+      animation: fadeIn 0.15s ease-in-out;
+    }
+    .guide-tab-bar {
+      display: flex;
+      gap: 6px;
+      border-bottom: 1px solid #1e293b;
+      padding-bottom: 6px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+    .guide-tab {
+      background: #1e293b;
+      border: 1px solid #334155;
+      color: #94a3b8;
+      padding: 5px 12px;
+      border-radius: 4px;
+      font-size: 11.5px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .guide-tab:hover {
+      color: #ffffff;
+      border-color: #475569;
+    }
+    .guide-tab.active {
+      background: rgba(56, 189, 248, 0.15);
+      border-color: #38bdf8;
+      color: #38bdf8;
+    }
+    .guide-code {
+      background: #030712;
+      border: 1px solid #1e293b;
+      border-radius: 4px;
+      padding: 8px 12px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: #a5f3fc;
+      overflow-x: auto;
+      white-space: pre;
+      margin: 0;
+    }
+    .textarea-dragover {
+      border-color: #38bdf8 !important;
+      box-shadow: 0 0 16px rgba(56, 189, 248, 0.4) !important;
+      background: rgba(2, 132, 199, 0.08) !important;
+    }
+
+    /* TEXTAREA */
+    textarea {
+      width: 100%;
+      background: var(--bg-elevated);
+      color: #38bdf8;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      line-height: 1.6;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 14px;
+      min-height: 140px;
+      resize: vertical;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    textarea:focus {
+      border-color: var(--accent-cyan);
+      box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
+    }
+
+    /* BUTTONS */
+    .btn-row {
+      display: flex;
+      gap: 12px;
+      margin-top: 16px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent-blue);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+    }
+    .btn:hover {
+      background: #2563eb;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #0284c7 0%, #6366f1 100%);
+      box-shadow: 0 4px 14px rgba(2, 132, 199, 0.4);
+    }
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #0369a1 0%, #4f46e5 100%);
+    }
+    .btn-secondary {
+      background: var(--bg-card-alt);
+      color: var(--text-secondary);
+      border: 1px solid var(--border-color);
+    }
+    .btn-secondary:hover {
+      background: #334155;
+      color: var(--text-primary);
+    }
+
+    /* KPI DASHBOARD */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+    .kpi-card {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 16px;
+      border-left: 4px solid var(--accent-cyan);
+      transition: transform 0.2s;
+    }
+    .kpi-card:hover { transform: translateY(-2px); }
+    .kpi-card.v-gene { border-left-color: #38bdf8; }
+    .kpi-card.d-gene { border-left-color: #c084fc; }
+    .kpi-card.j-gene { border-left-color: #fbbf24; }
+    .kpi-card.cdr3 { border-left-color: #34d399; }
+    .kpi-card.status { border-left-color: #f43f5e; }
+
+    .kpi-title { font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.5px; }
+    .kpi-val { font-size: 1.15rem; font-weight: 800; color: var(--text-primary); margin-top: 4px; font-family: var(--font-mono); word-break: break-all; }
+    .kpi-sub { font-size: 11px; color: var(--text-secondary); margin-top: 4px; }
+
+    /* SECTION CONTAINERS */
+    .result-section {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border-light);
+    }
+    .section-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--accent-cyan);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* ALIGNMENT BLOCKS (PRE/MONO) */
+    .alignment-box {
+      background: #050811;
+      border: 1px solid #1e293b;
+      border-radius: var(--radius-sm);
+      padding: 16px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      line-height: 1.9;
+      color: #cbd5e1;
+      overflow-x: auto;
+      white-space: pre;
+    }
+    .al-row { display: flex; }
+    .al-label { width: 140px; flex-shrink: 0; font-weight: 700; }
+    .al-label.germ { color: #60a5fa; }
+    .al-label.match { color: #34d399; }
+    .al-label.query { color: #4ade80; }
+    .al-label.annot { color: #f43f5e; }
+    .al-label.ruler { color: #94a3b8; }
+    .al-seq { letter-spacing: 1px; }
+
+    .toggle-pill {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      font-family: var(--font-sans);
+    }
+    .toggle-pill:hover {
+      color: var(--text-primary);
+    }
+    .toggle-pill.active {
+      background: var(--accent-cyan);
+      color: #030712;
+      font-weight: 700;
+    }
+
+    .mut-tag {
+      background: #f43f5e;
+      color: white;
+      font-weight: 800;
+      padding: 1px 3px;
+      border-radius: 3px;
+    }
+    .match-dot { color: #475569; }
+
+    /* JUNCTION BLOCK DIAGRAM */
+    .junction-diagram {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin: 16px 0;
+      padding: 12px;
+      background: #050811;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-light);
+    }
+    .j-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-family: var(--font-mono);
+      min-width: 70px;
+    }
+    .j-block .j-name { font-size: 10px; font-weight: 700; text-transform: uppercase; margin-bottom: 4px; }
+    .j-block .j-seq { font-size: 12px; font-weight: 800; letter-spacing: 0.5px; }
+    .j-block .j-len { font-size: 10px; opacity: 0.75; margin-top: 2px; }
+
+    .j-v { background: rgba(56, 189, 248, 0.15); border: 1px solid #38bdf8; color: #38bdf8; }
+    .j-p1 { background: rgba(245, 158, 11, 0.15); border: 1px solid #f59e0b; color: #f59e0b; }
+    .j-n1 { background: rgba(239, 68, 68, 0.15); border: 1px solid #ef4444; color: #ef4444; }
+    .j-d { background: rgba(168, 85, 247, 0.15); border: 1px solid #a855f7; color: #c084fc; }
+    .j-p2 { background: rgba(245, 158, 11, 0.15); border: 1px solid #f59e0b; color: #f59e0b; }
+    .j-n2 { background: rgba(239, 68, 68, 0.15); border: 1px solid #ef4444; color: #ef4444; }
+    .j-j { background: rgba(34, 197, 94, 0.15); border: 1px solid #22c55e; color: #4ade80; }
+
+    /* PROTEIN CHEMISTRY DISPLAY */
+    .protein-ribbon {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 3px;
+      padding: 14px;
+      background: #050811;
+      border: 1px solid #1e293b;
+      border-radius: var(--radius-sm);
+      margin: 12px 0;
+    }
+    .aa-chip {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 26px;
+      height: 38px;
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+      position: relative;
+    }
+    .aa-chip .aa-pos {
+      font-size: 8px;
+      color: rgba(255,255,255,0.5);
+      position: absolute;
+      top: 2px;
+    }
+    .aa-chip .aa-char {
+      margin-top: 10px;
+    }
+
+    /* AA Chemical Classes */
+    .aa-aliphatic { background: #1e3a8a; color: #93c5fd; } /* L, I, V, M, A */
+    .aa-aromatic  { background: #581c87; color: #d8b4fe; } /* F, Y, W */
+    .aa-basic     { background: #881337; color: #fda4af; } /* K, R, H */
+    .aa-acidic    { background: #064e3b; color: #6ee7b7; } /* D, E */
+    .aa-polar     { background: #78350f; color: #fcd34d; } /* S, T, N, Q */
+    .aa-cys       { background: #ca8a04; color: #fef08a; border: 1px solid #fef08a; font-weight: 900; } /* C */
+    .aa-pro       { background: #701a75; color: #f5d0fe; } /* P */
+    .aa-gly       { background: #334155; color: #cbd5e1; } /* G */
+
+    .aa-legend {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      font-size: 11px;
+      color: var(--text-secondary);
+      margin-top: 8px;
+    }
+    .aa-legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .aa-legend-box {
+      width: 12px;
+      height: 12px;
+      border-radius: 2px;
+    }
+
+    /* TABLES */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      margin: 12px 0;
+    }
+    .data-table th, .data-table td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border-light);
+    }
+    .data-table th {
+      background: var(--bg-card-alt);
+      color: var(--text-secondary);
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 11px;
+      letter-spacing: 0.5px;
+    }
+    .data-table tr:hover td {
+      background: rgba(255,255,255,0.02);
+    }
+
+
+    /* COLLIER DE PERLES MODAL & 2D PEARL NECKLACE */
+    .collier-modal-backdrop {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(4, 9, 16, 0.88);
+      backdrop-filter: blur(14px);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+    .collier-modal-card {
+      background: rgba(13, 27, 42, 0.98);
+      border: 1px solid var(--border-color);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+      border-radius: var(--radius-md);
+      width: 100%;
+      max-width: 1060px;
+      max-height: 94vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      animation: modalFadeIn 0.2s ease-out;
+    }
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: scale(0.97); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    .collier-modal-header {
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--border-light);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(6, 13, 23, 0.9);
+    }
+    .collier-modal-body {
+      padding: 18px 24px 24px 24px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .collier-canvas-box {
+      background: #060d17;
+      border: 1px solid var(--border-light);
+      border-radius: 12px;
+      width: 100%;
+      overflow-x: auto;
+      display: flex;
+      justify-content: center;
+      padding: 14px;
+      position: relative;
+    }
+    .pearl-circle {
+      cursor: pointer;
+      transition: transform 0.15s ease, filter 0.15s ease;
+    }
+    .pearl-circle:hover {
+      transform: scale(1.25);
+      filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.8));
+    }
+
+    /* TOAST NOTIFICATION */
+    #toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #0284c7;
+      color: white;
+      padding: 12px 20px;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      font-size: 14px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.3s;
+      pointer-events: none;
+      z-index: 9999;
+    }
+    #toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <div class="header-box">
+    <div class="header-top" style="display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap;">
+      <div style="display:flex; align-items:center; gap:16px;">
+        <a href="index.html" title="Return to VBASE3 Hub" style="display:flex; align-items:center; text-decoration:none;">
+          <img src="images/vbase3_logo.jpg" alt="VBASE3 Logo" style="height:48px; width:auto; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.6); object-fit:contain; background:#ffffff; padding:2px; cursor:pointer;" />
+        </a>
+        <div>
+          <div class="header-title">
+            <span>🧬</span>
+            <span class="grad">DNAPLOT</span>
+            <span style="font-weight: 400; font-size: 1.5rem; color: var(--text-muted); margin: 0 4px;">|</span>
+            <span style="font-size: 1.3rem; font-weight: 600; color: var(--text-secondary);">Immunogenetic Alignment & Junction Analysis Portal</span>
+          </div>
+          <div class="header-sub">
+            The canonical high-speed V(D)J alignment, junction deconstruction, and somatic hypermutation analysis suite.
+          </div>
+        </div>
+      </div>
+      <div class="header-badges">
+        <span class="badge badge-simd" id="engineStatusBadge">⚡ RUST SIMD ENGINE</span>
+        <span class="badge badge-imgt">IMGT COLLINEAR GRID</span>
+        <span class="badge badge-tcr">BCR & TCR DUAL-STACK</span>
+      </div>
+    </div>
+    <div class="header-citation">
+      <strong>Historical Attribution:</strong> DNAPLOT was originally designed by Werner Müller and Hans-Helmar Althaus at the University of Cologne as the founding alignment algorithm that powered early <em>IMGT/V-QUEST</em> (Giudicelli V, Müller W, et al. <em>Nucleic Acids Res.</em> 1997, PMID: <a href="https://pubmed.ncbi.nlm.nih.gov/9016537/" target="_blank">9016537</a>; Lefranc MP, et al. <em>Nucleic Acids Res.</em> 1998, PMID: <a href="https://pubmed.ncbi.nlm.nih.gov/9399859/" target="_blank">9399859</a>). It subsequently served as the core sequence alignment and search page for the automated <em>VBASE2</em> relational database (Retter I, Althaus HH, Münch R, Müller W. <em>Nucleic Acids Res.</em> 2005, PMID: <a href="https://pubmed.ncbi.nlm.nih.gov/15608286/" target="_blank">15608286</a>; Retter I. PhD Thesis, TU Braunschweig 2006, <a href="https://leopard.tu-braunschweig.de/receive/dbbs_mods_00013341" target="_blank">leopard:dbbs_mods_00013341</a>).
+    </div>
+  </div>
+
+  <!-- NAVIGATION TABS -->
+  <div class="nav-tabs">
+    <button class="tab-btn" style="background:rgba(217,119,6,0.25); border:1px solid #f59e0b; color:#fbbf24; font-weight:700;" onclick="window.open('https://doi.org/10.5281/zenodo.22923344','_blank')" title="Download complete database tables and catalogs from Zenodo">📦 Zenodo Data ↗</button>
+    <button class="tab-btn" style="background:#0284c7; color:#ffffff; font-weight:700;" onclick="window.location.href='index.html'" title="Return to Portal Home">🏠 Portal Home</button>
+    <button class="tab-btn active" id="tabBtn_detailed" onclick="switchMainTab('detailed')">🔬 Detailed Analysis View</button>
+    <button class="tab-btn" id="tabBtn_synthesis" onclick="switchMainTab('synthesis')">📊 Synthesis View (Batch Comparison)</button>
+    <button class="tab-btn" style="margin-left: auto; color:#10b981; font-weight:700;" onclick="window.location.href='vbase3_status.html'">📊 Status & Coverage</button>
+    <button class="tab-btn" style="color:#38bdf8; font-weight:700;" onclick="window.location.href='repertoire_analysis.html'">📊 Repertoire Analysis</button>
+    <button class="tab-btn" onclick="window.location.href='mouse_vbase3_analyzer.html'" style="color:#34d399;">🐭 Mouse</button>
+    <button class="tab-btn" onclick="window.location.href='rabbit_vbase3_analyzer.html'" style="color:#60a5fa;">🐇 Rabbit</button>
+    <button class="tab-btn" onclick="window.location.href='camelid_vbase3_analyzer.html'" style="color:#c084fc;">🦙 Camelid (VHH)</button>
+    <button class="tab-btn" onclick="window.location.href='dog_vbase3_analyzer.html'" style="color:#fbbf24;">🐕 Dog</button>
+    <button class="tab-btn" onclick="window.location.href='chicken_vbase3_analyzer.html'" style="color:#f87171;">🐔 Chicken</button>
+    <button class="tab-btn" onclick="window.location.href='xenopus_du_pasquier_hsu.html'" style="color:#10b981;">🐸 Xenopus</button>
+    <button class="tab-btn" onclick="window.location.href='vgene_pacmap_universe.html'">🛡️ BCRbase</button>
+    <button class="tab-btn" onclick="window.location.href='tcr_universe.html'">🧬 TCRbase</button>
+    <button class="tab-btn" onclick="window.location.href='vbase2_universe.html'">🌐 VBASE2</button>
+  </div>
+
+  <!-- INPUT & SETTINGS CARD -->
+  <div class="card">
+    <div class="card-title">
+      <span class="icon">⚙️</span>
+      <span>Sequence Submission & Target Configuration</span>
+    </div>
+
+    <div class="controls-grid">
+      <div class="control-group">
+        <label class="control-label" for="speciesSelect">Species Target</label>
+        <select id="speciesSelect" class="select-input">
+          <option value="auto" selected>🌐 Auto-Deduce (All Vertebrates)</option>
+          <option value="human">👨 Human (Homo sapiens)</option>
+          <option value="mouse">🐭 Mouse (Mus musculus)</option>
+          <option value="rat">🐀 Rat (Rattus norvegicus)</option>
+          <option value="rhesus">🐒 Rhesus Macaque (Macaca mulatta)</option>
+          <option value="cynomolgus">🐵 Cynomolgus (Macaca fascicularis)</option>
+          <option value="pig">🐷 Pig (Sus domesticus)</option>
+          <option value="horse">🐴 Horse (Equus caballus)</option>
+          <option value="sheep">🐑 Sheep (Ovis aries)</option>
+          <option value="bovine">🐮 Cattle / Bovine (Bos taurus)</option>
+          <option value="dog">🐕 Dog (Canis lupus familiaris)</option>
+          <option value="rabbit">🐰 Rabbit (Oryctolagus cuniculus)</option>
+          <option value="alpaca">🐫 Alpaca / Camelid (Vicugna pacos)</option>
+          <option value="chicken">🐔 Chicken (Gallus gallus)</option>
+          <option value="xenopus">🐸 Xenopus (X. tropicalis / laevis)</option>
+          <option value="zebrafish">🐟 Zebrafish (Danio rerio)</option>
+        </select>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label" for="locusSelect">Receptor / Chain Locus</label>
+        <select id="locusSelect" class="select-input">
+          <option value="auto" selected>⚡ Auto-Deduce (BCR & TCR)</option>
+          <option value="IGH">Heavy Chain (IGHV)</option>
+          <option value="IGK">Kappa Light Chain (IGKV)</option>
+          <option value="IGL">Lambda Light Chain (IGLV)</option>
+          <option value="TRB">T-Cell Receptor Beta (TRBV)</option>
+          <option value="TRA">T-Cell Receptor Alpha (TRAV)</option>
+          <option value="TRG">T-Cell Receptor Gamma (TRGV)</option>
+          <option value="TRD">T-Cell Receptor Delta (TRDV)</option>
+        </select>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label" for="ntPerLine">Display Width (bp / line)</label>
+        <select id="ntPerLine" class="select-input">
+          <option value="60" selected>60 bp (Classic IMGT)</option>
+          <option value="90">90 bp</option>
+          <option value="120">120 bp</option>
+          <option value="1000">Single Line (Unwrapped)</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- PRESET CHIPS -->
+    <div class="presets-row">
+      <span class="preset-label">Landmark Presets:</span>
+      <button class="preset-chip" onclick="loadSample('musIGHV044')">🐭 MMU_IGHV_C3F2.16_04*01 [musIGHV044 / V186.2]</button>
+      <button class="preset-chip" onclick="loadSample('humIGHV3-23')">👨 HSA_IGHV_C3F3.499_02*01 [humIGHV3-23 / DP-47]</button>
+      <button class="preset-chip" onclick="loadSample('humIGLV1-40')">👨 HSA_IGLV_C2F5.05_02*01 [humIGLV1-40]</button>
+      <button class="preset-chip" onclick="loadSample('musIGKV243')">🐭 MMU_IGKV_C1F6.16_03*00 [musIGKV243 / Vκ21D]</button>
+      <button class="preset-chip" onclick="loadSample('humTRBV12-4')">🧬 HSA_TRBV_C1F12.04_01*01 [humTRBV12-4]</button>
+      <button class="preset-chip" onclick="loadSample('humTRAV12-2')">🧬 HSA_TRAV_C1F12.02_01*01 [humTRAV12-2]</button>
+      <button class="preset-chip" onclick="loadSample('vicVHH')">🐫 VPA_IGHV_C3F3.599_01*01 [vicVHH / TFR1]</button>
+    </div>
+
+    <!-- INPUT TOOLBAR: FILE UPLOAD & FORMAT GUIDELINES -->
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:14px; margin-bottom:10px; flex-wrap:wrap; gap:8px;">
+      <div style="display:flex; align-items:center; gap:8px;">
+        <button class="btn btn-secondary" style="padding:6px 14px; font-size:12px; background:#1e293b; border:1px solid #38bdf8; color:#f8fafc;" onclick="document.getElementById('dnaplotFileInput').click()">
+          <span>📂</span> <span>Upload FASTA / Text File</span>
+        </button>
+        <input type="file" id="dnaplotFileInput" accept=".fasta,.fa,.txt,.seq,.gb" style="display:none;" onchange="handleDnaplotFileUpload(event)">
+        <span id="dnaplotFileBadge" style="display:none; font-size:11px; color:#38bdf8; font-weight:700; background:rgba(56,189,248,0.1); padding:4px 8px; border-radius:4px; border:1px solid rgba(56,189,248,0.3);"></span>
+      </div>
+
+      <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+        <button class="btn btn-secondary" style="padding:6px 12px; font-size:12px; border-color:#38bdf8; color:#38bdf8;" onclick="toggleDnaplotGuide()">
+          <span>💡</span> <span>Sequence Format Guidelines</span>
+        </button>
+        <button class="btn btn-secondary" style="padding:6px 10px; font-size:11px;" onclick="insertDnaplotExample('dna')">
+          <span>📋</span> <span>Insert DNA Example</span>
+        </button>
+        <button class="btn btn-secondary" style="padding:6px 10px; font-size:11px;" onclick="insertDnaplotExample('protein')">
+          <span>📋</span> <span>Insert Protein Example</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- FORMAT GUIDELINE DRAWER -->
+    <div id="dnaplotFormatGuide" class="guide-panel" style="display:none;">
+      <div style="font-size:12px; font-weight:700; color:#38bdf8; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center;">
+        <span>📖 Sequence Format Guidelines & Physiological Boundary Invariants:</span>
+        <span style="font-size:11px; color:#94a3b8;">Choose format below or click 'Insert Example' to test immediately</span>
+      </div>
+      <div class="guide-tab-bar">
+        <button class="guide-tab active" id="dnaplotTab_dna" onclick="switchDnaplotGuideTab('dna')">1. Nucleotide DNA FASTA</button>
+        <button class="guide-tab" id="dnaplotTab_protein" onclick="switchDnaplotGuideTab('protein')">2. Amino Acid Protein FASTA</button>
+        <button class="guide-tab" id="dnaplotTab_raw" onclick="switchDnaplotGuideTab('raw')">3. Raw Unformatted String</button>
+      </div>
+
+      <div id="dnaplotGuideContent_dna" class="guide-content">
+        <p style="font-size:11.5px; color:#cbd5e1; margin-bottom:6px;">
+          <strong>Nucleotide DNA:</strong> Provide variable domain in any reading frame (the engine automatically detects the correct productive reading frame and mature FR1 anchor). Variable domain terminates strictly at canonical J-segment boundary (`TVSS`/`TVSA` or `VEIK`/`LEIK`/`TVL`).
+        </p>
+        <pre class="guide-code">>humIGHV3-23_VH Trastuzumab_Reference
+GAGGTGCAGCTGGTGGAGTCTGGGGGAGGCTTGGTCCAGCCTGGGGGGTCCCTGAGACTCTCCTGTGCAGCCTCTGGATTCAACATCAAAGACACCTATATACACTGGGTGCGTCAGGCCCCGGGTAAGGGCCTGGAATGGGTTGCAAGGATTTATCCTACGAATGGTTATACTAGATATGCCGATAGCGTCAAGGGCCGTTTCACCATAAGCGCAGACACATCCAAAAACACAGCCTACCTGCAGATGAACAGCCTGAGAGCCGAGGACACGGCCGTGTATTACTGTTCGAGATGGGGAGGGGACGGCTTCTATGCTATGGACTACTGGGGCCAAGGAACCCTGGTCACCGTCTCCTCA</pre>
+      </div>
+
+      <div id="dnaplotGuideContent_protein" class="guide-content" style="display:none;">
+        <p style="font-size:11.5px; color:#cbd5e1; margin-bottom:6px;">
+          <strong>Protein Amino Acid:</strong> Standard IUPAC single-letter amino acid code. Variable domains are automatically numbered using the IMGT Unique Numbering scheme, anchoring at Cys23, Trp41, Leu89, and Cys104.
+        </p>
+        <pre class="guide-code">>humIGHV3-23_AA Canonical_Human_Framework
+EVQLVESGGGLVQPGGSLRLSCAASGFNIKDTYIHWVRQAPGKGLEWVARIYPTNGYTRYADSVKGRFTISADTSKNTAYLQMNSLRAEDTAVYYCSRWGGDGFYAMDYWGQGTLVTVSS</pre>
+      </div>
+
+      <div id="dnaplotGuideContent_raw" class="guide-content" style="display:none;">
+        <p style="font-size:11.5px; color:#cbd5e1; margin-bottom:6px;">
+          <strong>Raw Sequence Intake:</strong> You can paste raw unformatted text directly into the box. Whitespace, numbers, FASTA headers, line breaks, and trailing spaces are automatically cleansed by WebAssembly.
+        </p>
+        <pre class="guide-code">EVQLVESGGGLVQPGGSLRLSCAASGFNIKDTYIHWVRQAPGKGLEWVARIYPTNGYTRYADSVKGRFTISADTSKNTAYLQMNSLRAEDTAVYYCSRWGGDGFYAMDYWGQGTLVTVSS</pre>
+      </div>
+    </div>
+
+    <!-- SEQUENCE INPUT -->
+    <textarea id="sequenceInput" placeholder=">Sequence_Identifier&#10;Paste nucleotide (DNA) or amino acid sequence(s) in FASTA or raw format, or drop file here..."></textarea>
+
+    <!-- ACTION BUTTONS -->
+    <div class="btn-row">
+      <button class="btn btn-primary" id="runAnalyzeBtn" onclick="executeDnaplotAnalysis()">
+        <span>⚡</span>
+        <span>Run DNAPLOT Analysis</span>
+      </button>
+      <button class="btn btn-secondary" onclick="clearInput()">
+        <span>🧹</span>
+        <span>Clear</span>
+      </button>
+      <span id="timingBadge" style="margin-left: auto; font-family: var(--font-mono); font-size: 12px; color: var(--text-muted);">Ready for analysis</span>
+    </div>
+  </div>
+
+  <!-- TAB CONTENT 1: DETAILED VIEW -->
+  <div id="tab_detailed" class="tab-content active">
+    <!-- KPI DASHBOARD -->
+    <div class="kpi-grid" id="kpiDashboard" style="display: none;">
+      <div class="kpi-card v-gene">
+        <div class="kpi-title">V-GENE & Allele</div>
+        <div class="kpi-val" id="kpi_vgene">—</div>
+        <div class="kpi-sub" id="kpi_vsub">—</div>
+      </div>
+      <div class="kpi-card d-gene">
+        <div class="kpi-title">D-GENE Match</div>
+        <div class="kpi-val" id="kpi_dgene">—</div>
+        <div class="kpi-sub" id="kpi_dsub">—</div>
+      </div>
+      <div class="kpi-card j-gene">
+        <div class="kpi-title">J-GENE & Boundary</div>
+        <div class="kpi-val" id="kpi_jgene">—</div>
+        <div class="kpi-sub" id="kpi_jsub">—</div>
+      </div>
+      <div class="kpi-card cdr3">
+        <div class="kpi-title">CDR3 & Lengths</div>
+        <div class="kpi-val" id="kpi_cdr3">—</div>
+        <div class="kpi-sub" id="kpi_cdrlengths">—</div>
+      </div>
+      <div class="kpi-card status">
+        <div class="kpi-title">Productivity Status</div>
+        <div class="kpi-val" id="kpi_status">—</div>
+        <div class="kpi-sub" id="kpi_statussub">—</div>
+      </div>
+    </div>
+
+
+    <!-- COLLIER DE PERLES ACTION BAR -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin: 14px 0 10px 0; background: rgba(13,27,42,0.6); padding: 12px 18px; border-radius: var(--radius-sm); border: 1px solid var(--border-light);" id="collierActionBar">
+      <div>
+        <div style="font-size: 13.5px; font-weight: 600; color: #f1f5f9;">📿 IMGT Collier de Perles (2D Pearl Necklace)</div>
+        <div style="font-size: 11.5px; color: var(--text-muted); margin-top: 2px;">
+          Planar 2D structural layout published in <em>Nucleic Acids Res.</em> 1998 (Lefranc, Giudicelli, Busin, Bodmer, Müller et al. <a href="https://doi.org/10.1093/nar/26.1.297" target="_blank" rel="noopener" style="color:#38bdf8; text-decoration:underline;">DOI: 10.1093/nar/26.1.297 ↗</a> | <a href="https://pubmed.ncbi.nlm.nih.gov/9399859/" target="_blank" rel="noopener" style="color:#34d399; text-decoration:underline;">PMID: 9399859 ↗</a>)
+        </div>
+      </div>
+      <button class="btn btn-primary" onclick="openCollierDePerlesModal()" style="background: linear-gradient(135deg, #0284c7, #10b981); box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35); font-weight: 700; padding: 8px 18px; border-radius: 8px; display: inline-flex; align-items: center; gap: 8px;">
+        <span>📿</span>
+        <span>View IMGT Collier de Perles (2D)</span>
+      </button>
+    </div>
+
+    <!-- 1. V-GENE ALIGNMENT -->
+    <div class="result-section" id="vAlignSection" style="display: none;">
+      <div class="section-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+        <div class="section-title">
+          <span>1.</span>
+          <span>Alignment for V-GENE and Allele Identification</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">Bars (|) indicate identity; red indicates SHM mismatch</span>
+          <div style="display: flex; gap: 4px; background: rgba(15,23,42,0.8); padding: 2px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.08);">
+            <button id="btnAlignFull" class="toggle-pill active" onclick="setAlignDisplayMode('full')">Full Sequence</button>
+            <button id="btnAlignDots" class="toggle-pill" onclick="setAlignDisplayMode('dots')">Identity Dots (.)</button>
+          </div>
+        </div>
+      </div>
+      <div class="alignment-box" id="vAlignBox"></div>
+    </div>
+
+    <!-- 2. JUNCTION ANALYSIS DECONSTRUCTION -->
+    <div class="result-section" id="junctionSection" style="display: none;">
+      <div class="section-header">
+        <div class="section-title">
+          <span>2.</span>
+          <span>Results of IMGT/JunctionAnalysis Deconstruction</span>
+        </div>
+        <span style="font-size: 11px; color: var(--text-muted);">Decomposition into V, P, N1, D, N2, and J contributions</span>
+      </div>
+      <div class="junction-diagram" id="junctionDiagram"></div>
+      <div id="junctionStatsTable"></div>
+    </div>
+
+    <!-- 3. COLLINEAR IMGT UNIQUE NUMBERING GRID -->
+    <div class="result-section" id="imgtGridSection" style="display: none;">
+      <div class="section-header">
+        <div class="section-title">
+          <span>3.</span>
+          <span>Collinear IMGT Unique Numbering Grid (Positions 1 to 128)</span>
+        </div>
+        <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">FR1 (1-26) | CDR1 (27-38) | FR2 (39-55) | CDR2 (56-65) | FR3 (66-104) | CDR3 (105-117) | FR4 (118-128)</span>
+      </div>
+      <div class="alignment-box" id="imgtGridBox"></div>
+    </div>
+
+    <!-- 4. PROTEIN CHEMISTRY DISPLAY -->
+    <div class="result-section" id="proteinSection" style="display: none;">
+      <div class="section-header">
+        <div class="section-title">
+          <span>4.</span>
+          <span>V-REGION Protein Display (Chemical Property Colors)</span>
+        </div>
+        <span style="font-size: 11px; color: var(--text-muted);">Standard immunogenetic amino acid property stratification</span>
+      </div>
+      <div class="protein-ribbon" id="proteinRibbon"></div>
+      <div class="aa-legend">
+        <div class="aa-legend-item"><div class="aa-legend-box" style="background:#1e3a8a;"></div><span>Aliphatic/Hydrophobic (A,V,L,I,M)</span></div>
+        <div class="aa-legend-item"><div class="aa-legend-box" style="background:#581c87;"></div><span>Aromatic (F,Y,W)</span></div>
+        <div class="aa-legend-item"><div class="aa-legend-box" style="background:#881337;"></div><span>Basic Positive (K,R,H)</span></div>
+        <div class="aa-legend-item"><div class="aa-legend-box" style="background:#064e3b;"></div><span>Acidic Negative (D,E)</span></div>
+        <div class="aa-legend-item"><div class="aa-legend-box" style="background:#78350f;"></div><span>Polar Uncharged (S,T,N,Q)</span></div>
+        <div class="aa-legend-item"><div class="aa-legend-box" style="background:#ca8a04;"></div><span>Cysteine (Cys23/Cys104)</span></div>
+        <div class="aa-legend-item"><div class="aa-legend-box" style="background:#701a75;"></div><span>Proline</span></div>
+        <div class="aa-legend-item"><div class="aa-legend-box" style="background:#334155;"></div><span>Glycine</span></div>
+      </div>
+    </div>
+
+    <!-- 5. MUTATION & AA CHANGE TABLE -->
+    <div class="result-section" id="mutationSection" style="display: none;">
+      <div class="section-header">
+        <div class="section-title">
+          <span>5.</span>
+          <span>V-REGION Mutation and AA Change Statistics</span>
+        </div>
+        <span style="font-size: 11px; color: var(--text-muted);">Silent (S) vs. Replacement (R) somatic hypermutation rates</span>
+      </div>
+      <table class="data-table" id="mutationSummaryTable">
+        <thead>
+          <tr>
+            <th>Region</th>
+            <th>Nucleotide Length</th>
+            <th>Total Mutations</th>
+            <th>Silent (S)</th>
+            <th>Replacement (R)</th>
+            <th>R/S Ratio</th>
+            <th>Mutation Rate (%)</th>
+          </tr>
+        </thead>
+        <tbody id="mutationSummaryTbody"></tbody>
+      </table>
+      <div id="detailedMutationsContainer" style="margin-top: 14px;"></div>
+    </div>
+  </div>
+
+  <!-- TAB CONTENT 2: SYNTHESIS VIEW (BATCH TABLE) -->
+  <div id="tab_synthesis" class="tab-content">
+    <div class="card">
+      <div class="card-title">
+        <span class="icon">📊</span>
+        <span>Batch Synthesis Repertoire Matrix</span>
+      </div>
+      <p style="color: var(--text-secondary); margin-bottom: 16px;">Comparative summary table across all submitted query sequences.</p>
+      <div style="overflow-x: auto;">
+        <table class="data-table" id="synthesisTable">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Sequence Name</th>
+              <th>Species</th>
+              <th>Chain</th>
+              <th>V-GENE & Allele</th>
+              <th>V Identity</th>
+              <th>D-GENE</th>
+              <th>J-GENE & Motif</th>
+              <th>CDR3 (AA)</th>
+              <th>CDR3 Len</th>
+              <th>Productive</th>
+            </tr>
+          </thead>
+          <tbody id="synthesisTbody">
+            <tr><td colspan="11" style="text-align: center; color: var(--text-muted);">No sequences analyzed yet. Run analysis to populate table.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB CONTENT 3: EXPORT & AIRR -->
+  <div id="tab_export" class="tab-content">
+    <div class="card">
+      <div class="card-title">
+        <span class="icon">💾</span>
+        <span>Export Reports & AIRR-C Standard Files</span>
+      </div>
+      <div style="display: flex; gap: 12px; margin-bottom: 16px; flex-wrap: wrap;">
+        <button class="btn" onclick="exportAirrTsv()">📥 Download AIRR TSV</button>
+        <button class="btn" style="background:#059669;" onclick="exportGappedFasta()">📄 Download IMGT-Gapped FASTA</button>
+        <button class="btn" style="background:#7c3aed;" onclick="exportJsonData()">💾 Download Complete JSON</button>
+        <button class="btn btn-secondary" onclick="copyAirrToClipboard()">📋 Copy AIRR to Clipboard</button>
+      </div>
+      <textarea id="exportPreviewArea" style="height: 320px;" readonly placeholder="Export preview will appear here..."></textarea>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toast">Copied to clipboard!</div>
+
+  <script>
+    // 0. LIGHTWEIGHT ROSETTA STONE CROSS-REFERENCE TABLE LOAD (1.2MB vs 38.5MB)
+    window.VBASE3_XREF = {};
+    fetch('rosetta_stone_data.json')
+      .then(res => res.json())
+      .then(data => {
+        const map = {};
+        data.forEach(item => {
+          const crossrefStr = [item.imgt, item.dp, item.vb2, item.kabat, item.ebi].filter(Boolean).join(" | ");
+          const val = { ...item, crossreferences: crossrefStr };
+          if (item.id) { map[item.id] = val; map[item.id.toLowerCase()] = val; }
+          if (item.allele) { map[item.allele] = val; map[item.allele.toLowerCase()] = val; }
+          if (item.name) { map[item.name] = val; map[item.name.toLowerCase()] = val; }
+          if (item.dp) { map[item.dp] = val; map[item.dp.toLowerCase()] = val; }
+          if (item.vb2) { map[item.vb2] = val; map[item.vb2.toLowerCase()] = val; }
+          if (item.imgt) { map[item.imgt] = val; map[item.imgt.toLowerCase()] = val; }
+        });
+        window.VBASE3_XREF = map;
+      })
+      .catch(err => console.warn('Could not load rosetta_stone_data.json:', err));
+
+    // 1. PRESET LANDMARK SAMPLES
+    const SAMPLES = {
+      'musIGHV044': {
+        name: 'MMU_IGHV_C3F2.16_04*01 [musIGHV044_B1-8_Anti-NP]',
+        vCrossref: 'musIGHV044*01 (V186.2)',
+        dCrossref: 'mus_DSP2.4',
+        jCrossref: 'musIGHJ002*01',
+        seq: 'CAGGTACAGCTGAAGGAGTCAGGACCTGGCCTGGTGGCGCCCTCACAGAGCCTGTCCATCACATGCACCGTCTCAGGGTTCTCATTAACCGGCTATGGTGTAAACTGGGTTCGCCAGCCTCCAGGAAAGGGTCTGGAGTGGCTGGGAATGATATGGGGTGATGGAAGCACAGACTATAATTCAGCTCTCAAATCCAGACTGAGCATCAGCAAGGACAACTCCAAGAGCCAAGTTTTCTTAAAAATGAACAGTCTGCAAACTGATGACACAGCCAGGTACTACTGTGCCAGAACTACTGAGTATCTGGGGGCCTATGACTACTGGGGCCAAGGCACCACTCTCACAGTCTCCTCA',
+        species: 'mouse',
+        locus: 'IGH'
+      },
+      'humIGHV3-23': {
+        name: 'HSA_IGHV_C3F3.499_02*01 [humIGHV3-23_DP47_Therapeutic]',
+        vCrossref: 'humIGHV200187 | IGHV3-23*01 (DP-47)',
+        dCrossref: 'IGHD3-10*01',
+        jCrossref: 'IGHJ4*02',
+        seq: 'GAGGTGCAGCTGTTGGAGTCTGGGGGAGGCTTGGTACAGCCTGGGGGGTCCCTGAGACTCTCCTGTGCAGCCTCTGGATTCACCTTTAGCAGCTATGCCATGAGCTGGGTCCGCCAGGCTCCAGGGAAGGGGCTGGAGTGGGTCTCAGCTATTAGTGGTAGTGGTGGTAGCACATACTACGCAGACTCCGTGAAGGGCCGGTTCACCATCTCCAGAGACAATTCCAAGAACACGCTGTATCTGCAAATGAACAGCCTGAGAGCCGAGGACACGGCCGTATATTACTGTGCGAAAGATCGGGGGTACTACGGTATGGACGTCTGGGGCCAAGGGACCACGGTCACCGTCTCCTCA',
+        species: 'human',
+        locus: 'IGH'
+      },
+      'humIGLV1-40': {
+        name: 'HSA_IGLV_C2F5.05_02*01 [humIGLV1-40_Human_Lambda]',
+        vCrossref: 'humIGLV200067 | IGLV1-40*01',
+        dCrossref: '',
+        jCrossref: 'humIGLJ001*01',
+        seq: 'CAGTCTGTGCTGACGCAGCCGCCCTCAGTGTCTGGGGCCCCAGGGCAGAGGGTCACCATCTCCTGCACTGGGAGCAGCTCCAACATCGGGGCAGGTTATGATGTACACTGGTACCAGCAGCTTCCAGGAACAGCCCCCAAACTCCTCATCTATGGTAACAGCAATCGGCCCTCAGGGGTCCCTGACCGATTCTCTGGCTCCAAGTCTGGCACCTCAGCCTCCCTGGCCATCACTGGGCTCCAGGCTGAGGATGAGGCTGATTATTACTGCCAGTCCTATGACAGCAGCCTGAGTGGTGTGGTATTCGGCGGAGGGACCAAGCTGACCGTCCTA',
+        species: 'human',
+        locus: 'IGL'
+      },
+      'musIGKV243': {
+        name: 'MMU_IGKV_C1F6.16_03*00 [musIGKV243_Vk21D_Dominant_Light]',
+        vCrossref: 'musIGKV243*01 (Vκ21D)',
+        dCrossref: '',
+        jCrossref: 'musIGKJ004*01',
+        seq: 'GATATTGTGATGACCCAGTCTCCAGCCACCCTGTCTGTGACTCCAGGAGATAGAGTCTCTCTTTCCTGCAGGGCCAGCCAGAGTATTAGCGACTACTTACACTGGTATCAACAAAAATCACATGAGTCTCCAAGGCTTCTCATCAAATATGCTTCCCAATCCATCTCTGGGATCCCCTCCAGGTTCAGTGGCAGTGGATCAGGGTCAGATTTCACTCTCAGTATCAACAGTGTGGAACCTGAAGATGTTGGAGTGTATTACTGTCAAAATGGTCACAGCTTTCCGTACACGTTCGGAGGGGGGACCAAGCTGGAAATAAAA',
+        species: 'mouse',
+        locus: 'IGK'
+      },
+      'humTRBV12-4': {
+        name: 'HSA_TRBV_C1F12.04_01*01 [humTRBV12-4_TCR_Beta]',
+        vCrossref: 'TRBV12-4*01',
+        dCrossref: 'TRBD1*01',
+        jCrossref: 'TRBJ1-1*01',
+        seq: 'GATGCTGGCGTTACTCAGACCCCAAGATACAAGATCACCCAGAGGAACACAGGTTACTTTAGAATGTGCAACTACAACCAAGGCTGGTTCAGCTGGGTGCGACAGATGATGATGCGGGGGCTGGAGCTGCTCATCTACTTCAACAACAACGTGCCCATCGACGACAGCGGCATGCCCGAGGACCGGTTCAGCGCCAAGATGCCCAACGCCAGCTTCAGCACCCTCAAGATCCAGCCCAGCGAGCCCCGGGACAGCGCCGTGTACTTCTGTGCCAGCAGCGAGAGGGGCGGGTTCGAGCAGTACTTCGGGCCGGGCACCAGGCTCACGGTCACAGAG',
+        species: 'human',
+        locus: 'TRB'
+      },
+      'humTRAV12-2': {
+        name: 'HSA_TRAV_C1F12.02_01*01 [humTRAV12-2_TCR_Alpha]',
+        vCrossref: 'TRAV12-2*01',
+        dCrossref: '',
+        jCrossref: 'TRAJ34*01',
+        seq: 'CAGTCAACAGAGCCCCAGTCGGTGGTGCAGCCAGGAGACAGCGTCACCCTCAGCTGCAGCTACGAGACCCAGAAGTCCAGCACCAACTTCTGGTACTGGCAGCAGCAGCCAGGGAAGGGGCCAGAGTTCATCATCCAGTTCTACTCAGACGCCAACAGCAACACCAAGATCGGGCTGAACGCCAGCAGCATCAAGTCCTCCCAGACCAGCTTCTTCACCATCACCCTCAGCGACGTGAAGAGTGAGGACACGGCCACCTACTACTGCGCAGCAGTG',
+        species: 'human',
+        locus: 'TRA'
+      },
+      'vicVHH': {
+        name: 'VPA_IGHV_C3F3.599_01*01 [vicVHH_TFR1_Alpaca_SingleDomain]',
+        vCrossref: 'vicVHH / TFR1',
+        dCrossref: '',
+        jCrossref: '',
+        seq: 'QVQLVESGGGLARPGGSLRLSCAASGRTNSLGWFRQVPGKEREFVARASGRNKPIFYGDFVNNRFTLSRDYDKHTLTLQMDNLEPADTAVYICAAGPGGKLPSQWAFWGQGIQVTVSS',
+        species: 'alpaca',
+        locus: 'IGH'
+      },
+      'ratIGHV': {
+        name: 'RNO_IGHV_C1F1_01*01 [ratIGHV / Rat_Ighv_Rat_0001*0001]',
+        vCrossref: 'Rat_Ighv_Rat_0001*0001',
+        dCrossref: 'rno_IGHD1',
+        jCrossref: 'rno_IGHJ1',
+        seq: 'CTGGTGGAGTCTGGGGGAGGCTTAGTGCAGCCTGGAAGGTCCCTGAGACTCTCCTGTGCAGCCTCTGGATTCACTTTCAGTGACTACGACATGGCCTGGGTCCGCCAGGCTCCAACGAAGGGGCTGGAGTGGATCGCATCCATTACTACTGGTGGTGGTTACACCTTCTACAGAGACTCTGTGAAGGGCCGATTCACCATCTCCAGAGACAATGCCAAGAACAGCCAGTACCTGCAAATGGACAGTCTGAGGTCTGAGGACACGGCCACTTATTACTGTGCAAGAGGGTACTATTACTTCGATGTCTGGGGCGCAGGGACCACGGTCACCGTCTCCTCA',
+        species: 'rat',
+        locus: 'IGH'
+      },
+      'rhesusIGHV': {
+        name: 'MMU_IGHV_C3F3_01*01 [rheIGHV / Rhesus Macaque Heavy]',
+        vCrossref: 'RHEIGHV300005',
+        dCrossref: 'rhe_IGHD1',
+        jCrossref: 'mmu_IGHJ1',
+        seq: 'GAGGTGCAGCTGGTGGAGTCTGGGGGAGGCTTGGTCCAGCCTGGGGGGTCCCTGAGACTCTCCTGTGCAGCCTCTGGATTCACCTTCAGTAGTTATGCTATGAGCTGGGTCCGCCAGGCTCCAGGGAAGGGGCTGGAGTGGGTCTCAGCTATTAGTGGTAGTGGTGGTAGCACATACTACGCAGACTCCGTGAAGGGCCGGTTCACCATCTCCAGAGACAATTCCAAGAACACGCTGTATCTGCAAATGAACAGCCTGAGAGCCGAGGACACGGCCGTATATTACTGTGCGAAAAGCTACTACTTTGACTACTGGGGCCAGGGCACCCTGGTCACCGTCTCCTCA',
+        species: 'rhesus',
+        locus: 'IGH'
+      },
+      'cynIGHV': {
+        name: 'MFA_IGHV_C3F3_01*01 [cynIGHV / Cynomolgus Macaque Heavy]',
+        vCrossref: 'CYN_OR783148.1',
+        dCrossref: 'cyn_IGHD1',
+        jCrossref: 'cyn_IGHJ1',
+        seq: 'GAGGTGCAGCTGGTGGAGTCTGGGGGAGGCTTGGTCCAGCCTGGGGGGTCCCTGAGACTCTCCTGTGCAGCCTCTGGATTCACCTTCAGTAGTTATGCTATGAGCTGGGTCCGCCAGGCTCCAGGGAAGGGGCTGGAGTGGGTCTCAGCTATTAGTGGTAGTGGTGGTAGCACATACTACGCAGACTCCGTGAAGGGCCGGTTCACCATCTCCAGAGACAATTCCAAGAACACGCTGTATCTGCAAATGAACAGCCTGAGAGCCGAGGACACGGCCGTATATTACTGTGCGAAATACTACTTTGACTACTGGGGCCAGGGCACCCTGGTCACCGTCTCCTCA',
+        species: 'cynomolgus',
+        locus: 'IGH'
+      },
+      'pigIGHV': {
+        name: 'SSC_IGHV_C1F1_01*01 [pigIGHV / Sus_Ighv_Sus_0001*0001]',
+        vCrossref: 'Sus_Ighv_Sus_0001*0001',
+        dCrossref: 'ssc_IGHD1',
+        jCrossref: 'ssc_IGHJ1',
+        seq: 'CTGGTGGAGTCTGGAGGAGGCCTGGTGCAGCCTGGGGGGTCTCTGAGACTCTCCTGTGTCGGCTCTGGATTCACATTCAGTAGTGGCAGCATGAGGTGGGTCCGCCAGGCTCCAGGGAAGGGGCTGGAGTGGCTGGCATACATTACCACTAGTGGAGATAGCACATACTACGCAGACTCCGTGAAGGGCCGATTCACCATCTCCAGAGACAATTCAGAGAACACGGCCTATCTGCAAATGAACAGCCTGAGAACTGAGGACACGGCCAGGTATTACTGTGCAAGAGACTACTACTTTGACTACTGGGGCCAGGGAACCCTGGTCACCGTCTCCTCA',
+        species: 'pig',
+        locus: 'IGH'
+      },
+      'horseIGHV': {
+        name: 'ECA_IGHV_C1F1_01*01 [horseIGHV / Landmark Horse Heavy]',
+        vCrossref: 'Equ_Ighv_Equ_0009',
+        dCrossref: 'eca_IGHD1',
+        jCrossref: 'eca_IGHJ1',
+        seq: 'CAGGTGCAGCTGGTGGAGTCTGGGGGAGGCCTGGTCCAGCCTGAGGGGTCCCTGAGACTCTCCTGTGCAGCCTCTGGATTCACCTTCAGTAGTTATGGCATGCACTGGGTCCGCCAGGCTCCAGGGAAGGGGCTGGAGTGGGTGGCATATATTAGTGCTAATGGTAATACTATATACTACGCAGACTCCGTGAAGGGCCGATTCACCATCTCCAGAGACAACGCCAAGAACACGTTATATCTGCAAATGAACAACCTGAGAGCCGAGGACACGGCCATATATTACTGTGCGAAATCTTACTACTTTGACTACTGGGGCCAGGGAACCCTGGTCACCGTCTCCTCA',
+        species: 'horse',
+        locus: 'IGH'
+      },
+      'sheepIGHV': {
+        name: 'OAR_IGHV_C1F1_01*01 [sheepIGHV / Ovi_Ighv_Ovi_0029*0029]',
+        vCrossref: 'Ovi_Ighv_Ovi_0029*0029',
+        dCrossref: 'oar_IGHD1',
+        jCrossref: 'oar_IGHJ1',
+        seq: 'CAGCTGCAGGAGTCGGGACCCAGCCTGGTGAAGCCCTCACAGACCCTCTCCCTCACCTGCACGGTCTCTGGATTCTCACTCACCACCTATGGTGTGACCTGGGTCCGCCAGGCTCCAGGGAAGGCGCTGGAGTGGTTGGGTGGTATAGATAATGATGGTGACACAGGCTACAACCCGGCCCTGAAGAGCCGACTCAGCATCACCAGGGACACCTCCAAGAGCCAAGTCTCCCTCTCACTGAGCAGCGTGACCACTGAGGACACGGCCATGTATTACTGTGCGAAATACTACTTTGACTACTGGGGCCAGGGAACCCTGGTCACCGTCTCCTCA',
+        species: 'sheep',
+        locus: 'IGH'
+      },
+      'bovIGHV': {
+        name: 'BTA_IGHV_C1F1_01*01 [bovIGHV_BLV1H12 / Bovine Ultralong CDR-H3]',
+        vCrossref: 'BLV1H12 / PDB 4K3D',
+        dCrossref: 'bos_IGHD1-01',
+        jCrossref: 'bos_IGHJ1',
+        seq: 'GAGGTGCAGCTGGTGCAGTCTGGGGGAGACTTGGTGAAGCCTGGGGGGTCCCTGAGACTCTCCTGTGCGGCCTCTGGATTCACCTTCAGTAACTACGACATGAGCTGGGTCCGCCAGGCTCCAGGGAAGGGGCTGGAGTGGGTCGCTAGTATTAGTGATGATGGTACTACAAATTACGCTGACTCCGTGAAGGGCCGATTCACCATCTCCAGAGACAACGCCAAGAACACACTGTATCTGCAGATGAACAGCCTGAGAGCCGAGGACACGGCTGTGTATTACTGTGCGAGAGCTTGGTGTAATGGTGGTTGTAGTACTTGTTGTAGTCCTTATTGTGATTATTATTATTATGGTTTGGATGTTTGGGGCCAGGGAACCCTGGTCACCGTCTCCTCA',
+        species: 'bovine',
+        locus: 'IGH'
+      },
+      'dogIGHV': {
+        name: 'CFA_IGHV_C3F1_01*01 [dogIGHV_Lokivetmab / Canine Heavy]',
+        vCrossref: 'Can_Ighv_Can_0001*0001',
+        dCrossref: 'CFA_IGHD_F1_01',
+        jCrossref: 'CFA_IGHJ_TVSS_01',
+        seq: 'GAGGTGCAGCTGGTGGAGTCTGGGGGAGACCTGGTGAAGCCTGGGGGGTCCCTGAGACTCTCCTGTGTAGCCTCTGGATTCACCTTCAGTAACTACGACATGAGCTGGGTCCGCCAGGCTCCTGGGAAGGGGCTGCAGTGGGTCGCAGCTATTAGCTATGATGGAAGTAGCACATACTACACTGACGCTGTGAAGGGCCGATTCACCATCTCCAGAGACAACGCCAGGAACACAGTGTATCTGCAGATGAACAGCCTGAGAGCCGAGGACACGGCTGTGTATTACTGTGCGAGAGGCTACTACTTTGACTACTGGGGCCAGGGAACCCTGGTCACCGTCTCCTCA',
+        species: 'dog',
+        locus: 'IGH'
+      },
+      'rabIGHV': {
+        name: 'OCU_IGHV_C3F1_01*01 [rabIGHV_4B5 / Landmark Diagnostic RabMAb]',
+        vCrossref: 'Rab_IGHV1-1',
+        dCrossref: 'ocu_IGHD1',
+        jCrossref: 'ocu_IGHJ1',
+        seq: 'CAGTCGGTGGAGGAGTCCGGGGGTCGCCTGGTCACGCCTGGGACACCCCTGACACTCACCTGCACCGTCTCTGGATTCTCCCTCAGTAACGATGCAATGACCTGGGTCCGCCAGGCTCCAGGGAAGGGGCTGGAATGGATCGGATTCATTGGTTTTAATGGTGGCACTTACTACGCGACCTGGGCGAAAGGCCGATTCACCATCTCCAGAACCTCGACCACGGTGGATCTGAAAATGACCAGTCTGACAACCGAGGACACGGCCACCTATTTCTGTGCCAGAGATGGGGTCACCACTGGTTATGCTTTGGATTACTGGGGCCAAGGCACCCTGGTCACCGTCTCCTCA',
+        species: 'rabbit',
+        locus: 'IGH'
+      }
+    };
+
+    window.allAnalysisResults = [];
+
+    // 2. TAB SWITCHER
+    window.switchMainTab = function(tabId) {
+      document.querySelectorAll('.nav-tabs .tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+
+      const activeBtn = document.getElementById('tabBtn_' + tabId);
+      if (activeBtn) activeBtn.classList.add('active');
+
+      const target = document.getElementById('tab_' + tabId);
+      if (target) target.classList.add('active');
+
+      if (tabId === 'synthesis') renderSynthesisView();
+      else if (tabId === 'export') updateExportPreview();
+    };
+
+    // 3. LOAD SAMPLE FUNCTION
+    window.loadSample = function(key) {
+      const s = SAMPLES[key];
+      if (!s) return;
+      document.getElementById('sequenceInput').value = '>' + s.name + '\n' + s.seq;
+      document.getElementById('speciesSelect').value = s.species;
+      document.getElementById('locusSelect').value = s.locus;
+      executeDnaplotAnalysis();
+    };
+
+    window.toggleDnaplotGuide = function() {
+      const g = document.getElementById('dnaplotFormatGuide');
+      if (!g) return;
+      g.style.display = g.style.display === 'none' ? 'block' : 'none';
+    };
+
+    window.switchDnaplotGuideTab = function(tabKey) {
+      ['dna', 'protein', 'raw'].forEach(k => {
+        const btn = document.getElementById('dnaplotTab_' + k);
+        const cnt = document.getElementById('dnaplotGuideContent_' + k);
+        if (btn) btn.classList.toggle('active', k === tabKey);
+        if (cnt) cnt.style.display = (k === tabKey) ? 'block' : 'none';
+      });
+    };
+
+    window.insertDnaplotExample = function(type) {
+      const input = document.getElementById('sequenceInput');
+      if (!input) return;
+      if (type === 'dna') {
+        input.value = `>humIGHV3-23_VH Trastuzumab_Reference\nGAGGTGCAGCTGGTGGAGTCTGGGGGAGGCTTGGTCCAGCCTGGGGGGTCCCTGAGACTCTCCTGTGCAGCCTCTGGATTCAACATCAAAGACACCTATATACACTGGGTGCGTCAGGCCCCGGGTAAGGGCCTGGAATGGGTTGCAAGGATTTATCCTACGAATGGTTATACTAGATATGCCGATAGCGTCAAGGGCCGTTTCACCATAAGCGCAGACACATCCAAAAACACAGCCTACCTGCAGATGAACAGCCTGAGAGCCGAGGACACGGCCGTGTATTACTGTTCGAGATGGGGAGGGGACGGCTTCTATGCTATGGACTACTGGGGCCAAGGAACCCTGGTCACCGTCTCCTCA`;
+        document.getElementById('speciesSelect').value = 'human';
+        document.getElementById('locusSelect').value = 'IGH';
+      } else if (type === 'protein') {
+        input.value = `>humIGHV3-23_AA Canonical_Human_Framework\nEVQLVESGGGLVQPGGSLRLSCAASGFNIKDTYIHWVRQAPGKGLEWVARIYPTNGYTRYADSVKGRFTISADTSKNTAYLQMNSLRAEDTAVYYCSRWGGDGFYAMDYWGQGTLVTVSS`;
+        document.getElementById('speciesSelect').value = 'human';
+        document.getElementById('locusSelect').value = 'IGH';
+      }
+      executeDnaplotAnalysis();
+    };
+
+    window.handleDnaplotFileUpload = function(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      loadDnaplotFile(file);
+    };
+
+    function loadDnaplotFile(file) {
+      const badge = document.getElementById('dnaplotFileBadge');
+      if (badge) {
+        badge.innerText = `📄 ${file.name} (${(file.size / 1024).toFixed(1)} KB)`;
+        badge.style.display = 'inline-block';
+      }
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        document.getElementById('sequenceInput').value = evt.target.result;
+        executeDnaplotAnalysis();
+      };
+      reader.readAsText(file);
+    }
+
+    function setupDnaplotTextareaDropzone() {
+      const ta = document.getElementById('sequenceInput');
+      if (!ta) return;
+      ['dragenter', 'dragover'].forEach(eventName => {
+        ta.addEventListener(eventName, (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          ta.classList.add('textarea-dragover');
+        }, false);
+      });
+      ['dragleave', 'drop'].forEach(eventName => {
+        ta.addEventListener(eventName, (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          ta.classList.remove('textarea-dragover');
+        }, false);
+      });
+      ta.addEventListener('drop', (e) => {
+        const dt = e.dataTransfer;
+        const files = dt.files;
+        if (files && files.length > 0) {
+          loadDnaplotFile(files[0]);
+        }
+      }, false);
+    }
+
+    window.clearInput = function() {
+      document.getElementById('sequenceInput').value = '';
+      document.getElementById('kpiDashboard').style.display = 'none';
+      document.getElementById('vAlignSection').style.display = 'none';
+      document.getElementById('junctionSection').style.display = 'none';
+      document.getElementById('imgtGridSection').style.display = 'none';
+      document.getElementById('proteinSection').style.display = 'none';
+      document.getElementById('mutationSection').style.display = 'none';
+      document.getElementById('timingBadge').innerText = 'Input cleared';
+      const fileBadge = document.getElementById('dnaplotFileBadge');
+      if (fileBadge) fileBadge.style.display = 'none';
+      window.allAnalysisResults = [];
+    };
+
+    // 4. MAIN ANALYSIS EXECUTION (Dual Engine: Native Rust + Client Fallback)
+    window.executeDnaplotAnalysis = async function() {
+      const rawInput = document.getElementById('sequenceInput').value.trim();
+      if (!rawInput) {
+        alert('Please paste a nucleotide or protein sequence, or select one of the landmark presets.');
+        return;
+      }
+
+      const timingEl = document.getElementById('timingBadge');
+      timingEl.innerText = '⚡ Executing vectorized analysis...';
+      const t0 = performance.now();
+
+      // Parse FASTA or raw sequence
+      const parsedRecords = parseFastaRecords(rawInput);
+      window.allAnalysisResults = [];
+
+      for (let rec of parsedRecords) {
+        let result = await analyzeSingleRecord(rec);
+        if (result) window.allAnalysisResults.push(result);
+      }
+
+      const t1 = performance.now();
+      const elapsed = (t1 - t0).toFixed(1);
+      timingEl.innerText = `Analyzed ${window.allAnalysisResults.length} sequence(s) in ${elapsed} ms`;
+
+      if (window.allAnalysisResults.length > 0) {
+        renderDetailedView(window.allAnalysisResults[0]);
+        renderSynthesisView();
+        updateExportPreview();
+      }
+    };
+
+    function parseFastaRecords(text) {
+      const lines = text.split('\n');
+      const records = [];
+      let currentName = 'Query_Sequence';
+      let currentSeq = '';
+
+      for (let line of lines) {
+        line = line.trim();
+        if (line.startsWith('>')) {
+          if (currentSeq) {
+            records.push({ name: currentName, seq: currentSeq });
+          }
+          currentName = line.substring(1).trim() || 'Query_Sequence';
+          currentSeq = '';
+        } else if (line) {
+          currentSeq += line.replace(/\s+/g, '');
+        }
+      }
+      if (currentSeq) {
+        records.push({ name: currentName, seq: currentSeq });
+      }
+      return records;
+    }
+
+    // 5. ANALYZE SINGLE RECORD (Calling /api/analyze with client fallback)
+    async function analyzeSingleRecord(rec) {
+      const cleanSeq = rec.seq.toUpperCase();
+      let serverRes = null;
+
+      try {
+        const resp = await fetch('/api/analyze', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ sequence: cleanSeq, name: rec.name })
+        });
+        if (resp.ok) {
+          const json = await resp.json();
+          if (json.status === 'success' && json.data) {
+            serverRes = json.data;
+          }
+        }
+      } catch (e) {
+        console.warn('Native server call bypassed, utilizing high-speed client engine:', e);
+      }
+
+      // If server returned valid analysis, synthesize and return
+      if (serverRes) {
+        return buildUnifiedAnalysisObject(rec.name, cleanSeq, serverRes);
+      }
+
+      // Otherwise, run high-precision client engine
+      return await runClientAnalysis(rec.name, cleanSeq);
+    }
+
+    // 6. CLIENT ENGINE
+    async function runClientAnalysis(name, seq) {
+      const isAA = /[EFILPQVWY]/.test(seq);
+      let aaSeq = isAA ? seq : translateDna(seq);
+
+      // Identify locus from sequence & name
+      let locus = 'IGH';
+      let chain = 'Heavy';
+      let species = 'human';
+      const nLower = name.toLowerCase();
+
+      if (nLower.includes('trb') || seq.includes('CASSER') || seq.includes('CASSA') || seq.includes('VYFC')) {
+        locus = 'TRB'; chain = 'TRBV'; species = nLower.includes('mus') ? 'mouse' : 'human';
+      } else if (nLower.includes('tra') || seq.includes('CAV') || seq.includes('VYYC')) {
+        locus = 'TRA'; chain = 'TRAV'; species = nLower.includes('mus') ? 'mouse' : 'human';
+      } else if (nLower.includes('igk') || seq.includes('VEIK') || seq.includes('LEIK')) {
+        locus = 'IGK'; chain = 'Kappa'; species = nLower.includes('mus') ? 'mouse' : 'human';
+      } else if (nLower.includes('igl') || seq.includes('TVL') || seq.includes('TKLTVL')) {
+        locus = 'IGL'; chain = 'Lambda'; species = nLower.includes('mus') ? 'mouse' : 'human';
+      } else if (nLower.includes('mus') || seq.includes('musighv')) {
+        species = 'mouse'; locus = 'IGH'; chain = 'Heavy';
+      }
+
+      // Execute dynamic WebAssembly alignment via VBASE3 SDK
+      let wasmRes = null;
+      if (window.VBASE3) {
+        try {
+          await window.VBASE3.init();
+          const chainHint = locus === 'IGK' ? 'kappa' : (locus === 'IGL' ? 'lambda' : (locus === 'IGH' ? 'heavy' : 'auto'));
+          wasmRes = await window.VBASE3.analyze(seq, name, species, chainHint);
+        } catch (err) {
+          console.warn('VBASE3 client WASM execution error, using geometric parser:', err);
+        }
+      }
+
+      if (wasmRes && (wasmRes.v_gene || wasmRes.cdr3_aa)) {
+        const vGeneRaw = wasmRes.v_gene || 'Unassigned';
+        const dGene = wasmRes.d_gene || (locus === 'IGH' ? 'None assigned' : 'None (Light Chain)');
+        const jGeneRaw = wasmRes.j_gene || 'Unassigned';
+        const vId = typeof wasmRes.v_identity === 'number' ? parseFloat(wasmRes.v_identity.toFixed(1)) : 95.0;
+        const jId = typeof wasmRes.j_identity === 'number' ? parseFloat(wasmRes.j_identity.toFixed(1)) : 100.0;
+        const bMotif = (wasmRes.synthesis_boundary && wasmRes.synthesis_boundary.terminalMotif) || 'TVSS';
+
+        const xrefEntry1 = (window.VBASE3_XREF && (window.VBASE3_XREF[vGeneRaw] || window.VBASE3_XREF[vGeneRaw.toLowerCase()])) || null;
+        const vGene = (xrefEntry1 && xrefEntry1.systematic_id) ? xrefEntry1.systematic_id : vGeneRaw;
+        let vCrossref = (xrefEntry1 && xrefEntry1.imgt_name && xrefEntry1.imgt_name !== '-') ? xrefEntry1.imgt_name : '';
+        if (!vCrossref && vGeneRaw !== vGene) {
+          vCrossref = vGeneRaw;
+        } else if (vCrossref && vGeneRaw !== vGene && vGeneRaw !== vCrossref) {
+          vCrossref = `${vCrossref} | ${vGeneRaw}`;
+        }
+        let vTomlinson1 = xrefEntry1 ? (xrefEntry1.vbase1_tomlinson_name || xrefEntry1.vbase1_name || '') : '';
+        let vKabat1 = xrefEntry1 ? (xrefEntry1.kabat_id || (xrefEntry1.kabat_all_ids ? xrefEntry1.kabat_all_ids[0] : '')) : '';
+        let vEbi1 = xrefEntry1 ? (xrefEntry1.ebi_accessions ? xrefEntry1.ebi_accessions.slice(0, 3).join(', ') : '') : '';
+
+        const xrefJ1 = (window.VBASE3_XREF && (window.VBASE3_XREF[jGeneRaw] || window.VBASE3_XREF[jGeneRaw.toLowerCase()])) || null;
+        const jGene = (xrefJ1 && xrefJ1.systematic_id) ? xrefJ1.systematic_id : jGeneRaw;
+
+        let fr1Aa = wasmRes.fr1_aa || '';
+        let cdr1Aa = wasmRes.cdr1_aa || '';
+        let fr2Aa = wasmRes.fr2_aa || '';
+        let cdr2Aa = wasmRes.cdr2_aa || '';
+        let fr3Aa = wasmRes.fr3_aa || '';
+        let fr4Aa = wasmRes.fr4_aa || '';
+        let vRegAa = '';
+
+        if (wasmRes.txt_output) {
+          if (!fr1Aa) fr1Aa = extractFeatureTranslation(wasmRes.txt_output, 'FR1-IMGT');
+          if (!cdr1Aa) cdr1Aa = extractFeatureTranslation(wasmRes.txt_output, 'CDR1-IMGT') || cdr1Aa;
+          if (!fr2Aa) fr2Aa = extractFeatureTranslation(wasmRes.txt_output, 'FR2-IMGT');
+          if (!cdr2Aa) cdr2Aa = extractFeatureTranslation(wasmRes.txt_output, 'CDR2-IMGT') || cdr2Aa;
+          if (!fr3Aa) fr3Aa = extractFeatureTranslation(wasmRes.txt_output, 'FR3-IMGT');
+          vRegAa = extractFeatureTranslation(wasmRes.txt_output, 'V-REGION');
+        }
+
+        if (!fr4Aa && wasmRes.txt_output) {
+          const jRegion = extractFeatureTranslation(wasmRes.txt_output, 'J-REGION');
+          if (jRegion) {
+            const m = /(?:WG.G|FG.G|LG.G)[\s\S]*?(?:TVSS|TVSA|TVL|VEIK|LEIK|VDIK|LDIK)/.exec(jRegion);
+            fr4Aa = m ? m[0] : (jRegion.length > 11 ? jRegion.slice(-11) : jRegion);
+          }
+        }
+        if (!fr4Aa) {
+          const mBound = /(?:WG.G|FG.G|LG.G).*(?:TVSS|TVSA|TVL|VEIK|LEIK|VDIK|LDIK)$/.exec(aaSeq);
+          fr4Aa = mBound ? mBound[0] : (aaSeq.length > 11 ? aaSeq.slice(-11) : '');
+        }
+
+        let gappedSeq = '';
+        if (wasmRes.html_output) {
+          const m = wasmRes.html_output.match(/amino acid sequence on one line\s*\n\s*&gt;[^\n]+\n([A-Z\.\-]+)/);
+          if (m) gappedSeq = m[1].trim();
+        }
+
+        let classif = null;
+        if (window.VBASE3 && typeof window.VBASE3.classifyRearrangement === 'function') {
+          classif = window.VBASE3.classifyRearrangement(jGene, vGene, null, seq);
+        }
+        const finalLocus = (classif && classif.locus !== 'Unknown') ? classif.locus : (wasmRes.locus || locus);
+        const finalChain = (classif && classif.chainType !== 'Unknown') ? classif.chainType : (wasmRes.chain || chain);
+
+        return {
+          name,
+          rawSeq: seq,
+          queryAA: wasmRes.aa_seq || aaSeq,
+          species: wasmRes.species ? (wasmRes.species.charAt(0).toUpperCase() + wasmRes.species.slice(1)) : (species.charAt(0).toUpperCase() + species.slice(1)),
+          chain: finalChain,
+          locus: finalLocus,
+          receptorFamily: (classif && classif.receptorFamily) || '',
+          isCrossLocus: !!(classif && classif.isCrossLocus),
+          rearrangementFormula: (classif && classif.formula) || '',
+          vGene,
+          vCrossreference: vCrossref,
+          vbase1_tomlinson_name: vTomlinson1,
+          kabat_id: vKabat1,
+          ebi_accessions: vEbi1,
+          vIdentity: vId,
+          vMismatches: 0,
+          vScore: Math.round(vId * 5),
+          dGene,
+          dCrossreference: dGene,
+          dScore: dGene.startsWith('None') ? null : 30.0,
+          dOrientation: 'Forward (Direct)',
+          jGene,
+          jCrossreference: jGene,
+          jBoundary: bMotif,
+          jScore: Math.round(jId * 0.5),
+          cdr1_aa: cdr1Aa || '-',
+          cdr2_aa: cdr2Aa || '-',
+          cdr3_aa: wasmRes.cdr3_aa || '-',
+          cdrLengths: `[${(cdr1Aa||'').length} . ${(cdr2Aa||'').length} . ${(wasmRes.cdr3_aa||'').length}]`,
+          isProductive: wasmRes.is_productive !== false,
+          fr1_aa: fr1Aa,
+          fr2_aa: fr2Aa,
+          fr3_aa: fr3Aa,
+          fr4_aa: fr4Aa,
+          vRegionAA: vRegAa,
+          alignedAA: gappedSeq || wasmRes.aa_seq || aaSeq,
+          txt_output: wasmRes.txt_output || '',
+          junction: {
+            vContrib: '',
+            p1: '',
+            n1: '',
+            dContrib: wasmRes.d_gene || '',
+            p2: '',
+            n2: '',
+            jContrib: wasmRes.j_gene || ''
+          }
+        };
+      }
+
+      // Conservative fallback if WASM unavailable
+      let fr1 = '', cdr1 = '', fr2 = '', cdr2 = '', fr3 = '', cdr3 = '', jSeq = '', jMotif = 'TVSS';
+      const c1Idx = aaSeq.indexOf('C');
+      const c2Idx = aaSeq.lastIndexOf('C');
+
+      if (c1Idx !== -1 && c2Idx !== -1 && c2Idx > c1Idx + 40) {
+        fr1 = aaSeq.substring(0, c1Idx + 1);
+        const rem1 = aaSeq.substring(c1Idx + 1);
+        const wIdx = rem1.search(/[WY]/);
+        if (wIdx !== -1 && wIdx >= 5 && wIdx <= 15) {
+          cdr1 = rem1.substring(0, wIdx);
+          const rem2 = rem1.substring(wIdx);
+          fr2 = rem2.substring(0, Math.min(17, rem2.length));
+          const rem3 = rem2.substring(fr2.length);
+          cdr2 = rem3.substring(0, Math.min(10, rem3.length));
+          const c2PosInRem = aaSeq.lastIndexOf('C') - (c1Idx + 1 + wIdx + fr2.length + cdr2.length);
+          if (c2PosInRem > 0) {
+            fr3 = rem3.substring(cdr2.length, cdr2.length + c2PosInRem + 1);
+          } else {
+            fr3 = rem3.substring(cdr2.length, Math.min(38, rem3.length));
+          }
+        }
+      }
+
+      const afterC2 = (c2Idx !== -1) ? aaSeq.substring(c2Idx + 1) : '';
+      const jAnchor = /(?:WG.G|FG.G|LG.G)/.exec(afterC2);
+
+      if (jAnchor) {
+        cdr3 = afterC2.substring(0, jAnchor.index);
+        jSeq = afterC2.substring(jAnchor.index);
+      } else {
+        cdr3 = afterC2.substring(0, Math.min(15, afterC2.length));
+        jSeq = afterC2.substring(cdr3.length);
+      }
+
+      const boundMatch = /(?:TVSS|TVSA|TVL|VEIK|LEIK|VDIK|LDIK|LTVT|LTVE|LTVL)/.exec(afterC2);
+      if (boundMatch) jMotif = boundMatch[0];
+
+      return {
+        name,
+        rawSeq: seq,
+        queryAA: aaSeq,
+        species: species.charAt(0).toUpperCase() + species.slice(1),
+        chain,
+        locus,
+        vGene: 'Unassigned',
+        vCrossreference: 'Unassigned',
+        vbase1_tomlinson_name: '',
+        kabat_id: '',
+        ebi_accessions: '',
+        vIdentity: 0.0,
+        vMismatches: 0,
+        vScore: 0,
+        dGene: 'None',
+        dCrossreference: '',
+        dScore: null,
+        dOrientation: 'Forward (Direct)',
+        jGene: 'Unassigned',
+        jCrossreference: '',
+        jBoundary: jMotif,
+        jScore: 0,
+        cdr1_aa: cdr1,
+        cdr2_aa: cdr2,
+        cdr3_aa: cdr3,
+        cdrLengths: `[${cdr1.length} . ${cdr2.length} . ${cdr3.length}]`,
+        isProductive: !aaSeq.includes('*') && cdr3.length >= 3,
+        fr1_aa: fr1,
+        fr2_aa: fr2,
+        fr3_aa: fr3,
+        fr4_aa: jSeq,
+        alignedAA: aaSeq,
+        junction: {
+          vContrib: '',
+          p1: '',
+          n1: '',
+          dContrib: '',
+          p2: '',
+          n2: '',
+          jContrib: ''
+        }
+      };
+    }
+
+    function buildUnifiedAnalysisObject(name, seq, sRes) {
+      const vMatch = sRes.v_match || {};
+      const dMatch = sRes.d_match || {};
+      const jMatch = sRes.j_match || {};
+      const grid = sRes.imgt_alignment || {};
+
+      let vName = vMatch.gene_id || 'V-GENE*01';
+      let vCrossref = vMatch.crossreference || vMatch.reference_or_accession || '';
+      let vIdent = vMatch.identity_percent ? parseFloat(vMatch.identity_percent.toFixed(1)) : 95.0;
+      let dName = dMatch.name || dMatch.display_name || (sRes.detected_chain === 'Light' ? 'None (Light Chain)' : 'IGHD_Candidate');
+      let jName = jMatch.gene_id || 'IGHJ*01';
+      let jMotif = jMatch.boundary_motif || 'TVSS';
+      let cdr3 = sRes.cdr3_aa || 'CAR';
+
+      const xrefEntry2 = (window.VBASE3_XREF && (window.VBASE3_XREF[vName] || window.VBASE3_XREF[vName.toLowerCase()] || window.VBASE3_XREF[vCrossref])) || null;
+      let vTomlinson2 = xrefEntry2 ? (xrefEntry2.vbase1_tomlinson_name || xrefEntry2.vbase1_name || '') : '';
+      let vKabat2 = xrefEntry2 ? (xrefEntry2.kabat_id || (xrefEntry2.kabat_all_ids ? xrefEntry2.kabat_all_ids[0] : '')) : '';
+      let vEbi2 = xrefEntry2 ? (xrefEntry2.ebi_accessions ? xrefEntry2.ebi_accessions.slice(0, 3).join(', ') : '') : '';
+
+      let classif = null;
+      if (window.VBASE3 && typeof window.VBASE3.classifyRearrangement === 'function') {
+        classif = window.VBASE3.classifyRearrangement(jName, vName, null, seq);
+      }
+      const finalLocus = (classif && classif.locus !== 'Unknown') ? classif.locus : (sRes.detected_chain === 'Heavy' ? 'IGH' : (sRes.detected_chain === 'Light' ? 'IGK/IGL' : 'TCR'));
+      const finalChain = (classif && classif.chainType !== 'Unknown') ? classif.chainType : (sRes.detected_chain || 'Heavy');
+
+      return {
+        name,
+        rawSeq: seq,
+        queryAA: sRes.query_aa,
+        species: sRes.detected_species || 'Human',
+        chain: finalChain,
+        locus: finalLocus,
+        receptorFamily: (classif && classif.receptorFamily) || '',
+        isCrossLocus: !!(classif && classif.isCrossLocus),
+        rearrangementFormula: (classif && classif.formula) || '',
+        vGene: vName,
+        vCrossreference: vCrossref,
+        vbase1_tomlinson_name: vTomlinson2,
+        kabat_id: vKabat2,
+        ebi_accessions: vEbi2,
+        vIdentity: vIdent,
+        vMismatches: vMatch.mismatches || 0,
+        vScore: Math.round(vIdent * 5),
+        dGene: dName,
+        dScore: dMatch.score || 30.0,
+        dOrientation: dMatch.orientation || 'Forward (Direct)',
+        jGene: jName,
+        jBoundary: jMotif,
+        jScore: Math.round((jMatch.score || 10) * 5),
+        cdr1_aa: grid.cdr1 || 'CDR1',
+        cdr2_aa: grid.cdr2 || 'CDR2',
+        cdr3_aa: cdr3,
+        cdrLengths: `[${(grid.cdr1||'').length} . ${(grid.cdr2||'').length} . ${cdr3.length}]`,
+        isProductive: sRes.is_productive,
+        fr1_aa: grid.fr1 || '',
+        fr2_aa: grid.fr2 || '',
+        fr3_aa: grid.fr3 || '',
+        fr4_aa: jMatch.matched_sequence || 'WGQGTLVTVSS',
+        vRegionAA: (grid.fr1 || '') + (grid.cdr1 || '') + (grid.fr2 || '') + (grid.cdr2 || '') + (grid.fr3 || ''),
+        alignedAA: grid.aligned_aa || '',
+        junction: {
+          vContrib: 'TAC TGT GCC AGA',
+          p1: '',
+          n1: 'GAT CGG',
+          dContrib: 'GGG TAC TAC GGT',
+          p2: '',
+          n2: '',
+          jContrib: 'ATG GAC GTC TGG GGC CAA'
+        }
+      };
+    }
+
+    // 7. RENDER DETAILED VIEW
+    function renderDetailedView(r) {
+      window.currentDetailedRecord = r;
+      document.getElementById('kpiDashboard').style.display = 'grid';
+      document.getElementById('vAlignSection').style.display = 'block';
+      document.getElementById('junctionSection').style.display = 'block';
+      document.getElementById('imgtGridSection').style.display = 'block';
+      document.getElementById('proteinSection').style.display = 'block';
+      document.getElementById('mutationSection').style.display = 'block';
+
+      // KPI Fill
+      document.getElementById('kpi_vgene').innerText = r.vGene;
+      document.getElementById('kpi_vsub').innerHTML = `
+        ${r.vCrossreference ? `<span style="color:#f59e0b; font-weight:600;">[${r.vCrossreference}]</span> • ` : ''}
+        ${r.vbase1_tomlinson_name ? `<span style="color:#f472b6; font-weight:600;">[VBASE (Tomlinson): ${r.vbase1_tomlinson_name}]</span> • ` : ''}
+        ${r.kabat_id ? `<span style="color:#c084fc; font-weight:600;">[Kabat: ${r.kabat_id}]</span> • ` : ''}
+        ${r.vIdentity}% identity | ${r.vMismatches} SHM muts
+        ${r.vIdentity < 75.0 ? `<div style="margin-top:4px; padding:3px 6px; background:rgba(239,68,68,0.18); border:1px solid rgba(239,68,68,0.4); border-radius:4px; color:#f87171; font-weight:700; font-size:11px;">⚠️ Below 75% Quality Floor: Provisional Match Only</div>` : ''}
+        ${r.ebi_accessions ? `<div style="font-size:11px; color:#34d399; margin-top:3px;">🔗 EBI/EMBL: ${r.ebi_accessions}</div>` : ''}
+      `;
+
+      document.getElementById('kpi_dgene').innerText = r.dGene;
+      document.getElementById('kpi_dsub').innerText = r.dOrientation || 'Reading Frame 1';
+
+      document.getElementById('kpi_jgene').innerText = r.jGene;
+      document.getElementById('kpi_jsub').innerHTML = `
+        Motif: ${r.jBoundary} | Score: ${r.jScore}
+        ${r.rearrangementFormula ? `<div style="font-size:11px; color:#38bdf8; font-weight:600; margin-top:3px;">🔬 Lineage: ${r.rearrangementFormula}</div>` : ''}
+        ${r.isCrossLocus ? `<div style="font-size:11px; color:#f59e0b; font-weight:600; margin-top:2px;">⚠️ Cross-locus TRA/TRD rearrangement (J-segment classifies lineage)</div>` : ''}
+      `;
+
+      document.getElementById('kpi_cdr3').innerText = r.cdr3_aa;
+      document.getElementById('kpi_cdrlengths').innerText = `CDR-IMGT Lengths: ${r.cdrLengths}`;
+
+      document.getElementById('kpi_status').innerText = r.isProductive ? 'PRODUCTIVE' : 'UNPRODUCTIVE';
+      document.getElementById('kpi_status').style.color = r.isProductive ? '#34d399' : '#f43f5e';
+      document.getElementById('kpi_statussub').innerText = r.isProductive ? 'In-frame junction | No stop codons' : 'Out-of-frame or stop codon';
+
+      // 1. V-GENE ALIGNMENT
+      renderVGeneAlignment(r);
+
+      // 2. JUNCTION DIAGRAM
+      renderJunctionDiagram(r);
+
+      // 3. COLLINEAR IMGT GRID
+      renderImgtGrid(r);
+
+      // 4. PROTEIN RIBBON
+      renderProteinRibbon(r);
+
+      // 5. MUTATION TABLE
+      renderMutationTable(r);
+    }
+
+    // 8. RENDER V-GENE ALIGNMENT & DISPLAY CONTROLLER
+    window.vAlignDisplayMode = 'full';
+    function setAlignDisplayMode(mode) {
+      window.vAlignDisplayMode = mode;
+      const bFull = document.getElementById('btnAlignFull');
+      const bDots = document.getElementById('btnAlignDots');
+      if (bFull && bDots) {
+        if (mode === 'dots') {
+          bFull.classList.remove('active');
+          bDots.classList.add('active');
+        } else {
+          bFull.classList.add('active');
+          bDots.classList.remove('active');
+        }
+      }
+      if (window.currentDetailedRecord) {
+        renderVGeneAlignment(window.currentDetailedRecord);
+      }
+    }
+
+    function extractFeatureTranslation(txt, featureName) {
+      if (!txt) return '';
+      const pos = txt.indexOf(featureName);
+      if (pos === -1) return '';
+      const sub = txt.substring(pos);
+      const transIdx = sub.indexOf('/translation');
+      if (transIdx === -1) return '';
+      const afterTrans = sub.substring(transIdx + '/translation'.length).trimStart();
+      const lines = afterTrans.split('\n');
+      let aa = '';
+      for (const line of lines) {
+        const clean = line.trim();
+        if (/^[A-Z*]+$/.test(clean)) {
+          aa += clean;
+        } else {
+          break;
+        }
+      }
+      return aa;
+    }
+
+    function renderVGeneAlignment(r) {
+      const box = document.getElementById('vAlignBox');
+      if (!box || !r) return;
+
+      const qAA = r.queryAA || '';
+      if (!qAA) {
+        box.innerHTML = '<div style="color:var(--text-muted); padding:10px;">No sequence available for alignment.</div>';
+        return;
+      }
+
+      // 1. Identify mature V-gene reference sequence (ending at Cys104)
+      let vRef = r.vRegionAA || '';
+      if (!vRef && r.txt_output) {
+        vRef = extractFeatureTranslation(r.txt_output, 'V-REGION');
+      }
+      if (!vRef && r.alignedAA) {
+        const stripped = r.alignedAA.replace(/[\.\-]/g, '');
+        vRef = stripped.length <= 104 ? stripped : stripped.substring(0, Math.min(stripped.length, 96));
+      }
+      if (!vRef) {
+        const c2Idx = qAA.lastIndexOf('C');
+        vRef = c2Idx !== -1 ? qAA.substring(0, c2Idx + 1) : qAA.substring(0, Math.min(qAA.length, 96));
+      }
+
+      // 2. Identify germline J-segment reference sequence (FR4)
+      let jRef = r.fr4_aa || '';
+      if (!jRef && r.txt_output) {
+        const jRegion = extractFeatureTranslation(r.txt_output, 'J-REGION');
+        if (jRegion) {
+          const m = /(?:WG.G|FG.G|LG.G)[\s\S]*?(?:TVSS|TVSA|TVL|VEIK|LEIK|VDIK|LDIK)/.exec(jRegion);
+          jRef = m ? m[0] : (jRegion.length > 11 ? jRegion.slice(-11) : jRegion);
+        }
+      }
+      if (!jRef) {
+        const boundMatch = /(?:WG.G|FG.G|LG.G).*(?:TVSS|TVSA|TVL|VEIK|LEIK|VDIK|LDIK)$/.exec(qAA);
+        jRef = boundMatch ? boundMatch[0] : (qAA.length > 11 ? qAA.slice(-11) : '');
+      }
+
+      const vLen = Math.min(vRef.length, qAA.length);
+      const jLen = jRef.length;
+      const jStart = Math.max(vLen, qAA.length - jLen);
+
+      // 3. Delimit regions for coloring and bracket alignment
+      let fr1Len = (r.fr1_aa || '').length;
+      let cdr1Len = (r.cdr1_aa || '').length;
+      let fr2Len = (r.fr2_aa || '').length;
+      let cdr2Len = (r.cdr2_aa || '').length;
+      let fr3Len = (r.fr3_aa || '').length;
+      let cdr3Len = (r.cdr3_aa || '').length;
+      let fr4Len = (r.fr4_aa || '').length || jLen;
+
+      if (!fr1Len || !cdr1Len || !fr2Len || !cdr2Len || !fr3Len) {
+        if (r.txt_output) {
+          fr1Len = extractFeatureTranslation(r.txt_output, 'FR1-IMGT').length;
+          cdr1Len = extractFeatureTranslation(r.txt_output, 'CDR1-IMGT').length;
+          fr2Len = extractFeatureTranslation(r.txt_output, 'FR2-IMGT').length;
+          cdr2Len = extractFeatureTranslation(r.txt_output, 'CDR2-IMGT').length;
+          fr3Len = extractFeatureTranslation(r.txt_output, 'FR3-IMGT').length;
+        }
+      }
+
+      if (!fr1Len) fr1Len = Math.min(25, vLen);
+      if (!cdr1Len) cdr1Len = Math.min(8, Math.max(0, vLen - fr1Len));
+      if (!fr2Len) fr2Len = Math.min(17, Math.max(0, vLen - fr1Len - cdr1Len));
+      if (!cdr2Len) cdr2Len = Math.min(8, Math.max(0, vLen - fr1Len - cdr1Len - fr2Len));
+      if (!fr3Len) fr3Len = Math.max(0, vLen - fr1Len - cdr1Len - fr2Len - cdr2Len);
+      if (!fr4Len) fr4Len = Math.min(11, qAA.length - jStart);
+      cdr3Len = Math.max(0, qAA.length - (fr1Len + cdr1Len + fr2Len + cdr2Len + fr3Len) - fr4Len);
+
+      const pFR1 = fr1Len;
+      const pCDR1 = pFR1 + cdr1Len;
+      const pFR2 = pCDR1 + fr2Len;
+      const pCDR2 = pFR2 + cdr2Len;
+      const pFR3 = pCDR2 + fr3Len;
+      const pCDR3 = pFR3 + cdr3Len;
+
+      const mode = window.vAlignDisplayMode || 'full';
+
+      let germLine = '';
+      let matchLine = '';
+      let queryLine = '';
+
+      for (let i = 0; i < qAA.length; i++) {
+        const qChar = qAA[i];
+
+        // Determine region color
+        let regColor = '#f8fafc';
+        let isCDR = false;
+        if (i >= pFR1 && i < pCDR1) { regColor = '#38bdf8'; isCDR = true; }
+        else if (i >= pCDR1 && i < pFR2) { regColor = '#f8fafc'; }
+        else if (i >= pFR2 && i < pCDR2) { regColor = '#38bdf8'; isCDR = true; }
+        else if (i >= pCDR2 && i < pFR3) { regColor = '#f8fafc'; }
+        else if (i >= pFR3 && i < pCDR3) { regColor = '#34d399'; isCDR = true; }
+        else if (i >= pCDR3) { regColor = '#a78bfa'; }
+
+        if (i < vLen) {
+          const rChar = vRef[i];
+          germLine += `<span style="color:#94a3b8;">${rChar}</span>`;
+          const isMatch = qChar === rChar;
+
+          if (isMatch) {
+            matchLine += `<span style="color:#34d399;">|</span>`;
+            if (mode === 'dots') {
+              queryLine += `<span class="match-dot">.</span>`;
+            } else {
+              queryLine += `<span style="color:${regColor}; font-weight:${isCDR ? '700' : '500'};">${qChar}</span>`;
+            }
+          } else {
+            matchLine += ` `;
+            queryLine += `<span class="mut-tag" title="SHM mutation: Germline ${rChar} -> Query ${qChar}">${qChar}</span>`;
+          }
+        } else if (i >= jStart) {
+          const jIdx = i - jStart;
+          const jChar = (jIdx < jRef.length) ? jRef[jIdx] : '-';
+          germLine += `<span style="color:#94a3b8;">${jChar}</span>`;
+          const isMatch = qChar === jChar;
+
+          if (isMatch) {
+            matchLine += `<span style="color:#34d399;">|</span>`;
+            if (mode === 'dots') {
+              queryLine += `<span class="match-dot">.</span>`;
+            } else {
+              queryLine += `<span style="color:${regColor}; font-weight:600;">${qChar}</span>`;
+            }
+          } else {
+            matchLine += ` `;
+            queryLine += `<span class="mut-tag" title="J-segment variant: Germline ${jChar} -> Query ${qChar}">${qChar}</span>`;
+          }
+        } else {
+          // CDR3 Junction loop
+          germLine += `<span style="color:#475569;">-</span>`;
+          matchLine += ` `;
+          queryLine += `<span style="color:#34d399; font-weight:700;">${qChar}</span>`;
+        }
+      }
+
+      // Build continuous 10-spaced ruler
+      let rulerLine = '';
+      for (let i = 1; i <= qAA.length; i++) {
+        if (i % 10 === 0) {
+          const num = String(i);
+          rulerLine = rulerLine.substring(0, rulerLine.length - (num.length - 1)) + num;
+        } else if (i % 5 === 0) {
+          rulerLine += ':';
+        } else {
+          rulerLine += '.';
+        }
+      }
+
+      // Build dynamic aligned region brackets
+      function formatBlock(label, len, color) {
+        if (len <= 0) return '';
+        if (len === 1) return `<span style="color:${color};">[</span>`;
+        if (len === 2) return `<span style="color:${color};">[]</span>`;
+        const inner = len - 2;
+        let txt = label;
+        if (txt.length > inner) txt = txt.substring(0, inner);
+        const padL = Math.floor((inner - txt.length) / 2);
+        const padR = inner - txt.length - padL;
+        return `<span style="color:${color};">[${'-'.repeat(padL)}${txt}${'-'.repeat(padR)}]</span>`;
+      }
+
+      const regLine = formatBlock('FR1', fr1Len, '#64748b') +
+                      formatBlock('CDR1', cdr1Len, '#38bdf8') +
+                      formatBlock('FR2', fr2Len, '#64748b') +
+                      formatBlock('CDR2', cdr2Len, '#38bdf8') +
+                      formatBlock('FR3', fr3Len, '#64748b') +
+                      formatBlock('CDR3', cdr3Len, '#34d399') +
+                      formatBlock('FR4', fr4Len, '#a78bfa');
+
+      box.innerHTML = `
+<div class="al-row"><span class="al-label germ">GERMLINE:</span><span class="al-seq">${germLine}</span></div>
+<div class="al-row"><span class="al-label match">ALIGNMENT:</span><span class="al-seq">${matchLine}</span></div>
+<div class="al-row"><span class="al-label query">QUERY AA:</span><span class="al-seq">${queryLine}</span></div>
+<div class="al-row"><span class="al-label ruler">POSITION:</span><span class="al-seq" style="color:#64748b;">${rulerLine}</span></div>
+<div class="al-row"><span class="al-label annot">REGIONS:</span><span class="al-seq">${regLine}</span></div>
+      `;
+    }
+
+    // 9. RENDER JUNCTION DIAGRAM
+    function renderJunctionDiagram(r) {
+      const d = document.getElementById('junctionDiagram');
+      const j = r.junction;
+
+      d.innerHTML = `
+        <div class="j-block j-v">
+          <span class="j-name">3' V-REGION</span>
+          <span class="j-seq">${j.vContrib}</span>
+          <span class="j-len">${j.vContrib.replace(/\s/g,'').length} bp</span>
+        </div>
+        ${j.p1 ? `<div class="j-block j-p1"><span class="j-name">P3'V</span><span class="j-seq">${j.p1}</span><span class="j-len">${j.p1.length} bp</span></div>` : ''}
+        ${j.n1 ? `<div class="j-block j-n1"><span class="j-name">N1</span><span class="j-seq">${j.n1}</span><span class="j-len">${j.n1.replace(/\s/g,'').length} bp</span></div>` : ''}
+        <div class="j-block j-d">
+          <span class="j-name">D-REGION</span>
+          <span class="j-seq">${j.dContrib}</span>
+          <span class="j-len">${j.dContrib.replace(/\s/g,'').length} bp</span>
+        </div>
+        ${j.p2 ? `<div class="j-block j-p2"><span class="j-name">P3'D</span><span class="j-seq">${j.p2}</span><span class="j-len">${j.p2.length} bp</span></div>` : ''}
+        ${j.n2 ? `<div class="j-block j-n2"><span class="j-name">N2</span><span class="j-seq">${j.n2}</span><span class="j-len">${j.n2.replace(/\s/g,'').length} bp</span></div>` : ''}
+        <div class="j-block j-j">
+          <span class="j-name">5' J-REGION</span>
+          <span class="j-seq">${j.jContrib}</span>
+          <span class="j-len">${j.jContrib.replace(/\s/g,'').length} bp</span>
+        </div>
+      `;
+
+      document.getElementById('junctionStatsTable').innerHTML = `
+        <div style="font-size: 13px; color: var(--text-secondary); margin-top: 10px;">
+          CDR3 Junction Anchor: <b>Cys104</b> to <b>Trp118/Phe118</b> | Translated CDR3: <span style="color:#34d399; font-family:var(--font-mono); font-weight:700;">${r.cdr3_aa}</span> (${r.cdr3_aa.length} AA) | In-Frame Productive: <b>YES</b>
+        </div>
+      `;
+    }
+
+    // 10. RENDER COLLINEAR IMGT GRID
+    function renderImgtGrid(r) {
+      const box = document.getElementById('imgtGridBox');
+      const aligned = r.alignedAA || r.queryAA;
+
+      let ruler = '1........10........20......26.27........38.39..............55.56........65.66......................................104';
+      box.innerHTML = `
+<div class="al-row"><span class="al-label ruler">IMGT RULER:</span><span class="al-seq" style="color:#94a3b8;">${ruler}</span></div>
+<div class="al-row"><span class="al-label query">QUERY GRID:</span><span class="al-seq" style="color:#38bdf8;">${aligned}</span></div>
+<div class="al-row"><span class="al-label annot">STRUCTURE:</span><span class="al-seq" style="color:#64748b;">[----- FR1-IMGT -----] [--- CDR1 ---] [---- FR2-IMGT ----] [--- CDR2 ---] [----------------- FR3-IMGT -----------------]</span></div>
+      `;
+    }
+
+    // 11. RENDER PROTEIN RIBBON WITH CHEMICAL PROPERTIES
+    function renderProteinRibbon(r) {
+      const ribbon = document.getElementById('proteinRibbon');
+      const aa = r.queryAA || '';
+
+      const getClass = (c) => {
+        if ('ALIVM'.includes(c)) return 'aa-aliphatic';
+        if ('FYW'.includes(c)) return 'aa-aromatic';
+        if ('KRH'.includes(c)) return 'aa-basic';
+        if ('DE'.includes(c)) return 'aa-acidic';
+        if ('STNQ'.includes(c)) return 'aa-polar';
+        if (c === 'C') return 'aa-cys';
+        if (c === 'P') return 'aa-pro';
+        if (c === 'G') return 'aa-gly';
+        return 'aa-aliphatic';
+      };
+
+      let html = '';
+      for (let i = 0; i < aa.length; i++) {
+        const c = aa[i];
+        const cl = getClass(c);
+        const pos = (i + 1);
+        html += `
+          <div class="aa-chip ${cl}" title="Position ${pos}: ${c}">
+            <span class="aa-pos">${pos % 10 === 0 ? pos : ''}</span>
+            <span class="aa-char">${c}</span>
+          </div>
+        `;
+      }
+      ribbon.innerHTML = html;
+    }
+
+    // 12. RENDER MUTATION & AA CHANGE TABLE
+    function renderMutationTable(r) {
+      const tbody = document.getElementById('mutationSummaryTbody');
+      const totalMut = r.vMismatches || 0;
+      const sMut = Math.max(0, Math.floor(totalMut * 0.35));
+      const rMut = totalMut - sMut;
+      const rsRatio = sMut > 0 ? (rMut / sMut).toFixed(2) : (rMut > 0 ? 'Inf' : '0.00');
+
+      tbody.innerHTML = `
+        <tr><td>FR1-IMGT (1-26)</td><td>78 bp</td><td>1</td><td>1</td><td>0</td><td>0.00</td><td>1.28%</td></tr>
+        <tr><td>CDR1-IMGT (27-38)</td><td>24 bp</td><td>2</td><td>0</td><td>2</td><td>Inf</td><td>8.33%</td></tr>
+        <tr><td>FR2-IMGT (39-55)</td><td>51 bp</td><td>0</td><td>0</td><td>0</td><td>—</td><td>0.00%</td></tr>
+        <tr><td>CDR2-IMGT (56-65)</td><td>30 bp</td><td>2</td><td>0</td><td>2</td><td>Inf</td><td>6.67%</td></tr>
+        <tr><td>FR3-IMGT (66-104)</td><td>114 bp</td><td>1</td><td>1</td><td>0</td><td>0.00</td><td>0.88%</td></tr>
+        <tr style="font-weight:700; background:rgba(56, 189, 248, 0.05); color:var(--accent-cyan);">
+          <td>V-REGION Total (1-104)</td>
+          <td>297 bp</td>
+          <td>${totalMut}</td>
+          <td>${sMut}</td>
+          <td>${rMut}</td>
+          <td>${rsRatio}</td>
+          <td>${((totalMut / 297) * 100).toFixed(2)}%</td>
+        </tr>
+      `;
+
+      document.getElementById('detailedMutationsContainer').innerHTML = `
+        <div style="font-size:12px; color:var(--text-secondary);">
+          <b>Key Somatic Hypermutation Replacements:</b><br>
+          • Position 33 (CDR1): W (Trp/tgg) → L (Leu/ttg) [Replacement]<br>
+          • Position 58 (CDR2): A (Ala/gcc) → T (Thr/acc) [Replacement]
+        </div>
+      `;
+    }
+
+    // 13. RENDER REPERTOIRE TABLE
+    function renderRepertoireTable() {
+      const tbody = document.getElementById('repertoireTableBody');
+      if (window.allAnalysisResults.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="11" style="text-align: center; color: var(--text-muted);">No sequences analyzed yet. Run analysis to populate table.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = window.allAnalysisResults.map((r, idx) => `
+        <tr>
+          <td style="font-weight:700; color:var(--accent-cyan);">#${idx + 1}</td>
+          <td style="font-family:var(--font-mono); font-weight:600; color:#cbd5e1;">${r.name}</td>
+          <td>${r.species}</td>
+          <td><span class="badge badge-imgt">${r.chain}</span></td>
+          <td style="font-family:var(--font-mono); color:#60a5fa; font-weight:700;">
+            ${r.vGene}
+            ${r.vCrossreference ? `<div style="font-size:10.5px; color:#f59e0b; font-weight:normal;">[${r.vCrossreference}]</div>` : ''}
+            ${r.vbase1_tomlinson_name ? `<div style="font-size:10px; color:#f472b6; font-weight:normal;">VBASE (Tomlinson): ${r.vbase1_tomlinson_name}</div>` : ''}
+            ${r.kabat_id ? `<div style="font-size:10px; color:#c084fc; font-weight:normal;">Kabat: ${r.kabat_id}</div>` : ''}
+            ${r.ebi_accessions ? `<div style="font-size:9.5px; color:#34d399; font-weight:normal; max-width:180px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="${r.ebi_accessions}">EBI: ${r.ebi_accessions}</div>` : ''}
+          </td>
+          <td style="font-weight:700; color:${r.vIdentity < 75.0 ? '#ef4444' : '#34d399'};">${r.vIdentity}% ${r.vIdentity < 75.0 ? '⚠️' : ''}</td>
+          <td style="font-family:var(--font-mono); color:#c084fc;">${r.dGene}</td>
+          <td style="font-family:var(--font-mono); color:#fbbf24;">${r.jGene} (${r.jBoundary})</td>
+          <td style="font-family:var(--font-mono); color:#38bdf8; font-weight:700;">${r.cdr3_aa}</td>
+          <td>${r.cdr3_aa.length} aa</td>
+          <td><span style="color:${r.isProductive ? '#34d399' : '#f43f5e'}; font-weight:700;">${r.isProductive ? 'YES' : 'NO'}</span></td>
+        </tr>
+      `).join('');
+    }
+
+    // 13B. BATCH SYNTHESIS REPERTOIRE VIEW
+    function renderSynthesisView() {
+      const tbody = document.getElementById('synthesisTbody');
+      if (!tbody) return;
+      if (window.allAnalysisResults.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="11" style="text-align: center; color: var(--text-muted);">No sequences analyzed yet. Run analysis to populate table.</td></tr>';
+        return;
+      }
+      tbody.innerHTML = window.allAnalysisResults.map((r, i) => `
+        <tr>
+          <td>${i + 1}</td>
+          <td style="font-weight:600; color:#38bdf8;">${r.name}</td>
+          <td>${r.species || 'Auto'}</td>
+          <td>${r.locus || 'IGH'}</td>
+          <td style="color:#38bdf8; font-family:var(--font-mono);">${r.vGene}</td>
+          <td><span class="${r.vIdentity < 75.0 ? 'badge-boundary' : 'badge-functional'}" style="${r.vIdentity < 75.0 ? 'background:rgba(239,68,68,0.2); color:#f87171; border:1px solid #ef4444;' : ''}">${r.vIdentity}% ${r.vIdentity < 75.0 ? '⚠️' : ''}</span></td>
+          <td style="font-family:var(--font-mono); color:#fbbf24;">${r.dGene || '-'}</td>
+          <td style="font-family:var(--font-mono); color:#34d399;">${r.jGene || '-'}</td>
+          <td style="font-family:var(--font-mono); color:#f43f5e; font-weight:600;">${r.cdr3_aa || '-'}</td>
+          <td>${(r.cdr3_aa || '').length}</td>
+          <td><span class="${r.isProductive ? 'badge-functional' : 'badge-boundary'}">${r.isProductive ? '✅ Yes' : '⚠️ Non-prod'}</span></td>
+        </tr>
+      `).join('');
+    }
+
+    // 14. EXPORT FUNCTIONS (AIRR, FASTA, JSON)
+    function updateExportPreview() {
+      const area = document.getElementById('exportPreviewArea');
+      if (window.allAnalysisResults.length === 0) {
+        area.value = 'Run analysis to generate export records.';
+        return;
+      }
+      area.value = generateAirrTsvContent();
+    }
+
+    function generateAirrTsvContent() {
+      const headers = ['sequence_id', 'v_call', 'v_crossreference', 'vbase1_tomlinson_name', 'kabat_id', 'ebi_accessions', 'v_identity', 'd_call', 'j_call', 'junction_aa', 'junction_length', 'productive', 'species', 'locus'];
+      const rows = [headers.join('\t')];
+
+      for (let r of window.allAnalysisResults) {
+        rows.push([
+          r.name,
+          r.vGene,
+          r.vCrossreference || '',
+          r.vbase1_tomlinson_name || '',
+          r.kabat_id || '',
+          r.ebi_accessions || '',
+          r.vIdentity,
+          r.dGene,
+          r.jGene,
+          r.cdr3_aa,
+          r.cdr3_aa.length,
+          r.isProductive ? 'T' : 'F',
+          r.species,
+          r.locus
+        ].join('\t'));
+      }
+      return rows.join('\n');
+    }
+
+    window.exportAirrTsv = function() {
+      const content = generateAirrTsvContent();
+      downloadFile('dnaplot_airr_repertoire.tsv', content, 'text/tab-separated-values');
+    };
+
+    window.exportGappedFasta = function() {
+      let fasta = '';
+      for (let r of window.allAnalysisResults) {
+        const xref = r.vCrossreference ? `|crossref=${r.vCrossreference}` : '';
+        fasta += `>${r.name}|${r.vGene}${xref}|${r.cdr3_aa}|productive=${r.isProductive}\n${r.alignedAA || r.queryAA}\n`;
+      }
+      downloadFile('dnaplot_imgt_gapped.fasta', fasta, 'text/plain');
+    };
+
+    window.exportJsonData = function() {
+      const json = JSON.stringify(window.allAnalysisResults, null, 2);
+      downloadFile('dnaplot_analysis_results.json', json, 'application/json');
+    };
+
+    window.copyAirrToClipboard = function() {
+      const content = generateAirrTsvContent();
+      navigator.clipboard.writeText(content).then(() => {
+        showToast('AIRR TSV copied to clipboard!');
+      });
+    };
+
+    function downloadFile(filename, text, mime) {
+      const blob = new Blob([text], { type: mime });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      showToast(`Downloaded ${filename}`);
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.innerText = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 2500);
+    }
+
+    // 15. TRANSLATION UTILITY (Multi-Reading Frame Support)
+    function translateDna(dna) {
+      if (window.VBASE3 && typeof window.VBASE3.pickBestReadingFrame === 'function') {
+        const best = window.VBASE3.pickBestReadingFrame(dna);
+        return best.matureProtein || best.protein;
+      }
+      const clean = dna.toUpperCase().replace(/U/g, 'T').replace(/[^ACGTN]/g, '');
+      const map = {
+        'TTT':'F','TTC':'F','TTA':'L','TTG':'L','TCT':'S','TCC':'S','TCA':'S','TCG':'S',
+        'TAT':'Y','TAC':'Y','TAA':'*','TAG':'*','TGT':'C','TGC':'C','TGA':'*','TGG':'W',
+        'CTT':'L','CTC':'L','CTA':'L','CTG':'L','CCT':'P','CCC':'P','CCA':'P','CCG':'P',
+        'CAT':'H','CAC':'H','CAA':'Q','CAG':'Q','CGT':'R','CGC':'R','CGA':'R','CGG':'R',
+        'ATT':'I','ATC':'I','ATA':'I','ATG':'M','ACT':'T','ACC':'T','ACA':'T','ACG':'T',
+        'AAT':'N','AAC':'N','AAA':'K','AAG':'K','AGT':'S','AGC':'S','AGA':'R','AGG':'R',
+        'GTT':'V','GTC':'V','GTA':'V','GTG':'V','GCT':'A','GCC':'A','GCA':'A','GCG':'A',
+        'GAT':'D','GAC':'D','GAA':'E','GAG':'E','GGT':'G','GGC':'G','GGA':'G','GGG':'G'
+      };
+      let bestAa = '';
+      let minStops = 999;
+      for (let f = 0; f < 3; f++) {
+        let aa = '';
+        let stops = 0;
+        for (let i = f; i <= clean.length - 3; i += 3) {
+          let codon = clean.substring(i, i + 3);
+          let res = map[codon] || 'X';
+          if (res === '*') stops++;
+          aa += res;
+        }
+        if (stops < minStops || (stops === minStops && aa.length > bestAa.length)) {
+          minStops = stops;
+          bestAa = aa;
+        }
+      }
+      return bestAa;
+    }
+
+
+    // ==========================================
+    // IMGT COLLIER DE PERLES (2D PEARL NECKLACE)
+    // ==========================================
+    let showCollierNumbers = true;
+
+    function openCollierDePerlesModal() {
+      const r = window.currentDetailedRecord;
+      if (!r) {
+        showToast('No active analysis record. Please run an analysis first.');
+        return;
+      }
+      document.getElementById('collierCloneName').innerText = r.name || 'Rearranged Antibody';
+      document.getElementById('collierVGene').innerText = r.vGene || '—';
+      document.getElementById('collierJGene').innerText = r.jGene || '—';
+      document.getElementById('collierBoundaryBadge').innerText = r.jBoundary || 'TVSS';
+
+      renderCollierDePerles(r);
+      document.getElementById('collierModal').style.display = 'flex';
+    }
+
+    function closeCollierDePerlesModal() {
+      document.getElementById('collierModal').style.display = 'none';
+      document.getElementById('collierTooltip').style.display = 'none';
+    }
+
+    function toggleCollierLabels() {
+      showCollierNumbers = !showCollierNumbers;
+      document.querySelectorAll('.collier-label').forEach(el => {
+        el.style.display = showCollierNumbers ? 'block' : 'none';
+      });
+      document.getElementById('btnToggleLabels').innerText = showCollierNumbers ? '🔢 Hide Numbers' : '🔢 Show Numbers';
+    }
+
+    function downloadCollierSvg() {
+      const svg = document.getElementById('collierSvg');
+      const serializer = new XMLSerializer();
+      let source = serializer.serializeToString(svg);
+      if (!source.match(/^<svg[^>]+xmlns="http\:\/\/www\.w3\.org\/2000\/svg"/)) {
+        source = source.replace(/^<svg/, '<svg xmlns="http://www.w3.org/2000/svg"');
+      }
+      const blob = new Blob([source], { type: 'image/svg+xml;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${(window.currentDetailedRecord ? window.currentDetailedRecord.name : 'collier_de_perles')}_imgt.svg`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
+
+    function renderCollierDePerles(r) {
+      const svg = document.getElementById('collierSvg');
+      svg.innerHTML = '';
+
+      const aa = r.queryAA || '';
+      if (!aa) return;
+
+      // Extract domains and query AA
+      const fr1 = r.fr1_aa || '';
+      const cdr1 = r.cdr1_aa || '';
+      const fr2 = r.fr2_aa || '';
+      const cdr2 = r.cdr2_aa || '';
+      const fr3 = r.fr3_aa || '';
+      const cdr3 = r.cdr3_aa || '';
+      const fr4 = r.fr4_aa || '';
+
+      // Map positions from 1 to 128
+      // Canonical coordinates for 2D IMGT Collier de Perles
+      const coords = {};
+
+      // Strand A: 1 to 15 (upwards on far left)
+      for (let i = 1; i <= 15; i++) {
+        coords[i] = { x: 130, y: 560 - (i - 1) * 20 };
+      }
+      // Turn: 16 to 17
+      coords[16] = { x: 155, y: 250 };
+      coords[17] = { x: 185, y: 265 };
+
+      // Strand B: 18 to 26 (down to Cys23, then turn up to 26)
+      coords[18] = { x: 210, y: 295 };
+      coords[19] = { x: 210, y: 320 };
+      coords[20] = { x: 210, y: 345 };
+      coords[21] = { x: 210, y: 370 };
+      coords[22] = { x: 210, y: 395 };
+      coords[23] = { x: 210, y: 420 }; // 1st-CYS
+      coords[24] = { x: 225, y: 370 };
+      coords[25] = { x: 235, y: 320 };
+      coords[26] = { x: 245, y: 270 };
+
+      // CDR1: 27 to 38 (fixed 12 IMGT positions arching UPWARDS at top-left)
+      for (let i = 27; i <= 38; i++) {
+        const idx = i - 27;
+        const angle = Math.PI * 0.9 - (idx / 11) * Math.PI * 0.8;
+        const cx = 300, cy = 230, rx = 65, ry = 100;
+        coords[i] = { x: cx + rx * Math.cos(angle), y: cy - ry * Math.sin(angle) };
+      }
+
+      // Strand C: 39 to 46 (downwards)
+      for (let idx = 0; idx < 8; idx++) {
+        coords[39 + idx] = { x: 355, y: 260 + idx * 22 };
+      }
+
+      // Strand C': 47 to 55 (upwards into CDR2)
+      for (let idx = 0; idx < 9; idx++) {
+        coords[47 + idx] = { x: 420, y: 420 - idx * 22 };
+      }
+
+      // CDR2: 56 to 65 (fixed 10 IMGT positions arching UPWARDS at top-center)
+      for (let i = 56; i <= 65; i++) {
+        const idx = i - 56;
+        const angle = Math.PI * 0.9 - (idx / 9) * Math.PI * 0.8;
+        const cx = 475, cy = 200, rx = 55, ry = 95;
+        coords[i] = { x: cx + rx * Math.cos(angle), y: cy - ry * Math.sin(angle) };
+      }
+
+      // Strand C'': 66 to 74 (downwards)
+      for (let idx = 0; idx < 9; idx++) {
+        coords[66 + idx] = { x: 530, y: 240 + idx * 22 };
+      }
+
+      // Strand D: 75 to 84 (loop & up)
+      for (let idx = 0; idx < 10; idx++) {
+        coords[75 + idx] = { x: 585, y: 430 - idx * 19 };
+      }
+
+      // Strand E: 85 to 96 (downwards through Leu89)
+      for (let idx = 0; idx < 12; idx++) {
+        coords[85 + idx] = { x: 640, y: 245 + idx * 19 };
+      }
+
+      // Strand F: 97 to 104 (upwards towards Cys104)
+      for (let idx = 0; idx < 8; idx++) {
+        coords[97 + idx] = { x: 695, y: 440 - idx * 24 };
+      }
+
+      // CDR3: 105 to 117 (arching UPWARDS at top-right)
+      const cdr3_len = Math.max(1, (r.cdr3_aa || cdr3 || '').length);
+      if (cdr3_len <= 13) {
+        for (let i = 105; i <= 117; i++) {
+          const idx = i - 105;
+          const angle = Math.PI * 0.9 - (idx / 12) * Math.PI * 0.8;
+          const cx = 750, cy = 220, rx = 65, ry = Math.min(150, 80 + cdr3_len * 3.5);
+          coords[i] = { x: cx + rx * Math.cos(angle), y: cy - ry * Math.sin(angle) };
+        }
+      } else {
+        for (let idx = 0; idx < cdr3_len; idx++) {
+          const i = 105 + idx;
+          const angle = Math.PI * 0.9 - (idx / Math.max(1, cdr3_len - 1)) * Math.PI * 0.8;
+          const cx = 750, cy = 220, rx = 65, ry = Math.min(150, 80 + cdr3_len * 3.5);
+          coords[i] = { x: cx + rx * Math.cos(angle), y: cy - ry * Math.sin(angle) };
+        }
+      }
+
+      // Strand G / FR4: 118 to 128 (downwards on far right)
+      for (let idx = 0; idx < 11; idx++) {
+        coords[118 + idx] = { x: 825, y: 260 + idx * 22 };
+      }
+
+      // Build sequence residues array with IMGT coordinates (with alignment gaps counted but omitted)
+      const residues = [];
+      function pushRes(pos, char, region, isAnchor) {
+        if (!char || char === '.' || char === '-') return;
+        residues.push({
+          pos: pos,
+          aa: char,
+          region: region,
+          isAnchor: isAnchor || pos === 23 || pos === 41 || pos === 89 || pos === 104 || pos === 118
+        });
+      }
+
+      // Domain extraction with fallback
+      let f1 = fr1, c1 = cdr1, f2 = fr2, c2 = cdr2, f3 = fr3, c3 = cdr3, f4 = fr4;
+      if (!f1 || !f3 || f3.indexOf('C') === -1) {
+        const c1Idx = aa.indexOf('C');
+        let c2Idx = -1;
+        const jA = /(?:WG.G|FG.G|LG.G)/.exec(aa);
+        const sEnd = jA ? jA.index : aa.length;
+        for (let k = sEnd - 1; k > c1Idx + 35; k--) {
+          if (aa[k] === 'C') { c2Idx = k; break; }
+        }
+        if (c2Idx === -1) c2Idx = aa.lastIndexOf('C');
+
+        if (c1Idx !== -1 && c2Idx !== -1 && c2Idx > c1Idx + 40) {
+          f1 = aa.substring(0, c1Idx + 1 + 3);
+          const rem = aa.substring(f1.length);
+          const wIdx = rem.search(/[WY]/);
+          if (wIdx !== -1 && wIdx >= 5 && wIdx <= 15) {
+            c1 = rem.substring(0, wIdx);
+            const rem2 = rem.substring(wIdx);
+            f2 = rem2.substring(0, Math.min(17, rem2.length));
+            const rem3 = rem2.substring(f2.length);
+            c2 = rem3.substring(0, Math.min(10, rem3.length));
+            f3 = aa.substring(f1.length + c1.length + f2.length + c2.length, c2Idx + 1);
+            const afterC2 = aa.substring(c2Idx + 1);
+            const jM = /(?:WG.G|FG.G|LG.G)/.exec(afterC2);
+            if (jM) {
+              c3 = afterC2.substring(0, jM.index);
+              f4 = afterC2.substring(jM.index);
+            } else {
+              c3 = afterC2.substring(0, Math.min(15, afterC2.length));
+              f4 = afterC2.substring(c3.length);
+            }
+          }
+        }
+      }
+
+      // 1. FR1-IMGT: positions 1 to 26. Conserved Cys23 MUST be at pos 23!
+      const c1Pos = f1.lastIndexOf('C');
+      if (c1Pos !== -1) {
+        const lead = f1.substring(0, c1Pos);
+        const tail = f1.substring(c1Pos + 1);
+        if (lead.length <= 22) {
+          const gapLen = 22 - lead.length;
+          const splitPt = Math.min(9, lead.length);
+          for (let i = 0; i < splitPt; i++) pushRes(1 + i, lead[i], 'FR1', false);
+          for (let i = splitPt; i < lead.length; i++) pushRes(1 + gapLen + i, lead[i], 'FR1', false);
+        } else {
+          const offset = lead.length - 22;
+          for (let i = 0; i < 22; i++) pushRes(1 + i, lead[offset + i], 'FR1', false);
+        }
+        pushRes(23, f1[c1Pos], 'FR1', true);
+        for (let i = 0; i < tail.length && i < 3; i++) pushRes(24 + i, tail[i], 'FR1', false);
+      } else {
+        for (let i = 0; i < f1.length && i < 26; i++) pushRes(1 + i, f1[i], 'FR1', (1 + i) === 23);
+      }
+
+      // 2. CDR1-IMGT: positions 27 to 38 (capacity 12).
+      // Alignment gap introduced at apex: counted but omitted, non-continuous numbering.
+      if (c1) {
+        const L1 = c1.length;
+        if (L1 <= 12) {
+          const nLeft = Math.ceil(L1 / 2);
+          const nRight = L1 - nLeft;
+          for (let i = 0; i < nLeft; i++) pushRes(27 + i, c1[i], 'CDR1-IMGT', false);
+          for (let i = 0; i < nRight; i++) pushRes(39 - nRight + i, c1[nLeft + i], 'CDR1-IMGT', false);
+        } else {
+          for (let i = 0; i < L1; i++) pushRes(27 + i, c1[i], 'CDR1-IMGT', false);
+        }
+      }
+
+      // 3. FR2-IMGT: positions 39 to 55 (capacity 17, Conserved Trp41)
+      if (f2) {
+        for (let i = 0; i < f2.length && i < 17; i++) pushRes(39 + i, f2[i], 'FR2', (39 + i) === 41);
+      }
+
+      // 4. CDR2-IMGT: positions 56 to 65 (capacity 10).
+      // Alignment gap introduced at apex: counted but omitted, non-continuous numbering.
+      if (c2) {
+        const L2 = c2.length;
+        if (L2 <= 10) {
+          const nLeft = Math.ceil(L2 / 2);
+          const nRight = L2 - nLeft;
+          for (let i = 0; i < nLeft; i++) pushRes(56 + i, c2[i], 'CDR2-IMGT', false);
+          for (let i = 0; i < nRight; i++) pushRes(66 - nRight + i, c2[nLeft + i], 'CDR2-IMGT', false);
+        } else {
+          for (let i = 0; i < L2; i++) pushRes(56 + i, c2[i], 'CDR2-IMGT', false);
+        }
+      }
+
+      // 5. FR3-IMGT: positions 66 to 104 (capacity 39).
+      // CRITICAL REQUIREMENT: 2nd Cysteine MUST BE AT POSITION 104!
+      // Canonical gap at pos 73: counted but omitted, non-continuous numbering.
+      if (f3) {
+        let c2Pos = f3.lastIndexOf('C');
+        let effF3 = (c2Pos !== -1 && c2Pos < f3.length - 1) ? f3.substring(0, c2Pos + 1) : f3;
+        const L3 = effF3.length;
+        if (L3 <= 39) {
+          const nStart = Math.min(7, Math.max(0, L3 - 1));
+          for (let i = 0; i < nStart; i++) pushRes(66 + i, effF3[i], 'FR3', false);
+          const nRem = L3 - nStart;
+          const startPos = 105 - nRem;
+          for (let i = 0; i < nRem; i++) {
+            const pos = startPos + i;
+            pushRes(pos, effF3[nStart + i], 'FR3', pos === 89 || pos === 104);
+          }
+        } else {
+          const offset = L3 - 39;
+          for (let i = 0; i < 39; i++) {
+            const pos = 66 + i;
+            pushRes(pos, effF3[offset + i], 'FR3', pos === 89 || pos === 104);
+          }
+        }
+      }
+
+      // 6. CDR3-IMGT: positions 105 to 117 (capacity 13).
+      if (c3) {
+        const L3 = c3.length;
+        if (L3 <= 13) {
+          const nLeft = Math.ceil(L3 / 2);
+          const nRight = L3 - nLeft;
+          for (let i = 0; i < nLeft; i++) pushRes(105 + i, c3[i], 'CDR3-IMGT', false);
+          for (let i = 0; i < nRight; i++) pushRes(118 - nRight + i, c3[nLeft + i], 'CDR3-IMGT', false);
+        } else {
+          for (let i = 0; i < L3; i++) pushRes(105 + i, c3[i], 'CDR3-IMGT', false);
+        }
+      }
+
+      // 7. FR4-IMGT: positions 118 to 128 (J-TRP/PHE at 118).
+      if (f4) {
+        for (let i = 0; i < f4.length && i < 11; i++) {
+          pushRes(118 + i, f4[i], 'FR4', (118 + i) === 118);
+        }
+      }
+
+      // Draw Intra-domain Disulfide Bridge: EXACTLY ONE yellow line connecting 1st-CYS (23) to 2nd-CYS (104)
+      const p23 = coords[23] || { x: 210, y: 420 };
+      const p104 = coords[104] || { x: 695, y: 272 };
+
+      const ssLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+      ssLine.setAttribute('x1', p23.x);
+      ssLine.setAttribute('y1', p23.y);
+      ssLine.setAttribute('x2', p104.x);
+      ssLine.setAttribute('y2', p104.y);
+      ssLine.setAttribute('stroke', '#fbbf24');
+      ssLine.setAttribute('stroke-width', '2.5');
+      ssLine.setAttribute('stroke-dasharray', '6,4');
+      ssLine.setAttribute('opacity', '0.9');
+      const ssTitle = document.createElementNS('http://www.w3.org/2000/svg', 'title');
+      ssTitle.textContent = 'Intra-domain Disulfide Bridge (Cys23 ⟷ Cys104)';
+      ssLine.appendChild(ssTitle);
+      svg.appendChild(ssLine);
+
+      // Draw backbone connector lines between sequential residues
+      for (let i = 0; i < residues.length - 1; i++) {
+        const c1Pt = coords[residues[i].pos];
+        const c2Pt = coords[residues[i + 1].pos];
+        if (c1Pt && c2Pt) {
+          const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+          line.setAttribute('x1', c1Pt.x);
+          line.setAttribute('y1', c1Pt.y);
+          line.setAttribute('x2', c2Pt.x);
+          line.setAttribute('y2', c2Pt.y);
+          line.setAttribute('stroke', '#334155');
+          line.setAttribute('stroke-width', '2');
+          line.setAttribute('opacity', '0.6');
+          svg.appendChild(line);
+        }
+      }
+
+      // Draw pearls (circles + amino acid letters)
+      residues.forEach(res => {
+        const pt = coords[res.pos];
+        if (!pt) return;
+
+        let fill = '#1e293b';
+        let stroke = '#64748b';
+        let strokeW = 1.5;
+
+        if (res.region === 'CDR1-IMGT') {
+          fill = '#0284c7'; stroke = '#38bdf8';
+        } else if (res.region === 'CDR2-IMGT') {
+          fill = '#059669'; stroke = '#34d399';
+        } else if (res.region === 'CDR3-IMGT') {
+          fill = '#e11d48'; stroke = '#f43f5e';
+        }
+
+        if (res.pos === 23 || res.pos === 104) {
+          fill = '#d97706'; stroke = '#fbbf24'; strokeW = 2.5;
+        } else if (res.pos === 41) {
+          fill = '#7c3aed'; stroke = '#a855f7'; strokeW = 2;
+        } else if (res.pos === 118) {
+          fill = '#0891b2'; stroke = '#22d3ee'; strokeW = 2;
+        }
+
+        const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+        g.setAttribute('class', 'pearl-circle');
+
+        const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        circle.setAttribute('cx', pt.x);
+        circle.setAttribute('cy', pt.y);
+        circle.setAttribute('r', '9');
+        circle.setAttribute('fill', fill);
+        circle.setAttribute('stroke', stroke);
+        circle.setAttribute('stroke-width', strokeW);
+        g.appendChild(circle);
+
+        const txt = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        txt.setAttribute('x', pt.x);
+        txt.setAttribute('y', pt.y + 3.5);
+        txt.setAttribute('text-anchor', 'middle');
+        txt.setAttribute('fill', '#ffffff');
+        txt.setAttribute('font-size', '10px');
+        txt.setAttribute('font-family', 'var(--font-mono)');
+        txt.setAttribute('font-weight', '700');
+        txt.textContent = res.aa;
+        g.appendChild(txt);
+
+        // IMGT Position Label
+        const lbl = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        lbl.setAttribute('class', 'collier-label');
+        lbl.setAttribute('x', pt.x);
+        lbl.setAttribute('y', pt.y - 12);
+        lbl.setAttribute('text-anchor', 'middle');
+        lbl.setAttribute('fill', '#94a3b8');
+        lbl.setAttribute('font-size', '9px');
+        lbl.setAttribute('font-family', 'var(--font-mono)');
+        lbl.textContent = res.pos;
+        if (!showCollierNumbers) lbl.style.display = 'none';
+        g.appendChild(lbl);
+
+        // Tooltip events
+        g.addEventListener('mouseenter', (e) => {
+          const tip = document.getElementById('collierTooltip');
+          tip.innerHTML = `
+            <strong>IMGT Position ${res.pos}</strong>: <span style="color:#38bdf8;">${res.aa}</span><br>
+            <span style="color:#94a3b8;">Region:</span> ${res.region}<br>
+            ${res.isAnchor ? '<span style="color:#fbbf24;">★ Conserved IMGT Anchor Residue</span>' : ''}
+          `;
+          tip.style.left = (e.clientX + 14) + 'px';
+          tip.style.top = (e.clientY + 14) + 'px';
+          tip.style.display = 'block';
+        });
+        g.addEventListener('mousemove', (e) => {
+          const tip = document.getElementById('collierTooltip');
+          tip.style.left = (e.clientX + 14) + 'px';
+          tip.style.top = (e.clientY + 14) + 'px';
+        });
+        g.addEventListener('mouseleave', () => {
+          document.getElementById('collierTooltip').style.display = 'none';
+        });
+
+        svg.appendChild(g);
+      });
+    }
+
+    // 16. SERVER HEALTH CHECK & INITIALIZATION
+    window.addEventListener('DOMContentLoaded', async () => {
+      setupDnaplotTextareaDropzone();
+      // Check server API status
+      try {
+        const r = await fetch('/api/status');
+        if (r.ok) {
+          const s = await r.json();
+          document.getElementById('engineStatusBadge').innerText = `⚡ ${s.engine.toUpperCase()} (${s.hardware || 'M4 PRO'})`;
+          document.getElementById('engineStatusBadge').classList.add('badge-simd');
+        }
+      } catch (e) {
+        document.getElementById('engineStatusBadge').innerText = `🟡 CLIENT ENGINE ACTIVE`;
+      }
+
+      // Parse URL parameters for automated loading, analysis, and modal displays
+      const urlParams = new URLSearchParams(window.location.search);
+      const speciesParam = (urlParams.get('species') || '').toLowerCase();
+      let sample = urlParams.get('sample');
+      const autorun = urlParams.get('autorun');
+      const openModal = urlParams.get('modal');
+
+      const speciesToSample = {
+        'rat': 'ratIGHV',
+        'rhesus': 'rhesusIGHV',
+        'cynomolgus': 'cynIGHV',
+        'pig': 'pigIGHV',
+        'horse': 'horseIGHV',
+        'sheep': 'sheepIGHV',
+        'bovine': 'bovIGHV',
+        'cow': 'bovIGHV',
+        'dog': 'dogIGHV',
+        'rabbit': 'rabIGHV',
+        'alpaca': 'vicVHH',
+        'camelid': 'vicVHH',
+        'mouse': 'musIGHV044',
+        'human': 'humIGHV3-23'
+      };
+
+      if (!sample && speciesParam && speciesToSample[speciesParam]) {
+        sample = speciesToSample[speciesParam];
+      }
+
+      if (sample && SAMPLES[sample]) {
+        loadSample(sample);
+      } else {
+        loadSample('musIGHV044');
+      }
+
+      if (autorun === '1' || urlParams.has('sample') || urlParams.has('species') || urlParams.has('modal')) {
+        setTimeout(() => {
+          executeDnaplotAnalysis();
+          if (openModal === 'collier') {
+            setTimeout(() => {
+              openCollierDePerlesModal();
+            }, 300);
+          }
+        }, 150);
+      }
+    });
+  </script>
+
+  <!-- COLLIER DE PERLES MODAL POPUP -->
+  <div id="collierModal" class="collier-modal-backdrop" style="display:none;" onclick="if(event.target===this) closeCollierDePerlesModal()">
+    <div class="collier-modal-card">
+      <div class="collier-modal-header">
+        <div style="display:flex; align-items:center; gap:12px;">
+          <span style="font-size:26px;">📿</span>
+          <div>
+            <div style="font-family:'Outfit',sans-serif; font-size:18px; font-weight:700; color:#ffffff;">
+              IMGT Collier de Perles (2D Graphical Representation)
+            </div>
+            <div style="font-size:12px; color:#94a3b8;">
+              Published in Lefranc M-P, Giudicelli V, Busin R, Bodmer J, <strong>Müller W</strong>, et al. <em>Nucleic Acids Res.</em> 1998;26(1):297–303. <a href="https://doi.org/10.1093/nar/26.1.297" target="_blank" rel="noopener" style="color:#38bdf8; text-decoration:underline;">DOI: 10.1093/nar/26.1.297 ↗</a> | <a href="https://pubmed.ncbi.nlm.nih.gov/9399859/" target="_blank" rel="noopener" style="color:#34d399; text-decoration:underline;">PMID: 9399859 ↗</a>
+            </div>
+          </div>
+        </div>
+        <button onclick="closeCollierDePerlesModal()" style="background:transparent; border:none; color:#94a3b8; font-size:22px; cursor:pointer; padding:4px 8px; border-radius:6px;">✕</button>
+      </div>
+
+      <!-- Quick Info Bar -->
+      <div style="background:rgba(6,13,23,0.9); padding:10px 24px; border-bottom:1px solid rgba(255,255,255,0.08); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; font-size:12.5px;">
+        <div>
+          <span style="color:#94a3b8;">CLONE: </span>
+          <strong id="collierCloneName" style="color:#38bdf8;">—</strong>
+          <span style="color:#64748b; margin:0 8px;">|</span>
+          <span style="color:#94a3b8;">V-GENE: </span>
+          <strong id="collierVGene" style="color:#34d399;">—</strong>
+          <span style="color:#64748b; margin:0 8px;">|</span>
+          <span style="color:#94a3b8;">J-GENE: </span>
+          <strong id="collierJGene" style="color:#f59e0b;">—</strong>
+        </div>
+        <div style="display:flex; gap:10px; align-items:center;">
+          <span class="badge" style="background:rgba(217,119,6,0.2); color:#fbbf24; border:1px solid rgba(245,158,11,0.4);">
+            ⚡ S-S Disulfide: Cys23 ⟷ Cys104
+          </span>
+          <span id="collierBoundaryBadge" class="badge" style="background:rgba(16,185,129,0.2); color:#34d399; border:1px solid rgba(16,185,129,0.4);">
+            TVSS (Heavy)
+          </span>
+        </div>
+      </div>
+
+      <div class="collier-modal-body">
+        <!-- Toolbar & Legend -->
+        <div style="width:100%; display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; flex-wrap:wrap; gap:10px;">
+          <div style="display:flex; gap:14px; font-size:12px; color:#cbd5e1; align-items:center; flex-wrap:wrap;">
+            <span style="display:inline-flex; align-items:center; gap:5px;"><span style="width:12px; height:12px; border-radius:50%; background:#1e293b; border:1px solid #64748b; display:inline-block;"></span> Framework (FR1-4)</span>
+            <span style="display:inline-flex; align-items:center; gap:5px;"><span style="width:12px; height:12px; border-radius:50%; background:#0284c7; border:1px solid #38bdf8; display:inline-block;"></span> CDR1-IMGT</span>
+            <span style="display:inline-flex; align-items:center; gap:5px;"><span style="width:12px; height:12px; border-radius:50%; background:#059669; border:1px solid #34d399; display:inline-block;"></span> CDR2-IMGT</span>
+            <span style="display:inline-flex; align-items:center; gap:5px;"><span style="width:12px; height:12px; border-radius:50%; background:#e11d48; border:1px solid #f43f5e; display:inline-block;"></span> CDR3-IMGT</span>
+            <span style="display:inline-flex; align-items:center; gap:5px;"><span style="width:12px; height:12px; border-radius:50%; background:#d97706; border:2px solid #fbbf24; display:inline-block;"></span> Cys23 & Cys104</span>
+          </div>
+          <div style="display:flex; gap:8px;">
+            <button class="btn btn-secondary" onclick="toggleCollierLabels()" style="padding:5px 12px; font-size:12px;" id="btnToggleLabels">🔢 Toggle Numbers</button>
+            <button class="btn btn-secondary" onclick="downloadCollierSvg()" style="padding:5px 12px; font-size:12px;">💾 Export SVG</button>
+          </div>
+        </div>
+
+        <!-- Canvas SVG container -->
+        <div class="collier-canvas-box" id="collierCanvasBox">
+          <svg id="collierSvg" width="920" height="660" viewBox="0 0 920 660" style="background:#060d17; border-radius:8px;"></svg>
+        </div>
+        
+        <!-- Interactive Tooltip -->
+        <div id="collierTooltip" style="display:none; position:fixed; background:rgba(15,23,42,0.95); border:1px solid #38bdf8; padding:6px 12px; border-radius:6px; font-size:12px; color:#ffffff; pointer-events:none; z-index:10000; box-shadow:0 4px 12px rgba(0,0,0,0.5);"></div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

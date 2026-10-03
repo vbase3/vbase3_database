@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DNAPLOT Single-Cell Antibody Sequence Analyzer (SIMD128 Accelerator)</title>
+<style>
+  body { font-family: Inter, -apple-system, sans-serif; background: #090d16; color: #f8fafc; margin: 0; padding: 24px; }
+  .card { background: #1e293b; padding: 24px; border-radius: 12px; border: 1px solid #334155; margin-bottom: 24px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.5); }
+  .header-badge { background: #0f172a; padding: 10px 18px; border-radius: 8px; border: 1px solid #38bdf8; text-align: right; }
+  .btn { background: #38bdf8; color: #0f172a; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 15px; transition: all 0.2s; }
+  .btn:hover { background: #7dd3fc; transform: translateY(-1px); }
+  textarea { width: 100%; background: #0f172a; color: #38bdf8; border: 1px solid #334155; border-radius: 8px; padding: 12px; font-family: monospace; font-size: 14px; box-sizing: border-box; }
+  select { background: #0f172a; color: #f8fafc; border: 1px solid #334155; border-radius: 6px; padding: 8px 12px; font-size: 14px; }
+  .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 16px; }
+  .stat-box { background: #0f172a; padding: 16px; border-radius: 8px; border: 1px solid #334155; text-align: center; }
+  .stat-val { font-size: 22px; font-weight: 800; color: #38bdf8; font-family: monospace; }
+  .stat-lbl { font-size: 12px; color: #94a3b8; text-transform: uppercase; margin-top: 4px; }
+  .simd-tag { background: #22c55e; color: #0f172a; font-weight: 800; padding: 4px 10px; border-radius: 6px; font-size: 12px; }
+  .quality-warn { color: #f59e0b; font-weight: 600; }
+  .quality-pass { color: #22c55e; }
+</style>
+</head>
+<body>
+
+<div class="card" style="display: flex; justify-content: space-between; align-items: center; flex-wrap:wrap; gap:16px;">
+  <div style="display: flex; align-items: center; gap: 16px;">
+    <a href="index.html" title="Return to VBASE3 Hub" style="text-decoration:none; display:flex; align-items:center;">
+      <img src="images/vbase3_logo.jpg" alt="VBASE3 Logo" style="height:44px; width:auto; border-radius:6px; box-shadow:0 2px 10px rgba(0,0,0,0.5); object-fit:contain; background:#ffffff; padding:2px; cursor:pointer;" />
+    </a>
+    <div>
+      <h1 style="margin:0; font-size:24px; color:#f8fafc;">DNAPLOT Antibody Sequence Analyzer</h1>
+      <p style="margin:6px 0 0 0; color:#94a3b8; font-size:14px;">Powered by WASM SIMD128 128-Byte Canonical Vector Comparison Engine (100% Client-Side)</p>
+    </div>
+  </div>
+  <div style="display:flex; align-items:center; gap:12px;">
+    <a href="https://doi.org/10.5281/zenodo.22923344" target="_blank" rel="noopener" style="background:rgba(217,119,6,0.25); border:1px solid #f59e0b; color:#fbbf24; text-decoration:none; padding:8px 14px; border-radius:6px; font-weight:700; font-size:13px; display:inline-flex; align-items:center; gap:6px; margin-right:8px;" title="Download complete database tables and catalogs from Zenodo">📦 Zenodo Data ↗</a>
+        <a href="index.html" style="background:#0284c7; color:#fff; text-decoration:none; padding:8px 14px; border-radius:6px; font-weight:700; font-size:13px;" title="Return to Portal Home">🏠 Portal Home</a>
+    <div class="header-badge">
+      <span class="simd-tag">⚡ WASM SIMD128 ACTIVE</span>
+      <div style="font-size:12px; color:#94a3b8; margin-top:4px;">Canonical pkg/ Engine • Zero Server</div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; flex-wrap:wrap; gap:12px;">
+    <h2 style="font-size:18px; color:#38bdf8; margin:0;">1. Input Antibody Sequences (FASTA or Raw AA / DNA)</h2>
+    <div style="display:flex; gap:12px; align-items:center;">
+      <label style="font-size:13px; color:#94a3b8;">Species Hint:
+        <select id="speciesSelect">
+          <option value="auto" selected>Auto-Detect</option>
+          <option value="human">Homo sapiens (Human)</option>
+          <option value="mouse">Mus musculus (Mouse)</option>
+          <option value="camelid">Camelid (VHH / HCAb)</option>
+          <option value="rabbit">Oryctolagus cuniculus (Rabbit)</option>
+        </select>
+      </label>
+      <label style="font-size:13px; color:#94a3b8;">Chain Hint:
+        <select id="chainSelect">
+          <option value="auto" selected>Auto-Detect</option>
+          <option value="H">Heavy (IGH)</option>
+          <option value="K">Kappa (IGK)</option>
+          <option value="L">Lambda (IGL)</option>
+        </select>
+      </label>
+    </div>
+  </div>
+  <textarea id="seqInput" rows="6">>EVOLV154_Human_Heavy_Lead
+QVQLVESGGGLVKPGGSLRLSCAASGFTFSSYSMNWVRQAPGKGLEWVSSISSSSSYIYYADSVKGRFTISRDNAKNSLYLQMNSLRAEDTAVYYCARDRVGYCSSTSCYFDYWGQGTLVTVSS
+>Mus_Heavy_Lead_B1-8
+EVQLQQSGAELVKPGASVKLSCTASGFNIKDTYIHWVKQRPEQGLEWIGRIDPANGNTKYDPKFQGKATITADTSSNTAYLQLSSLTSEDTAVYYCARWGYWGQGTLVTVSA
+>Trastuzumab_Herceptin_VH
+EVQLVESGGGLVQPGGSLRLSCAASGFNIKDTYIHWVRQAPGKGLEWVARIYPTNGYTRYADSVKGRFTISADTSKNTAYLQMNSLRAEDTAVYYCSRWGGDGFYAMDYWGQGTLVTVSS</textarea>
+  
+  <div style="margin-top: 16px; display: flex; gap: 12px; align-items: center;">
+    <button class="btn" id="analyzeBtn">⚡ Analyze Sequences (SIMD128 Engine)</button>
+    <span id="statusText" style="color:#f59e0b; font-size:14px; font-weight:700;">Loading Canonical WASM...</span>
+  </div>
+</div>
+
+<div class="stats-grid">
+  <div class="stat-box">
+    <div class="stat-val" id="evalTime">0.00 ms</div>
+    <div class="stat-lbl">Execution Time</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-val" id="seqCount">0</div>
+    <div class="stat-lbl">Sequences Processed</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-val" id="throughput">0</div>
+    <div class="stat-lbl">Throughput (seqs/sec)</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-val" style="color:#22c55e;">100% Client</div>
+    <div class="stat-lbl">Privacy Guarantee</div>
+  </div>
+</div>
+
+<div class="card" style="margin-top: 24px;">
+  <h2 style="font-size:18px; color:#38bdf8; margin-top:0;">2. Alignment & Annotations Output (Reference: Stratum 3 • Class I Quality Floor: ≥ 75%)</h2>
+  <div id="outputArea" style="font-family: monospace; white-space: pre-wrap; background: #0f172a; padding: 16px; border-radius: 8px; border: 1px solid #334155; min-height: 150px; color: #cbd5e1; overflow-x: auto;">Results will appear here...</div>
+</div>
+
+<script>
+// Watchdog for Simple Browser / webview loading:
+window.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => {
+        const el = document.getElementById('statusText');
+        if (el && el.innerText.includes('Loading')) {
+            el.innerHTML = '⚠️ WASM load taking longer than expected. In Simple Browser, try <button onclick="location.reload(true)" style="background:#0284c7;color:#fff;border:none;padding:2px 8px;border-radius:4px;cursor:pointer;">Hard Refresh</button> or open in Chrome/Safari: <a href="http://127.0.0.1:8765/dnaplot_wasm.html" target="_blank" style="color:#38bdf8;">127.0.0.1:8765</a>';
+        }
+    }, 3000);
+});
+</script>
+
+<script type="module">
+import init, { analyze_sequence, analyze_sequence_universal } from './pkg/dnaplot_wasm.js';
+
+async function startWasm() {
+    const statusEl = document.getElementById('statusText');
+    try {
+        statusEl.innerText = 'Initializing Canonical WebAssembly Engine (pkg/)...';
+        // Explicitly bust bytecode caching with version query param to prevent stale cache in embedded webviews
+        const wasmUrl = new URL('./pkg/dnaplot_wasm_bg.wasm?v=1.0.1', import.meta.url);
+        await init(wasmUrl);
+        statusEl.innerText = '⚡ WASM SIMD128 Engine Ready (Reference: Stratum 3 • 100% Offline)';
+        statusEl.style.color = '#22c55e';
+    } catch(err) {
+        console.error('WASM Init Error:', err);
+        statusEl.innerText = '⚠️ WASM Init Error: ' + err.message;
+        statusEl.style.color = '#ef4444';
+    }
+}
+
+startWasm();
+
+document.getElementById('analyzeBtn').addEventListener('click', () => {
+    const input = document.getElementById('seqInput').value;
+    const speciesHint = document.getElementById('speciesSelect').value;
+    const chainHint = document.getElementById('chainSelect').value;
+    const lines = input.split(/\r?\n/);
+    let currentHeader = '';
+    let currentSeq = '';
+    const records = [];
+
+    for (let l of lines) {
+        l = l.trim();
+        if (l.startsWith('>')) {
+            if (currentHeader && currentSeq) {
+                records.push({ header: currentHeader, seq: currentSeq });
+            }
+            currentHeader = l;
+            currentSeq = '';
+        } else if (l) {
+            currentSeq += l;
+        }
+    }
+    if (currentHeader && currentSeq) {
+        records.push({ header: currentHeader, seq: currentSeq });
+    }
+
+    const t0 = performance.now();
+    let outText = '';
+    for (let r of records) {
+        const seqName = r.header.replace('>', '').trim();
+        try {
+            const res = analyze_sequence(r.seq, seqName, speciesHint, chainHint);
+            const vId = res.v_identity || 0;
+            const qualityTag = vId >= 75.0 
+                ? `[Class I Valid: ${vId.toFixed(1)}%]` 
+                : `[⚠️ Below Quality Floor: ${vId.toFixed(1)}% (< 75% threshold)]`;
+            
+            outText += `[${seqName}]\n`;
+            outText += `  • Reference Stratum : ${res.reference_stratum || 'Stratum 3 (Class I Master Export)'}\n`;
+            outText += `  • Closest V-Gene     : ${res.v_gene || 'N/A'} ${qualityTag}\n`;
+            outText += `  • Closest J-Gene     : ${res.j_gene || 'N/A'} (${(res.j_identity || 0).toFixed(1)}%)\n`;
+            outText += `  • Locus / Chain      : ${res.locus || 'IGH'} (${res.chain || 'H'})\n`;
+            outText += `  • Species Model      : ${res.species || 'Auto'}\n`;
+            outText += `  • CDR3 Loop          : ${res.cdr3_aa || 'N/A'} (Junction: ${res.junction_aa || 'N/A'})\n`;
+            outText += `  • Productive         : ${res.is_productive ? 'YES (In-frame)' : 'NO'}\n`;
+            if (vId < 75.0) {
+                outText += `  • Quality Status     : ⚠️ BELOW CLASS I QUALITY FLOOR (< 75.0% mature FR1→Cys104 identity)\n`;
+                outText += `  • Note               : Gene call '${res.v_gene}' is provisional and unconfirmed. Sequence falls below the 75% Class I physiological threshold (may represent somatic hypermutation, synthetic graft, or unrepresented taxon).\n`;
+            } else {
+                outText += `  • Quality Status     : ✅ PASS (Class I Functional Floor Met: ≥ 75.0%)\n`;
+            }
+            outText += `--------------------------------------------------------------------------------\n`;
+        } catch (e) {
+            outText += `[${seqName}] Error: ${e}\n--------------------------------------------------------------------------------\n`;
+        }
+    }
+    const t1 = performance.now();
+    const duration = Math.max(0.01, t1 - t0);
+    const throughputVal = Math.round((records.length / (duration / 1000)));
+
+    document.getElementById('evalTime').innerText = duration.toFixed(2) + ' ms';
+    document.getElementById('seqCount').innerText = records.length;
+    document.getElementById('throughput').innerText = throughputVal.toLocaleString();
+    document.getElementById('outputArea').innerText = outText || 'No sequences analyzed.';
+    document.getElementById('statusText').innerText = '⚡ Analysis Complete!';
+    document.getElementById('statusText').style.color = '#22c55e';
+});
+</script>
+</body>
+</html>

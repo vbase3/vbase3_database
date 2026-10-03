@@ -1,0 +1,98 @@
+LOCUS       XM_045052894            1665 bp    mRNA    linear   MAM 09-NOV-2021
+DEFINITION  PREDICTED: Felis catus M1-specific T cell receptor beta chain-like
+            (LOC101097553), mRNA.
+ACCESSION   XM_045052894
+VERSION     XM_045052894.1
+DBLINK      BioProject: PRJNA773801
+KEYWORDS    RefSeq.
+SOURCE      Felis catus (domestic cat)
+  ORGANISM  Felis catus
+            Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi;
+            Mammalia; Eutheria; Laurasiatheria; Carnivora; Feliformia; Felidae;
+            Felinae; Felis.
+COMMENT     MODEL REFSEQ:  This record is predicted by automated computational
+            analysis. This record is derived from a genomic sequence
+            (NC_058369.1) annotated using gene prediction method: Gnomon,
+            supported by mRNA evidence.
+            Also see:
+                Documentation of NCBI's Annotation Process
+            
+            ##Genome-Annotation-Data-START##
+            Annotation Provider         :: NCBI
+            Annotation Status           :: Full annotation
+            Annotation Name             :: Felis catus Annotation Release 105
+            Annotation Version          :: 105
+            Annotation Pipeline         :: NCBI eukaryotic genome annotation
+                                           pipeline
+            Annotation Software Version :: 9.0
+            Annotation Method           :: Best-placed RefSeq; Gnomon
+            Features Annotated          :: Gene; mRNA; CDS; ncRNA
+            ##Genome-Annotation-Data-END##
+FEATURES             Location/Qualifiers
+     source          1..1665
+                     /organism="Felis catus"
+                     /mol_type="mRNA"
+                     /isolate="Fca126"
+                     /db_xref="taxon:9685"
+                     /chromosome="A2"
+                     /sex="female"
+                     /cell_type="Fibroblast"
+                     /tissue_type="Fibroblast"
+                     /dev_stage="adult"
+     gene            1..1665
+                     /gene="LOC101097553"
+                     /note="Derived by automated computational analysis using
+                     gene prediction method: Gnomon. Supporting evidence
+                     includes similarity to: 1 mRNA, 56 Proteins, and 98%
+                     coverage of the annotated genomic feature by RNAseq
+                     alignments"
+                     /db_xref="GeneID:101097553"
+     CDS             51..1451
+                     /gene="LOC101097553"
+                     /codon_start=1
+                     /product="M1-specific T cell receptor beta chain-like"
+                     /protein_id="XP_044908829.1"
+                     /db_xref="GeneID:101097553"
+                     /translation="MCFRLLCCVALFFWGAGSMDTQVTQSPRYLVRGKKQSAKMNCIP
+                     VKGHSYVYWYRQKLEEFKFLVYLQNEDILDKIEKFEDQFSAQCPKNSPCSLKIESTEP
+                     GDSALYFCASSKSTGLTELFFGAGTRLTVIEDLKKVSPPKVTVFEPSEAEISRTLKAT
+                     LVCLATGFYPDHVELSWWVNGKEVRDGVSTDPEPYKEQSGASVSSYCLSSRLRVSATF
+                     WHNPRNHFRCQVQFHGLGKDDQWDYPEAKPVTQNVSADTWGRADCGFTSASYQQGVNN
+                     EQHFGPGTRLTVLEDLKKVSPPKVTVFEPSEAEISRTLKATLVCLATGFYPDHVELSW
+                     WVNGKEVRDGVSTDPEPYKEQSGANVSSYCLSSRLRVSATFWHNPRNHFRCQVQFHGL
+                     GKDDQWDYPEAKPVTQNVSADTWGRADCGFTSASYQQGVLSATILYEILLGKATLYAI
+                     LVSVLALMAKVKRKDS"
+     polyA_site      1665
+                     /gene="LOC101097553"
+                     /experiment="COORDINATES: polyA evidence [ECO:0006239]"
+ORIGIN      
+        1 gaagccttaa agcaaaggcc gcgggccatt gcttttcccc tgagcccacc atgtgcttca
+       61 gacttctctg ctgtgtggcc ctttttttct ggggagcagg ctccatggac acccaggtca
+      121 cccagagtcc tagatacctg gtcagaggga agaaacagtc agcaaagatg aattgtatcc
+      181 ctgtaaaagg acacagttat gtttattggt atcgacaaaa gttggaagag ttcaagtttt
+      241 tggtttactt acagaatgaa gatattcttg ataagataga gaagtttgaa gatcagtttt
+      301 cggctcaatg ccccaaaaac tcaccctgca gcctgaaaat cgagtccact gagccagggg
+      361 attcagccct gtatttctgt gcgagcagca aatccacagg tttgactgaa cttttctttg
+      421 gagcaggcac caggctcaca gttatagagg acctgaaaaa ggtgagccct cccaaggtca
+      481 cagtgttcga accatcagaa gcagagatct cccggaccct gaaggccacg ctcgtgtgcc
+      541 tggccacagg cttctacccc gaccacgtgg agctgagctg gtgggtgaac gggaaggagg
+      601 tgcgcgacgg ggtcagcacg gaccctgagc cctacaagga acagtccggc gcgagtgtct
+      661 ccagctactg tctgagcagc cggctgaggg tctccgccac cttctggcac aaccctcgga
+      721 accacttccg ctgccaggtc cagttccacg ggctcgggaa ggatgaccag tgggactacc
+      781 ccgaggccaa acccgtcacc cagaacgtca gtgccgacac ctggggcaga gcagactgtg
+      841 gcttcacttc agcgtcctac cagcaggggg tcaataatga gcagcacttt gggccaggga
+      901 cccggctcac tgtcctagag gacctgaaaa aggtgagccc tcccaaggtc acagtgttcg
+      961 aaccatcaga agcagagatc tcccggaccc tgaaggccac gctcgtgtgc ctggccacag
+     1021 gcttctaccc cgaccacgtg gagctgagct ggtgggtgaa cgggaaggag gtgcgcgacg
+     1081 gggtcagcac ggaccctgag ccctacaagg aacagtccgg cgcgaatgtc tccagctact
+     1141 gtctgagcag ccggctgagg gtctccgcca ccttctggca caaccctcgg aaccacttcc
+     1201 gctgccaggt ccagttccac gggctcggga aggatgacca gtgggactac cccgaggcca
+     1261 aacccgtcac ccagaacgtc agtgccgaca cctggggcag agcagactgt ggcttcactt
+     1321 cggcgtccta ccagcagggg gtcctgtcgg ccaccatcct ctatgagatc ctgctgggga
+     1381 aggccaccct atatgccatc ctggtcagcg tcctcgcgct gatggccaag gtcaagagaa
+     1441 aggattcctg aggccagctc caaaagcgta tcctgagttc ataatcctca ccccggattc
+     1501 tcctttccat gcgtccagcc tgtgtttcta aaagcatgat tctctctccg cctcttatct
+     1561 ccttcctgcc gggttatctg tcccttcgcc ccacttccct gtggattgag ctcctcagcc
+     1621 ctgacactga aagagactaa aacaataaaa agcatcgtgc caggc
+//
+

@@ -1,0 +1,82 @@
+ID   M12960; SV 1; linear; gDNA; STD; HUM; 710 BP.
+XX
+AC   M12960; X03434;
+XX
+DT   11-MAR-1996 (Rel. 199611-1, arrived in LIGM-DB)
+DT   17-JAN-2013 (Rel. 201303-4, Last updated, Version 19)
+XX
+DE   Homo sapiens T-cell receptor gamma-chain J1, partial cds.
+XX
+KW   antigen receptor; Immunoglobulin superfamily (IgSF); T cell receptor (TR);
+KW   TR-Gamma-TRG; joining; IMGT reference sequence; regular; gDNA; germline;
+KW   functional; J-gene.
+XX
+OS   Homo sapiens (human)
+OC   cellular organisms; Eukaryota; Opisthokonta; Metazoa; Eumetazoa; Bilateria;
+OC   Deuterostomia; Chordata; Craniata; Vertebrata; Gnathostomata; Teleostomi;
+OC   Euteleostomi; Sarcopterygii; Dipnotetrapodomorpha; Tetrapoda; Amniota;
+OC   Mammalia; Theria; Eutheria; Boreoeutheria; Euarchontoglires; Primates;
+OC   Haplorrhini; Simiiformes; Catarrhini; Hominoidea; Hominidae; Homininae;
+OC   Homo; Homo sapiens.
+XX
+RN   [1]
+RP   1-710
+RX   PUBMED; 10477601.
+RA   Zhu X., Boonthum A., Zhai S.K., Knight K.L.;
+RT   "B lymphocyte selection and age-related changes in VH gene usage in mutant
+RT   Alicia rabbits";
+RL   J. Immunol. 163(6):3313-3320(1999).
+XX
+DR   EMBL-ALIGN; ALIGN_000291.
+DR   ENA; M12960.
+DR   GDB; 120410.
+XX
+CC   IMGT/LIGM-DB annotation level: by annotators
+CC   
+CC   On Feb 26, 2002 this sequence version replaced gi:37357.
+CC   A clean copy of the sequence in [1] was kindly provided by
+CC   M.-P.Lefranc, 01-AUG-1986.
+CC   The conserved heptamer and nanomer sequences for VJ recombination
+CC   are found from positions 129 to 157.
+XX
+FH   Key                 Location/Qualifiers
+FH   
+FT   J-GENE              1..710
+FT                       /db_xref="taxon:9606"
+FT                       /functional
+FT                       /IMGT_allele="TRGJ1*01"
+FT                       /IMGT_gene="TRGJ1"
+FT                       /mol_type="genomic DNA"
+FT                       /organism="Homo sapiens"
+FT   5'UTR               1..156
+FT   J-RS                129..156
+FT   J-GENE-UNIT         129..206
+FT   J-NONAMER           129..137
+FT   J-SPACER            138..149
+FT   J-HEPTAMER          150..156
+FT   J-REGION            157..206
+FT                       /codon_start=2
+FT                       /translation="NYYKKLFGSGTTLVVT"
+FT                       /IMGT_allele="TRGJ1*01"
+FT                       /IMGT_gene="TRGJ1"
+FT                       /note="g at position 196 can be allelic (t): Huck and 
+FT                       Lefranc, FEBS Lett., 224, 291-296 (1987)"
+FT                       /protein_id="AAA72056.1"
+FT   J-PHE               176..178
+FT   DONOR-SPLICE        206..208
+FT   J-C-INTRON          207..710
+XX
+SQ   Sequence 710 BP; 242 A; 108 C; 158 G; 202 T; 0 other;
+     aagctttaag ttatttgatt tgtggagcaa cagaacttgt tatgagcaaa atgaaccagg        60
+     actggaaccc tggtcttttg agaatcccag accaccagaa tttgaagaac tcagggaaac       120
+     tgaattagag tttttgatat ggactgaatc actgtggaat tattataaga aactctttgg       180
+     cagtggaaca acactggttg tcacaggtaa gtatcggaag aatacaacat ttccaaggta       240
+     atagagggaa agcaggaaat tattaaactg gaataatgta ataatgttta gaaaaaagag       300
+     gaattggatg gggatttgat gtagaaaact taggagagac tttaaaacaa atgctcatac       360
+     taaaagagaa catagataac attgcacaga tatcataata agatttggct ttgtgcatat       420
+     acggacttcc ataaagggct catatgtaat gtatgaaatg atctcattaa aatgtctggc       480
+     cctgagacca aatgtattat gacaggtaag tttgtgatag actctacaga gtggacacat       540
+     attcatctct gatggtcaaa gacatgttta ctcttgttgt gaaggagccc gggtgttgga       600
+     gtcaggtcca cgtggaactc tggctccacc actcactgct tagtgaaatt gagtgattat       660
+     tctctggcct cagttttcta atccataaaa tgggataaca gtatgaattc                  710
+//

@@ -1,0 +1,186 @@
+ID   X62916; SV 1; linear; cDNA; STD; MAM; 1581 BP.
+XX
+AC   X62916; S35776;
+XX
+DT   15-MAY-1995 (Rel. 199520-1, arrived in LIGM-DB)
+DT   09-MAR-2018 (Rel. 201810-5, Last updated, Version 10)
+XX
+DE   B.taurus mRNA for immunoglobulin G1 heavy chain
+XX
+KW   antigen receptor; Immunoglobulin superfamily (IgSF); immunoglobulin (IG);
+KW   IG-Heavy; IG-Heavy-Gamma; constant; variable; IG-Heavy-Gamma-1-IGHG1;
+KW   IMGT reference sequence; regular; cDNA; undefined; rearranged; functional;
+KW   productive.
+XX
+OS   Bos taurus (bovine)
+OC   Teleostomi; Euteleostomi; Sarcopterygii; Dipnotetrapodomorpha; Tetrapoda;
+OC   Amniota; Mammalia; Theria; Eutheria; Boreoeutheria; Laurasiatheria;
+OC   Artiodactyla; Ruminantia; Pecora; Bovidae; Bovinae; Bos; Bos taurus.
+XX
+RN   [1]
+RP   1-1581
+RA   Boulain J., Ducancel F.;
+RT   "HYBRID PROTEIN COMPLEXES, THEIR PROCESS OF PREPARATION, AND THEIR
+RT   APPLICATIONS AS AN AGENT IN DIAGNOSTIC AND IN THE THERAPEUTIC FIELD OR AS A
+RT   REAGENT RELEVANT IN MEDICAL APPROACHES.";
+RL   Patent number EP0556111-A/1, 18-AUG-1993.
+RL   COMMISSARIAT ENERGIE ATOMIQUE (FR).
+XX
+RN   [2]
+RX   DOI; 10.1016/S0165-2478(97)00101-6.
+RX   PUBMED; 9373213.
+RA   Fukuoka M., Tokushima M., Koarada S., Sai T., Miyake K., Kimoto M.;
+RT   "Analysis of Vbeta4 T cell receptor CDR3 repertoire in BALB/c and (NZB x
+RT   NZW)F1 mice";
+RL   Immunol. Lett. 59(2):63-69(1997).
+XX
+DR   ENA; X62916.
+XX
+CC   IMGT/LIGM-DB annotation level: by annotators
+XX
+FH   Key                 Location/Qualifiers
+FH   
+FT   5'UTR               1..21
+FT   L-V-D-J-C-REGION    22..1431
+FT                       /translation="MNPLWTLLFVLSAPIGVLSQVQLRESGPSLVKPSQTLSLTC
+FT                       TVSGFSLSSYALTWVRQAPGKALEWVGGITSGGTTYYNPALKSRLSITKENSKSQ
+FT                       VSLSVSSVTPEDTATYYCARSTYGEVGDGAIADAWGQGLLVTVSSASTTAPKVYP
+FT                       LSSCCGDKSSSTVTLGCLVSSYMPEPVTVTWNSGALKSGVHTFPAVLQSSGLYSL
+FT                       SSMVTVPGSTSGQTFTCNVAHPASSTKVDKAVDPTCKPSPCDCCPPPELPGGPSV
+FT                       FIFPPKPKDTLTISGTPEVTCVVVDVGHDDPEVKFSWFVDDVEVNTATTKPREEQ
+FT                       FNSTYRVVSALRIQHQDWTGGKEFKCKVHNEGLPAPIVRTISRTKGPAREPQVYV
+FT                       LAPPQEELSKSTVSLTCMVTSFYPDYIAVEWQRNGQPESEDKYGTTPPQLDADSS
+FT                       YFLYSKLRVDRNSWQEGDTYTCVVMHEALHNHYTQKSTSKSAGK"
+FT                       /cell_line="B/MT.4A.17.H5.A5"
+FT                       /note="anti-testosterone antibody"
+FT                       /organism="Bos taurus"
+FT                       /tissue_type="mouse x bovine heterohybridoma"
+FT   L-V-D-J-REGION      22..444
+FT                       /translation="MNPLWTLLFVLSAPIGVLSQVQLRESGPSLVKPSQTLSLTC
+FT                       TVSGFSLSSYALTWVRQAPGKALEWVGGITSGGTTYYNPALKSRLSITKENSKSQ
+FT                       VSLSVSSVTPEDTATYYCARSTYGEVGDGAIADAWGQGLLVTVSS"
+FT   L-V-REGION          22..369
+FT                       /translation="MNPLWTLLFVLSAPIGVLSQVQLRESGPSLVKPSQTLSLTC
+FT                       TVSGFSLSSYALTWVRQAPGKALEWVGGITSGGTTYYNPALKSRLSITKENSKSQ
+FT                       VSLSVSSVTPEDTATYYCAR"
+FT   L-REGION            22..78
+FT                       /translation="MNPLWTLLFVLSAPIGVLS"
+FT   INIT-CODON          22..24
+FT   V-D-J-C-REGION      79..1431
+FT                       /translation="QVQLRESGPSLVKPSQTLSLTCTVSGFSLSSYALTWVRQAP
+FT                       GKALEWVGGITSGGTTYYNPALKSRLSITKENSKSQVSLSVSSVTPEDTATYYCA
+FT                       RSTYGEVGDGAIADAWGQGLLVTVSSASTTAPKVYPLSSCCGDKSSSTVTLGCLV
+FT                       SSYMPEPVTVTWNSGALKSGVHTFPAVLQSSGLYSLSSMVTVPGSTSGQTFTCNV
+FT                       AHPASSTKVDKAVDPTCKPSPCDCCPPPELPGGPSVFIFPPKPKDTLTISGTPEV
+FT                       TCVVVDVGHDDPEVKFSWFVDDVEVNTATTKPREEQFNSTYRVVSALRIQHQDWT
+FT                       GGKEFKCKVHNEGLPAPIVRTISRTKGPAREPQVYVLAPPQEELSKSTVSLTCMV
+FT                       TSFYPDYIAVEWQRNGQPESEDKYGTTPPQLDADSSYFLYSKLRVDRNSWQEGDT
+FT                       YTCVVMHEALHNHYTQKSTSKSAGK"
+FT   V-D-J-REGION        79..444
+FT                       /translation="QVQLRESGPSLVKPSQTLSLTCTVSGFSLSSYALTWVRQAP
+FT                       GKALEWVGGITSGGTTYYNPALKSRLSITKENSKSQVSLSVSSVTPEDTATYYCA
+FT                       RSTYGEVGDGAIADAWGQGLLVTVSS"
+FT   V-REGION            79..369
+FT                       /translation="QVQLRESGPSLVKPSQTLSLTCTVSGFSLSSYALTWVRQAP
+FT                       GKALEWVGGITSGGTTYYNPALKSRLSITKENSKSQVSLSVSSVTPEDTATYYCA
+FT                       R"
+FT                       /CDR_length="[8.7.16]"
+FT                       /putative_limit="3' side"
+FT   FR1-IMGT            79..153
+FT                       /translation="QVQLRESGPSLVKPSQTLSLTCTVS"
+FT                       /AA_IMGT="1 to 26,AA 10 missing"
+FT   1st-CYS             142..144
+FT   CDR1-IMGT           154..177
+FT                       /translation="GFSLSSYA"
+FT                       /AA_IMGT="AA 27 to 38, AA 31, 32, 33 and 34 are 
+FT                       missing"
+FT   FR2-IMGT            178..228
+FT                       /translation="LTWVRQAPGKALEWVGG"
+FT                       /AA_IMGT="39 to 55"
+FT   CONSERVED-TRP       184..186
+FT   CDR2-IMGT           229..249
+FT                       /translation="ITSGGTT"
+FT                       /AA_IMGT="AA 56 to 65, AA 60, 61 and 62 are missing"
+FT   FR3-IMGT            250..363
+FT                       /translation="YYNPALKSRLSITKENSKSQVSLSVSSVTPEDTATYYC"
+FT                       /AA_IMGT="66 to 104,AA 73 missing"
+FT   2nd-CYS             361..363
+FT   CDR3-IMGT           364..411
+FT                       /translation="ARSTYGEVGDGAIADA"
+FT                       /AA_IMGT="AA 105 to 117, AA 112.1, 111.1 and 112.2 are 
+FT                       added"
+FT   JUNCTION            361..414
+FT                       /translation="CARSTYGEVGDGAIADAW"
+FT                       /in_frame
+FT   D-J-REGION          370..444
+FT                       /translation="STYGEVGDGAIADAWGQGLLVTVSS"
+FT   J-TRP               412..414
+FT   C-REGION            445..1431
+FT                       /translation="ASTTAPKVYPLSSCCGDKSSSTVTLGCLVSSYMPEPVTVTW
+FT                       NSGALKSGVHTFPAVLQSSGLYSLSSMVTVPGSTSGQTFTCNVAHPASSTKVDKA
+FT                       VDPTCKPSPCDCCPPPELPGGPSVFIFPPKPKDTLTISGTPEVTCVVVDVGHDDP
+FT                       EVKFSWFVDDVEVNTATTKPREEQFNSTYRVVSALRIQHQDWTGGKEFKCKVHNE
+FT                       GLPAPIVRTISRTKGPAREPQVYVLAPPQEELSKSTVSLTCMVTSFYPDYIAVEW
+FT                       QRNGQPESEDKYGTTPPQLDADSSYFLYSKLRVDRNSWQEGDTYTCVVMHEALHN
+FT                       HYTQKSTSKSAGK"
+FT                       /functional
+FT                       /IMGT_allele="IGHG1*02"
+FT                       /IMGT_gene="IGHG1"
+FT   CH1                 445..735
+FT                       /translation="ASTTAPKVYPLSSCCGDKSSSTVTLGCLVSSYMPEPVTVTW
+FT                       NSGALKSGVHTFPAVLQSSGLYSLSSMVTVPGSTSGQTFTCNVAHPASSTKVDKA
+FT                       V"
+FT                       /IMGT_note="deletion in CH1 (AA 99 is missing)"
+FT   H                   736..774
+FT                       /translation="DPTCKPSPCDCCP"
+FT   CH2                 775..1104
+FT                       /translation="PPELPGGPSVFIFPPKPKDTLTISGTPEVTCVVVDVGHDDP
+FT                       EVKFSWFVDDVEVNTATTKPREEQFNSTYRVVSALRIQHQDWTGGKEFKCKVHNE
+FT                       GLPAPIVRTISRTK"
+FT   CH3-CHS             1105..1431
+FT                       /translation="GPAREPQVYVLAPPQEELSKSTVSLTCMVTSFYPDYIAVEW
+FT                       QRNGQPESEDKYGTTPPQLDADSSYFLYSKLRVDRNSWQEGDTYTCVVMHEALHN
+FT                       HYTQKSTSKSAGK"
+FT   CH3                 1105..1426
+FT                       /translation="GPAREPQVYVLAPPQEELSKSTVSLTCMVTSFYPDYIAVEW
+FT                       QRNGQPESEDKYGTTPPQLDADSSYFLYSKLRVDRNSWQEGDTYTCVVMHEALHN
+FT                       HYTQKSTSKSA"
+FT   INT-DONOR-SPLICE    1426..1428
+FT   CHS                 1426..1431
+FT                       /translation="GK"
+FT                       /IMGT_note="For complete translation nucleotide G at 
+FT                       position 1426 has been included in CH-S."
+FT   STOP-CODON          1432..1434
+FT   3'UTR               1432..1581
+FT   POLYA_SIGNAL        1546..1551
+FT   POLYA_SITE          1577
+XX
+SQ   Sequence 1581 BP; 339 A; 539 C; 432 G; 271 T; 0 other;
+     ctgactctca tctgctccaa gatgaaccca ctgtggaccc tcctctttgt gctgtcagcc        60
+     cccatagggg tcctgtccca ggtgcagctg cgggagtcgg gccccagcct ggtgaagccc       120
+     tcacagaccc tctccctcac gtgcacggtg tctggattct cattgagcag ctatgctcta       180
+     acctgggtcc gccaggctcc agggaaggcg ctggagtggg ttggtggtat aaccagtggt       240
+     ggaaccacat actataatcc agccctgaaa tcccggctca gcatcaccaa ggagaactcc       300
+     aagagccaag tctctctgtc agtgagcagc gtgacacctg aggacacagc cacatactac       360
+     tgtgcaagaa gtacttatgg tgaggttggt gatggtgcca tcgccgatgc ctggggccaa       420
+     ggactcctgg tcaccgtctc ctcagcctcc accacagccc cgaaagtcta ccctctgagt       480
+     tcttgctgcg gggacaagtc cagctccacc gtgaccctgg gctgcctggt ctccagctac       540
+     atgcccgagc cggtgaccgt gacctggaac tcgggtgccc tgaagagcgg cgtgcacacc       600
+     ttcccggctg tccttcagtc ctccgggctg tactctctca gcagcatggt gaccgtgccc       660
+     ggcagcacct caggacagac cttcacctgc aacgtagccc acccggccag cagcaccaag       720
+     gtggacaagg ctgttgatcc cacatgcaaa ccatcaccct gtgactgttg cccaccccct       780
+     gagctccccg gaggaccctc tgtcttcatc ttcccaccga aacccaagga caccctcaca       840
+     atctcgggaa cgcccgaggt cacgtgtgtg gtggtggacg tgggccacga tgaccccgag       900
+     gtgaagttct cctggttcgt ggacgacgtg gaggtaaaca cagccacgac gaagccgaga       960
+     gaggagcagt tcaacagcac ctaccgcgtg gtcagcgccc tgcgcatcca gcaccaggac      1020
+     tggactggag gaaaggagtt caagtgcaag gtccacaacg aaggcctccc ggcccccatc      1080
+     gtgaggacca tctccaggac caaagggccg gcccgggagc cgcaggtgta tgtcctggcc      1140
+     ccaccccagg aagagctcag caaaagcacg gtcagcctca cctgcatggt caccagcttc      1200
+     tacccagact acatcgccgt ggagtggcag agaaacgggc agcctgagtc ggaggacaag      1260
+     tacggcacga ccccgcccca gctggacgcc gacagctcct acttcctgta cagcaagctc      1320
+     agggtggaca ggaacagctg gcaggaagga gacacctaca cgtgtgtggt gatgcacgag      1380
+     gccctgcaca atcactacac gcagaagtcc acctctaagt ctgcgggtaa atgagcctca      1440
+     cgtccctgca ccagcaagcc ctcacccagc ccaccctccc cgggctccag gtccagccag      1500
+     gacgccctag cccctccctg tgtgcattcc tcctgggccg ccgtgaataa agcacccagg      1560
+     ccgccctggg accctgcaaa a                                                1581
+//

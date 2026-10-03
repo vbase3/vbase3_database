@@ -1,0 +1,8 @@
+# OS Artifacts
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.log
+*.swp

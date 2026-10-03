@@ -1,0 +1,87 @@
+{
+  "species": "mouse",
+  "chain": "lambda",
+  "total_sequences": 35420,
+  "v_j_matrix": {
+    "IGLV1": {
+      "IGLJ1": 20444,
+      "IGLJ2": 3931,
+      "IGLJ3": 1310,
+      "IGLJ4": 524
+    },
+    "IGLV2": {
+      "IGLJ1": 5801,
+      "IGLJ2": 1115,
+      "IGLJ3": 371,
+      "IGLJ4": 148
+    },
+    "IGLV3": {
+      "IGLJ1": 1381,
+      "IGLJ2": 265,
+      "IGLJ3": 88,
+      "IGLJ4": 35
+    }
+  },
+  "top_cdr3_clones": [
+    {
+      "cdr3": "CALWYSNHWVF",
+      "count": 14210
+    },
+    {
+      "cdr3": "CALWYSNHLVF",
+      "count": 4820
+    },
+    {
+      "cdr3": "CALWYSNRWVF",
+      "count": 3150
+    },
+    {
+      "cdr3": "CALWYSNHWLF",
+      "count": 2210
+    },
+    {
+      "cdr3": "CQAWDSSNVVF",
+      "count": 1940
+    },
+    {
+      "cdr3": "CQAWDSSTAVF",
+      "count": 1450
+    },
+    {
+      "cdr3": "CALWYSNTRVF",
+      "count": 1120
+    },
+    {
+      "cdr3": "CALWYSNQRVF",
+      "count": 980
+    },
+    {
+      "cdr3": "CQAWDSSNAVF",
+      "count": 890
+    },
+    {
+      "cdr3": "CALWYSDHWVF",
+      "count": 760
+    },
+    {
+      "cdr3": "CALWYSNRWLF",
+      "count": 640
+    },
+    {
+      "cdr3": "CQAWDSSNVLF",
+      "count": 520
+    },
+    {
+      "cdr3": "CALWYSNAWVF",
+      "count": 430
+    },
+    {
+      "cdr3": "CALWYSNHKIF",
+      "count": 380
+    },
+    {
+      "cdr3": "CQAWDSSNTVF",
+      "count": 310
+    }
+  ]
+}

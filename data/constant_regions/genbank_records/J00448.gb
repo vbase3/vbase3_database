@@ -1,0 +1,79 @@
+ID   J00448; SV 1; linear; gDNA; STD; MUS; 137 BP.
+XX
+AC   J00448;
+XX
+DT   15-MAY-1995 (Rel. 199520-1, arrived in LIGM-DB)
+DT   12-FEB-2014 (Rel. 201407-3, Last updated, Version 16)
+XX
+DE   Mouse germline IgD gene, DJC region: c-delta-h(hinge) exon.
+XX
+KW   antigen receptor; Immunoglobulin superfamily (IgSF); immunoglobulin (IG);
+KW   IG-Heavy; IG-Heavy-Delta; constant; regular; gDNA; undefined; C-gene.
+XX
+OS   Mus musculus (house mouse)
+OC   Sarcopterygii; Dipnotetrapodomorpha; Tetrapoda; Amniota; Mammalia; Theria;
+OC   Eutheria; Boreoeutheria; Euarchontoglires; Glires; Rodentia; Myomorpha;
+OC   Muroidea; Muridae; Murinae; Mus; Mus; Mus musculus.
+XX
+RN   [1]
+RC   Contact ncbi-contacts@bcm.tmc.edu for more information.
+RP   1-137
+RA   Rat Genome Sequencing Consortium;
+RT   ;
+RL   Submitted (11-JUL-2003) to the INSDC.
+RL   Human Genome Sequencing Center, Department of Molecular and Human Genetics,
+RL   Baylor College of Medicine, One Baylor Plaza, Houston, TX 77030, USA
+XX
+DR   EMBL-JOIN; J00450.
+DR   ENA; J00448.
+DR   UniProtKB/Swiss-Prot; P01881; IGHD_MOUSE.
+DR   UniProtKB/Swiss-Prot; P01882; IGHDM_MOUSE.
+XX
+CC   IMGT/LIGM-DB annotation level: by annotators
+CC   
+CC   for an overview of the musigdjc loci see the first paragraph of
+CC   'comment' in musigdjc01. for a summary of the alternative mrna
+CC   processing pathways of the c-delta region see the second paragraph
+CC   of 'comment' in musigdjc14.
+CC       the hinge exon for igd is unusual in that it is longer than any
+CC   other hinge exon, and that it encodes no cys residues so no
+CC   disulfide bonds can be formed between delta h-chains. this may
+CC   account for igd half-molecules. for the other c-delta exons see
+CC   musigdjc14, musigdjc16 & musigdjc17.
+XX
+FH   Key                 Location/Qualifiers
+FH   
+FT   C-GENE              1..137
+FT                       /partial
+FT                       /cell_line="J606; 2PK-3; IGE-53-569"
+FT                       /db_xref="taxon:10090"
+FT                       /dev_stage="newborn; embryo"
+FT                       /functional
+FT                       /IMGT_allele="IGHD*01"
+FT                       /IMGT_gene="IGHD"
+FT                       /IMGT_map="12F2 (58.0 cM)"
+FT                       /mol_type="genomic DNA"
+FT                       /organism="Mus musculus"
+FT                       /strain="BALB/c"
+FT                       /sub_species="domesticus"
+FT                       /tissue_lib="EcoRI"
+FT                       /tissue_type="myeloma; liver; B-cell lymphoma; 
+FT                       hybridoma"
+FT   C-GENE-UNIT         <1..>137
+FT                       /partial
+FT                       /protein_id="AAB596534.1"
+FT   INTRON              <1..16
+FT                       /partial
+FT   ACCEPTOR-SPLICE     14..18
+FT   H                   17..121
+FT                       /codon_start=3
+FT                       /translation="SWDSQSSKRVTPTLQAKNHSTEATKAITTKKDIE"
+FT   DONOR-SPLICE        121..123
+FT   INTRON              122..>137
+FT                       /partial
+XX
+SQ   Sequence 137 BP; 46 A; 38 C; 25 G; 28 T; 0 other;
+     tcttctttaa ctccagagtc atgggattcc cagtcctcta agagagtcac tccaactctc        60
+     caagcaaaga atcactccac agaagccacc aaagctatta ccaccaaaaa ggacatagaa       120
+     ggtagagtcc ggatgtg                                                      137
+//

@@ -1,0 +1,263 @@
+ID   BC063384; SV 1; linear; cDNA; STD; HUM; 2173 BP.
+XX
+AC   BC063384;
+XX
+DT   09-JAN-2004 (Rel. 200402-5, arrived in LIGM-DB)
+DT   09-FEB-2018 (Rel. 201806-5, Last updated, Version 14)
+XX
+DE   Homo sapiens immunoglobulin heavy constant delta, mRNA (cDNA clone
+DE   IMAGE:4764956).
+XX
+KW   antigen receptor; Immunoglobulin superfamily (IgSF); immunoglobulin (IG);
+KW   IG-Heavy; IG-Heavy-Delta; constant; variable; diversity; joining; regular;
+KW   cDNA; undefined; rearranged; productive.
+XX
+OS   Homo sapiens (human)
+OC   cellular organisms; Eukaryota; Opisthokonta; Metazoa; Eumetazoa; Bilateria;
+OC   Deuterostomia; Chordata; Craniata; Vertebrata; Gnathostomata; Teleostomi;
+OC   Euteleostomi; Sarcopterygii; Dipnotetrapodomorpha; Tetrapoda; Amniota;
+OC   Mammalia; Theria; Eutheria; Boreoeutheria; Euarchontoglires; Primates;
+OC   Haplorrhini; Simiiformes; Catarrhini; Hominoidea; Hominidae; Homininae;
+OC   Homo; Homo sapiens.
+XX
+RN   [1]
+RP   1-2173
+RX   DOI; 10.1073/pnas.242603899.
+RX   PUBMED; 12477932.
+RG   Mammalian Gene Collection Program Team
+RA   Strausberg R.L., Feingold E.A., Grouse L.H., Derge J.G., Klausner R.D.,
+RA   Collins F.S., Wagner L., Shenmen C.M., Schuler G.D., Altschul S.F.,
+RA   Zeeberg B., Buetow K.H., Schaefer C.F., Bhat N.K., Hopkins R.F., Jordan H.,
+RA   Moore T., Max S.I., Wang J., Hsieh F., Diatchenko L., Marusina K.,
+RA   Farmer A.A., Rubin G.M., Hong L., Stapleton M., Soares M.B., Bonaldo M.F.,
+RA   Casavant T.L., Scheetz T.E., Brownstein M.J., Usdin T.B., Toshiyuki S.,
+RA   Carninci P., Prange C., Raha S.S., Loquellano N.A., Peters G.J.,
+RA   Abramson R.D., Mullahy S.J., Bosak S.A., McEwan P.J., McKernan K.J.,
+RA   Malek J.A., Gunaratne P.H., Richards S., Worley K.C., Hale S., Garcia A.M.,
+RA   Gay L.J., Hulyk S.W., Villalon D.K., Muzny D.M., Sodergren E.J., Lu X.,
+RA   Gibbs R.A., Fahey J., Helton E., Ketteman M., Madan A., Rodrigues S.,
+RA   Sanchez A., Whiting M., Madan A., Young A.C., Shevchenko Y., Bouffard G.G.,
+RA   Blakesley R.W., Touchman J.W., Green E.D., Dickson M.C., Rodriguez A.C.,
+RA   Grimwood J., Schmutz J., Myers R.M., Butterfield Y.S., Krzywinski M.I.,
+RA   Skalska U., Smailus D.E., Schnerch A., Schein J.E., Jones S.J., Marra M.A.;
+RT   "Generation and initial analysis of more than 15,000 full-length human and
+RT   mouse cDNA sequences";
+RL   Proc. Natl. Acad. Sci. U.S.A. 99(26):16899-16903(2002).
+XX
+RN   [2]
+RC   NIH-MGC Project URL: http://mgc.nci.nih.gov
+RP   1-2173
+RG   NIH MGC Project
+RA   ;
+RT   ;
+RL   Submitted (08-DEC-2003) to the INSDC.
+RL   National Institutes of Health, Mammalian Gene Collection (MGC), Bethesda,
+RL   MD 20892-2590, USA
+XX
+DR   ENA; BC063384.
+DR   H-InvDB; HIT000260846.
+DR   ImaGenes; IMAGp958A211623Q.
+DR   ImaGenes; IOH62842.
+DR   ImaGenes; IRALp962E0750Q.
+DR   ImaGenes; IRAUp969E07105D.
+DR   ImaGenes; IRAUp969E0797D.
+XX
+CC   IMGT/LIGM-DB annotation level: by annotators
+CC   
+CC   Contact: MGC help desk
+CC   Email: cgapbs-r@mail.nih.gov
+CC   Tissue Procurement: Louis Staudt
+CC   cDNA Library Preparation: Rubin Laboratory
+CC   cDNA Library Arrayed by: The I.M.A.G.E. Consortium (LLNL)
+CC   DNA Sequencing by: National Institutes of Health Intramural
+CC   Sequencing Center (NISC),
+CC   Gaithersburg, Maryland;
+CC   Web site: http://www.nisc.nih.gov/
+CC   Contact: nisc_mgc@nhgri.nih.gov
+CC   Akhter,N., Ayele,K., Beckstrom-Sternberg,S.M., Benjamin,B.,
+CC   Blakesley,R.W., Bouffard,G.G., Breen,K., Brinkley,C., Brooks,S.,
+CC   Dietrich,N.L., Granite,S., Guan,X., Gupta,J., Haghighi,P.,
+CC   Hansen,N., Ho,S.-L., Karlins,E., Kwong,P., Laric,P., Legaspi,R.,
+CC   Maduro,Q.L., Masiello,C., Maskeri,B., Mastrian,S.D.,McCloskey,J.C.,
+CC   McDowell,J., Pearson,R., Stantripop,S., Thomas,P.J., Touchman,J.W.,
+CC   Tsurgeon,C., Vogt,J.L., Walker,M.A., Wetherby,K.D., Wiggins,L.,
+CC   Young,A., Zhang,L.-H. and Green,E.D.
+CC   Clone distribution: MGC clone distribution information can be found
+CC   through the I.M.A.G.E. Consortium/LLNL at: http://image.llnl.gov
+CC   Series: IRAL Plate: 50 Row: e Column: 7
+CC   This clone was selected for full length sequencing because it
+CC   passed the following selection criteria: GenomeScan gene
+CC   prediction, Similarity but not identity to protein.
+CC   Differences found between this sequence and the human reference
+CC   genome (build 36) are described in misc_difference features below
+CC   and these differences were also compared to chimpanzee genome
+CC   (build 2).
+XX
+FH   Key                 Location/Qualifiers
+FH   
+FT   L-V-D-J-C-SEQUENCE  1..2173
+FT                       /clone="IMAGE:4764956"
+FT                       /clone_lib="NIH_MGC_48"
+FT                       /db_xref="taxon:9606"
+FT                       /lab_host="DH10B-R"
+FT                       /mol_type="mRNA"
+FT                       /note="Vector: pOTB7"
+FT                       /organism="Homo sapiens"
+FT                       /tissue_type="Primary B-Cells from Tonsils"
+FT   L-V-D-J-C-REGION    22..1728
+FT                       /translation="MKHLWFFLLLVAAPRWVLSQVQLQESGPGLVKPSGTLSLTC
+FT                       AVSGGSISSSNWWSWVRQPPGKGLEWIGEIYHSGSTNYNPSLKSRVTISVDKSKN
+FT                       QFSLKLSSVTAADTAVYYCASLGDIYYYGMDVWGQGTTVTVSSAPTKAPDVFPII
+FT                       SGCRHPKDNSPVVLACLITGYHPTSVTVTWYMGTQSQPQRTFPEIQRRDSYYMTS
+FT                       SQLSTPLQQWRQGEYKCVVQHTASKSKKEIFRWPESPKAQASSVPTAQPQAEGSL
+FT                       AKATTAPATTRNTGRGGEEKKKEKEKEEQEERETKTPECPSHTQPLGVYLLTPAV
+FT                       QDLWLRDKATFTCFVVGSDLKDAHLTWEVAGKVPTGGVEEGLLERHSNGSQSQHS
+FT                       RLTLPRSLWNAGTSITCTLNHPSLPPQRLMALREPAAQAPVKLSLNLLASSDPPE
+FT                       AASWLLCEVSGFSPPNILLMWLEDQREVNTSGFAPARPPPQPGSTTFWAWSVLRV
+FT                       PAPPSPQPATYTCVVSHEDSRTLLNASRSLEVSYLAMTPLIPQSKDENSDDYTTF
+FT                       DDVGSLWTTLSTFVALFILTLLYSGIVTFIKVK"
+FT   L-V-D-J-REGION      22..438
+FT                       /translation="MKHLWFFLLLVAAPRWVLSQVQLQESGPGLVKPSGTLSLTC
+FT                       AVSGGSISSSNWWSWVRQPPGKGLEWIGEIYHSGSTNYNPSLKSRVTISVDKSKN
+FT                       QFSLKLSSVTAADTAVYYCASLGDIYYYGMDVWGQGTTVTVSS"
+FT   L-REGION            22..78
+FT                       /translation="MKHLWFFLLLVAAPRWVLS"
+FT   INIT-CODON          22..24
+FT   V-D-J-REGION        79..438
+FT                       /translation="QVQLQESGPGLVKPSGTLSLTCAVSGGSISSSNWWSWVRQP
+FT                       PGKGLEWIGEIYHSGSTNYNPSLKSRVTISVDKSKNQFSLKLSSVTAADTAVYYC
+FT                       ASLGDIYYYGMDVWGQGTTVTVSS"
+FT                       /CDR_length="[9.7.13]"
+FT                       /FR_length="[25.17.38.11]"
+FT   V-REGION            79..371
+FT                       /translation="QVQLQESGPGLVKPSGTLSLTCAVSGGSISSSNWWSWVRQP
+FT                       PGKGLEWIGEIYHSGSTNYNPSLKSRVTISVDKSKNQFSLKLSSVTAADTAVYYC
+FT                       A"
+FT                       /IMGT_allele="IGHV4-4*02"
+FT                       /IMGT_gene="IGHV4-4"
+FT                       /Videntity="100%"
+FT   FR1-IMGT            79..153
+FT                       /translation="QVQLQESGPGLVKPSGTLSLTCAVS"
+FT                       /AA_IMGT="AA 1 to 26, AA 10 is missing"
+FT   1st-CYS             142..144
+FT   CDR1-IMGT           154..180
+FT                       /translation="GGSISSSNW"
+FT                       /AA_IMGT="AA 27 to 38, AA 32, 33 and 34 are missing"
+FT   FR2-IMGT            181..231
+FT                       /translation="WSWVRQPPGKGLEWIGE"
+FT                       /AA_IMGT="AA 39 to 55"
+FT   CONSERVED-TRP       187..189
+FT   CDR2-IMGT           232..252
+FT                       /translation="IYHSGST"
+FT                       /AA_IMGT="AA 56 to 65, AA 60, 61 and 62 are missing"
+FT   FR3-IMGT            253..366
+FT                       /translation="NYNPSLKSRVTISVDKSKNQFSLKLSSVTAADTAVYYC"
+FT                       /AA_IMGT="AA 66 to 104, AA 73 is missing"
+FT   2nd-CYS             364..366
+FT   CDR3-IMGT           367..405
+FT                       /translation="ASLGDIYYYGMDV"
+FT                       /AA_IMGT="AA 105 to 117"
+FT   (N-D)-J-REGION      372..438
+FT                       /codon_start=2
+FT                       /translation="LGDIYYYGMDVWGQGTTVTVSS"
+FT   D-J-REGION          372..438
+FT                       /codon_start=2
+FT                       /translation="LGDIYYYGMDVWGQGTTVTVSS"
+FT   (N-D)-REGION        372..383
+FT                       /codon_start=2
+FT                       /translation="LGD"
+FT   D-REGION            372..379
+FT                       /translation="SG"
+FT                       /IMGT_allele="IGHD3-10*01"
+FT                       /IMGT_gene="IGHD3-10"
+FT   N2-REGION           380..383
+FT                       /translation="T"
+FT   J-REGION            384..438
+FT                       /codon_start=2
+FT                       /translation="YYYGMDVWGQGTTVTVSS"
+FT                       /IMGT_allele="IGHJ6*02"
+FT                       /IMGT_gene="IGHJ6"
+FT                       /Jidentity="91,94% (57/62 nt)"
+FT   5'J-REGION          384..408
+FT                       /codon_start=2
+FT                       /translation="YYYGMDVW"
+FT   FR4-IMGT            406..438
+FT                       /translation="WGQGTTVTVSS"
+FT                       /AA_IMGT="AA 118 to 128"
+FT   J-TRP               406..408
+FT   C-REGION            439..1728
+FT                       /translation="APTKAPDVFPIISGCRHPKDNSPVVLACLITGYHPTSVTVT
+FT                       WYMGTQSQPQRTFPEIQRRDSYYMTSSQLSTPLQQWRQGEYKCVVQHTASKSKKE
+FT                       IFRWPESPKAQASSVPTAQPQAEGSLAKATTAPATTRNTGRGGEEKKKEKEKEEQ
+FT                       EERETKTPECPSHTQPLGVYLLTPAVQDLWLRDKATFTCFVVGSDLKDAHLTWEV
+FT                       AGKVPTGGVEEGLLERHSNGSQSQHSRLTLPRSLWNAGTSITCTLNHPSLPPQRL
+FT                       MALREPAAQAPVKLSLNLLASSDPPEAASWLLCEVSGFSPPNILLMWLEDQREVN
+FT                       TSGFAPARPPPQPGSTTFWAWSVLRVPAPPSPQPATYTCVVSHEDSRTLLNASRS
+FT                       LEVSYLAMTPLIPQSKDENSDDYTTFDDVGSLWTTLSTFVALFILTLLYSGIVTF
+FT                       IKVK"
+FT                       /IMGT_allele="IGHD*01 or IGHD*02"
+FT                       /IMGT_gene="IGHD"
+FT   CH1                 439..741
+FT                       /translation="APTKAPDVFPIISGCRHPKDNSPVVLACLITGYHPTSVTVT
+FT                       WYMGTQSQPQRTFPEIQRRDSYYMTSSQLSTPLQQWRQGEYKCVVQHTASKSKKE
+FT                       IFRWP"
+FT   H1                  742..843
+FT                       /translation="ESPKAQASSVPTAQPQAEGSLAKATTAPATTRNT"
+FT   H2                  844..915
+FT                       /translation="GRGGEEKKKEKEKEEQEERETKTP"
+FT   CH2                 916..1239
+FT                       /translation="ECPSHTQPLGVYLLTPAVQDLWLRDKATFTCFVVGSDLKDA
+FT                       HLTWEVAGKVPTGGVEEGLLERHSNGSQSQHSRLTLPRSLWNAGTSITCTLNHPS
+FT                       LPPQRLMALREP"
+FT   CH3                 1240..1563
+FT                       /translation="AAQAPVKLSLNLLASSDPPEAASWLLCEVSGFSPPNILLMW
+FT                       LEDQREVNTSGFAPARPPPQPGSTTFWAWSVLRVPAPPSPQPATYTCVVSHEDSR
+FT                       TLLNASRSLEVS"
+FT   M1                  1564..1722
+FT                       /translation="YLAMTPLIPQSKDENSDDYTTFDDVGSLWTTLSTFVALFIL
+FT                       TLLYSGIVTFIK"
+FT   M2                  1723..1728
+FT                       /translation="VK"
+FT   STOP-CODON          1729..1731
+FT   POLYA_SIGNAL        2094..2098
+FT   POLYA_TAIL          2117..2173
+XX
+SQ   Sequence 2173 BP; 513 A; 726 C; 570 G; 364 T; 0 other;
+     atgggcctcc tgcacaagaa catgaaacac ctgtggttct tcctcctcct ggtggcagct        60
+     cccagatggg tcctgtctca ggtgcagctg caggagtcgg gcccaggact ggtgaagcct       120
+     tcggggaccc tgtccctcac ctgcgctgtc tctggtggct ccatcagcag tagtaactgg       180
+     tggagttggg tccgccagcc cccagggaag gggctggagt ggattgggga aatctatcat       240
+     agtgggagca ccaactacaa cccgtccctc aagagtcgag tcaccatatc agtagacaag       300
+     tccaagaacc agttctccct gaagctgagc tctgtgaccg ccgcggacac ggccgtgtat       360
+     tactgtgcga gtctgggaga catctactac tacggtatgg acgtctgggg ccaagggacc       420
+     acggtcaccg tctcctcagc acccaccaag gctccggatg tgttccccat catatcaggg       480
+     tgcagacacc caaaggataa cagccctgtg gtcctggcat gcttgataac tgggtaccac       540
+     ccaacgtccg tgactgtcac ctggtacatg gggacacaga gccagcccca gagaaccttc       600
+     cctgagatac aaagacggga cagctactac atgacaagca gccagctctc cacccccctc       660
+     cagcagtggc gccaaggcga gtacaaatgc gtggtccagc acaccgccag caagagtaag       720
+     aaggagatct tccgctggcc agagtctcca aaggcacagg cctcctcagt gcccactgca       780
+     caaccccaag cagagggcag cctcgccaag gcaaccacag ccccagccac cacccgtaac       840
+     acaggaagag gaggagaaga gaagaagaag gagaaggaga aagaggaaca agaagagaga       900
+     gagacaaaga caccagagtg tccgagccac acccagcctc ttggcgtcta cctgctaacc       960
+     cctgcagtgc aggacctgtg gctccgggac aaagccacct tcacctgctt cgtggtgggc      1020
+     agtgacctga aggatgctca cctgacctgg gaggtggctg ggaaggtccc cacagggggc      1080
+     gtggaggaag ggctgctgga gcggcacagc aacggctccc agagccagca cagccgtctg      1140
+     accctgccca ggtccttgtg gaacgcgggg acctccatca cctgcacact gaaccatccc      1200
+     agcctcccac cccagaggtt gatggcgctg agagaacccg ctgcgcaggc acccgtcaag      1260
+     ctttccctga acctgctggc ctcgtctgac cctcccgagg cggcctcgtg gctcctgtgt      1320
+     gaggtgtctg gcttctcgcc ccccaacatc ctcctgatgt ggctggagga ccagcgtgag      1380
+     gtgaacactt ctgggtttgc ccccgcacgc ccccctccac agcccgggag caccacgttc      1440
+     tgggcctgga gtgtgctgcg tgtcccagcc ccgcccagcc ctcagccagc cacctacacg      1500
+     tgtgtggtca gccacgagga ctcccggact ctgctcaacg ccagccggag cctagaagtc      1560
+     agctacctgg ccatgacccc cctgatccct cagagcaagg atgagaacag cgatgactac      1620
+     acgacctttg atgatgtggg cagcctgtgg accaccctgt ccacgtttgt ggccctcttc      1680
+     atcctcaccc tcctctacag cggcattgtc actttcatca aggtgaagta gccccagaag      1740
+     agcaggacgc cctgtacctg cagagaaggg aagcagcctc tgtacctcat ctgtggctac      1800
+     cagagagcag aaaggaccca ccctggactc ttctgtgtgc aggaagatgc gccagcccct      1860
+     gcccccggct cccctctgtc cgccacagaa tccagtcttc tagaccaggg ggacgggcac      1920
+     ccatcactcc gcaggcgaat cagagccccc ctgccccggc cctaacccct gtgcctcctt      1980
+     cccgtgcttc ccccagagcc agctacaccc ctgccccggc cctaaccccc atgcctcctt      2040
+     cctgtgcttc ccccagagcc agctagtccc acctgcagcc cgctggcctc cccataaaca      2100
+     cgctttggtt catttcaaaa aaaaaaaaaa aaaaaaaaaa aaaaaaaaaa aaaaaaaaaa      2160
+     aaaaaaaaaa aaa                                                         2173
+//

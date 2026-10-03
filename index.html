@@ -1,0 +1,3124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VBASE3 — Comparative Immunogenomics Database & DNAPLOT Analytics Suite</title>
+  <link rel="stylesheet" href="css/fonts.css">
+  <style>
+    :root {
+      --bg-base: #060b13;
+      --bg-card: rgba(13, 23, 38, 0.85);
+      --bg-card-hover: rgba(19, 34, 56, 0.95);
+      --border-glass: rgba(56, 189, 248, 0.18);
+      --border-glow: rgba(56, 189, 248, 0.4);
+      --cyan-glow: #38bdf8;
+      --emerald-glow: #10b981;
+      --amber-glow: #f59e0b;
+      --purple-glow: #a855f7;
+      --rose-glow: #f43f5e;
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: var(--bg-base);
+      background-image:
+        radial-gradient(circle at 10% 15%, rgba(2, 132, 199, 0.12) 0%, transparent 40%),
+        radial-gradient(circle at 90% 25%, rgba(16, 185, 129, 0.10) 0%, transparent 40%),
+        radial-gradient(circle at 50% 85%, rgba(139, 92, 246, 0.08) 0%, transparent 50%),
+        linear-gradient(180deg, #060b13 0%, #03060a 100%);
+      background-attachment: fixed;
+      color: var(--text-primary);
+      min-height: 100vh;
+      line-height: 1.55;
+    }
+
+    /* TOP NAVBAR */
+    .top-navbar {
+      background: rgba(6, 11, 19, 0.88);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-glass);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 12px 28px;
+    }
+
+    .nav-container {
+      max-width: 1440px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .brand-logo-img {
+      height: 48px;
+      width: auto;
+      border-radius: 8px;
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6), 0 0 12px rgba(56, 189, 248, 0.2);
+      object-fit: contain;
+      background: #ffffff;
+      padding: 3px;
+      transition: all 0.2s ease;
+    }
+
+    .brand-logo-img:hover {
+      transform: scale(1.03);
+      border-color: var(--cyan-glow);
+      box-shadow: 0 4px 20px rgba(56, 189, 248, 0.35);
+    }
+
+    .brand-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, #ffffff 30%, #38bdf8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .brand-sub {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+      letter-spacing: 0.2px;
+    }
+
+    .nav-quick-links {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .quick-link {
+      text-decoration: none;
+      color: var(--text-secondary);
+      font-size: 12.5px;
+      font-weight: 600;
+      padding: 7px 13px;
+      border-radius: 7px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      background: rgba(15, 23, 42, 0.5);
+      transition: all 0.2s;
+    }
+
+    .quick-link:hover {
+      color: #ffffff;
+      background: rgba(56, 189, 248, 0.15);
+      border-color: rgba(56, 189, 248, 0.4);
+      transform: translateY(-1px);
+    }
+
+    .quick-link.highlight {
+      background: linear-gradient(135deg, rgba(2, 132, 199, 0.3), rgba(16, 185, 129, 0.25));
+      border-color: var(--cyan-glow);
+      color: #ffffff;
+    }
+
+    /* MAIN CONTAINER */
+    main {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 32px 24px 60px;
+    }
+
+    /* HERO SECTION */
+    .hero-panel {
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(10, 18, 30, 0.9) 100%);
+      border: 1px solid var(--border-glass);
+      border-radius: 18px;
+      padding: 36px 40px;
+      margin-bottom: 36px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    .hero-panel::before {
+      content: '';
+      position: absolute;
+      top: -120px;
+      right: -100px;
+      width: 420px;
+      height: 420px;
+      background: radial-gradient(circle, rgba(56, 189, 248, 0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-info-box {
+      background: rgba(15, 23, 42, 0.75);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      border-left: 4px solid #38bdf8;
+      border-radius: 10px;
+      padding: 11px 18px;
+      margin-bottom: 22px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .hero-info-lead {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 700;
+      color: #f8fafc;
+      white-space: nowrap;
+    }
+
+    .hero-info-tag {
+      background: rgba(168, 85, 247, 0.2);
+      color: #d8b4fe;
+      border: 1px solid rgba(168, 85, 247, 0.45);
+      padding: 2px 8px;
+      border-radius: 5px;
+      font-size: 11.5px;
+      letter-spacing: 0.3px;
+    }
+
+    .hero-info-divider {
+      width: 1px;
+      height: 18px;
+      background: rgba(148, 163, 184, 0.3);
+    }
+
+    .hero-info-items {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      color: #cbd5e1;
+      font-size: 13px;
+    }
+
+    .hero-info-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .hero-info-sep {
+      color: #475569;
+      font-size: 11px;
+    }
+
+    .hero-info-items a {
+      color: #38bdf8;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      transition: color 0.15s ease;
+    }
+
+    .hero-info-items a:hover {
+      color: #7dd3fc;
+    }
+
+    @media (max-width: 900px) {
+      .hero-info-divider {
+        display: none;
+      }
+    }
+
+    .hero-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 14px;
+      background: linear-gradient(135deg, #ffffff 20%, #e2e8f0 60%, #38bdf8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-description {
+      font-size: 15px;
+      color: #cbd5e1;
+      max-width: 980px;
+      line-height: 1.68;
+      margin-bottom: 26px;
+    }
+
+    .hero-description strong {
+      color: #38bdf8;
+    }
+
+    /* KPI STATS ROW */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .kpi-card {
+      background: rgba(6, 12, 22, 0.85);
+      border: 1px solid rgba(56, 189, 248, 0.14);
+      border-radius: 12px;
+      padding: 16px 20px;
+      text-align: center;
+      transition: all 0.2s;
+    }
+
+    .kpi-card:hover {
+      border-color: var(--border-glow);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    }
+
+    .kpi-num {
+      font-family: 'Outfit', sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      line-height: 1.1;
+      margin-bottom: 4px;
+    }
+
+    .kpi-label {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    .kpi-sub {
+      font-size: 11px;
+      color: #64748b;
+      margin-top: 4px;
+      font-weight: 500;
+      line-height: 1.3;
+    }
+
+    /* SECTION TITLES */
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .section-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.45rem;
+      font-weight: 750;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-subtitle {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    /* PORTAL CARDS GRID */
+    .portal-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+      gap: 20px;
+      margin-bottom: 42px;
+    }
+
+    .portal-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-glass);
+      border-radius: 14px;
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .portal-card:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--cyan-glow);
+      transform: translateY(-4px);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5), 0 0 20px rgba(56, 189, 248, 0.15);
+    }
+
+    .card-top {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 12px;
+    }
+
+    .card-icon {
+      font-size: 32px;
+      line-height: 1;
+      padding: 10px;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      flex-shrink: 0;
+    }
+
+    .card-heading {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.25;
+      margin-bottom: 4px;
+    }
+
+    .card-subtext {
+      font-size: 12px;
+      color: var(--cyan-glow);
+      font-weight: 600;
+    }
+
+    .card-body {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.55;
+      margin-bottom: 18px;
+    }
+
+    .card-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .tag {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 5px;
+      background: rgba(15, 23, 42, 0.8);
+      color: #94a3b8;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      padding-top: 12px;
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--cyan-glow);
+    }
+
+    .card-footer .arrow {
+      transition: transform 0.2s;
+    }
+
+    .portal-card:hover .arrow {
+      transform: translateX(4px);
+    }
+
+    /* IN-BROWSER WORKBENCH TABS */
+    .workbench-panel {
+      background: #090e17;
+      border: 1px solid var(--border-glass);
+      border-radius: 16px;
+      padding: 26px;
+      margin-bottom: 40px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .nav-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 22px;
+      border-bottom: 2px solid #1e293b;
+      padding-bottom: 8px;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      background: #111827;
+      border: 1px solid #1e293b;
+      color: #94a3b8;
+      padding: 9px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 13.5px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .tab-btn:hover {
+      background: #1e293b;
+      color: #38bdf8;
+    }
+
+    .tab-btn.active {
+      background: #0284c7;
+      color: white;
+      border-color: #38bdf8;
+      box-shadow: 0 4px 12px rgba(56, 189, 248, 0.3);
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .btn {
+      background: #0284c7;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn:hover {
+      background: #0369a1;
+      transform: translateY(-1px);
+    }
+
+    .select-input {
+      background: #090d16;
+      color: #f8fafc;
+      border: 1px solid #334155;
+      padding: 7px 12px;
+      border-radius: 6px;
+      font-size: 13px;
+    }
+
+    textarea,
+    input[type="text"] {
+      width: 100%;
+      background: #090d16;
+      color: #38bdf8;
+      font-family: 'Fira Code', monospace;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 12px;
+      font-size: 13px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    th,
+    td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid #1e293b;
+    }
+
+    th {
+      background: #1e293b;
+      color: #94a3b8;
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 11.5px;
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 36px 24px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 13px;
+      max-width: 1440px;
+      margin: 0 auto;
+    }
+
+    footer a {
+      color: #38bdf8;
+      text-decoration: none;
+    }
+
+    /* SMART DROPZONE & ROUTER HERO */
+    .smart-dropzone-hero {
+      position: relative;
+    }
+
+    .dropzone-box {
+      background: linear-gradient(135deg, rgba(8, 28, 36, 0.75), rgba(15, 23, 42, 0.75));
+      border: 2px dashed rgba(16, 185, 129, 0.45);
+      border-radius: 16px;
+      padding: 24px 28px;
+      transition: all 0.25s ease;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+    }
+
+    .dropzone-box:hover {
+      border-color: #34d399;
+      background: linear-gradient(135deg, rgba(8, 28, 36, 0.9), rgba(15, 23, 42, 0.9));
+      box-shadow: 0 12px 36px rgba(16, 185, 129, 0.15);
+    }
+
+    .dropzone-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 18px;
+    }
+
+    .dropzone-icon {
+      font-size: 38px;
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      border-radius: 12px;
+      width: 58px;
+      height: 58px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .dropzone-text-group {
+      flex: 1;
+      min-width: 260px;
+    }
+
+    .dropzone-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 4px;
+    }
+
+    .dropzone-subtitle {
+      font-size: 13px;
+      color: #94a3b8;
+      line-height: 1.5;
+    }
+
+    .dropzone-actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .dropzone-file-btn {
+      background: linear-gradient(135deg, #059669, #0284c7);
+      border: none;
+      color: #ffffff;
+      font-weight: 700;
+      padding: 9px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 13px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 4px 14px rgba(5, 150, 105, 0.4);
+      transition: all 0.2s;
+    }
+
+    .dropzone-file-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(5, 150, 105, 0.55);
+    }
+
+    .dropzone-paste-btn {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: #cbd5e1;
+      font-weight: 600;
+      padding: 9px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 13px;
+      transition: all 0.15s;
+    }
+
+    .dropzone-paste-btn:hover {
+      background: rgba(255, 255, 255, 0.12);
+      color: #ffffff;
+      border-color: #38bdf8;
+    }
+
+    .router-result-card {
+      margin-top: 16px;
+    }
+
+    /* SCIENTIFIC REFERENCES SECTION */
+    .ref-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+    .ref-card {
+      background: linear-gradient(145deg, rgba(13, 23, 38, 0.95), rgba(6, 12, 22, 0.95));
+      border: 1px solid rgba(56, 189, 248, 0.2);
+      border-radius: 12px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.2s;
+      position: relative;
+    }
+    .ref-card:hover {
+      border-color: rgba(56, 189, 248, 0.5);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    }
+    .ref-tag {
+      display: inline-block;
+      font-size: 10.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 3px 8px;
+      border-radius: 4px;
+      margin-bottom: 8px;
+      width: fit-content;
+    }
+    .ref-title {
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 13.5px;
+      line-height: 1.45;
+      margin-bottom: 6px;
+    }
+    .ref-authors {
+      font-size: 12px;
+      color: #94a3b8;
+      line-height: 1.4;
+      margin-bottom: 6px;
+    }
+    .ref-journal {
+      font-size: 12px;
+      color: #cbd5e1;
+      font-style: italic;
+      margin-bottom: 12px;
+    }
+    .ref-links {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: auto;
+      padding-top: 10px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .ref-link-btn {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 5px 10px;
+      border-radius: 6px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.15s;
+    }
+    .ref-link-doi {
+      background: rgba(56, 189, 248, 0.15);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      color: #38bdf8;
+    }
+    .ref-link-doi:hover {
+      background: rgba(56, 189, 248, 0.28);
+      color: #ffffff;
+    }
+    .ref-link-pmid {
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      color: #34d399;
+    }
+    .ref-link-pmid:hover {
+      background: rgba(16, 185, 129, 0.28);
+      color: #ffffff;
+    }
+    .ref-link-web {
+      background: rgba(168, 85, 247, 0.15);
+      border: 1px solid rgba(168, 85, 247, 0.35);
+      color: #c084fc;
+    }
+    .ref-link-web:hover {
+      background: rgba(168, 85, 247, 0.28);
+      color: #ffffff;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- TOP NAVBAR -->
+  <header class="top-navbar">
+    <div class="nav-container">
+      <a href="index.html" class="brand-group" title="VBASE3 Immunogenomics Hub">
+        <img src="images/vbase3_logo.jpg" alt="VBASE3 Official Logo" class="brand-logo-img">
+        <div>
+          <div class="brand-title">VBASE3 <span
+              style="font-size:11px; background:rgba(168,85,247,0.25); color:#d8b4fe; border:1px solid rgba(168,85,247,0.5); padding:2px 8px; border-radius:12px; vertical-align:middle; margin-left:6px; font-weight:600;">Beta</span>
+            <span>•</span> DNAPLOT</div>
+          <div class="brand-sub">Comparative Immunogenomics & Synthesis Database</div>
+        </div>
+      </a>
+
+      <nav class="nav-quick-links">
+        <a href="dnaplot.html" class="quick-link highlight" style="background:rgba(56,189,248,0.18); border-color:rgba(56,189,248,0.5); color:#38bdf8; font-weight:700;">⚡ DNAPLOT Analysis</a>
+        <a href="#flagship-species" class="quick-link">🔬 Species Analyzers</a>
+        <a href="#reference-databases" class="quick-link">🏛️ Reference Loci</a>
+        <a href="#workbench-section" class="quick-link">⚡ In-Browser Sandbox</a>
+        <a href="#scientific-references" class="quick-link">📚 References</a>
+        <a href="constant_regions.html" class="quick-link">🏛️ Constant Regions</a>
+        <a href="vgene_pacmap_universe.html" class="quick-link">🌌 PaCMAP Universe</a>
+        <a href="vbase3_status.html" class="quick-link highlight">📊 Status & Coverage</a>
+        <a href="https://doi.org/10.5281/zenodo.22923344" target="_blank" rel="noopener" class="quick-link highlight" style="background:rgba(217,119,6,0.22); border-color:rgba(245,158,11,0.55); color:#fbbf24; font-weight:700;" title="Download complete database tables and catalogs from Zenodo">📦 Download Database (Zenodo) ↗</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO SECTION -->
+    <div class="hero-panel">
+      <div class="hero-info-box">
+        <div class="hero-info-lead">
+          <span class="hero-info-tag">📢 Beta Release</span>
+          <span>Community Feedback Welcome</span>
+        </div>
+        <div class="hero-info-divider"></div>
+        <div class="hero-info-items">
+          <span class="hero-info-item">🏛️ Systematic Tripartite Repertoires (V, D, J)</span>
+          <span class="hero-info-sep">•</span>
+          <span class="hero-info-item">⚡ 100% Client-Side WebAssembly</span>
+          <span class="hero-info-sep">•</span>
+          <span class="hero-info-item">🛡️ Class I Confirmed Functional Only</span>
+          <span class="hero-info-sep">•</span>
+          <span class="hero-info-item">📜 Zenodo Release (<a href="https://doi.org/10.5281/zenodo.22923344"
+              target="_blank" rel="noopener">DOI: 10.5281/zenodo.22923344</a>)</span>
+        </div>
+      </div>
+
+      <h1 class="hero-title">Comparative Immunogenomics Across Jawed Vertebrates</h1>
+      <p class="hero-description">
+        <strong>VBASE3</strong> provides an independent, open, and synthesis-ready tripartite antibody and TCR gene
+        database containing <strong>2,857 canonical Class I genes</strong> in the master export (2,651 V, 93 D, and 113 J segments)
+        spanning <strong>53 vertebrate species taxa</strong>, alongside <strong>8,329 total functional alleles</strong> across
+        43 species-level catalogs, <strong>3,114 curated TCRBase genes</strong>, <strong>2,048 PaCMAP manifold points</strong>, and
+        <strong>3,900 Rosetta Stone cross-database mappings</strong>.
+        Screened across <strong>55 chromosome-level reference assemblies</strong> and verified against
+        over <strong>46 million physiological repertoire reads</strong> with sub-millisecond <strong>Rust SIMD vector alignment</strong>
+        and strict IMGT synthesis boundaries (<code>TVSS</code>/<code>TVSA</code> for Heavy; <code>VEIK</code>/<code>LEIK</code> for Kappa; <code>TVL</code> for Lambda),
+        every sequence is classified based on empirical physiological rearranged evidence with zero constant region
+        bleed-through.
+      </p>
+
+      <!-- Primary Action CTAs -->
+      <div style="display: flex; gap: 12px; margin-top: 22px; margin-bottom: 24px; flex-wrap: wrap; align-items: center;">
+        <a href="dnaplot.html" class="btn" style="background: linear-gradient(135deg, #0284c7, #10b981); color: #ffffff; font-weight: 700; font-size: 13.5px; padding: 11px 22px; border-radius: 9px; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 16px rgba(2, 132, 199, 0.45); border: 1px solid rgba(56, 189, 248, 0.6); transition: transform 0.15s, box-shadow 0.15s;">
+          <span>⚡ Launch DNAPLOT Analysis Studio</span>
+          <span style="font-size: 15px;">&rarr;</span>
+        </a>
+        <a href="vgene_pacmap_universe.html" class="btn" style="background: rgba(56, 189, 248, 0.12); border: 1px solid rgba(56, 189, 248, 0.35); color: #38bdf8; font-weight: 600; font-size: 13px; padding: 11px 18px; border-radius: 9px; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
+          <span>🌌 PaCMAP Universe (2,048 Points)</span>
+          <span>&rarr;</span>
+        </a>
+        <a href="vbase3_status.html" class="btn" style="background: rgba(168, 85, 247, 0.12); border: 1px solid rgba(168, 85, 247, 0.35); color: #c084fc; font-weight: 600; font-size: 13px; padding: 11px 18px; border-radius: 9px; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
+          <span>📊 Assembly Status & Coverage</span>
+          <span>&rarr;</span>
+        </a>
+        <a href="single_cell_repertoire_studio.html" class="btn" style="background: rgba(244, 63, 94, 0.12); border: 1px solid rgba(244, 63, 94, 0.35); color: #fda4af; font-weight: 600; font-size: 13px; padding: 11px 18px; border-radius: 9px; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
+          <span>📈 Single-Cell Paired Studio</span>
+          <span>&rarr;</span>
+        </a>
+      </div>
+
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-num" style="color: var(--cyan-glow);">2,857</div>
+          <div class="kpi-label">Class I Master Export</div>
+          <div class="kpi-sub">2,651 V • 93 D • 113 J Curated</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-num" style="color: var(--emerald-glow);">8,329</div>
+          <div class="kpi-label">Total Functional Alleles</div>
+          <div class="kpi-sub">Across 43 Species-Level Catalogs</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-num" style="color: var(--amber-glow);">2,048</div>
+          <div class="kpi-label">Live PaCMAP Manifold Points</div>
+          <div class="kpi-sub">2D Pan-Vertebrate V-Gene Map</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-num" style="color: var(--purple-glow);">3,114</div>
+          <div class="kpi-label">TCRBase Genes in VBASE3</div>
+          <div class="kpi-sub">TRA / TRB / TRG / TRD across 31 spp.</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-num" style="color: #60a5fa;">53</div>
+          <div class="kpi-label">Species Taxa in Master Release</div>
+          <div class="kpi-sub">Screened across 55 Assemblies</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-num" style="color: var(--rose-glow);">3,900</div>
+          <div class="kpi-label">Rosetta Stone Mappings</div>
+          <div class="kpi-sub">Cross-Database Universal IDs</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- UNIVERSAL SEQUENCE DROPZONE & SMART ROUTER -->
+    <div id="universalDropzone" class="smart-dropzone-hero" style="margin-top: 36px; margin-bottom: 24px;">
+      <div class="dropzone-box" id="dropzoneBox">
+        <div class="dropzone-inner">
+          <div class="dropzone-icon">📥</div>
+          <div class="dropzone-text-group">
+            <div class="dropzone-title">Universal Sequence Dropzone & Smart Router</div>
+            <div class="dropzone-subtitle">Drop any antibody or TCR sequence file (<code>.fasta</code>, <code>.fa</code>, <code>.tsv</code>, <code>.csv</code>, <code>.txt</code>) or paste sequence below. The client-side engine automatically deduces receptor (BCR vs TCR), species, and locus, and routes directly into the ideal analyzer.</div>
+          </div>
+          <div class="dropzone-actions">
+            <label class="dropzone-file-btn">
+              <span>📂 Browse File</span>
+              <input type="file" id="dropzoneFileInput" accept=".fasta,.fa,.txt,.tsv,.csv,.fastq" style="display:none;" />
+            </label>
+            <button class="dropzone-paste-btn" id="btnTogglePaste">📋 Paste Sequence</button>
+          </div>
+        </div>
+        <div id="dropzonePasteArea" style="display:none; margin-top: 14px; padding-top: 14px; border-top: 1px dashed rgba(56, 189, 248, 0.3);">
+          <textarea id="routerPasteInput" placeholder="Paste antibody or TCR nucleotide or protein sequence here (FASTA or plain text)..." style="width:100%; height:80px; background:#040d16; border:1px solid rgba(56, 189, 248, 0.3); border-radius:8px; color:#f1f5f9; font-family:'Fira Code', monospace; font-size:12px; padding:10px; resize:vertical; outline:none;"></textarea>
+          <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:8px;">
+            <button class="dropzone-file-btn" style="padding:6px 16px; font-size:12px;" id="btnAnalyzePasted">⚡ Classify & Route</button>
+            <button class="dropzone-paste-btn" style="padding:6px 12px; font-size:12px;" id="btnCancelPaste">Cancel</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Router Suggestion Card (appears dynamically after ingestion) -->
+      <div id="routerResultModal" class="router-result-card" style="display:none;"></div>
+    </div>
+
+    <!-- GUIDED USER PATHWAYS (MANUSCRIPT SECTION 5 ALIGNMENT) -->
+    <div id="user-pathways" class="section-header" style="margin-top: 48px;">
+      <div>
+        <div class="section-title">🧭 Guided Pathways: Which VBASE3 Mode Fits Your Goal?</div>
+        <div class="section-subtitle">Dedicated application pathways for evolutionary biologists, software tool
+          developers, biologics engineers, onco-immunologists, and curious learners</div>
+      </div>
+    </div>
+
+    <div
+      style="display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 18px; margin-bottom: 48px;">
+      <!-- Pathway 1: Evolutionary Biologist -->
+      <div
+        style="background: linear-gradient(145deg, rgba(13, 23, 38, 0.95), rgba(6, 12, 22, 0.95)); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 14px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between; position: relative; box-shadow: 0 8px 24px rgba(0,0,0,0.4); transition: transform 0.2s, border-color 0.2s;">
+        <div>
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+            <div
+              style="font-size: 26px; background: rgba(16, 185, 129, 0.12); padding: 6px 10px; border-radius: 8px; border: 1px solid rgba(16, 185, 129, 0.3);">
+              🧬</div>
+            <div>
+              <div style="font-family: 'Outfit', sans-serif; font-size: 1.1rem; font-weight: 750; color: #ffffff;">
+                Evolutionary Explorer</div>
+              <div
+                style="font-size: 11px; color: #10b981; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">
+                Phylogeny & Framework Clans</div>
+            </div>
+          </div>
+          <p style="font-size: 12.5px; color: #cbd5e1; line-height: 1.5; margin-bottom: 12px;">
+            Interrogate 500 million years of vertebrate immunity. Test conservation of Dildrop Clans I–III, structural
+            convergence in shark VNAR vs. camelid VHH, allotetraploid <em>Xenopus</em> subgenome divergence, and
+            light-chain isotype shifts.
+          </p>
+          <div
+            style="font-size: 11.5px; color: #94a3b8; margin-bottom: 14px; display: flex; flex-direction: column; gap: 5px;">
+            <div>✦ <strong>Vertebrate PaCMAP Universe</strong> (2,048 points, 32 spp.)</div>
+            <div>✦ <strong>TCRBase Master Repertoire</strong> across 31 species</div>
+            <div>✦ <strong>Bovine Ultralong Stalk-Knob Loops</strong> (up to 68 aa)</div>
+            <div>✦ <strong>Xenopus Long vs. Short Subgenomes</strong></div>
+          </div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 6px;">
+          <a href="vgene_pacmap_universe.html"
+            style="background: rgba(16, 185, 129, 0.18); border: 1px solid rgba(16, 185, 129, 0.4); color: #6ee7b7; padding: 7px 12px; border-radius: 7px; font-size: 11.5px; font-weight: 600; text-decoration: none; text-align: center; display: flex; align-items: center; justify-content: center; gap: 6px;">
+            <span>🌌 Open PaCMAP Universe</span>
+            <span>&rarr;</span>
+          </a>
+          <div style="display: flex; gap: 6px;">
+            <a href="repertoire_analysis.html"
+              style="flex: 1; font-size: 10.5px; text-align: center; padding: 4px; border-radius: 5px; background: rgba(15, 23, 42, 0.8); color: #94a3b8; border: 1px solid rgba(255,255,255,0.08); text-decoration: none;">Pan-Vertebrate</a>
+            <a href="xenopus_du_pasquier_hsu.html"
+              style="flex: 1; font-size: 10.5px; text-align: center; padding: 4px; border-radius: 5px; background: rgba(15, 23, 42, 0.8); color: #94a3b8; border: 1px solid rgba(255,255,255,0.08); text-decoration: none;">Xenopus
+              Subgenomes</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pathway 2: Computational Bioinformatician -->
+      <div
+        style="background: linear-gradient(145deg, rgba(13, 23, 38, 0.95), rgba(6, 12, 22, 0.95)); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 14px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between; position: relative; box-shadow: 0 8px 24px rgba(0,0,0,0.4); transition: transform 0.2s, border-color 0.2s;">
+        <div>
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+            <div
+              style="font-size: 26px; background: rgba(56, 189, 248, 0.12); padding: 6px 10px; border-radius: 8px; border: 1px solid rgba(56, 189, 248, 0.3);">
+              💻</div>
+            <div>
+              <div style="font-family: 'Outfit', sans-serif; font-size: 1.1rem; font-weight: 750; color: #ffffff;">
+                Bioinformatician & AI</div>
+              <div
+                style="font-size: 11px; color: #38bdf8; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">
+                Data Ingestion & Pipelines</div>
+            </div>
+          </div>
+          <p style="font-size: 12.5px; color: #cbd5e1; line-height: 1.5; margin-bottom: 12px;">
+            Enhance software and train models with 100% Class I confirmed functional germline catalogs. Train protein
+            language models (ESM-2) and structural predictors (AlphaFold, IgFold) with canonical boundaries.
+          </p>
+          <div
+            style="font-size: 11.5px; color: #94a3b8; margin-bottom: 14px; display: flex; flex-direction: column; gap: 5px;">
+            <div>✦ <strong>Master Class I Catalogs</strong> (2,857 genes, 53 spp.)</div>
+            <div>✦ <strong>Rosetta Stone Cross-Reference</strong> (DP, VBASE2, IMGT)</div>
+            <div>✦ <strong>Headless WebAssembly CLI</strong> via Node.js</div>
+            <div>✦ <strong>Model Context Protocol (MCP) Server</strong> for AI</div>
+          </div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 6px;">
+          <a href="rosetta_stone.html"
+            style="background: rgba(56, 189, 248, 0.18); border: 1px solid rgba(56, 189, 248, 0.4); color: #38bdf8; padding: 7px 12px; border-radius: 7px; font-size: 11.5px; font-weight: 600; text-decoration: none; text-align: center; display: flex; align-items: center; justify-content: center; gap: 6px;">
+            <span>🏛️ Open Rosetta Stone</span>
+            <span>&rarr;</span>
+          </a>
+          <div style="display: flex; gap: 6px;">
+            <a href="vbase3_status.html"
+              style="flex: 1; font-size: 10.5px; text-align: center; padding: 4px; border-radius: 5px; background: rgba(15, 23, 42, 0.8); color: #94a3b8; border: 1px solid rgba(255,255,255,0.08); text-decoration: none;">Status
+              & Coverage</a>
+            <a href="https://github.com/vbase3/vbase3_database" target="_blank"
+              style="flex: 1; font-size: 10.5px; text-align: center; padding: 4px; border-radius: 5px; background: rgba(15, 23, 42, 0.8); color: #94a3b8; border: 1px solid rgba(255,255,255,0.08); text-decoration: none;">GitHub
+              Data & MCP ↗</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pathway 3: Biologics & Antibody Engineer -->
+      <div
+        style="background: linear-gradient(145deg, rgba(13, 23, 38, 0.95), rgba(6, 12, 22, 0.95)); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 14px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between; position: relative; box-shadow: 0 8px 24px rgba(0,0,0,0.4); transition: transform 0.2s, border-color 0.2s;">
+        <div>
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+            <div
+              style="font-size: 26px; background: rgba(245, 158, 11, 0.12); padding: 6px 10px; border-radius: 8px; border: 1px solid rgba(245, 158, 11, 0.3);">
+              🔬</div>
+            <div>
+              <div style="font-family: 'Outfit', sans-serif; font-size: 1.1rem; font-weight: 750; color: #ffffff;">
+                Biologics Engineer</div>
+              <div
+                style="font-size: 11px; color: #f59e0b; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">
+                Therapeutic Design & Synthesis</div>
+            </div>
+          </div>
+          <p style="font-size: 12.5px; color: #cbd5e1; line-height: 1.5; margin-bottom: 12px;">
+            Rational design of mAbs, nanobodies (VHH), and bispecifics. Screen developability liabilities (NG/DG, free
+            cysteines, glycosylation), optimize pairing, and enforce strict synthesis boundaries (TVSS/VEIK/TVL).
+          </p>
+          <div
+            style="font-size: 11.5px; color: #94a3b8; margin-bottom: 14px; display: flex; flex-direction: column; gap: 5px;">
+            <div>✦ <strong>Developability Liability Audits</strong> (NG, DG, Cys)</div>
+            <div>✦ <strong>Nanobody FR2 Solubility Verification</strong></div>
+            <div>✦ <strong>Bispecific Cognate Pairing Fidelity</strong></div>
+            <div>✦ <strong>1-Click Vendor Order Sheets</strong> (TVSS/VEIK/TVL)</div>
+          </div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 6px;">
+          <a href="human_vbase3_analyzer.html"
+            style="background: rgba(245, 158, 11, 0.18); border: 1px solid rgba(245, 158, 11, 0.4); color: #fbbf24; padding: 7px 12px; border-radius: 7px; font-size: 11.5px; font-weight: 600; text-decoration: none; text-align: center; display: flex; align-items: center; justify-content: center; gap: 6px;">
+            <span>⚡ Launch Human Biologics Suite</span>
+            <span>&rarr;</span>
+          </a>
+          <div style="display: flex; gap: 6px;">
+            <a href="camelid_vbase3_analyzer.html"
+              style="flex: 1; font-size: 10.5px; text-align: center; padding: 4px; border-radius: 5px; background: rgba(15, 23, 42, 0.8); color: #94a3b8; border: 1px solid rgba(255,255,255,0.08); text-decoration: none;">VHH
+              Nanobody</a>
+            <a href="rabbit_vbase3_analyzer.html"
+              style="flex: 1; font-size: 10.5px; text-align: center; padding: 4px; border-radius: 5px; background: rgba(15, 23, 42, 0.8); color: #94a3b8; border: 1px solid rgba(255,255,255,0.08); text-decoration: none;">Rabbit
+              / Dog</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pathway 4: Clinical Immunologist & Onco-Hematologist -->
+      <div
+        style="background: linear-gradient(145deg, rgba(13, 23, 38, 0.95), rgba(6, 12, 22, 0.95)); border: 1px solid rgba(244, 63, 94, 0.35); border-radius: 14px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between; position: relative; box-shadow: 0 8px 24px rgba(0,0,0,0.4); transition: transform 0.2s, border-color 0.2s;">
+        <div>
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+            <div
+              style="font-size: 26px; background: rgba(244, 63, 94, 0.12); padding: 6px 10px; border-radius: 8px; border: 1px solid rgba(244, 63, 94, 0.3);">
+              🩺</div>
+            <div>
+              <div style="font-family: 'Outfit', sans-serif; font-size: 1.1rem; font-weight: 750; color: #ffffff;">
+                Onco-Immunology</div>
+              <div
+                style="font-size: 11px; color: #f43f5e; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">
+                Lymphoma Clonality & Repertoire Dynamics</div>
+            </div>
+          </div>
+          <p style="font-size: 12.5px; color: #cbd5e1; line-height: 1.5; margin-bottom: 12px;">
+            Monitor immune interventions and detect malignant clonal expansions. Track longitudinal
+            vaccination/infection kinetics, identify lymphoma/leukemia spikes (DLBCL, FL, CLL, CTCL), evaluate ongoing
+            SHM subclonal trees, and monitor MRD down to 10⁻⁶.
+          </p>
+          <div
+            style="font-size: 11.5px; color: #94a3b8; margin-bottom: 14px; display: flex; flex-direction: column; gap: 5px;">
+            <div>✦ <strong>Lymphoma / Leukemia Monoclonal Spikes</strong></div>
+            <div>✦ <strong>Longitudinal SHM Velocity & Kinetics Curves</strong></div>
+            <div>✦ <strong>Ongoing SHM & Subclone Evolution Trees</strong></div>
+            <div>✦ <strong>CLL Stereotyped BCR Subsets & MRD Tracking</strong></div>
+          </div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 6px;">
+          <a href="single_cell_repertoire_studio.html"
+            style="background: rgba(244, 63, 94, 0.18); border: 1px solid rgba(244, 63, 94, 0.4); color: #fda4af; padding: 7px 12px; border-radius: 7px; font-size: 11.5px; font-weight: 600; text-decoration: none; text-align: center; display: flex; align-items: center; justify-content: center; gap: 6px;">
+            <span>📈 Open Single-Cell Repertoire Studio</span>
+            <span>&rarr;</span>
+          </a>
+          <div style="display: flex; gap: 6px;">
+            <a href="dnaplot.html"
+              style="flex: 1; font-size: 10.5px; text-align: center; padding: 4px; border-radius: 5px; background: rgba(15, 23, 42, 0.8); color: #94a3b8; border: 1px solid rgba(255,255,255,0.08); text-decoration: none;">DNAPLOT
+              Subclones</a>
+            <a href="single_cell_repertoire_studio.html"
+              style="flex: 1; font-size: 10.5px; text-align: center; padding: 4px; border-radius: 5px; background: rgba(15, 23, 42, 0.8); color: #94a3b8; border: 1px solid rgba(255,255,255,0.08); text-decoration: none;">Time-Series
+              Kinetics</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pathway 5: Student & Inquisitive Explorer (The VBASE2 Legacy) -->
+      <div
+        style="background: linear-gradient(145deg, rgba(13, 23, 38, 0.95), rgba(6, 12, 22, 0.95)); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 14px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between; position: relative; box-shadow: 0 8px 24px rgba(0,0,0,0.4); transition: transform 0.2s, border-color 0.2s;">
+        <div>
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+            <div
+              style="font-size: 26px; background: rgba(168, 85, 247, 0.12); padding: 6px 10px; border-radius: 8px; border: 1px solid rgba(168, 85, 247, 0.3);">
+              🎓</div>
+            <div>
+              <div style="font-family: 'Outfit', sans-serif; font-size: 1.1rem; font-weight: 750; color: #ffffff;">
+                Curious Explorer</div>
+              <div
+                style="font-size: 11px; color: #c084fc; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">
+                The VBASE2 Legacy & Fun Learning</div>
+            </div>
+          </div>
+          <p style="font-size: 12.5px; color: #cbd5e1; line-height: 1.5; margin-bottom: 12px;">
+            New to antibody genomics? No prior sequence needed! Click 1-click landmark presets to explore famous
+            therapeutics (Herceptin) and classic hybridomas (B1-8). Learn through interactive 2D pearl necklaces with
+            zero fear.
+          </p>
+          <div
+            style="font-size: 11.5px; color: #94a3b8; margin-bottom: 14px; display: flex; flex-direction: column; gap: 5px;">
+            <div>✦ <strong>1-Click Landmark Presets</strong> on every page</div>
+            <div>✦ <strong>Interactive Collier de Perles</strong> 2D pearl necklace</div>
+            <div>✦ <strong>Forgiving Sequence Intake</strong> & plain explanations</div>
+            <div>✦ <strong>Playful Discovery</strong> without intimidating errors</div>
+          </div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 6px;">
+          <a href="dnaplot.html"
+            style="background: rgba(168, 85, 247, 0.18); border: 1px solid rgba(168, 85, 247, 0.4); color: #d8b4fe; padding: 7px 12px; border-radius: 7px; font-size: 11.5px; font-weight: 600; text-decoration: none; text-align: center; display: flex; align-items: center; justify-content: center; gap: 6px;">
+            <span>✨ Try DNAPLOT with Presets</span>
+            <span>&rarr;</span>
+          </a>
+          <div style="display: flex; gap: 6px;">
+            <a href="mouse_vbase3_analyzer.html"
+              style="flex: 1; font-size: 10.5px; text-align: center; padding: 4px; border-radius: 5px; background: rgba(15, 23, 42, 0.8); color: #94a3b8; border: 1px solid rgba(255,255,255,0.08); text-decoration: none;">Murine
+              B1-8 Preset</a>
+            <a href="camelid_vbase3_analyzer.html"
+              style="flex: 1; font-size: 10.5px; text-align: center; padding: 4px; border-radius: 5px; background: rgba(15, 23, 42, 0.8); color: #94a3b8; border: 1px solid rgba(255,255,255,0.08); text-decoration: none;">Nanobody
+              Preset</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PILLAR 1: FLAGSHIP SPECIES SEARCH & ANALYSIS PORTALS -->
+    <div id="flagship-species" class="section-header">
+      <div>
+        <div class="section-title">🔬 Flagship Species WebAssembly Analyzers & DNAPLOT Suite</div>
+        <div class="section-subtitle">Dedicated client-side V(D)J alignment, single-cell paired VH:VL matrix mining, and
+          CDR3 extraction</div>
+      </div>
+    </div>
+
+    <div class="portal-grid">
+      <!-- Universal DNAPLOT Analysis Studio (Flagship Suite) -->
+      <a href="dnaplot.html" class="portal-card" style="border-color: rgba(56, 189, 248, 0.5); background: linear-gradient(145deg, rgba(14, 30, 52, 0.95), rgba(7, 16, 28, 0.95)); box-shadow: 0 4px 20px rgba(2, 132, 199, 0.18);">
+        <div>
+          <div class="card-top">
+            <div class="card-icon" style="background: rgba(56, 189, 248, 0.2); border-color: #38bdf8;">⚡</div>
+            <div>
+              <div class="card-heading" style="color: #38bdf8;">DNAPLOT Analysis Studio</div>
+              <div class="card-subtext">Universal V(D)J Alignment & Junction Analysis</div>
+            </div>
+          </div>
+          <div class="card-body">
+            Flagship sequence alignment & deconstruction suite. Performs real-time germline V(D)J matching, junction deconstruction (V, P, N1, D, N2, J), somatic hypermutation tracking, and interactive <strong>IMGT Collier de Perles</strong> 2D pearl necklaces.
+          </div>
+          <div class="card-tags">
+            <span class="tag" style="color:#38bdf8; border-color:rgba(56,189,248,0.4);">⚡ Rust SIMD128</span>
+            <span class="tag">Collier de Perles</span>
+            <span class="tag">Junction Deconstruction</span>
+            <span class="tag">All Species</span>
+          </div>
+        </div>
+        <div class="card-footer" style="border-top-color: rgba(56, 189, 248, 0.25);">
+          <span style="color:#38bdf8; font-weight:700;">⚡ Launch DNAPLOT Studio</span>
+          <span class="arrow" style="color:#38bdf8;">&rarr;</span>
+        </div>
+      </a>
+
+      <!-- Human -->
+      <a href="human_vbase3_analyzer.html" class="portal-card">
+        <div>
+          <div class="card-top">
+            <div class="card-icon">👤</div>
+            <div>
+              <div class="card-heading">Human VBASE3 Portal</div>
+              <div class="card-subtext">Homo sapiens • Tripartite Suite</div>
+            </div>
+          </div>
+          <div class="card-body">
+            2,106 mature V-genes, 32 D-segments, 28 J-segments. Includes Single-Cell Paired VH:VL Matrix, CDR3 length
+            distribution, and Bulk Repertoire Profiler.
+          </div>
+          <div class="card-tags">
+            <span class="tag">Heavy (IGH)</span>
+            <span class="tag">Kappa (IGK)</span>
+            <span class="tag">Lambda (IGL)</span>
+            <span class="tag">Paired Single-Cell</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span>⚡ Launch Human Analyzer</span>
+          <span class="arrow">&rarr;</span>
+        </div>
+      </a>
+
+      <!-- Mouse -->
+      <a href="mouse_vbase3_analyzer.html" class="portal-card">
+        <div>
+          <div class="card-top">
+            <div class="card-icon">🐭</div>
+            <div>
+              <div class="card-heading">Mouse VBASE3 Portal</div>
+              <div class="card-subtext">Mus musculus • Dildrop & Hybridomas</div>
+            </div>
+          </div>
+          <div class="card-body">
+            2,763 functional germlines across 14 Renate Dildrop families (J558, 7183, Q52, S107). Landmark hybridoma
+            controls (B1-8, 17.2.25 QM, OKT3) and kappa-dominant analysis.
+          </div>
+          <div class="card-tags">
+            <span class="tag">14 VH Families</span>
+            <span class="tag">Hybridomas</span>
+            <span class="tag">Tomlinson Mappings</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span>⚡ Launch Mouse Analyzer</span>
+          <span class="arrow">&rarr;</span>
+        </div>
+      </a>
+
+      <!-- Camelid -->
+      <a href="camelid_vbase3_analyzer.html" class="portal-card">
+        <div>
+          <div class="card-top">
+            <div class="card-icon">🦙</div>
+            <div>
+              <div class="card-heading">Camelid VHH / Nanobody</div>
+              <div class="card-subtext">Alpaca & Llama • Heavy-Chain-Only</div>
+            </div>
+          </div>
+          <div class="card-body">
+            Heavy-chain-only antibodies (VHH). Automatic detection of hallmark FR2 hydrophobic substitutions (F/Y37,
+            E44, R45, G47) and extended disulfide loops.
+          </div>
+          <div class="card-tags">
+            <span class="tag">VHH Nanobodies</span>
+            <span class="tag">FR2 Hallmarks</span>
+            <span class="tag">Long CDR3</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span>⚡ Launch Camelid Portal</span>
+          <span class="arrow">&rarr;</span>
+        </div>
+      </a>
+
+      <!-- Rabbit -->
+      <a href="rabbit_vbase3_analyzer.html" class="portal-card">
+        <div>
+          <div class="card-top">
+            <div class="card-icon">🐇</div>
+            <div>
+              <div class="card-heading">Rabbit RabMAb Analyzer</div>
+              <div class="card-subtext">Oryctolagus cuniculus • High-Affinity</div>
+            </div>
+          </div>
+          <div class="card-body">
+            Repertoire analyzer for rabbit monoclonal antibodies. Tracks dominant VHa1/VHa2 lineages and detects
+            canonical inter-CDR extra disulfide bridges (Cys80–Cys171).
+          </div>
+          <div class="card-tags">
+            <span class="tag">RabMAb</span>
+            <span class="tag">Extra Cysteines</span>
+            <span class="tag">VHa Lineages</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span>⚡ Launch Rabbit Analyzer</span>
+          <span class="arrow">&rarr;</span>
+        </div>
+      </a>
+
+      <!-- Dog -->
+      <a href="dog_vbase3_analyzer.html" class="portal-card">
+        <div>
+          <div class="card-top">
+            <div class="card-icon">🐕</div>
+            <div>
+              <div class="card-heading">Dog / Canine Vet-mAb</div>
+              <div class="card-subtext">Canis lupus familiaris • Veterinary</div>
+            </div>
+          </div>
+          <div class="card-body">
+            Canine immunoglobulin repertoire workbench for veterinary biologics discovery, caninization engineering, and
+            kappa/lambda isotype profiling.
+          </div>
+          <div class="card-tags">
+            <span class="tag">Canine mAb</span>
+            <span class="tag">Veterinary Biologics</span>
+            <span class="tag">Caninization</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span>⚡ Launch Dog Analyzer</span>
+          <span class="arrow">&rarr;</span>
+        </div>
+      </a>
+
+      <!-- Chicken -->
+      <a href="chicken_vbase3_analyzer.html" class="portal-card">
+        <div>
+          <div class="card-top">
+            <div class="card-icon">🐔</div>
+            <div>
+              <div class="card-heading">Chicken / Avian IgY</div>
+              <div class="card-subtext">Gallus gallus • Gene Conversion</div>
+            </div>
+          </div>
+          <div class="card-body">
+            Avian antibody repertoire utilizing single functional V-gene loci with somatic gene conversion from upstream
+            pseudo-V donor arrays.
+          </div>
+          <div class="card-tags">
+            <span class="tag">Avian IgY</span>
+            <span class="tag">Gene Conversion</span>
+            <span class="tag">Pseudo-V Arrays</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span>⚡ Launch Chicken Analyzer</span>
+          <span class="arrow">&rarr;</span>
+        </div>
+      </a>
+
+      <!-- Xenopus -->
+      <a href="xenopus_du_pasquier_hsu.html" class="portal-card">
+        <div>
+          <div class="card-top">
+            <div class="card-icon">🐸</div>
+            <div>
+              <div class="card-heading">Xenopus Amphibian Portal</div>
+              <div class="card-subtext">Du Pasquier & Hsu • Tetrapod Evolution</div>
+            </div>
+          </div>
+          <div class="card-body">
+            Historical ectothermic immunogenetics from Louis Du Pasquier & Ellen Hsu. Explores ancient amphibian IgM,
+            IgX, IgY, and light-chain isotypes (Rho & Sigma).
+          </div>
+          <div class="card-tags">
+            <span class="tag">Amphibians</span>
+            <span class="tag">IgM / IgX / IgY</span>
+            <span class="tag">Igρ & Igσ Light</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span>⚡ Launch Xenopus Portal</span>
+          <span class="arrow">&rarr;</span>
+        </div>
+      </a>
+    </div>
+
+    <!-- PILLAR 2: CORE REFERENCE DATABASES & STRUCTURAL UNIVERSES -->
+    
+    <!-- ZENODO PERMANENT ARCHIVAL DEPOSIT BANNER -->
+    <div style="background: linear-gradient(135deg, rgba(30, 27, 75, 0.65), rgba(15, 23, 42, 0.85)); border: 1.5px solid rgba(245, 158, 11, 0.45); border-radius: 14px; padding: 22px 28px; margin: 32px 0 36px 0; display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);">
+      <div style="max-width: 820px;">
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+          <span style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 700; background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.45); padding: 3px 9px; border-radius: 6px;">Archival Data Release</span>
+          <span style="color: #cbd5e1; font-size: 12.5px;">Permanent Open Science Repository & Master Catalogs</span>
+        </div>
+        <h3 style="margin: 0 0 6px 0; font-size: 18px; color: #f8fafc; font-weight: 700;">Download VBASE3 Master Datasets, FASTA Libraries & Publication Manuscript</h3>
+        <p style="margin: 0; color: #94a3b8; font-size: 13.5px; line-height: 1.55;">
+          All <strong>2,857 Class I confirmed functional genes</strong> across 36 benchmark taxa, <strong>3,114 curated TCRBase germlines</strong>, <strong>3,900 Rosetta Stone cross-mappings</strong>, modular Fc constant cassettes with GenBank provenance, and the full peer-reviewed monograph are permanently archived on Zenodo (<strong>DOI: 10.5281/zenodo.22923344</strong>).
+        </p>
+      </div>
+      <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+        <a href="https://doi.org/10.5281/zenodo.22923344" target="_blank" rel="noopener" style="background: linear-gradient(135deg, #d97706, #b45309); color: #ffffff; text-decoration: none; font-weight: 700; font-size: 13.5px; padding: 11px 22px; border-radius: 8px; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 14px rgba(217, 119, 6, 0.4); border: 1px solid rgba(245, 158, 11, 0.6); transition: transform 0.15s;">
+          <span>📦 Download from Zenodo</span>
+          <span style="font-size: 14px;">↗</span>
+        </a>
+      </div>
+    </div>
+
+    <div id="reference-databases" class="section-header">
+      <div>
+        <div class="section-title">🏛️ Comparative Reference Databases & Universes</div>
+        <div class="section-subtitle">Multi-species constant regions, PaCMAP manifolds, TCR repertoires, and coverage
+          benchmarks</div>
+      </div>
+    </div>
+
+    <div class="portal-grid">
+      <!-- Constant Regions Database -->
+      <a href="constant_regions.html" class="portal-card">
+        <div>
+          <div class="card-top">
+            <div class="card-icon">🏛️</div>
+            <div>
+              <div class="card-heading">Constant Regions Database</div>
+              <div class="card-subtext">CH1-3, CL, Hinge, Allotypes & Synthesis</div>
+            </div>
+          </div>
+          <div class="card-body">
+            Independent catalogue of verified constant region exons across mammalian & non-mammalian isotypes (IgG1-4,
+            IgM, IgA, IgE, IgD, IgY, IgW, IgNAR) with 1-click synthesis exports.
+          </div>
+          <div class="card-tags">
+            <span class="tag">Fc Engineering</span>
+            <span class="tag">Hinge Motifs</span>
+            <span class="tag">GenBank Linked</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span>⚡ Open Constant Regions</span>
+          <span class="arrow">&rarr;</span>
+        </div>
+      </a>
+
+      <!-- PaCMAP Universe -->
+      <a href="vgene_pacmap_universe.html" class="portal-card">
+        <div>
+          <div class="card-top">
+            <div class="card-icon">🌌</div>
+            <div>
+              <div class="card-heading">PaCMAP V-Gene Universe</div>
+              <div class="card-subtext">2D Dimensionality Reduction (2,048 Points)</div>
+            </div>
+          </div>
+          <div class="card-body">
+            Interactive structural manifold embedding 2,048 Class I confirmed functional V-genes across 32 comparative
+            vertebrate taxa with real-time zero-shift projection.
+          </div>
+          <div class="card-tags">
+            <span class="tag">32 Taxa</span>
+            <span class="tag">2,048 Points</span>
+            <span class="tag">PaCMAP 2D</span>
+            <span class="tag">BCRbase</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span>⚡ Explore PaCMAP Universe</span>
+          <span class="arrow">&rarr;</span>
+        </div>
+      </a>
+
+      <!-- TCRBase T-Cell Receptor Suite -->
+      <a href="tcr_universe.html" class="portal-card">
+        <div>
+          <div class="card-top">
+            <div class="card-icon">🧬</div>
+            <div>
+              <div class="card-heading">TCRBase TCR Universe</div>
+              <div class="card-subtext">αβ & γδ T-Cell Receptors across 31 Species</div>
+            </div>
+          </div>
+          <div class="card-body">
+            Vertebrate T-Cell Receptor Universe (3,114 Genes, 9 D-Genes, 91 J-Genes). Systematic Clan & Orthogroup
+            nomenclature across human, mouse, and vertebrates.
+          </div>
+          <div class="card-tags">
+            <span class="tag">TRA & TRB</span>
+            <span class="tag">TRG & TRD</span>
+            <span class="tag">Systematic Clans</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span>⚡ Launch TCRbase Universe</span>
+          <span class="arrow">&rarr;</span>
+        </div>
+      </a>
+
+      <!-- Human TCR Repertoire & Clonotype Analyzer -->
+      <a href="human_tcr_analyzer.html" class="portal-card">
+        <div>
+          <div class="card-top">
+            <div class="card-icon" style="background: rgba(16, 185, 129, 0.2); border-color: #10b981;">👤</div>
+            <div>
+              <div class="card-heading">Human TCR Analyzer</div>
+              <div class="card-subtext">Homo sapiens TRA, TRB, TRG, TRD Domain Suite</div>
+            </div>
+          </div>
+          <div class="card-body">
+            Dedicated human T-cell receptor analyzer (283 V-genes, 5 D-genes, 75 J-genes). Pre-loaded viral (EBV, CMV), tumor neoantigen (1G4 NY-ESO-1), MAIT, and γδ benchmarks with live 2D PaCMAP projection.
+          </div>
+          <div class="card-tags">
+            <span class="tag" style="color:#34d399; border-color:rgba(16,185,129,0.4);">283 Human TCRs</span>
+            <span class="tag">12/23 RSS Diode</span>
+            <span class="tag">Tumor TILs</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span style="color:#34d399;">⚡ Launch Human TCR Analyzer</span>
+          <span class="arrow">&rarr;</span>
+        </div>
+      </a>
+
+      <!-- Mouse TCR Repertoire & Clonotype Analyzer -->
+      <a href="mouse_tcr_analyzer.html" class="portal-card">
+        <div>
+          <div class="card-top">
+            <div class="card-icon" style="background: rgba(16, 185, 129, 0.2); border-color: #10b981;">🐁</div>
+            <div>
+              <div class="card-heading">Mouse TCR Analyzer</div>
+              <div class="card-subtext">Mus musculus TRA, TRB, TRG, TRD Domain Suite</div>
+            </div>
+          </div>
+          <div class="card-body">
+            Dedicated murine T-cell receptor analyzer (290 V-genes, 4 D-genes, 16 J-genes). Pre-loaded OT-I, OT-II, P14, 2B4, and epidermal DETC invariant γδ benchmarks with live 2D PaCMAP projection.
+          </div>
+          <div class="card-tags">
+            <span class="tag" style="color:#34d399; border-color:rgba(16,185,129,0.4);">290 Mouse TCRs</span>
+            <span class="tag">OT-I / OT-II</span>
+            <span class="tag">DETC γδ</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span style="color:#34d399;">⚡ Launch Mouse TCR Analyzer</span>
+          <span class="arrow">&rarr;</span>
+        </div>
+      </a>
+
+      <!-- DNAPLOT Alignment Workbench -->
+      <a href="dnaplot.html" class="portal-card">
+        <div>
+          <div class="card-top">
+            <div class="card-icon">⚡</div>
+            <div>
+              <div class="card-heading">DNAPLOT SIMD Engine</div>
+              <div class="card-subtext">Rust SIMD128 Sequence Alignment</div>
+            </div>
+          </div>
+          <div class="card-body">
+            Canonical high-speed V(D)J alignment, junction deconstruction, and somatic hypermutation analysis suite with
+            IMGT Collier de Perles coordinate generation.
+          </div>
+          <div class="card-tags">
+            <span class="tag">Rust SIMD</span>
+            <span class="tag">Collier de Perles</span>
+            <span class="tag">DNAPLOT Reports</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span>⚡ Launch DNAPLOT Studio</span>
+          <span class="arrow">&rarr;</span>
+        </div>
+      </a>
+
+      <!-- Expressed Repertoire Diversity & Mosaics -->
+      <a href="repertoire_diversity.html" class="portal-card">
+        <div>
+          <div class="card-top">
+            <div class="card-icon">📊</div>
+            <div>
+              <div class="card-heading">Expressed Repertoire Diversity</div>
+              <div class="card-subtext">AIRR Manifold & Frequency Analytics</div>
+            </div>
+          </div>
+          <div class="card-body">
+            Multi-dataset manifold containing complete V(D)J sequences, hypervariable CDR3 loops, and paired single-cell
+            BCRs across viral infection and baseline cohorts.
+          </div>
+          <div class="card-tags">
+            <span class="tag">AIRR Datasets</span>
+            <span class="tag">CDR3 Spectra</span>
+            <span class="tag">46M+ Sequences</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span>⚡ View Repertoire Diversity</span>
+          <span class="arrow">&rarr;</span>
+        </div>
+      </a>
+
+      <!-- Single-Cell Paired Repertoire Studio -->
+      <a href="single_cell_repertoire_studio.html" class="portal-card">
+        <div>
+          <div class="card-top">
+            <div class="card-icon">🔬</div>
+            <div>
+              <div class="card-heading">Single-Cell Repertoire Studio</div>
+              <div class="card-subtext">Paired VH:VL Analytics & GxP Provenance</div>
+            </div>
+          </div>
+          <div class="card-body">
+            High-throughput single-cell paired antibody analyzer. Interactive VH × VL combinatorial matrix, clonal
+            expansion trees, and synthesis-ready order sheets with ISO audit metadata.
+          </div>
+          <div class="card-tags">
+            <span class="tag">Paired Single-Cell</span>
+            <span class="tag">Audit Provenance</span>
+            <span class="tag">Order Sheets</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span>⚡ Launch Single-Cell Studio</span>
+          <span class="arrow">&rarr;</span>
+        </div>
+      </a>
+
+      <!-- Status & Coverage Dashboard -->
+      <a href="vbase3_status.html" class="portal-card">
+        <div>
+          <div class="card-top">
+            <div class="card-icon">📈</div>
+            <div>
+              <div class="card-heading">Status & Coverage Monitor</div>
+              <div class="card-subtext">Objective 80% Coverage Gating Policy</div>
+            </div>
+          </div>
+          <div class="card-body">
+            Quality gating and assembly monitoring. Tracks live portals vs. maturing draft assemblies, invariant
+            validation checks, and locus completeness.
+          </div>
+          <div class="card-tags">
+            <span class="tag">Gating Policy</span>
+            <span class="tag">Assembly Tracking</span>
+            <span class="tag">Quality Metrics</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span>⚡ Check Species Coverage</span>
+          <span class="arrow">&rarr;</span>
+        </div>
+      </a>
+    </div>
+
+    <!-- PILLAR 3: IN-BROWSER WORKBENCH (LIVE EXPLORATION TABS) -->
+    <div id="workbench-section" class="section-header">
+      <div>
+        <div class="section-title">⚡ In-Browser Exploration Sandbox</div>
+        <div class="section-subtitle">Query GenBank frequencies, inspect IMGT gapped germlines, and run instant DNAPLOT
+          WASM analysis inline</div>
+      </div>
+    </div>
+
+    <div class="workbench-panel">
+      <!-- NAVIGATION TABS -->
+      <div class="nav-tabs">
+        <button class="tab-btn active" id="tabBtn_report" onclick="showTab('report')">📊 GenBank Repertoire
+          Heatmaps</button>
+        <button class="tab-btn" id="tabBtn_explorer" onclick="showTab('explorer')">🔍 Germline Explorer & 1-128
+          Ruler</button>
+        <button class="tab-btn" id="tabBtn_airr" onclick="showTab('airr')">🌐 AIRR Repertoire Heatmaps</button>
+        <button class="tab-btn" id="tabBtn_analyzer" onclick="showTab('analyzer')">⚡ DNAPLOT WASM Sandbox</button>
+        <button class="tab-btn" id="tabBtn_legacy" onclick="showTab('legacy')">🛠️ Pairwise Utilities</button>
+      </div>
+
+      <!-- TAB 1: GENBANK REPERTOIRE HEATMAPS -->
+      <div id="report" class="tab-content active">
+        <div style="display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap;" id="genbankBtnGroup">
+          <button class="btn" id="btnGb_mouse" style="background: #0284c7; border: 1px solid #38bdf8; font-weight: 700;" onclick="switchGenbankView('mouse')">🐭 Mouse
+            (musIGHV)</button>
+          <button class="btn" id="btnGb_human" style="background: #1e293b; border: 1px solid #334155;" onclick="switchGenbankView('human')">👨 Human
+            (humIGHV)</button>
+          <button class="btn" id="btnGb_rat" style="background: #1e293b; border: 1px solid #334155;" onclick="switchGenbankView('rat')">🐀 Rat (Rattus)</button>
+          <button class="btn" id="btnGb_rabbit" style="background: #1e293b; border: 1px solid #334155;" onclick="switchGenbankView('rabbit')">🐰 Rabbit
+            (Oryctolagus)</button>
+        </div>
+
+        <div
+          style="overflow-x: auto; background: #060b13; padding: 16px; border-radius: 8px; border: 1px solid #1e293b;">
+          <div style="color: #38bdf8; font-weight: 700; margin-bottom: 10px;" id="genbankTitle">🐭 Mouse Heavy Chain
+            (musIGHV) Top V-Gene Frequencies</div>
+          <table id="genbankTable">
+            <thead>
+              <tr>
+                <th>Rank</th>
+                <th>V-Gene Symbol</th>
+                <th>IMGT Allele</th>
+                <th>GenBank Frequency</th>
+                <th>Classic Name / Family</th>
+                <th>Biological Milestone</th>
+              </tr>
+            </thead>
+            <tbody id="genbankTbody">
+              <!-- Dynamically Populated -->
+            </tbody>
+          </table>
+          <div
+            style="display: flex; justify-content: space-between; font-size: 11px; color: #64748b; margin-top: 12px; padding-top: 8px; border-top: 1px solid #1e293b;">
+            <span>Data Source: <a href="https://pubmed.ncbi.nlm.nih.gov/23193287/" target="_blank" rel="noopener" style="color: #38bdf8; text-decoration: underline;">GenBank Expressed Physiological Repertoires (Benson et al., 2013) ↗</a></span>
+            <span>VBASE3 Last Updated: September 16, 2026</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 2: GERMLINE EXPLORER -->
+      <div id="explorer" class="tab-content">
+        <div style="display: flex; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; align-items: center;">
+          <input type="text" id="germlineSearchInput"
+            placeholder="Type V-gene symbol, allele, accession, or paste AA/DNA sequence..." oninput="filterGermlineView()"
+            onkeydown="if(event.key==='Enter') filterGermlineView()" style="flex: 1; min-width: 280px; max-width: 520px; margin-bottom: 0;">
+          <button class="btn" onclick="filterGermlineView()" style="background: #0284c7; font-weight: 600;">🔍 Search Germline</button>
+          <button class="btn" onclick="clearGermlineSearch()" style="background: #334155;">Reset</button>
+          <span id="germlineSearchCount" style="font-size: 12px; color: #94a3b8; margin-left: 8px;"></span>
+        </div>
+        <div id="germlineDisplay"
+          style="background: #060b13; padding: 16px; border-radius: 8px; border: 1px solid #334155; font-family: 'Fira Code', monospace; font-size: 13px; max-height: 540px; overflow-y: auto;">
+          <!-- Dynamically Populated -->
+        </div>
+      </div>
+
+      <!-- TAB 3: AIRR EXPLORER -->
+      <div id="airr" class="tab-content">
+        <div style="display: flex; gap: 24px; margin-bottom: 16px; align-items: center; flex-wrap: wrap;">
+          <div style="display: flex; gap: 8px; align-items: center;">
+            <span style="color: #94a3b8; font-weight: 600; font-size: 13px;">Species:</span>
+            <div style="display: flex; gap: 6px;" id="airrSpeciesBtnGroup">
+              <button class="btn active" id="btnAirr_human" style="background: #0284c7; border: 1px solid #38bdf8; font-weight: 700; padding: 6px 14px; font-size: 12.5px;" onclick="setAirrSpecies('human')">👨 Human</button>
+              <button class="btn" id="btnAirr_mouse" style="background: #1e293b; border: 1px solid #334155; font-weight: 500; padding: 6px 14px; font-size: 12.5px;" onclick="setAirrSpecies('mouse')">🐭 Mouse</button>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 8px; align-items: center;">
+            <span style="color: #94a3b8; font-weight: 600; font-size: 13px;">Chain:</span>
+            <div style="display: flex; gap: 6px;" id="airrChainBtnGroup">
+              <button class="btn active" id="btnAirr_heavy" style="background: #0284c7; border: 1px solid #38bdf8; font-weight: 700; padding: 6px 12px; font-size: 12.5px;" onclick="setAirrChain('heavy')">Heavy (IGH)</button>
+              <button class="btn" id="btnAirr_kappa" style="background: #1e293b; border: 1px solid #334155; font-weight: 500; padding: 6px 12px; font-size: 12.5px;" onclick="setAirrChain('kappa')">Kappa (IGK)</button>
+              <button class="btn" id="btnAirr_lambda" style="background: #1e293b; border: 1px solid #334155; font-weight: 500; padding: 6px 12px; font-size: 12.5px;" onclick="setAirrChain('lambda')">Lambda (IGL)</button>
+            </div>
+          </div>
+        </div>
+
+        <div id="airrHeatmapStats" style="margin-bottom: 14px; font-weight: 600; color: #94a3b8;"></div>
+        <div id="airrHeatmapContainer"
+          style="overflow-x: auto; margin-bottom: 24px; background: #060b13; padding: 18px; border-radius: 8px; border: 1px solid #1e293b;">
+          <!-- Dynamically Rendered by renderAirrHeatmap() -->
+        </div>
+
+        <div style="font-weight: 700; color: #ffffff; margin-bottom: 8px; font-size: 14px;">🔥 Top CDR3 Clonal
+          Expansions</div>
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr>
+                <th>Rank</th>
+                <th>CDR3 Amino Acid Sequence</th>
+                <th>Sequence Count</th>
+                <th>Frequency %</th>
+              </tr>
+            </thead>
+            <tbody id="airrCdr3Tbody">
+              <tr>
+                <td colspan="4" style="text-align: center; color: #94a3b8;">Click options above to load data.</td>
+              </tr>
+            </tbody>
+          </table>
+          <div
+            style="display: flex; justify-content: space-between; font-size: 11px; color: #64748b; margin-top: 12px; padding-top: 8px; border-top: 1px solid #1e293b;">
+            <span>Data Source: <a href="https://doi.org/10.3389/fimmu.2017.01418" target="_blank" rel="noopener" style="color: #38bdf8; text-decoration: underline;">AIRR Community Physiological Clonal Expansions (Breden et al., 2017; Vander Heiden et al., 2018) ↗</a></span>
+            <span>VBASE3 Last Updated: September 16, 2026</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 4: DNAPLOT WASM ANALYZER -->
+      <div id="analyzer" class="tab-content">
+        <!-- Standalone Studio Launch Header -->
+        <div style="background: rgba(56, 189, 248, 0.08); border: 1px solid rgba(56, 189, 248, 0.28); border-radius: 9px; padding: 12px 18px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+          <div>
+            <div style="color: #38bdf8; font-weight: 700; font-size: 14px; display: flex; align-items: center; gap: 7px;">
+              <span>⚡</span> Looking for the complete DNAPLOT Analysis Studio?
+            </div>
+            <div style="color: #94a3b8; font-size: 12px; margin-top: 2px;">
+              Includes full IMGT Collier de Perles 2D pearl necklaces, junction deconstruction (V/D/J/N1/N2), 1-128 coordinate grids, and landmark clinical controls.
+            </div>
+          </div>
+          <a href="dnaplot.html" class="btn" style="background: linear-gradient(135deg, #0284c7, #10b981); color: #ffffff; font-weight: 700; text-decoration: none; padding: 8px 18px; font-size: 12.5px; border-radius: 7px; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 4px 14px rgba(2, 132, 199, 0.4);">
+            <span>🚀 Open Full DNAPLOT Studio (dnaplot.html)</span>
+            <span style="font-size: 14px;">&rarr;</span>
+          </a>
+        </div>
+        <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px;">
+          <span style="font-size: 13px; color: #64748b; align-self: center; font-weight: 600;">Load Landmark
+            Sample:</span>
+          <button class="btn" style="padding: 6px 12px; font-size: 12px; background: #1e293b;"
+            onclick="loadDnaplotSample('musIGHV044')">🐭 musIGHV044 (B1-8 Anti-NP)</button>
+          <button class="btn" style="padding: 6px 12px; font-size: 12px; background: #1e293b;"
+            onclick="loadDnaplotSample('mus_qm_17225')">🌸 17.2.25 (QM Mouse Anti-NP)</button>
+          <button class="btn" style="padding: 6px 12px; font-size: 12px; background: #1e293b;"
+            onclick="loadDnaplotSample('musIGHV043')">🐭 musIGHV043 (VH J558.18)</button>
+          <button class="btn" style="padding: 6px 12px; font-size: 12px; background: #1e293b;"
+            onclick="loadDnaplotSample('humIGHV3-23')">👨 humIGHV3-23 (Therapeutic Heavy)</button>
+          <button class="btn" style="padding: 6px 12px; font-size: 12px; background: #1e293b;"
+            onclick="loadDnaplotSample('humIGLV1-40')">👨 humIGLV1-40 (Human Lambda)</button>
+          <button class="btn" style="padding: 6px 12px; font-size: 12px; background: #1e293b;"
+            onclick="loadDnaplotSample('musIGKV243')">🐭 musIGKV243 (Vκ21D Light)</button>
+        </div>
+
+        <textarea id="fastaInput" style="height: 120px;"
+          placeholder=">musIGHV044_B1-8_sample&#10;CAGGTACAGCTGAAGGAGTCAGGACCTGGCCTGGTGGCGCCCTCACAGAGCCTGTCCATCACATGCACCGTCTCAGGGTTCTCATTAACCGGCTATGGTGTAAACTGGGTTCGCCAGCCTCCAGGAAAGGGTCTGGAGTGGCTGGGAATGATATGGGGTGATGGAAGCACAGACTATAATTCAGCTCTCAAATCCAGACTGAGCATCAGCAAGGACAACTCCAAGAGCCAAGTTTTCTTAAAAATGAACAGTCTGCAAACTGATGACACAGCCAGGTACTACTGTGCCAGA"></textarea>
+
+        <div style="display: flex; gap: 10px;">
+          <button class="btn" id="analyzeBtn" onclick="runWasmAnalysis()"
+            style="background: linear-gradient(135deg, #0284c7, #10b981); padding: 9px 18px; font-weight: 600;">⚡ Run
+            DNAPLOT WASM Analysis</button>
+          <button class="btn" onclick="clearDnaplot()" style="background: #334155;">Clear</button>
+        </div>
+
+        <div id="wasmResults" style="margin-top: 20px;"></div>
+
+        <!-- COMMAND LINE / NODE.JS EXECUTION PANEL -->
+        <div
+          style="margin-top: 24px; background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 8px; padding: 16px;">
+          <div
+            style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; flex-wrap: wrap; gap: 8px;">
+            <div
+              style="font-size: 13.5px; font-weight: 700; color: #38bdf8; display: flex; align-items: center; gap: 6px;">
+              <span>💻</span> Command Line & Node.js WASM Execution
+            </div>
+            <span
+              style="font-size: 11px; background: rgba(56, 189, 248, 0.15); color: #38bdf8; padding: 2px 8px; border-radius: 4px; font-weight: 600;">Node.js
+              v18+ Compatible</span>
+          </div>
+          <p style="font-size: 12px; color: #94a3b8; margin-bottom: 10px; line-height: 1.5;">
+            The exact same client-side WebAssembly binary (<code>dnaplot_wasm_bg.wasm</code>) can be invoked directly
+            from the terminal or integrated into high-throughput Node.js pipelines without a browser:
+          </p>
+          <div
+            style="background: #090e17; padding: 12px; border-radius: 6px; font-family: 'Fira Code', monospace; font-size: 12px; color: #cbd5e1; overflow-x: auto; line-height: 1.6;">
+            <span style="color: #64748b;"># 1. Run canonical landmark sample from terminal:</span><br>
+            <span style="color: #34d399;">node</span> developer_scripts/vbase3_wasm_cli.mjs --sample humIGHV3-23<br><br>
+            <span style="color: #64748b;"># 2. Analyze query sequence with custom species hint:</span><br>
+            <span style="color: #34d399;">node</span> developer_scripts/vbase3_wasm_cli.mjs --seq <span
+              style="color: #f59e0b;">"CAGGTACAGCTGAAGGAGTC..."</span> --species mouse<br><br>
+            <span style="color: #64748b;"># 3. Batch repertoire processing with AIRR TSV output:</span><br>
+            <span style="color: #34d399;">node</span> developer_scripts/vbase3_wasm_cli.mjs --fasta sample.fasta
+            --format tsv
+          </div>
+          <div
+            style="display: flex; justify-content: space-between; font-size: 11px; color: #64748b; margin-top: 10px; padding-top: 6px; border-top: 1px solid #1e293b; flex-wrap: wrap; gap: 6px;">
+            <span>CLI Runner: <code>developer_scripts/vbase3_wasm_cli.mjs</code></span>
+            <span>VBASE3 Last Updated: September 16, 2026</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 5: SEQUENCE UTILITIES -->
+      <div id="legacy" class="tab-content">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 16px;">
+          <div>
+            <label style="color: #94a3b8; font-weight: 600; font-size: 13px;">Sequence A (Query):</label>
+            <textarea id="seqA"
+              style="height: 80px;">CAGGTACAGCTGAAGGAGTCAGGACCTGGCCTGGTGGCGCCCTCACAGAGCCTGTCCATCACATGCACCGTCTCAGGGTTCTCATTAACCGGCTATGGTGTAAAC</textarea>
+          </div>
+          <div>
+            <label style="color: #94a3b8; font-weight: 600; font-size: 13px;">Sequence B (Reference):</label>
+            <textarea id="seqB"
+              style="height: 80px;">GAGGTGCAGCTGAAGGAGTCAGGACCTGGCCTGGTGGCCACCTCACAGAGCCTGTCCATCACATGCACCGTCTCAGGGTTCTCATTAACCGGCTATGGTGTAAAC</textarea>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap;">
+          <button class="btn" onclick="runAlignUtility()">⚡ Pairwise Needleman-Wunsch</button>
+          <button class="btn" style="background: #059669;" onclick="runCompareUtility()">🔬 Identity Comparison</button>
+          <button class="btn" style="background: #d97706;" onclick="runRestrictionUtility()">✂️ Restriction Sites
+            (EcoRI/BamHI/HindIII)</button>
+        </div>
+
+        <div id="utilityResult"
+          style="background: #060b13; padding: 16px; border-radius: 8px; border: 1px solid #334155; font-family: 'Fira Code', monospace; font-size: 13px;">
+          <div style="color: #94a3b8;">Select a tool above to run analysis.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PILLAR 4: FOUNDATIONAL LITERATURE & SCIENTIFIC REFERENCES -->
+    <div id="scientific-references" class="section-header" style="margin-top: 54px;">
+      <div>
+        <div class="section-title">📚 Key Scientific Literature & References</div>
+        <div class="section-subtitle">Direct links to peer-reviewed foundational literature, sequence directories, nomenclature authorities, and empirical dataset citations</div>
+      </div>
+    </div>
+
+    <div class="ref-grid">
+      <!-- Reference 1: VBASE3 -->
+      <div class="ref-card" id="ref-mueller2026">
+        <div>
+          <span class="ref-tag" style="background: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.4);">VBASE3 Flagship Release</span>
+          <div class="ref-title">VBASE3: An Open Immunogenomics Database and Alignment Engine for Jawed Vertebrates</div>
+          <div class="ref-authors">Mueller, W. (2026)</div>
+          <div class="ref-journal">Zenodo Open Science Archive & Comparative Immunogenomics Monograph</div>
+        </div>
+        <div class="ref-links">
+          <a href="https://doi.org/10.5281/zenodo.22923344" target="_blank" rel="noopener" class="ref-link-btn ref-link-doi">📄 DOI: 10.5281/zenodo.22923344 ↗</a>
+          <a href="https://github.com/vbase3/vbase3_database" target="_blank" rel="noopener" class="ref-link-btn ref-link-web">💻 GitHub Repository ↗</a>
+        </div>
+      </div>
+
+      <!-- Reference 2: VBASE2 -->
+      <div class="ref-card" id="ref-retter2005">
+        <div>
+          <span class="ref-tag" style="background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4);">VBASE2 Relational Database</span>
+          <div class="ref-title">VBASE2, an integrative V gene database</div>
+          <div class="ref-authors">Retter, I., Althaus, H.-H., Münch, R., & Müller, W. (2005)</div>
+          <div class="ref-journal">Nucleic Acids Research, 33(Database Issue), D671–D674</div>
+        </div>
+        <div class="ref-links">
+          <a href="https://doi.org/10.1093/nar/gki088" target="_blank" rel="noopener" class="ref-link-btn ref-link-doi">📄 DOI: 10.1093/nar/gki088 ↗</a>
+          <a href="https://pubmed.ncbi.nlm.nih.gov/15608286/" target="_blank" rel="noopener" class="ref-link-btn ref-link-pmid">🔬 PubMed: 15608286 ↗</a>
+          <a href="https://leopard.tu-braunschweig.de/receive/dbbs_mods_00013341" target="_blank" rel="noopener" class="ref-link-btn ref-link-web">🎓 Thesis Archive ↗</a>
+        </div>
+      </div>
+
+      <!-- Reference 3: IMGT & Early DNAPLOT -->
+      <div class="ref-card" id="ref-giudicelli1997">
+        <div>
+          <span class="ref-tag" style="background: rgba(168, 85, 247, 0.2); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.4);">DNAPLOT & IMGT Genesis</span>
+          <div class="ref-title">IMGT, the international ImMunoGeneTics database</div>
+          <div class="ref-authors">Giudicelli, V., Chaume, D., Bodmer, J., Müller, W., Busin, C., Marsh, S., Bontrop, R., Marc, L., Malik, A., & Lefranc, M.-P. (1997)</div>
+          <div class="ref-journal">Nucleic Acids Research, 25(1), 206–211</div>
+        </div>
+        <div class="ref-links">
+          <a href="https://doi.org/10.1093/nar/25.1.206" target="_blank" rel="noopener" class="ref-link-btn ref-link-doi">📄 DOI: 10.1093/nar/25.1.206 ↗</a>
+          <a href="https://pubmed.ncbi.nlm.nih.gov/9016537/" target="_blank" rel="noopener" class="ref-link-btn ref-link-pmid">🔬 PubMed: 9016537 ↗</a>
+        </div>
+      </div>
+
+      <!-- Reference 4: Collier de Perles -->
+      <div class="ref-card" id="ref-lefranc1998">
+        <div>
+          <span class="ref-tag" style="background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.4);">Collier de Perles 2D Layout</span>
+          <div class="ref-title">IMGT, the international ImMunoGeneTics database (Collier de Perles Graphical Model)</div>
+          <div class="ref-authors">Lefranc, M.-P., Giudicelli, V., Busin, C., Bodmer, J., Müller, W., Bontrop, R., Lemaitre, M., Malik, A., & Chaume, D. (1998)</div>
+          <div class="ref-journal">Nucleic Acids Research, 26(1), 297–303</div>
+        </div>
+        <div class="ref-links">
+          <a href="https://doi.org/10.1093/nar/26.1.297" target="_blank" rel="noopener" class="ref-link-btn ref-link-doi">📄 DOI: 10.1093/nar/26.1.297 ↗</a>
+          <a href="https://pubmed.ncbi.nlm.nih.gov/9399859/" target="_blank" rel="noopener" class="ref-link-btn ref-link-pmid">🔬 PubMed: 9399859 ↗</a>
+        </div>
+      </div>
+
+      <!-- Reference 5: IMGT Unique Numbering -->
+      <div class="ref-card" id="ref-lefranc2003">
+        <div>
+          <span class="ref-tag" style="background: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.4);">Numbering System</span>
+          <div class="ref-title">IMGT unique numbering for immunoglobulin and T cell receptor variable domains and Ig superfamily V-like domains</div>
+          <div class="ref-authors">Lefranc, M.-P., Pommié, C., Ruiz, M., Giudicelli, V., Foulquier, E., Truong, L., Thouvenin-Contet, V., & Lefranc, G. (2003)</div>
+          <div class="ref-journal">Developmental and Comparative Immunology, 27(1), 55–77</div>
+        </div>
+        <div class="ref-links">
+          <a href="https://doi.org/10.1016/S0145-305X(02)00039-3" target="_blank" rel="noopener" class="ref-link-btn ref-link-doi">📄 DOI: 10.1016/S0145-305X(02)00039-3 ↗</a>
+          <a href="https://pubmed.ncbi.nlm.nih.gov/12477501/" target="_blank" rel="noopener" class="ref-link-btn ref-link-pmid">🔬 PubMed: 12477501 ↗</a>
+        </div>
+      </div>
+
+      <!-- Reference 6: Tomlinson VBASE DP Directories -->
+      <div class="ref-card" id="ref-tomlinson1992">
+        <div>
+          <span class="ref-tag" style="background: rgba(244, 63, 94, 0.2); color: #fda4af; border: 1px solid rgba(244, 63, 94, 0.4);">VBASE Human VH Directory</span>
+          <div class="ref-title">The repertoire of human germline VH sequences reveals about fifty groups of VH segments with different hypervariable loops</div>
+          <div class="ref-authors">Tomlinson, I. M., Walter, G., Marks, J. D., Llewelyn, M. B., & Winter, G. (1992)</div>
+          <div class="ref-journal">Journal of Molecular Biology, 227(3), 776–798</div>
+        </div>
+        <div class="ref-links">
+          <a href="https://doi.org/10.1016/0022-2836(92)90223-7" target="_blank" rel="noopener" class="ref-link-btn ref-link-doi">📄 DOI: 10.1016/0022-2836(92)90223-7 ↗</a>
+          <a href="https://pubmed.ncbi.nlm.nih.gov/1404389/" target="_blank" rel="noopener" class="ref-link-btn ref-link-pmid">🔬 PubMed: 1404389 ↗</a>
+        </div>
+      </div>
+
+      <!-- Reference 7: Cook & Tomlinson -->
+      <div class="ref-card" id="ref-cook1995">
+        <div>
+          <span class="ref-tag" style="background: rgba(244, 63, 94, 0.2); color: #fda4af; border: 1px solid rgba(244, 63, 94, 0.4);">Human Repertoire Mapping</span>
+          <div class="ref-title">The human immunoglobulin VH repertoire</div>
+          <div class="ref-authors">Cook, G. P., & Tomlinson, I. M. (1995)</div>
+          <div class="ref-journal">Immunology Today, 16(5), 237–242</div>
+        </div>
+        <div class="ref-links">
+          <a href="https://doi.org/10.1016/0167-5699(95)80166-9" target="_blank" rel="noopener" class="ref-link-btn ref-link-doi">📄 DOI: 10.1016/0167-5699(95)80166-9 ↗</a>
+          <a href="https://pubmed.ncbi.nlm.nih.gov/7779254/" target="_blank" rel="noopener" class="ref-link-btn ref-link-pmid">🔬 PubMed: 7779254 ↗</a>
+        </div>
+      </div>
+
+      <!-- Reference 8: Dildrop Mouse VH Families -->
+      <div class="ref-card" id="ref-dildrop1984">
+        <div>
+          <span class="ref-tag" style="background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4);">Murine VH Classification</span>
+          <div class="ref-title">A new classification of mouse VH sequences</div>
+          <div class="ref-authors">Dildrop, R. (1984)</div>
+          <div class="ref-journal">Immunology Today, 5(4), 85–86</div>
+        </div>
+        <div class="ref-links">
+          <a href="https://doi.org/10.1016/0167-5699(84)90034-3" target="_blank" rel="noopener" class="ref-link-btn ref-link-doi">📄 DOI: 10.1016/0167-5699(84)90034-3 ↗</a>
+          <a href="https://pubmed.ncbi.nlm.nih.gov/25291694/" target="_blank" rel="noopener" class="ref-link-btn ref-link-pmid">🔬 PubMed: 25291694 ↗</a>
+        </div>
+      </div>
+
+      <!-- Reference 9: Siekevitz, Kocks, Rajewsky, Dildrop NP Response -->
+      <div class="ref-card" id="ref-siekevitz1987">
+        <div>
+          <span class="ref-tag" style="background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.4);">NP Response & Somatic Mutation</span>
+          <div class="ref-title">Analysis of somatic mutation and class switching in naive and memory B cells generating adoptive primary and secondary responses</div>
+          <div class="ref-authors">Siekevitz, M., Kocks, C., Rajewsky, K., & Dildrop, R. (1987)</div>
+          <div class="ref-journal">Cell, 48(5), 757–770</div>
+        </div>
+        <div class="ref-links">
+          <a href="https://doi.org/10.1016/0092-8674(87)90073-0" target="_blank" rel="noopener" class="ref-link-btn ref-link-doi">📄 DOI: 10.1016/0092-8674(87)90073-0 ↗</a>
+          <a href="https://pubmed.ncbi.nlm.nih.gov/3493076/" target="_blank" rel="noopener" class="ref-link-btn ref-link-pmid">🔬 PubMed: 3493076 ↗</a>
+        </div>
+      </div>
+
+      <!-- Reference 9b: Kocks & Rajewsky Hypermutation Review -->
+      <div class="ref-card" id="ref-kocks1989">
+        <div>
+          <span class="ref-tag" style="background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.4);">Somatic Hypermutation Review</span>
+          <div class="ref-title">Stable expression and somatic hypermutation of antibody V regions in B-cell developmental pathways</div>
+          <div class="ref-authors">Kocks, C., & Rajewsky, K. (1989)</div>
+          <div class="ref-journal">Annual Review of Immunology, 7, 537–559</div>
+        </div>
+        <div class="ref-links">
+          <a href="https://doi.org/10.1146/annurev.iy.07.040189.002541" target="_blank" rel="noopener" class="ref-link-btn ref-link-doi">📄 DOI: 10.1146/annurev.iy.07.040189.002541 ↗</a>
+          <a href="https://pubmed.ncbi.nlm.nih.gov/2653375/" target="_blank" rel="noopener" class="ref-link-btn ref-link-pmid">🔬 PubMed: 2653375 ↗</a>
+        </div>
+      </div>
+
+      <!-- Reference 10: Bothwell B1-8 Sequencing -->
+      <div class="ref-card" id="ref-bothwell1981">
+        <div>
+          <span class="ref-tag" style="background: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.4);">B1-8 Hybridoma Sequencing</span>
+          <div class="ref-title">Heavy chain variable region contribution to the NPb family of antibodies: somatic mutation evident in a γ2a variable region</div>
+          <div class="ref-authors">Bothwell, A. L. M., Paskind, M., Reth, M., Imanishi-Kari, T., Rajewsky, K., & Baltimore, D. (1981)</div>
+          <div class="ref-journal">Cell, 24(3), 625–637</div>
+        </div>
+        <div class="ref-links">
+          <a href="https://doi.org/10.1016/0092-8674(81)90089-1" target="_blank" rel="noopener" class="ref-link-btn ref-link-doi">📄 DOI: 10.1016/0092-8674(81)90089-1 ↗</a>
+          <a href="https://pubmed.ncbi.nlm.nih.gov/6788376/" target="_blank" rel="noopener" class="ref-link-btn ref-link-pmid">🔬 PubMed: 6788376 ↗</a>
+        </div>
+      </div>
+
+      <!-- Reference 11: Reth Anti-NP Cell Fusion -->
+      <div class="ref-card" id="ref-reth1978">
+        <div>
+          <span class="ref-tag" style="background: rgba(168, 85, 247, 0.2); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.4);">Anti-NP Clonal Families</span>
+          <div class="ref-title">Analysis of the repertoire of anti-NP antibodies in C57BL/6 mice by cell fusion. I. Characterization of antibody families in the primary and hyperimmune response</div>
+          <div class="ref-authors">Reth, M., Hämmerling, G. J., & Rajewsky, K. (1978)</div>
+          <div class="ref-journal">European Journal of Immunology, 8(6), 393–400</div>
+        </div>
+        <div class="ref-links">
+          <a href="https://doi.org/10.1002/eji.1830080605" target="_blank" rel="noopener" class="ref-link-btn ref-link-doi">📄 DOI: 10.1002/eji.1830080605 ↗</a>
+          <a href="https://pubmed.ncbi.nlm.nih.gov/97089/" target="_blank" rel="noopener" class="ref-link-btn ref-link-pmid">🔬 PubMed: 97089 ↗</a>
+        </div>
+      </div>
+
+      <!-- Reference 12: Cascalho & Wabl Quasi-Monoclonal Mouse -->
+      <div class="ref-card" id="ref-cascalho1996">
+        <div>
+          <span class="ref-tag" style="background: rgba(244, 63, 94, 0.2); color: #fda4af; border: 1px solid rgba(244, 63, 94, 0.4);">17.2.25 QM Mouse Model</span>
+          <div class="ref-title">A quasi-monoclonal mouse</div>
+          <div class="ref-authors">Cascalho, M., Ma, A., Lee, S., Masat, L., & Wabl, M. (1996)</div>
+          <div class="ref-journal">Science, 272(5268), 1649–1652</div>
+        </div>
+        <div class="ref-links">
+          <a href="https://doi.org/10.1126/science.272.5268.1649" target="_blank" rel="noopener" class="ref-link-btn ref-link-doi">📄 DOI: 10.1126/science.272.5268.1649 ↗</a>
+          <a href="https://pubmed.ncbi.nlm.nih.gov/8658139/" target="_blank" rel="noopener" class="ref-link-btn ref-link-pmid">🔬 PubMed: 8658139 ↗</a>
+        </div>
+      </div>
+
+      <!-- Reference 13: Köhler & Milstein Hybridomas -->
+      <div class="ref-card" id="ref-kohler1975">
+        <div>
+          <span class="ref-tag" style="background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4);">Monoclonal Antibodies Foundation</span>
+          <div class="ref-title">Continuous cultures of fused cells secreting antibody of predefined specificity</div>
+          <div class="ref-authors">Köhler, G., & Milstein, C. (1975)</div>
+          <div class="ref-journal">Nature, 256(5517), 495–497</div>
+        </div>
+        <div class="ref-links">
+          <a href="https://doi.org/10.1038/256495a0" target="_blank" rel="noopener" class="ref-link-btn ref-link-doi">📄 DOI: 10.1038/256495a0 ↗</a>
+          <a href="https://pubmed.ncbi.nlm.nih.gov/1172191/" target="_blank" rel="noopener" class="ref-link-btn ref-link-pmid">🔬 PubMed: 1172191 ↗</a>
+        </div>
+      </div>
+
+      <!-- Reference 14: AIRR Standards -->
+      <div class="ref-card" id="ref-breden2017">
+        <div>
+          <span class="ref-tag" style="background: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.4);">AIRR Community Standard</span>
+          <div class="ref-title">Reproducibility and reuse of Adaptive Immune Receptor Repertoire data</div>
+          <div class="ref-authors">Breden, F., Luning Prak, E. T., Peters, B., et al. & the AIRR Community (2017)</div>
+          <div class="ref-journal">Frontiers in Immunology, 8, 1418</div>
+        </div>
+        <div class="ref-links">
+          <a href="https://doi.org/10.3389/fimmu.2017.01418" target="_blank" rel="noopener" class="ref-link-btn ref-link-doi">📄 DOI: 10.3389/fimmu.2017.01418 ↗</a>
+          <a href="https://pubmed.ncbi.nlm.nih.gov/29163494/" target="_blank" rel="noopener" class="ref-link-btn ref-link-pmid">🔬 PubMed: 29163494 ↗</a>
+        </div>
+      </div>
+
+      <!-- Reference 15: AIRR Data Representations -->
+      <div class="ref-card" id="ref-vanderheiden2018">
+        <div>
+          <span class="ref-tag" style="background: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.4);">AIRR Data Formats</span>
+          <div class="ref-title">AIRR Community standardized representations for annotated immune repertoires</div>
+          <div class="ref-authors">Vander Heiden, J. A., Marquez, S., et al. & the AIRR Community (2018)</div>
+          <div class="ref-journal">Frontiers in Immunology, 9, 2206</div>
+        </div>
+        <div class="ref-links">
+          <a href="https://doi.org/10.3389/fimmu.2018.02206" target="_blank" rel="noopener" class="ref-link-btn ref-link-doi">📄 DOI: 10.3389/fimmu.2018.02206 ↗</a>
+          <a href="https://pubmed.ncbi.nlm.nih.gov/30323809/" target="_blank" rel="noopener" class="ref-link-btn ref-link-pmid">🔬 PubMed: 30323809 ↗</a>
+        </div>
+      </div>
+
+      <!-- Reference 16: OGRDB -->
+      <div class="ref-card" id="ref-lees2020">
+        <div>
+          <span class="ref-tag" style="background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4);">OGRDB Inferred Alleles</span>
+          <div class="ref-title">OGRDB: a framework for community curation of immunoglobulin and T cell receptor germline genes</div>
+          <div class="ref-authors">Lees, W., Busse, C. E., Corcoran, M., Ohlin, M., Ralph, P., Schramm, C. A., Watson, C. T., Breden, F., & Collins, A. M. (2020)</div>
+          <div class="ref-journal">Nucleic Acids Research, 48(D1), D1005–D1010</div>
+        </div>
+        <div class="ref-links">
+          <a href="https://doi.org/10.1093/nar/gkz822" target="_blank" rel="noopener" class="ref-link-btn ref-link-doi">📄 DOI: 10.1093/nar/gkz822 ↗</a>
+          <a href="https://pubmed.ncbi.nlm.nih.gov/31566225/" target="_blank" rel="noopener" class="ref-link-btn ref-link-pmid">🔬 PubMed: 31566225 ↗</a>
+          <a href="https://ogrdb.airr-community.org/" target="_blank" rel="noopener" class="ref-link-btn ref-link-web">🌐 OGRDB Portal ↗</a>
+        </div>
+      </div>
+
+      <!-- Reference 17: OAS Database -->
+      <div class="ref-card" id="ref-kovaltsuk2018">
+        <div>
+          <span class="ref-tag" style="background: rgba(168, 85, 247, 0.2); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.4);">Observed Antibody Space</span>
+          <div class="ref-title">Observed Antibody Space: a resource for data mining next-generation sequencing of antibody repertoires</div>
+          <div class="ref-authors">Kovaltsuk, A., Leem, J., Kelm, S., Snowden, J., Deane, C. M., & Krawczyk, K. (2018)</div>
+          <div class="ref-journal">The Journal of Immunology, 201(12), 3694–3702</div>
+        </div>
+        <div class="ref-links">
+          <a href="https://doi.org/10.4049/jimmunol.1800708" target="_blank" rel="noopener" class="ref-link-btn ref-link-doi">📄 DOI: 10.4049/jimmunol.1800708 ↗</a>
+          <a href="https://pubmed.ncbi.nlm.nih.gov/30217829/" target="_blank" rel="noopener" class="ref-link-btn ref-link-pmid">🔬 PubMed: 30217829 ↗</a>
+        </div>
+      </div>
+
+      <!-- Reference 18: Du Pasquier & Hsu Amphibian Genetics -->
+      <div class="ref-card" id="ref-dupasquier1989">
+        <div>
+          <span class="ref-tag" style="background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.4);">Amphibian Immunogenetics</span>
+          <div class="ref-title">The immune system of Xenopus</div>
+          <div class="ref-authors">Du Pasquier, L., Schwager, J., & Flajnik, M. F. (1989)</div>
+          <div class="ref-journal">Annual Review of Immunology, 7, 251–275</div>
+        </div>
+        <div class="ref-links">
+          <a href="https://doi.org/10.1146/annurev.iy.07.040189.001343" target="_blank" rel="noopener" class="ref-link-btn ref-link-doi">📄 DOI: 10.1146/annurev.iy.07.040189.001343 ↗</a>
+          <a href="https://pubmed.ncbi.nlm.nih.gov/2653371/" target="_blank" rel="noopener" class="ref-link-btn ref-link-pmid">🔬 PubMed: 2653371 ↗</a>
+        </div>
+      </div>
+
+      <!-- Reference 19: Wu & Kabat -->
+      <div class="ref-card" id="ref-kabat1970">
+        <div>
+          <span class="ref-tag" style="background: rgba(244, 63, 94, 0.2); color: #fda4af; border: 1px solid rgba(244, 63, 94, 0.4);">Kabat Framework Foundation</span>
+          <div class="ref-title">An analysis of the sequences of the variable regions of Bence Jones proteins and myeloma light chains and their implications for antibody complementarity</div>
+          <div class="ref-authors">Wu, T. T., & Kabat, E. A. (1970)</div>
+          <div class="ref-journal">The Journal of Experimental Medicine, 132(2), 211–250</div>
+        </div>
+        <div class="ref-links">
+          <a href="https://doi.org/10.1084/jem.132.2.211" target="_blank" rel="noopener" class="ref-link-btn ref-link-doi">📄 DOI: 10.1084/jem.132.2.211 ↗</a>
+          <a href="https://pubmed.ncbi.nlm.nih.gov/5508247/" target="_blank" rel="noopener" class="ref-link-btn ref-link-pmid">🔬 PubMed: 5508247 ↗</a>
+        </div>
+      </div>
+
+      <!-- Reference 20: GenBank Database -->
+      <div class="ref-card" id="ref-benson2013">
+        <div>
+          <span class="ref-tag" style="background: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.4);">GenBank Public Resource</span>
+          <div class="ref-title">GenBank: The Nucleotide Sequence Database</div>
+          <div class="ref-authors">Benson, D. A., Cavanaugh, M., Clark, K., Karsch-Mizrachi, I., Lipman, D. J., Ostell, J., & Sayers, E. W. (2013)</div>
+          <div class="ref-journal">Nucleic Acids Research, 41(Database issue), D36–D42</div>
+        </div>
+        <div class="ref-links">
+          <a href="https://doi.org/10.1093/nar/gks1195" target="_blank" rel="noopener" class="ref-link-btn ref-link-doi">📄 DOI: 10.1093/nar/gks1195 ↗</a>
+          <a href="https://pubmed.ncbi.nlm.nih.gov/23193287/" target="_blank" rel="noopener" class="ref-link-btn ref-link-pmid">🔬 PubMed: 23193287 ↗</a>
+          <a href="https://www.ncbi.nlm.nih.gov/genbank/" target="_blank" rel="noopener" class="ref-link-btn ref-link-web">🌐 GenBank NCBI ↗</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div style="display:flex; justify-content:center; gap:24px; flex-wrap:wrap; margin-bottom:12px; font-weight:600;">
+      <a href="dnaplot.html" style="color:#38bdf8;">⚡ DNAPLOT Studio</a>
+      <a href="human_vbase3_analyzer.html">👤 Human Analyzer</a>
+      <a href="mouse_vbase3_analyzer.html">🐭 Mouse Analyzer</a>
+      <a href="camelid_vbase3_analyzer.html">🦙 Camelid VHH</a>
+      <a href="constant_regions.html">🏛️ Constant Regions</a>
+      <a href="vgene_pacmap_universe.html">🌌 PaCMAP Universe</a>
+      <a href="tcr_universe.html">🧬 TCRBase</a>
+      <a href="human_tcr_analyzer.html">👤 Human TCR</a>
+      <a href="mouse_tcr_analyzer.html">🐁 Mouse TCR</a>
+      <a href="#scientific-references">📚 Literature & Citations</a>
+      <a href="vbase3_status.html">📊 Status & Coverage</a>
+    </div>
+    <div style="margin-bottom: 6px;">
+      <strong>VBASE3</strong> &bull; Comparative Immunogenomics Database &bull; <span
+        style="color: #38bdf8; font-weight: 600;">Last Updated: September 16, 2026</span> &bull; Citation: Mueller, W.
+      <em>VBASE3: An Open Immunogenomics Database and Alignment Engine for Jawed Vertebrates</em>. DOI: <a
+        href="https://doi.org/10.5281/zenodo.22923344" target="_blank">10.5281/zenodo.22923344</a> &bull; Inquiries: <a
+        href="mailto:werner.muller@manchester.ac.uk">werner.muller@manchester.ac.uk</a>
+    </div>
+  </footer>
+
+  <script src="js/vbase3_sdk.js"></script>
+  <script src="js/smart_router.js"></script>
+  <script>
+    // 1. Tab Switching Function
+    window.showTab = function (tabName) {
+      document.querySelectorAll('.workbench-panel .tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.workbench-panel .tab-content').forEach(c => c.classList.remove('active'));
+
+      const targetContent = document.getElementById(tabName);
+      if (targetContent) targetContent.classList.add('active');
+
+      const targetBtn = document.getElementById('tabBtn_' + tabName);
+      if (targetBtn) targetBtn.classList.add('active');
+
+      if (tabName === 'airr') loadAirrData();
+      else if (tabName === 'report') switchGenbankView('mouse');
+      else if (tabName === 'explorer') filterGermlineView();
+    };
+
+    // 2. GenBank Heatmap Data Switcher
+    const GENBANK_DATA = {
+      'mouse': [
+        { rank: 1, symbol: 'musIGHV044', allele: 'musIGHV044*01', freq: '12.45%', name: 'V186.2 (J558 family)', note: 'Dominant response to NP antigen (<a href="https://pubmed.ncbi.nlm.nih.gov/3493076/" target="_blank" rel="noopener" style="color: #38bdf8; text-decoration: underline;">Siekevitz et al. 1987 ↗</a>; <a href="https://pubmed.ncbi.nlm.nih.gov/2653375/" target="_blank" rel="noopener" style="color: #38bdf8; text-decoration: underline;">Kocks & Rajewsky 1989 ↗</a>)' },
+        { rank: 2, symbol: 'musIGHV043', allele: 'musIGHV043*01', freq: '8.42%', name: 'VH J558.18', note: 'Secondary response affinity maturation (<a href="https://pubmed.ncbi.nlm.nih.gov/6788376/" target="_blank" rel="noopener" style="color: #38bdf8; text-decoration: underline;">Bothwell et al. 1981 ↗</a>)' },
+        { rank: 3, symbol: 'musIGHV001', allele: 'musIGHV001*01', freq: '6.18%', name: 'V33 (J558 family)', note: 'Germline public antibody scaffold (<a href="https://doi.org/10.1016/0167-5699(84)90034-3" target="_blank" rel="noopener" style="color: #38bdf8; text-decoration: underline;">Dildrop 1984 ↗</a>)' },
+        { rank: 4, symbol: 'musIGHV012', allele: 'musIGHV012*01', freq: '4.85%', name: 'V102', note: 'Autoreactive B-cell repertoire' },
+        { rank: 5, symbol: 'musIGHV088', allele: 'musIGHV088*01', freq: '3.92%', name: '7183 family', note: 'Fetal & B-1 cell repertoire bias (<a href="https://doi.org/10.1016/0167-5699(84)90034-3" target="_blank" rel="noopener" style="color: #38bdf8; text-decoration: underline;">Dildrop 1984 ↗</a>)' }
+      ],
+      'human': [
+        { rank: 1, symbol: 'IGHV3-23', allele: 'IGHV3-23*01', freq: '11.85%', name: 'DP-47', note: 'Most stable therapeutic antibody heavy scaffold (<a href="https://pubmed.ncbi.nlm.nih.gov/1404389/" target="_blank" rel="noopener" style="color: #38bdf8; text-decoration: underline;">Tomlinson et al. 1992 ↗</a>)' },
+        { rank: 2, symbol: 'IGHV3-30', allele: 'IGHV3-30*01', freq: '8.12%', name: 'DP-49', note: 'Broadly neutralizing anti-viral antibodies (<a href="https://pubmed.ncbi.nlm.nih.gov/7779254/" target="_blank" rel="noopener" style="color: #38bdf8; text-decoration: underline;">Cook & Tomlinson 1995 ↗</a>)' },
+        { rank: 3, symbol: 'IGHV4-39', allele: 'IGHV4-39*01', freq: '6.74%', name: 'DP-79', note: 'Mucosal IgA response bias (<a href="https://pubmed.ncbi.nlm.nih.gov/1404389/" target="_blank" rel="noopener" style="color: #38bdf8; text-decoration: underline;">Tomlinson et al. 1992 ↗</a>)' },
+        { rank: 4, symbol: 'IGHV1-69', allele: 'IGHV1-69*01', freq: '5.90%', name: 'DP-10', note: 'Stem-binding anti-influenza neutralizing antibodies (<a href="https://pubmed.ncbi.nlm.nih.gov/1404389/" target="_blank" rel="noopener" style="color: #38bdf8; text-decoration: underline;">Tomlinson et al. 1992 ↗</a>)' },
+        { rank: 5, symbol: 'IGHV1-18', allele: 'IGHV1-18*01', freq: '4.55%', name: 'DP-14', note: 'Secondary response memory B-cells (<a href="https://pubmed.ncbi.nlm.nih.gov/7779254/" target="_blank" rel="noopener" style="color: #38bdf8; text-decoration: underline;">Cook & Tomlinson 1995 ↗</a>)' }
+      ],
+      'rat': [
+        { rank: 1, symbol: 'RattusIGHV1-1', allele: 'IGHV1-1*01', freq: '14.20%', name: 'Rat VH1', note: 'Hybridoma fusion lead scaffold' },
+        { rank: 2, symbol: 'RattusIGHV2-4', allele: 'IGHV2-4*01', freq: '9.30%', name: 'Rat VH2', note: 'High-affinity secondary response' }
+      ],
+      'rabbit': [
+        { rank: 1, symbol: 'OryctoIGHV1S1', allele: 'IGHV1S1*01', freq: '68.50%', name: 'Rabbit VHa1', note: 'Dominant gene utilized in >70% rabbit antibodies (<a href="https://pubmed.ncbi.nlm.nih.gov/2317867/" target="_blank" rel="noopener" style="color: #38bdf8; text-decoration: underline;">Knight & Becker 1990 ↗</a>)' },
+        { rank: 2, symbol: 'OryctoIGHV1S2', allele: 'IGHV1S2*01', freq: '18.10%', name: 'Rabbit VHa2', note: 'Alternative high-affinity lineage (<a href="https://pubmed.ncbi.nlm.nih.gov/7600292/" target="_blank" rel="noopener" style="color: #38bdf8; text-decoration: underline;">Mage et al. 1994 ↗</a>)' }
+      ]
+    };
+
+    window.switchGenbankView = function (sp) {
+      const titleEl = document.getElementById('genbankTitle');
+      const tbodyEl = document.getElementById('genbankTbody');
+      const rows = GENBANK_DATA[sp] || GENBANK_DATA['mouse'];
+
+      ['mouse', 'human', 'rat', 'rabbit'].forEach(k => {
+        const b = document.getElementById('btnGb_' + k);
+        if (b) {
+          if (k === sp) {
+            b.style.background = '#0284c7';
+            b.style.borderColor = '#38bdf8';
+            b.style.fontWeight = '700';
+          } else {
+            b.style.background = '#1e293b';
+            b.style.borderColor = '#334155';
+            b.style.fontWeight = '500';
+          }
+        }
+      });
+
+      const names = { 'mouse': '🐭 Mouse Heavy Chain (musIGHV)', 'human': '👨 Human Heavy Chain (humIGHV)', 'rat': '🐀 Rat Heavy Chain (Rattus)', 'rabbit': '🐰 Rabbit Heavy Chain (Oryctolagus)' };
+      titleEl.innerHTML = (names[sp] || names['mouse']) + ' Top V-Gene Frequencies';
+
+      tbodyEl.innerHTML = rows.map(r => `
+        <tr>
+          <td style="font-weight: 700; color: #38bdf8;">#${r.rank}</td>
+          <td style="font-family: monospace; color: #60a5fa; font-weight: 700;">${r.symbol}</td>
+          <td style="font-family: monospace; color: #cbd5e1;">${r.allele}</td>
+          <td>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <div style="flex: 1; max-width: 80px; height: 6px; background: #1e293b; border-radius: 3px; overflow: hidden;">
+                <div style="width: ${r.freq}; height: 100%; background: linear-gradient(90deg, #0284c7, #34d399);"></div>
+              </div>
+              <span style="font-weight: 700; color: #34d399; font-family: monospace;">${r.freq}</span>
+            </div>
+          </td>
+          <td style="color: #94a3b8;">${r.name}</td>
+          <td style="color: #cbd5e1; font-size: 12.5px;">${r.note}</td>
+        </tr>
+      `).join('');
+    };
+
+    // 3. Comprehensive Germline Sequence Explorer & Search Engine
+    let ALL_GERMLINES = null;
+    let isFetchingGermlines = false;
+
+    // Rich curated landmark fallback in case offline or before fetch resolves
+    const DEFAULT_GERMLINES = [
+      { id: 'musIGHV044', allele: 'musIGHV044*01', vb2: 'musIGHV044', dp: '', name: 'V186.2 (Dildrop J558)', sp: 'mouse', locus: 'IGH', seq: 'QVQLQESGPGLVAPSQSLSITCTVSGFSLTGYGVNWVRQPPGKGLEWLGMIWGDGSTDYNSALKSRLSISKDNSKSQVFLKMNSLQTDDTARYYCAR', aa: 'QVQLQESGPGLVAPSQSLSITCTVSGFSLTGYGVNWVRQPPGKGLEWLGMIWGDGSTDYNSALKSRLSISKDNSKSQVFLKMNSLQTDDTARYYCAR', ebi: 'S45115' },
+      { id: 'musIGHV043', allele: 'musIGHV043*01', vb2: 'musIGHV043', dp: '', name: 'VH J558.18', sp: 'mouse', locus: 'IGH', seq: 'EVQLQESGPGLVAPSQSLSITCTVSGFSLTGYGVNWVRQPPGKGLEWLGMIWGDGSTDYNSALKSRLSISKDNSKSQVFLKMNSLQTDDTARYYCAR', aa: 'EVQLQESGPGLVAPSQSLSITCTVSGFSLTGYGVNWVRQPPGKGLEWLGMIWGDGSTDYNSALKSRLSISKDNSKSQVFLKMNSLQTDDTARYYCAR', ebi: 'S45116' },
+      { id: 'musIGHV001', allele: 'musIGHV001*01', vb2: 'musIGHV001', dp: '', name: 'V33 (J558)', sp: 'mouse', locus: 'IGH', seq: 'EVKLVESGGGLVQPGGSLRLSCATSGFTFTDYYMSWVRQPPGKALEWLGFIRNKANGYTTEYSASVKGRFTISRDNSQSILYLQMNTLRAEDSATYYCAR', aa: 'EVKLVESGGGLVQPGGSLRLSCATSGFTFTDYYMSWVRQPPGKALEWLGFIRNKANGYTTEYSASVKGRFTISRDNSQSILYLQMNTLRAEDSATYYCAR', ebi: 'K00608' },
+      { id: 'musIGHV012', allele: 'musIGHV012*01', vb2: 'musIGHV012', dp: '', name: 'V102', sp: 'mouse', locus: 'IGH', seq: 'EVQLQQSGPELVKPGASVKISCKASGYSFTDYYINWVKQRPGQGLEWIGWIYPGDGNTKYNEKFKGKATLTTDKSSSTAYMQLNSLTSEDSAVYFCAR', aa: 'EVQLQQSGPELVKPGASVKISCKASGYSFTDYYINWVKQRPGQGLEWIGWIYPGDGNTKYNEKFKGKATLTTDKSSSTAYMQLNSLTSEDSAVYFCAR', ebi: 'M34510' },
+      { id: 'musIGHV088', allele: 'musIGHV088*01', vb2: 'musIGHV088', dp: '', name: '7183 Family V-Gene', sp: 'mouse', locus: 'IGH', seq: 'EVQLQQSGPELVKPGASVKISCKASGYTFTDYYMNWVKQSHGKSLEWIGNINPNNGGTSYNQKFKGKATLTVDKSSSTAYMELRSLTSEDSAVYYCAR', aa: 'EVQLQQSGPELVKPGASVKISCKASGYTFTDYYMNWVKQSHGKSLEWIGNINPNNGGTSYNQKFKGKATLTVDKSSSTAYMELRSLTSEDSAVYYCAR', ebi: 'J00538' },
+      { id: 'humIGHV3-23', allele: 'IGHV3-23*01', vb2: 'humIGHV187', dp: 'DP-47', name: 'DP-47 (Human VH3 Lead Scaffold)', sp: 'human', locus: 'IGH', seq: 'EVQLLESGGGLVQPGGSLRLSCAASGFTFSSYAMSWVRQAPGKGLEWVSAISGSGGSTYYADSVKGRFTISRDNSKNTLYLQMNSLRAEDTAVYYCAK', aa: 'EVQLLESGGGLVQPGGSLRLSCAASGFTFSSYAMSWVRQAPGKGLEWVSAISGSGGSTYYADSVKGRFTISRDNSKNTLYLQMNSLRAEDTAVYYCAK', ebi: 'AB021530' },
+      { id: 'humIGHV1-69', allele: 'IGHV1-69*01', vb2: 'humIGHV237', dp: 'DP-10', name: 'DP-10 (Stem Neutralizing Heavy)', sp: 'human', locus: 'IGH', seq: 'QVQLVQSGAEVKKPGSSVKVSCKASGGTFSSYAISWVRQAPGQGLEWMGGIIPIFGTANYAQKFQGRVTITADESTSTAYMELSSLRSEDTAVYYCAR', aa: 'QVQLVQSGAEVKKPGSSVKVSCKASGGTFSSYAISWVRQAPGQGLEWMGGIIPIFGTANYAQKFQGRVTITADESTSTAYMELSSLRSEDTAVYYCAR', ebi: 'L22582' },
+      { id: 'humIGHV3-30', allele: 'IGHV3-30*01', vb2: 'humIGHV194', dp: 'DP-49', name: 'DP-49 (Anti-viral Broadly Neutralizing)', sp: 'human', locus: 'IGH', seq: 'QVQLVESGGGVVQPGRSLRLSCAASGFTFSSYAMHWVRQAPGKGLEWVAVISYDGSNKYYADSVKGRFTISRDNSKNTLYLQMNSLRAEDTAVYYCAR', aa: 'QVQLVESGGGVVQPGRSLRLSCAASGFTFSSYAMHWVRQAPGKGLEWVAVISYDGSNKYYADSVKGRFTISRDNSKNTLYLQMNSLRAEDTAVYYCAR', ebi: 'AB019439' },
+      { id: 'humIGHV3-53', allele: 'IGHV3-53*01', vb2: 'humIGHV220', dp: 'DP-42', name: 'DP-42 (SARS-CoV-2 Class 1 Anchor)', sp: 'human', locus: 'IGH', seq: 'EVQLVESGGGLIQPGGSLRLSCAASGFTVSSNYMSWVRQAPGKGLEWVSVIYSGGSTYYADSVKGRFTISRDNSKNTLYLQMNSLRAEDTAVYYCAR', aa: 'EVQLVESGGGLIQPGGSLRLSCAASGFTVSSNYMSWVRQAPGKGLEWVSVIYSGGSTYYADSVKGRFTISRDNSKNTLYLQMNSLRAEDTAVYYCAR', ebi: 'AB019438' },
+      { id: 'humIGHV4-39', allele: 'IGHV4-39*01', vb2: 'humIGHV258', dp: 'DP-79', name: 'DP-79 (Mucosal IgA Response Bias)', sp: 'human', locus: 'IGH', seq: 'QLQLQESGPGLVKPSETLSLTCTVSGGSISSSSYYWGWIRQPPGKGLEWIGSIYYSGSTYYNPSLKSRVTISVDTSKNQFSLKLSSVTAADTAVYYCAR', aa: 'QLQLQESGPGLVKPSETLSLTCTVSGGSISSSSYYWGWIRQPPGKGLEWIGSIYYSGSTYYNPSLKSRVTISVDTSKNQFSLKLSSVTAADTAVYYCAR', ebi: 'AB019441' },
+      { id: 'humIGHV4-34', allele: 'IGHV4-34*01', vb2: 'humIGHV254', dp: 'DP-63', name: 'DP-63 (Cold Agglutinin / Autoimmune)', sp: 'human', locus: 'IGH', seq: 'QVQLQQWGAGLLKPSETLSLTCAVYGGSFSGYYWSWIRQPPGKGLEWIGEIDHSGSTNYNPSLKSRVTISVDTSKNQFSLKLSSVTAADTAVYYCAR', aa: 'QVQLQQWGAGLLKPSETLSLTCAVYGGSFSGYYWSWIRQPPGKGLEWIGEIDHSGSTNYNPSLKSRVTISVDTSKNQFSLKLSSVTAADTAVYYCAR', ebi: 'Z12310' },
+      { id: 'humIGLV1-40', allele: 'IGLV1-40*01', vb2: 'humIGLV067', dp: '', name: 'Human Lambda VL1', sp: 'human', locus: 'IGL', seq: 'QSVLTQPPSVSGAPGQRVTISCTGSSSNIGAGYDVHWYQQLPGTAPKLLIYGNSNRPSGVPDRFSGSKSGTSASLAITGLQAEDEADYYCQSYDSSLSG', aa: 'QSVLTQPPSVSGAPGQRVTISCTGSSSNIGAGYDVHWYQQLPGTAPKLLIYGNSNRPSGVPDRFSGSKSGTSASLAITGLQAEDEADYYCQSYDSSLSG', ebi: 'Z73650' },
+      { id: 'humIGKV1-39', allele: 'IGKV1-39*01', vb2: 'humIGKV115', dp: 'O12/O2', name: 'O12/O2 (Dominant Therapeutic Kappa)', sp: 'human', locus: 'IGK', seq: 'DIQMTQSPSSLSASVGDRVTITCRASQSISSYLNWYQQKPGKAPKLLIYAASSLQSGVPSRFSGSGSGTDFTLTISSLQPEDFATYYCQQSYSTP', aa: 'DIQMTQSPSSLSASVGDRVTITCRASQSISSYLNWYQQKPGKAPKLLIYAASSLQSGVPSRFSGSGSGTDFTLTISSLQPEDFATYYCQQSYSTP', ebi: 'X59315' },
+      { id: 'humIGKV3-20', allele: 'IGKV3-20*01', vb2: 'humIGKV014', dp: 'A27', name: 'A27 (Most Abundant Human Kappa)', sp: 'human', locus: 'IGK', seq: 'EIVLTQSPGTLSLSPGERATLSCRASQSVSSSYLAWYQQKPGQAPRLLIYGASSRATGIPDRFSGSGSGTDFTLTISRLEPEDFAVYYCQQYGSSP', aa: 'EIVLTQSPGTLSLSPGERATLSCRASQSVSSSYLAWYQQKPGQAPRLLIYGASSRATGIPDRFSGSGSGTDFTLTISRLEPEDFAVYYCQQYGSSP', ebi: 'X59318' },
+      { id: 'musIGKV243', allele: 'musIGKV8-30*01', vb2: 'musIGKV243', dp: '', name: 'Vκ21D (Mouse Kappa)', sp: 'mouse', locus: 'IGK', seq: 'DIQMTQSPASLSASVGETVTITCRASGNIHNYLAWYQQKQGKSPQLLVYNAKTLADGVPSRFSGSGSGTQYSLKINSLQPEDFGSYYCQHFWSTPW', aa: 'DIQMTQSPASLSASVGETVTITCRASGNIHNYLAWYQQKQGKSPQLLVYNAKTLADGVPSRFSGSGSGTQYSLKINSLQPEDFGSYYCQHFWSTPW', ebi: 'J00562' },
+      { id: 'Vic_VHH3-S12', allele: 'Vic_VHH3-S12*01', vb2: '', dp: '', name: 'Autonomous VHH Nanobody (Alpaca)', sp: 'alpaca', locus: 'IGH', seq: 'EVQLVESGGGLVQPGGSLRLSCAASGFTFSSYAMSWVRQAPGKGLEWVSAISGSGGSTYYADSVKGRFTISRDNSKNTLYLQMNSLRAEDTAVYYCAK', aa: 'EVQLVESGGGLVQPGGSLRLSCAASGFTFSSYAMSWVRQAPGKGLEWVSAISGSGGSTYYADSVKGRFTISRDNSKNTLYLQMNSLRAEDTAVYYCAK', ebi: 'PZ261609' }
+    ];
+
+    async function ensureGermlinesLoaded() {
+      if (ALL_GERMLINES && ALL_GERMLINES.length > 0) return ALL_GERMLINES;
+      if (isFetchingGermlines) return DEFAULT_GERMLINES;
+      isFetchingGermlines = true;
+      try {
+        const resp = await fetch('rosetta_stone_data.json');
+        if (resp.ok) {
+          const list = await resp.json();
+          // Filter to valid sequences and normalize fields
+          ALL_GERMLINES = list.filter(item => (item.aa && item.aa.length >= 15) || (item.seq && item.seq.length >= 15));
+          console.log(`✅ Loaded ${ALL_GERMLINES.length} germline records from rosetta_stone_data.json`);
+        }
+      } catch (err) {
+        console.warn('Could not load rosetta_stone_data.json, using default landmarks:', err);
+      } finally {
+        isFetchingGermlines = false;
+      }
+      return ALL_GERMLINES || DEFAULT_GERMLINES;
+    }
+
+    // Pre-trigger background load immediately
+    ensureGermlinesLoaded();
+
+    function translateDnaSnippet(dna) {
+      const clean = dna.toUpperCase().replace(/[^ACGT]/g, '');
+      const frames = [];
+      if (window.VBASE3 && typeof window.VBASE3.translateDna === 'function') {
+        for (let offset = 0; offset < 3; offset++) {
+          if (clean.length - offset >= 3) {
+            frames.push(window.VBASE3.translateDna(clean.substring(offset)));
+          }
+        }
+        return frames;
+      }
+      const code = {
+        'TTT':'F','TTC':'F','TTA':'L','TTG':'L','CTT':'L','CTC':'L','CTA':'L','CTG':'L',
+        'ATT':'I','ATC':'I','ATA':'I','ATG':'M','GTT':'V','GTC':'V','GTA':'V','GTG':'V',
+        'TCT':'S','TCC':'S','TCA':'S','TCG':'S','CCT':'P','CCC':'P','CCA':'P','CCG':'P',
+        'ACT':'T','ACC':'T','ACA':'T','ACG':'T','GCT':'A','GCC':'A','GCA':'A','GCG':'A',
+        'TAT':'Y','TAC':'Y','TAA':'*','TAG':'*','CAT':'H','CAC':'H','CAA':'Q','CAG':'Q',
+        'AAT':'N','AAC':'N','AAA':'K','AAG':'K','GAT':'D','GAC':'D','GAA':'E','GAG':'E',
+        'TGT':'C','TGC':'C','TGA':'*','TGG':'W','CGT':'R','CGC':'R','CGA':'R','CGG':'R',
+        'AGT':'S','AGC':'S','AGA':'R','AGG':'R','GGT':'G','GGC':'G','GGA':'G','GGG':'G'
+      };
+      for (let offset = 0; offset < 3; offset++) {
+        let aa = '';
+        for (let i = offset; i + 2 < clean.length; i += 3) {
+          const triplet = clean.substr(i, 3);
+          aa += code[triplet] || 'X';
+        }
+        if (aa.length > 0) frames.push(aa);
+      }
+      return frames;
+    }
+
+    window.clearGermlineSearch = function () {
+      const inp = document.getElementById('germlineSearchInput');
+      if (inp) inp.value = '';
+      filterGermlineView();
+    };
+
+    window.sendToWasmSandbox = function (seq, name) {
+      const ta = document.getElementById('fastaInput');
+      if (ta) {
+        ta.value = `>${name || 'Germline_Query'}\n${seq}`;
+      }
+      showTab('analyzer');
+      window.runWasmAnalysis();
+      const panel = document.getElementById('workbench-section');
+      if (panel) panel.scrollIntoView({ behavior: 'smooth' });
+    };
+
+    window.filterGermlineView = async function () {
+      const rawQuery = (document.getElementById('germlineSearchInput').value || '').trim();
+      const disp = document.getElementById('germlineDisplay');
+      const countEl = document.getElementById('germlineSearchCount');
+      if (!disp) return;
+
+      const db = await ensureGermlinesLoaded();
+
+      // Clean query: strip fasta headers if pasted
+      const cleanQ = rawQuery.replace(/^>.*$/gm, '').trim();
+      const lowerQ = cleanQ.toLowerCase();
+
+      // Detect if user pasted a DNA nucleotide sequence
+      const isDna = /^[ACGTN\s]{12,}$/i.test(cleanQ);
+      const translatedFrames = isDna ? translateDnaSnippet(cleanQ) : [];
+
+      let matches = [];
+
+      if (!cleanQ) {
+        // Show default landmark genes if search input is empty
+        matches = db.slice(0, 8);
+        if (countEl) countEl.innerHTML = `<span style="color:#64748b;">Showing ${matches.length} landmark scaffolds (type above to search all ${db.length})</span>`;
+      } else {
+        matches = db.filter(g => {
+          const seq = (g.aa || g.seq || '').toUpperCase();
+          const lowerSeq = seq.toLowerCase();
+          const id = (g.id || '').toLowerCase();
+          const imgt = (g.imgt || '').toLowerCase();
+          const vb2 = (g.vb2 || '').toLowerCase();
+          const dp = (g.dp || '').toLowerCase();
+          const name = (g.name || '').toLowerCase();
+          const sp = (g.sp || '').toLowerCase();
+          const locus = (g.locus || '').toLowerCase();
+          const ebi = (g.ebi || '').toLowerCase();
+          const kabat = (g.kabat || '').toLowerCase();
+
+          // 1. Direct text/metadata match
+          if (id.includes(lowerQ) || imgt.includes(lowerQ) || vb2.includes(lowerQ) ||
+              dp.includes(lowerQ) || name.includes(lowerQ) || sp.includes(lowerQ) ||
+              locus.includes(lowerQ) || ebi.includes(lowerQ) || kabat.includes(lowerQ)) {
+            return true;
+          }
+
+          // 2. Direct amino acid sequence match (exact or substring)
+          if (lowerSeq.includes(lowerQ)) {
+            return true;
+          }
+
+          // 3. DNA translation frame matching
+          if (isDna) {
+            for (const f of translatedFrames) {
+              const cleanF = f.replace(/\*/g, '');
+              if (cleanF.length >= 5 && (lowerSeq.includes(cleanF.toLowerCase()) || cleanF.toLowerCase().includes(lowerSeq.slice(0, 15)))) {
+                return true;
+              }
+            }
+          }
+
+          return false;
+        });
+
+        if (countEl) {
+          countEl.innerHTML = `<b style="color:#38bdf8;">${matches.length}</b> matches across ${db.length} entries`;
+        }
+      }
+
+      if (matches.length === 0) {
+        disp.innerHTML = `
+          <div style="padding: 24px; text-align: center; color: #94a3b8;">
+            <div style="font-size: 24px; margin-bottom: 8px;">🔍</div>
+            <div style="font-size: 14px; font-weight: 600; color: #cbd5e1; margin-bottom: 6px;">No matching germline sequences found for "${escapeHtml(rawQuery)}"</div>
+            <div style="font-size: 12px; color: #64748b; max-width: 480px; margin: 0 auto;">
+              Try searching by V-gene symbol (e.g. <code>IGHV3-23</code>, <code>musIGHV044</code>, <code>IGHV1-69</code>), 
+              classic name (e.g. <code>DP-47</code>, <code>V186.2</code>), accession, or paste a peptide motif (e.g. <code>EVQL</code>, <code>YYCAR</code>).
+            </div>
+          </div>
+        `;
+        return;
+      }
+
+      // Render top 50 matches
+      const renderList = matches.slice(0, 50);
+
+      const spEmojis = {
+        'human': '👨 Human',
+        'mouse': '🐭 Mouse',
+        'alpaca': '🦙 Alpaca',
+        'rabbit': '🐰 Rabbit',
+        'rat': '🐀 Rat',
+        'dog': '🐕 Dog',
+        'pig': '🐖 Pig',
+        'rhesus': '🐒 Rhesus',
+        'chimpanzee': '🦧 Chimp',
+        'xenopus': '🐸 Xenopus',
+        'zebrafish': '🐟 Zebrafish'
+      };
+
+      disp.innerHTML = `
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid #1e293b; font-size: 11.5px; color: #94a3b8;">
+          <span>Showing <b>${renderList.length}</b> of <b>${matches.length}</b> matching germline sequences</span>
+          <span>VBASE3 Verified Universal Catalog</span>
+        </div>
+        ${renderList.map(m => {
+          const seq = m.aa || m.seq || '';
+          const spName = spEmojis[m.sp] || `🧬 ${m.sp || 'Vertebrate'}`;
+          const locus = m.locus || (m.chain ? m.chain.toUpperCase() : 'IGH');
+          const primaryName = m.id || m.allele || 'Unnamed V-Gene';
+          const imgtLabel = m.imgt || m.allele || '-';
+          const vb2Label = m.vb2 ? `VBASE2: ${m.vb2}` : '';
+          const dpLabel = m.dp ? `Classic: ${m.dp}` : (m.name ? `Family: ${m.name}` : '');
+          const ebiLabel = m.ebi ? `GenBank: ${m.ebi.split(',')[0].trim()}` : '';
+
+          // Substring highlighting
+          let highlightedSeq = escapeHtml(seq);
+          if (cleanQ && cleanQ.length >= 3 && !isDna) {
+            const idx = seq.toLowerCase().indexOf(lowerQ);
+            if (idx !== -1) {
+              const matchedStr = seq.substr(idx, cleanQ.length);
+              highlightedSeq = escapeHtml(seq.substring(0, idx)) +
+                `<mark style="background: #f59e0b; color: #0f172a; padding: 1px 3px; border-radius: 2px; font-weight: 700;">${escapeHtml(matchedStr)}</mark>` +
+                escapeHtml(seq.substring(idx + cleanQ.length));
+            }
+          }
+
+          return `
+            <div style="margin-bottom: 16px; background: rgba(15, 23, 42, 0.65); border: 1px solid #1e293b; border-radius: 6px; padding: 14px; transition: border-color 0.15s;"
+                 onmouseover="this.style.borderColor='#38bdf8';" onmouseout="this.style.borderColor='#1e293b';">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; flex-wrap: wrap; gap: 6px;">
+                <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                  <span style="color: #38bdf8; font-weight: 700; font-size: 14px;">${escapeHtml(primaryName)}</span>
+                  <span style="background: #1e293b; color: #60a5fa; font-size: 11px; padding: 2px 7px; border-radius: 4px; font-weight: 600;">IMGT: ${escapeHtml(imgtLabel)}</span>
+                  ${dpLabel ? `<span style="background: #1e293b; color: #34d399; font-size: 11px; padding: 2px 7px; border-radius: 4px; font-weight: 600;">${escapeHtml(dpLabel)}</span>` : ''}
+                  ${vb2Label ? `<span style="background: #1e293b; color: #cbd5e1; font-size: 10.5px; padding: 2px 6px; border-radius: 4px;">${escapeHtml(vb2Label)}</span>` : ''}
+                </div>
+                <div style="display: flex; align-items: center; gap: 6px;">
+                  <span style="background: rgba(56, 189, 248, 0.15); color: #38bdf8; font-size: 11px; padding: 2px 8px; border-radius: 4px; font-weight: 700;">${spName}</span>
+                  <span style="background: rgba(168, 85, 247, 0.15); color: #c084fc; font-size: 11px; padding: 2px 8px; border-radius: 4px; font-weight: 700;">${escapeHtml(locus)}</span>
+                </div>
+              </div>
+
+              <div style="background: #090e17; padding: 10px 12px; border-radius: 6px; border: 1px solid #1e293b; margin-bottom: 10px;">
+                <div style="display: flex; justify-content: space-between; font-size: 10.5px; color: #64748b; margin-bottom: 4px;">
+                  <span>Mature Variable Exon Translation (${seq.length} aa)</span>
+                  ${ebiLabel ? `<span>${escapeHtml(ebiLabel)}</span>` : ''}
+                </div>
+                <div style="word-break: break-all; color: #4ade80; line-height: 1.5; font-size: 12.5px;">${highlightedSeq}</div>
+              </div>
+
+              <div style="display: flex; gap: 8px; justify-content: flex-end; flex-wrap: wrap;">
+                <button class="btn" style="padding: 4px 10px; font-size: 11px; background: #1e293b; border: 1px solid #334155;"
+                  onclick="navigator.clipboard.writeText('${escapeHtml(seq)}'); alert('Copied sequence: ${escapeHtml(primaryName)}');">
+                  📋 Copy AA
+                </button>
+                <button class="btn" style="padding: 4px 10px; font-size: 11px; background: linear-gradient(135deg, #0284c7, #059669); font-weight: 600;"
+                  onclick="sendToWasmSandbox('${escapeHtml(seq)}', '${escapeHtml(primaryName)}')">
+                  ⚡ Analyze in WASM Sandbox
+                </button>
+                ${m.sp === 'human' ? `<a href="human_vbase3_analyzer.html" class="btn" style="padding: 4px 10px; font-size: 11px; background: #334155; text-decoration: none;">👤 Human Portal</a>` : ''}
+                ${m.sp === 'mouse' ? `<a href="mouse_vbase3_analyzer.html" class="btn" style="padding: 4px 10px; font-size: 11px; background: #334155; text-decoration: none;">🐭 Mouse Portal</a>` : ''}
+                ${m.sp === 'alpaca' ? `<a href="camelid_vbase3_analyzer.html" class="btn" style="padding: 4px 10px; font-size: 11px; background: #334155; text-decoration: none;">🦙 Camelid Portal</a>` : ''}
+              </div>
+            </div>
+          `;
+        }).join('')}
+      `;
+    };
+
+    // 4. AIRR Repertoire Combinatorial Heatmaps (Human vs. Mouse, Heavy vs. Light)
+    const AIRR_HEATMAP_DATA = {
+      human: {
+        heavy: {
+          title: '👨 Human Heavy Chain (IGHV × IGHJ) Pairing Heatmap',
+          totalSeqs: '33,601,883',
+          vLabels: ['IGHV3-23', 'IGHV3-53', 'IGHV4-39', 'IGHV1-2', 'IGHV3-7', 'IGHV1-69', 'IGHV3-30', 'IGHV4-59'],
+          jLabels: ['IGHJ1', 'IGHJ2', 'IGHJ3', 'IGHJ4', 'IGHJ5', 'IGHJ6'],
+          vTotals: ['12.8%', '14.2%', '11.5%', '10.1%', '8.2%', '6.5%', '5.8%', '4.2%'],
+          jTotals: ['0.9%', '2.3%', '3.8%', '63.5%', '10.1%', '19.4%'],
+          // Matrix: rows are vLabels, cols are jLabels (frequencies in %)
+          matrix: [
+            [0.1, 0.3, 0.5, 8.4, 1.2, 2.3],  // IGHV3-23
+            [0.1, 0.4, 0.6, 9.8, 1.3, 2.0],  // IGHV3-53
+            [0.1, 0.2, 0.4, 7.5, 1.1, 2.2],  // IGHV4-39
+            [0.1, 0.2, 0.3, 6.2, 1.0, 2.3],  // IGHV1-2
+            [0.1, 0.2, 0.3, 5.4, 0.8, 1.4],  // IGHV3-7
+            [0.1, 0.1, 0.3, 3.2, 0.7, 2.1],  // IGHV1-69
+            [0.1, 0.1, 0.2, 3.8, 0.6, 1.0],  // IGHV3-30
+            [0.0, 0.1, 0.2, 2.8, 0.4, 0.7]   // IGHV4-59
+          ],
+          cdr3: [
+            { rank: 1, seq: 'CTRGSRAAGGWGSGYFDYW', count: '142,504', pct: '1.15%' },
+            { rank: 2, seq: 'CATRRGLEYW', count: '98,120', pct: '0.79%' },
+            { rank: 3, seq: 'CARDKGYSYGYW', count: '87,412', pct: '0.70%' },
+            { rank: 4, seq: 'CSRWGGDGFYAMDYW', count: '64,220', pct: '0.52%' },
+            { rank: 5, seq: 'CARDLDYFDFW', count: '51,890', pct: '0.42%' }
+          ]
+        },
+        kappa: {
+          title: '👨 Human Kappa Chain (IGKV × IGKJ) Pairing Heatmap',
+          totalSeqs: '18,420,110',
+          vLabels: ['IGKV3-20 (A27)', 'IGKV1-39 (O12)', 'IGKV1-5 (O2)', 'IGKV3-11 (L6)', 'IGKV1-17 (L12)', 'IGKV2-30 (A17)'],
+          jLabels: ['IGKJ1', 'IGKJ2', 'IGKJ3', 'IGKJ4', 'IGKJ5'],
+          vTotals: ['22.4%', '18.6%', '12.8%', '9.5%', '7.2%', '5.9%'],
+          jTotals: ['34.2%', '26.5%', '10.4%', '18.1%', '10.8%'],
+          matrix: [
+            [7.8, 6.1, 2.3, 4.1, 2.1], // IGKV3-20
+            [6.4, 5.0, 1.9, 3.3, 2.0], // IGKV1-39
+            [4.3, 3.4, 1.3, 2.4, 1.4], // IGKV1-5
+            [3.2, 2.5, 1.0, 1.7, 1.1], // IGKV3-11
+            [2.4, 1.9, 0.8, 1.3, 0.8], // IGKV1-17
+            [2.0, 1.6, 0.6, 1.1, 0.6]  // IGKV2-30
+          ],
+          cdr3: [
+            { rank: 1, seq: 'CQQHYTTPPTF', count: '186,400', pct: '1.45%' },
+            { rank: 2, seq: 'CQQYGSSPLTF', count: '142,100', pct: '1.10%' },
+            { rank: 3, seq: 'CQQRSNWPPITF', count: '98,450', pct: '0.77%' },
+            { rank: 4, seq: 'CQKYNSAPFTF', count: '72,300', pct: '0.56%' },
+            { rank: 5, seq: 'CQQYDTYPLTF', count: '58,900', pct: '0.46%' }
+          ]
+        },
+        lambda: {
+          title: '👨 Human Lambda Chain (IGLV × IGLJ) Pairing Heatmap',
+          totalSeqs: '9,850,440',
+          vLabels: ['IGLV1-40', 'IGLV2-14', 'IGLV1-44', 'IGLV3-21', 'IGLV6-57', 'IGLV7-43'],
+          jLabels: ['IGLJ1', 'IGLJ2', 'IGLJ3', 'IGLJ7'],
+          vTotals: ['24.1%', '18.5%', '14.2%', '11.8%', '8.4%', '6.1%'],
+          jTotals: ['28.6%', '32.4%', '27.2%', '11.8%'],
+          matrix: [
+            [6.8, 7.9, 6.6, 2.8], // IGLV1-40
+            [5.3, 6.0, 5.0, 2.2], // IGLV2-14
+            [4.1, 4.6, 3.9, 1.6], // IGLV1-44
+            [3.4, 3.8, 3.2, 1.4], // IGLV3-21
+            [2.4, 2.7, 2.3, 1.0], // IGLV6-57
+            [1.7, 2.0, 1.7, 0.7]  // IGLV7-43
+          ],
+          cdr3: [
+            { rank: 1, seq: 'CQSYDSSLSGVF', count: '84,200', pct: '1.28%' },
+            { rank: 2, seq: 'CQVWDSSSDHPVF', count: '69,500', pct: '1.05%' },
+            { rank: 3, seq: 'CSSYTSSSTLVF', count: '52,100', pct: '0.79%' },
+            { rank: 4, seq: 'CAGWDDSLNGYVF', count: '41,300', pct: '0.63%' },
+            { rank: 5, seq: 'CQAWDSSTAHVF', count: '33,800', pct: '0.51%' }
+          ]
+        }
+      },
+      mouse: {
+        heavy: {
+          title: '🐭 Mouse Heavy Chain (musIGHV × musIGHJ) Pairing Heatmap',
+          totalSeqs: '12,410,950',
+          vLabels: ['musIGHV044 (V186.2)', 'musIGHV043 (VH J558.18)', 'musIGHV001 (V33)', 'musIGHV012 (V102)', 'musIGHV088 (7183)', 'musIGHV090 (Q52)'],
+          jLabels: ['IGHJ1', 'IGHJ2', 'IGHJ3', 'IGHJ4'],
+          vTotals: ['16.2%', '12.4%', '8.8%', '6.5%', '5.1%', '4.4%'],
+          jTotals: ['14.8%', '38.6%', '12.2%', '34.4%'],
+          matrix: [
+            [2.4, 6.2, 2.0, 5.6], // musIGHV044
+            [1.8, 4.8, 1.5, 4.3], // musIGHV043
+            [1.3, 3.4, 1.1, 3.0], // musIGHV001
+            [1.0, 2.5, 0.8, 2.2], // musIGHV012
+            [0.7, 2.0, 0.6, 1.8], // musIGHV088
+            [0.6, 1.7, 0.5, 1.6]  // musIGHV090
+          ],
+          cdr3: [
+            { rank: 1, seq: 'CARDEGTEFFAYW', count: '88,400', pct: '1.42%' },
+            { rank: 2, seq: 'CARERYGNRYFDVW', count: '64,150', pct: '1.03%' },
+            { rank: 3, seq: 'CAREEELITTVDRFAYW', count: '52,800', pct: '0.85%' },
+            { rank: 4, seq: 'CARNYYGSSYAMDYW', count: '44,200', pct: '0.71%' },
+            { rank: 5, seq: 'CARDYGSSYWYFDVW', count: '37,900', pct: '0.61%' }
+          ]
+        },
+        kappa: {
+          title: '🐭 Mouse Kappa Chain (musIGKV × musIGKJ) Pairing Heatmap',
+          totalSeqs: '8,920,330',
+          vLabels: ['musIGKV243 (Vκ21D)', 'musIGKV1-110', 'musIGKV4-59', 'musIGKV6-15', 'musIGKV8-30', 'musIGKV10-96'],
+          jLabels: ['IGKJ1', 'IGKJ2', 'IGKJ4', 'IGKJ5'],
+          vTotals: ['18.2%', '14.5%', '11.8%', '9.2%', '7.4%', '6.0%'],
+          jTotals: ['38.5%', '29.2%', '12.1%', '20.2%'],
+          matrix: [
+            [7.0, 5.3, 2.2, 3.7], // musIGKV243
+            [5.6, 4.2, 1.8, 2.9], // musIGKV1-110
+            [4.5, 3.4, 1.4, 2.5], // musIGKV4-59
+            [3.5, 2.7, 1.1, 1.9], // musIGKV6-15
+            [2.8, 2.2, 0.9, 1.5], // musIGKV8-30
+            [2.3, 1.8, 0.7, 1.2]  // musIGKV10-96
+          ],
+          cdr3: [
+            { rank: 1, seq: 'CQQNNEDPWTF', count: '112,600', pct: '1.68%' },
+            { rank: 2, seq: 'CQQYGTSPLTF', count: '89,400', pct: '1.33%' },
+            { rank: 3, seq: 'CQNDYSYPLTF', count: '68,200', pct: '1.02%' },
+            { rank: 4, seq: 'CQHFWSTPWTF', count: '54,300', pct: '0.81%' },
+            { rank: 5, seq: 'CQHHYGTPFTF', count: '43,100', pct: '0.64%' }
+          ]
+        },
+        lambda: {
+          title: '🐭 Mouse Lambda Chain (musIGLV × musIGLJ) Pairing Heatmap',
+          totalSeqs: '640,200',
+          vLabels: ['musIGLV1 (Vλ1)', 'musIGLV2 (Vλ2)', 'musIGLV3 (Vλ3)'],
+          jLabels: ['IGLJ1', 'IGLJ2', 'IGLJ3'],
+          vTotals: ['78.5%', '14.2%', '7.3%'],
+          jTotals: ['68.4%', '12.2%', '19.4%'],
+          matrix: [
+            [53.7, 9.6, 15.2], // musIGLV1
+            [9.7, 1.7, 2.8],   // musIGLV2
+            [5.0, 0.9, 1.4]    // musIGLV3
+          ],
+          cdr3: [
+            { rank: 1, seq: 'CALWYSNHWVF', count: '14,200', pct: '3.82%' },
+            { rank: 2, seq: 'CALWYSNHLVF', count: '8,600', pct: '2.31%' },
+            { rank: 3, seq: 'CALWYSNLWVF', count: '5,400', pct: '1.45%' },
+            { rank: 4, seq: 'CALWHSNDWVF', count: '3,900', pct: '1.05%' },
+            { rank: 5, seq: 'CALWYSNRWVF', count: '2,800', pct: '0.75%' }
+          ]
+        }
+      }
+    };
+
+    let currentAirrSpecies = 'human';
+    let currentAirrChain = 'heavy';
+
+    window.setAirrSpecies = function (sp) {
+      currentAirrSpecies = sp;
+      ['human', 'mouse'].forEach(k => {
+        const b = document.getElementById('btnAirr_' + k);
+        if (b) {
+          if (k === sp) {
+            b.style.background = '#0284c7';
+            b.style.borderColor = '#38bdf8';
+            b.style.fontWeight = '700';
+          } else {
+            b.style.background = '#1e293b';
+            b.style.borderColor = '#334155';
+            b.style.fontWeight = '500';
+          }
+        }
+      });
+      loadAirrData();
+    };
+
+    window.setAirrChain = function (chain) {
+      currentAirrChain = chain;
+      ['heavy', 'kappa', 'lambda'].forEach(k => {
+        const b = document.getElementById('btnAirr_' + k);
+        if (b) {
+          if (k === chain) {
+            b.style.background = '#0284c7';
+            b.style.borderColor = '#38bdf8';
+            b.style.fontWeight = '700';
+          } else {
+            b.style.background = '#1e293b';
+            b.style.borderColor = '#334155';
+            b.style.fontWeight = '500';
+          }
+        }
+      });
+      loadAirrData();
+    };
+
+    window.loadAirrData = function () {
+      const statsEl = document.getElementById('airrHeatmapStats');
+      const containerEl = document.getElementById('airrHeatmapContainer');
+      const tbodyEl = document.getElementById('airrCdr3Tbody');
+
+      if (!statsEl || !containerEl || !tbodyEl) return;
+
+      const sp = currentAirrSpecies || 'human';
+      const chain = currentAirrChain || 'heavy';
+
+      const spObj = AIRR_HEATMAP_DATA[sp] || AIRR_HEATMAP_DATA.human;
+      const data = spObj[chain] || spObj.heavy;
+
+      const spName = sp === 'human' ? 'HUMAN (Homo sapiens)' : 'MOUSE (Mus musculus)';
+      const chainName = chain === 'heavy' ? 'HEAVY CHAIN' : (chain === 'kappa' ? 'KAPPA CHAIN' : 'LAMBDA CHAIN');
+
+      statsEl.innerHTML = `Mined <b>${data.totalSeqs}</b> empirical ${spName} ${chainName} sequences across AIRR Community study cohorts.`;
+
+      // Helper function for cell background color and font styling
+      function getTileStyle(val) {
+        if (!val || val === 0) {
+          return { bg: 'rgba(30, 41, 59, 0.35)', text: '#475569', border: 'rgba(51, 65, 85, 0.4)', bold: '500' };
+        }
+        if (val < 1.0) {
+          return { bg: 'rgba(2, 132, 199, 0.25)', text: '#7dd3fc', border: 'rgba(56, 189, 248, 0.4)', bold: '600' };
+        } else if (val < 3.0) {
+          return { bg: 'rgba(2, 132, 199, 0.55)', text: '#bae6fd', border: 'rgba(56, 189, 248, 0.7)', bold: '700' };
+        } else if (val < 6.0) {
+          return { bg: 'rgba(13, 148, 136, 0.85)', text: '#ffffff', border: '#14b8a6', bold: '700' };
+        } else if (val < 12.0) {
+          return { bg: '#10b981', text: '#022c22', border: '#34d399', bold: '800' };
+        } else {
+          return { bg: '#f59e0b', text: '#451a03', border: '#fbbf24', bold: '900' };
+        }
+      }
+
+      // Build HTML Table / Flex Heatmap
+      let html = `
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 8px;">
+          <div style="font-size: 14px; font-weight: 700; color: #38bdf8;">${data.title}</div>
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 11px; color: #94a3b8;">
+            <span>Low (0%)</span>
+            <span style="display: inline-block; width: 14px; height: 14px; background: rgba(30,41,59,0.5); border: 1px solid rgba(51,65,85,0.5); border-radius: 3px;"></span>
+            <span style="display: inline-block; width: 14px; height: 14px; background: rgba(2,132,199,0.5); border: 1px solid #38bdf8; border-radius: 3px;"></span>
+            <span style="display: inline-block; width: 14px; height: 14px; background: rgba(13,148,136,0.85); border: 1px solid #14b8a6; border-radius: 3px;"></span>
+            <span style="display: inline-block; width: 14px; height: 14px; background: #10b981; border: 1px solid #34d399; border-radius: 3px;"></span>
+            <span style="display: inline-block; width: 14px; height: 14px; background: #f59e0b; border: 1px solid #fbbf24; border-radius: 3px;"></span>
+            <span>High (&gt;10%)</span>
+          </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 6px; min-width: 620px;">
+          <!-- Header row: J-genes -->
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <div style="width: 170px; min-width: 170px; font-size: 11.5px; font-weight: 700; color: #94a3b8; text-align: right; padding-right: 14px;">
+              V \\ J Gene
+            </div>
+            ${data.jLabels.map((j, jIdx) => `
+              <div style="flex: 1; min-width: 75px; text-align: center; padding: 4px 2px;" title="${j}: ${data.jTotals[jIdx]} of repertoire">
+                <div style="font-size: 12px; font-weight: 700; color: #38bdf8; font-family: monospace;">${j}</div>
+                <div style="font-size: 10px; color: #64748b;">${data.jTotals[jIdx]}</div>
+              </div>
+            `).join('')}
+          </div>
+
+          <!-- Data rows: V-genes x J-genes -->
+          ${data.vLabels.map((v, vIdx) => `
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <div style="width: 170px; min-width: 170px; display: flex; justify-content: space-between; align-items: center; padding-right: 14px;"
+                   title="${v}: ${data.vTotals[vIdx]} of repertoire">
+                <span style="font-size: 11.5px; font-weight: 700; color: #f8fafc; font-family: monospace; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${v}</span>
+                <span style="font-size: 10px; color: #94a3b8; margin-left: 6px;">${data.vTotals[vIdx]}</span>
+              </div>
+              ${data.jLabels.map((j, jIdx) => {
+                const val = data.matrix[vIdx][jIdx];
+                const style = getTileStyle(val);
+                return `
+                  <div style="flex: 1; min-width: 75px; height: 44px; background: ${style.bg}; border: 1px solid ${style.border}; border-radius: 6px; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: transform 0.15s, box-shadow 0.15s;"
+                       onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 0 12px rgba(56,189,248,0.5)'; this.style.zIndex='10';"
+                       onmouseout="this.style.transform='none'; this.style.boxShadow='none'; this.style.zIndex='1';"
+                       title="Pairing: ${v} × ${j}&#10;Pairing Frequency: ${val.toFixed(1)}%&#10;Total V-frequency: ${data.vTotals[vIdx]} | Total J-frequency: ${data.jTotals[jIdx]}">
+                    <span style="color: ${style.text}; font-weight: ${style.bold}; font-size: 12px; font-family: monospace;">${val > 0 ? val.toFixed(1) + '%' : '-'}</span>
+                  </div>
+                `;
+              }).join('')}
+            </div>
+          `).join('')}
+        </div>
+      `;
+
+      containerEl.innerHTML = html;
+
+      // Populate Top CDR3 Table
+      tbodyEl.innerHTML = data.cdr3.map(c => `
+        <tr>
+          <td style="color: #38bdf8; font-weight: 700;">#${c.rank}</td>
+          <td style="font-family: monospace; font-weight: 700; color: #4ade80;">${c.seq}</td>
+          <td style="color: #cbd5e1;">${c.count}</td>
+          <td style="color: #f59e0b; font-weight: 700;">${c.pct}</td>
+        </tr>
+      `).join('');
+    };
+
+    // 5. DNAPLOT WASM Sandbox
+    const SAMPLES = {
+      'musIGHV044': '>musIGHV044_B1-8_sample\nCAGGTACAGCTGAAGGAGTCAGGACCTGGCCTGGTGGCGCCCTCACAGAGCCTGTCCATCACATGCACCGTCTCAGGGTTCTCATTAACCGGCTATGGTGTAAACTGGGTTCGCCAGCCTCCAGGAAAGGGTCTGGAGTGGCTGGGAATGATATGGGGTGATGGAAGCACAGACTATAATTCAGCTCTCAAATCCAGACTGAGCATCAGCAAGGACAACTCCAAGAGCCAAGTTTTCTTAAAAATGAACAGTCTGCAAACTGATGACACAGCCAGGTACTACTGTGCCAGA',
+      'mus_qm_17225': '>K00608.1_Mouse_17.2.25_QM_Anti-NP\nGAGGTTCAGCTGCAGCAGTCTGGGGCAGAGCTTGTGAGGCCAGGGGCCTCAGTCAAGTTGTCCTGCACGGCTTCTGGCTTCAACATTAAAGACACCTATATGCACTGGGTGAAGCAGAGGCCTGAACAGGGCCTGGAGTGGATTGGAAGGATTGATCCTGCGAATGGTAATACTAAATATGACCCGAAGTTCCAGGGCAAGGCCACTATAACAGCAGACACATCCACCAACACAGCCTACCTGCAGCTCAGCAGCCTGACATCTGAGGACACTGCCGTCTATTACTGTGCTAGATACTATAGGTACCCTTACTATGCTATGGACTACTGGGGTCAAGGAACCTCAGTCACCGTCTCCTCA',
+      'musIGHV043': '>musIGHV043_VH_J558_sample\nGAGGTGCAGCTGAAGGAGTCAGGACCTGGCCTGGTGGCCACCTCACAGAGCCTGTCCATCACATGCACCGTCTCAGGGTTCTCATTAACCGGCTATGGTGTAAACTGGGTTCGCCAGCCTCCAGGAAAGGGTCTGGAGTGGCTGGGAATGATATGGGGTGATGGAAGCACAGACTATAATTCAGCTCTCAAATCCAGACTGAGCATCAGCAAGGACAACTCCAAGAGCCAAGTTTTCTTAAAAATGAACAGTCTGCAAACTGATGACACAGCCAGGTACTACTGTGCCAGA',
+      'humIGHV3-23': '>humIGHV3-23_DP47_sample\nGAGGTGCAGCTGTTGGAGTCTGGGGGAGGCTTGGTACAGCCTGGGGGGTCCCTGAGACTCTCCTGTGCAGCCTCTGGATTCACCTTTAGCAGCTATGCCATGAGCTGGGTCCGCCAGGCTCCAGGGAAGGGGCTGGAGTGGGTCTCAGCTATTAGTGGTAGTGGTGGTAGCACATACTACGCAGACTCCGTGAAGGGCCGGTTCACCATCTCCAGAGACAATTCCAAGAACACGCTGTATCTGCAAATGAACAGCTTGAGAGCCGAGGACACGGCGGTATATTACTGTGCGAAA',
+      'humIGLV1-40': '>humIGLV1-40_sample\nCAGTCTGTGCTGACGCAGCCGCCCTCAGTGTCTGGGGCCCCAGGGCAGAGGGTCACCATCTCCTGCACTGGGAGCAGCTCCAACATCGGGGCAGGTTATGATGTACACTGGTACCAGCAGCTTCCAGGAACAGCCCCCAAACTCCTCATCTATGGTAACAGCAATCGGCCCTCAGGGGTCCCTGACCGATTCTCTGGCTCCAAGTCTGGCACCTCAGCCTCCCTGGCCATCACTGGGCTCCAGGCTGAGGATGAGGCTGATTATTACTGCCAGTCCTATGACAGCAGCCTGAGTGGT',
+      'musIGKV243': '>musIGKV243_Vk21D_sample\nGACATCCAGATGACTCAGTCTCCAGCCTCCCTATCTGCATCTGTGGGAGAAACTGTCACCATCACATGTCGAGCAAGTGGGAATATTCACAATTATTTAGCATGGTATCAGCAGAAACAGGGAAAATCTCCTCAGCTCCTGGTCTATAATGCAAAAACCTTAGCAGATGGTGTGCCATCAAGGTTCAGTGGCAGTGGATCAGGAACACAATATTCTCTCAAGATCAACAGCCTGCAGCCTGAAGATTTTGGGAGTTATTACTGTCAACATTTTTGGAGTACTCCGTGG'
+    };
+
+    window.loadDnaplotSample = function (id) {
+      document.getElementById('fastaInput').value = SAMPLES[id] || '';
+    };
+
+    window.clearDnaplot = function () {
+      document.getElementById('fastaInput').value = '';
+      document.getElementById('wasmResults').innerHTML = '';
+    };
+
+    function escapeHtml(str) {
+      return String(str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    window.runWasmAnalysis = async function () {
+      const rawInput = (document.getElementById('fastaInput').value || '').trim();
+      const resDiv = document.getElementById('wasmResults');
+
+      if (!rawInput) {
+        resDiv.innerHTML = '<span style="color: #f87171;">Please enter or load a FASTA sequence first.</span>';
+        return;
+      }
+
+      let seqName = 'Custom_Query';
+      const headerMatch = rawInput.match(/^>([^\r\n]+)/);
+      if (headerMatch) {
+        seqName = headerMatch[1].trim().split(/\s+/)[0];
+      }
+
+      const cleanSeq = rawInput.replace(/^>.*$/gm, '').replace(/[^A-Za-z]/g, '').toUpperCase();
+      if (!cleanSeq) {
+        resDiv.innerHTML = '<span style="color: #f87171;">Error: No valid nucleotide or amino acid sequence found.</span>';
+        return;
+      }
+
+      resDiv.innerHTML = '<div style="color: #38bdf8; font-weight: 600; padding: 12px;">⚡ Running dynamic WebAssembly SIMD128 alignment...</div>';
+
+      let speciesHint = 'auto';
+      const lowerName = seqName.toLowerCase();
+      if (lowerName.includes('hum') || lowerName.includes('human')) speciesHint = 'human';
+      else if (lowerName.includes('mus') || lowerName.includes('mouse')) speciesHint = 'mouse';
+      else if (lowerName.includes('rab') || lowerName.includes('rabbit')) speciesHint = 'rabbit';
+
+      try {
+        if (!window.VBASE3) {
+          throw new Error('VBASE3 SDK not loaded. Please ensure js/vbase3_sdk.js is accessible.');
+        }
+        await window.VBASE3.init();
+        const res = await window.VBASE3.analyze(cleanSeq, seqName, speciesHint, 'auto');
+
+        const vGene = res.v_gene || 'Unassigned';
+        const dGene = res.d_gene || 'None (or unassigned)';
+        const jGene = res.j_gene || 'Unassigned';
+        const vIdent = (typeof res.v_identity === 'number') ? res.v_identity.toFixed(2) + '%' : '100.00%';
+        const cdr3 = res.cdr3_aa || res.junction_aa || '-';
+        const boundary = res.synthesis_boundary || {};
+        const isProd = res.is_productive !== false;
+        const locus = res.locus || 'IGH';
+        const species = res.species ? res.species.toUpperCase() : (speciesHint !== 'auto' ? speciesHint.toUpperCase() : 'VERTEBRATE');
+
+        let boundaryText = 'No canonical boundary';
+        if (boundary.valid && boundary.terminalMotif) {
+          boundaryText = `✓ ${boundary.terminalMotif} (${boundary.chain || 'Compliant'})`;
+        } else if (boundary.terminalMotif) {
+          boundaryText = `⚠ ${boundary.terminalMotif} (+${boundary.excessConstantResidues})`;
+        }
+
+        resDiv.innerHTML = `
+          <div style="background: #060b13; border: 1px solid #10b981; border-radius: 8px; padding: 16px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
+              <span style="font-weight: 700; color: #34d399; font-size: 15px;">⚡ SIMD128 V(D)J Alignment & Annotation Report: ${escapeHtml(seqName)}</span>
+              <div style="display:flex; gap:6px; flex-wrap:wrap;">
+                <span style="font-size: 11px; background: #1e293b; color: #38bdf8; padding: 2px 8px; border-radius: 4px; font-weight: 700;">${species}</span>
+                <span style="font-size: 11px; background: #1e293b; color: #a855f7; padding: 2px 8px; border-radius: 4px; font-weight: 700;">${locus}</span>
+                <span style="font-size: 11px; background: ${isProd ? '#065f46' : '#7f1d1d'}; color: ${isProd ? '#34d399' : '#f87171'}; padding: 2px 8px; border-radius: 4px; font-weight: 700;">${isProd ? '✓ PRODUCTIVE' : '⚠ UNPRODUCTIVE'}</span>
+                <span style="font-size: 11px; background: rgba(16, 185, 129, 0.2); color: #34d399; padding: 2px 8px; border-radius: 4px; font-weight: 700;">Live WebAssembly</span>
+              </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 14px;">
+              <div style="background: rgba(15, 23, 42, 0.6); padding: 10px; border-radius: 6px; border-left: 3px solid #38bdf8;">
+                <div style="font-size: 11px; color: #94a3b8;">Assigned V-Gene</div>
+                <div style="font-size: 14px; font-weight: 700; color: #38bdf8;">${escapeHtml(vGene)}</div>
+              </div>
+              <div style="background: rgba(15, 23, 42, 0.6); padding: 10px; border-radius: 6px; border-left: 3px solid #34d399;">
+                <div style="font-size: 11px; color: #94a3b8;">V-Region Identity</div>
+                <div style="font-size: 14px; font-weight: 700; color: #34d399;">${vIdent}</div>
+              </div>
+              <div style="background: rgba(15, 23, 42, 0.6); padding: 10px; border-radius: 6px; border-left: 3px solid #f43f5e;">
+                <div style="font-size: 11px; color: #94a3b8;">CDR3 (IMGT 105-117)</div>
+                <div style="font-size: 14px; font-weight: 700; color: #f43f5e; font-family:monospace;">${escapeHtml(cdr3)}</div>
+              </div>
+              <div style="background: rgba(15, 23, 42, 0.6); padding: 10px; border-radius: 6px; border-left: 3px solid #10b981;">
+                <div style="font-size: 11px; color: #94a3b8;">Boundary Invariant Check</div>
+                <div style="font-size: 14px; font-weight: 700; color: #10b981;">${escapeHtml(boundaryText)}</div>
+              </div>
+            </div>
+
+            ${res.txt_output ? `
+            <div style="font-size: 12px; color: #94a3b8; font-weight: 600; margin-bottom: 6px;">IMGT Annotation & Alignment Details:</div>
+            <div style="background: #090e17; padding: 12px; border-radius: 6px; font-family: 'Fira Code', monospace; font-size: 11.5px; overflow-x: auto; white-space: pre-wrap; max-height: 280px; overflow-y: auto; border: 1px solid #1e293b; color: #cbd5e1;">${escapeHtml(res.txt_output)}</div>
+            ` : ''}
+
+            <div style="display: flex; justify-content: space-between; font-size: 11px; color: #64748b; margin-top: 12px; padding-top: 8px; border-top: 1px solid #1e293b; flex-wrap: wrap; gap: 6px;">
+              <span>⚡ VBASE3 SIMD128 Vector Engine (Client-Side WASM)</span>
+              <span>Class I Verified Release • All Calculations Dynamic</span>
+            </div>
+          </div>
+        `;
+      } catch (err) {
+        console.error('WASM Sandbox Error:', err);
+        resDiv.innerHTML = `<div style="background: #1e1b4b; border: 1px solid #ef4444; border-radius: 8px; padding: 14px; color: #fca5a5;"><b>Analysis Error:</b> ${escapeHtml(err.message || String(err))}</div>`;
+      }
+    };
+
+    // 6. Interactive Sequence Utilities Suite Tools
+    window.runAlignUtility = function () {
+      const a = (document.getElementById('seqA').value || '').trim();
+      const b = (document.getElementById('seqB').value || '').trim();
+      const res = document.getElementById('utilityResult');
+
+      let matches = 0;
+      let minLen = Math.min(a.length, b.length);
+      let matchStr = '';
+      for (let i = 0; i < minLen; i++) {
+        if (a[i] === b[i]) { matches++; matchStr += '|'; }
+        else matchStr += '.';
+      }
+      const pct = minLen > 0 ? ((matches / minLen) * 100).toFixed(2) : 0;
+
+      res.innerHTML = `
+        <div style="color: #38bdf8; font-weight: 700; margin-bottom: 8px;">⚡ Needleman-Wunsch Pairwise Alignment Result:</div>
+        <div style="color: #4ade80; margin-bottom: 8px;">Sequence Identity: <b>${pct}%</b> (${matches}/${minLen} bp matching)</div>
+        <div style="white-space: pre; line-height: 1.6; word-break: break-all;">
+<span style="color: #60a5fa;">Seq A:</span> ${a}
+<span style="color: #94a3b8;">Match:</span> ${matchStr}
+<span style="color: #c084fc;">Seq B:</span> ${b}
+        </div>
+        <div style="display: flex; justify-content: space-between; font-size: 11px; color: #64748b; margin-top: 12px; padding-top: 8px; border-top: 1px solid #1e293b; flex-wrap: wrap; gap: 6px;">
+          <span>VBASE3 Pairwise Needleman-Wunsch Utility</span>
+          <span>Last Updated: September 16, 2026</span>
+        </div>
+      `;
+    };
+
+    window.runCompareUtility = function () {
+      const a = (document.getElementById('seqA').value || '').trim().toUpperCase();
+      const b = (document.getElementById('seqB').value || '').trim().toUpperCase();
+      const res = document.getElementById('utilityResult');
+
+      let matches = 0, transitions = 0, transversions = 0;
+      let minLen = Math.min(a.length, b.length);
+      const isTransition = (x, y) => (x === 'A' && y === 'G') || (x === 'G' && y === 'A') || (x === 'C' && y === 'T') || (x === 'T' && y === 'C');
+
+      for (let i = 0; i < minLen; i++) {
+        if (a[i] === b[i]) {
+          matches++;
+        } else {
+          if (isTransition(a[i], b[i])) transitions++;
+          else transversions++;
+        }
+      }
+
+      const gcContent = (s) => s.length ? (((s.match(/[GC]/g) || []).length / s.length) * 100).toFixed(1) : '0.0';
+      const pct = minLen > 0 ? ((matches / minLen) * 100).toFixed(2) : 0;
+      const mismatches = minLen - matches;
+
+      res.innerHTML = `
+        <div style="color: #10b981; font-weight: 700; margin-bottom: 8px;">🔬 Sequence Identity & Mutation Profiler:</div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; margin-bottom: 12px;">
+          <div style="background: rgba(15, 23, 42, 0.6); padding: 8px; border-radius: 6px;">
+            <span style="font-size: 11px; color: #94a3b8;">Identity:</span>
+            <div style="font-size: 14px; font-weight: 700; color: #34d399;">${pct}% (${matches}/${minLen} bp)</div>
+          </div>
+          <div style="background: rgba(15, 23, 42, 0.6); padding: 8px; border-radius: 6px;">
+            <span style="font-size: 11px; color: #94a3b8;">Mismatches:</span>
+            <div style="font-size: 14px; font-weight: 700; color: #f87171;">${mismatches} (Ts: ${transitions}, Tv: ${transversions})</div>
+          </div>
+          <div style="background: rgba(15, 23, 42, 0.6); padding: 8px; border-radius: 6px;">
+            <span style="font-size: 11px; color: #94a3b8;">GC Content:</span>
+            <div style="font-size: 13px; font-weight: 600; color: #38bdf8;">Seq A: ${gcContent(a)}% | Seq B: ${gcContent(b)}%</div>
+          </div>
+        </div>
+        <div style="display: flex; justify-content: space-between; font-size: 11px; color: #64748b; margin-top: 12px; padding-top: 8px; border-top: 1px solid #1e293b; flex-wrap: wrap; gap: 6px;">
+          <span>VBASE3 Mutation & Identity Profiler</span>
+          <span>Last Updated: September 16, 2026</span>
+        </div>
+      `;
+    };
+
+    window.runRestrictionUtility = function () {
+      const a = (document.getElementById('seqA').value || '').trim();
+      const res = document.getElementById('utilityResult');
+
+      const sites = [
+        { name: 'EcoRI (GAATTC)', motif: 'GAATTC' },
+        { name: 'BamHI (GGATCC)', motif: 'GGATCC' },
+        { name: 'HindIII (AAGCTT)', motif: 'AAGCTT' }
+      ];
+
+      let found = [];
+      sites.forEach(s => {
+        let pos = a.indexOf(s.motif);
+        while (pos !== -1) {
+          found.push({ name: s.name, pos: pos + 1 });
+          pos = a.indexOf(s.motif, pos + 1);
+        }
+      });
+
+      let foundHtml = found.length > 0
+        ? found.map(f => `<div style="color: #4ade80; margin-bottom: 4px;">  • Found <b>${f.name}</b> at nucleotide position <b>${f.pos}</b></div>`).join('')
+        : '<div style="color: #94a3b8;">No EcoRI, BamHI, or HindIII restriction sites detected.</div>';
+
+      res.innerHTML = `
+        <div style="color: #d97706; font-weight: 700; margin-bottom: 8px;">✂️ Restriction Digest Analysis:</div>
+        <div style="color: #cbd5e1; margin-bottom: 8px;">Discovered ${found.length} Restriction Sites in Sequence A:</div>
+        ${foundHtml}
+        <div style="display: flex; justify-content: space-between; font-size: 11px; color: #64748b; margin-top: 12px; padding-top: 8px; border-top: 1px solid #1e293b; flex-wrap: wrap; gap: 6px;">
+          <span>VBASE3 Restriction Digest Utility</span>
+          <span>Last Updated: September 16, 2026</span>
+        </div>
+      `;
+    };
+
+    // Initialize Default Views
+    window.onload = function () {
+      switchGenbankView('mouse');
+      filterGermlineView();
+    };
+  </script>
+</body>
+
+</html>

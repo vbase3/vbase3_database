@@ -1,0 +1,57 @@
+ID   M12835; SV 1; linear; gDNA; STD; MUS; 164 BP.
+XX
+AC   M12835;
+XX
+DT   15-MAY-1995 (Rel. 199520-1, arrived in LIGM-DB)
+DT   17-JAN-2013 (Rel. 201303-4, Last updated, Version 10)
+XX
+DE   Mouse T-cell receptor germline gamma chain gene C-region (C10.5).
+XX
+KW   antigen receptor; Immunoglobulin superfamily (IgSF); T cell receptor (TR);
+KW   TR-Gamma-TRG; constant; IMGT reference sequence; regular; gDNA; undefined;
+KW   functional; C-gene.
+XX
+OS   Mus musculus (house mouse)
+OC   Sarcopterygii; Dipnotetrapodomorpha; Tetrapoda; Amniota; Mammalia; Theria;
+OC   Eutheria; Boreoeutheria; Euarchontoglires; Glires; Rodentia; Myomorpha;
+OC   Muroidea; Muridae; Murinae; Mus; Mus; Mus musculus.
+XX
+RN   [1]
+RP   1-164
+RA   Shinohara S., Satorius C.;
+RT   ;
+RL   Submitted (14-FEB-2005) to the INSDC.
+RL   Contact:Satoshi Shinohara National Institute of Arthritis and
+RL   Musculoskeletal and Skin Diseases, Autoimmunity Branch; 9000 Rockville Pike
+RL   Bldg10/6D44, Bethesda, Maryland 20892-1592, USA
+XX
+DR   EMBL-JOIN; M12836.
+DR   ENA; M12835.
+XX
+CC   IMGT/LIGM-DB annotation level: by annotators
+XX
+FH   Key                 Location/Qualifiers
+FH   
+FT   C-GENE              <1..>164
+FT                       /partial
+FT                       /db_xref="taxon:10090"
+FT                       /functional
+FT                       /IMGT_allele="TRGC2*01"
+FT                       /IMGT_gene="TRGC2"
+FT                       /mol_type="genomic DNA"
+FT                       /note="C10.5"
+FT                       /organism="Mus musculus"
+FT   INTRON              1..91
+FT   ACCEPTOR-SPLICE     89..93
+FT   EX2                 92..121
+FT                       /codon_start=3
+FT                       /translation="ATTCWQDKN"
+FT                       /protein_id="AAA40312.1"
+FT   DONOR-SPLICE        121..123
+FT   INTRON              122..164
+XX
+SQ   Sequence 164 BP; 51 A; 26 C; 27 G; 60 T; 0 other;
+     gtattcattt atatatatgt gtattcacag acacacaaag gactgccaaa taatgtgcat        60
+     attaacaagt tcttattgcc atttctttta gttgctacaa cttgctggca agataaaaat       120
+     ggtaggttta catatacgtt tacctttgtg acatgttata gtgc                        164
+//

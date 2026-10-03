@@ -1,0 +1,120 @@
+LOCUS       NC_051830               1995 bp    DNA     linear   CON 08-JAN-2021
+DEFINITION  Canis lupus familiaris isolate SID07034 breed Labrador retriever
+            chromosome 26, ROS_Cfam_1.0, whole genome shotgun sequence.
+ACCESSION   NC_051830 REGION: 29033780..29035774
+VERSION     NC_051830.1
+DBLINK      BioProject: PRJNA681562
+            BioSample: SAMN14478636
+            Assembly: GCF_014441545.1
+KEYWORDS    WGS; RefSeq.
+SOURCE      Canis lupus familiaris (dog)
+  ORGANISM  Canis lupus familiaris
+            Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi;
+            Mammalia; Eutheria; Laurasiatheria; Carnivora; Caniformia; Canidae;
+            Canis.
+COMMENT     REFSEQ INFORMATION: The reference sequence is identical to
+            CM025125.1.
+            Assembly name: ROS_Cfam_1.0
+            The genomic sequence for this RefSeq record is from the
+            whole-genome assembly released by The Roslin Institute on
+            2020/09/03. The original whole-genome shotgun project has the
+            accession JAAUVH000000000.1.
+            
+            ##Genome-Assembly-Data-START##
+            Assembly Provider      :: The Roslin Institute
+            Assembly Method        :: nuclear: FALCON-Unzip v. 1.2.4; Bionano
+                                      Solve v. 3.3; Dovetail HiRise v.
+                                      2.1.6-072ca03871cc; Racon v. 1.3.2;
+                                      PBJelly v. PBSuite 15.8.24; mito: Flye v.
+                                      2.7b-b1526
+            Polishing Method       :: Pilon v. 1.22
+            Assembly Name          :: ROS_Cfam_1.0
+            Genome Representation  :: Full
+            Expected Final Version :: Yes
+            Genome Coverage        :: 56.5x
+            Sequencing Technology  :: PacBio Sequel; Illumina
+            ##Genome-Assembly-Data-END##
+            
+            ##Genome-Annotation-Data-START##
+            Annotation Provider         :: NCBI
+            Annotation Status           :: Full annotation
+            Annotation Name             :: Canis lupus familiaris Annotation
+                                           Release 106
+            Annotation Version          :: 106
+            Annotation Pipeline         :: NCBI eukaryotic genome annotation
+                                           pipeline
+            Annotation Software Version :: 8.5
+            Annotation Method           :: Best-placed RefSeq; Gnomon
+            Features Annotated          :: Gene; mRNA; CDS; ncRNA
+            ##Genome-Annotation-Data-END##
+FEATURES             Location/Qualifiers
+     source          1..1995
+                     /organism="Canis lupus familiaris"
+                     /mol_type="genomic DNA"
+                     /isolate="SID07034"
+                     /db_xref="taxon:9615"
+                     /chromosome="26"
+                     /sex="male"
+                     /tissue_type="fibroblast, soft palate"
+                     /dev_stage="adult"
+                     /breed="Labrador retriever"
+     gene            2..>1995
+                     /gene="LOC486474"
+                     /note="Derived by automated computational analysis using
+                     gene prediction method: Gnomon."
+                     /db_xref="GeneID:486474"
+     C_region        join(2..158,1536..>1995)
+                     /gene="LOC486474"
+                     /standard_name="immunoglobulin lambda constant 7-like"
+                     /note="Derived by automated computational analysis using
+                     gene prediction method: Gnomon. Supporting evidence
+                     includes similarity to: 3 ESTs, 24 Proteins, and 100%
+                     coverage of the annotated genomic feature by RNAseq
+                     alignments, including 31 samples with support for all
+                     annotated introns"
+                     /db_xref="GeneID:486474"
+     CDS             join(53..158,1536..1855)
+                     /gene="LOC486474"
+                     /exception="rearrangement required for product"
+                     /note="Derived by automated computational analysis using
+                     gene prediction method: Gnomon."
+                     /codon_start=1
+                     /product="immunoglobulin lambda constant 7-like"
+                     /db_xref="GeneID:486474"
+ORIGIN      
+        1 gaccccaaga agaggaggct ggactttgag cctccaaagc agccagctgc acatgggcct
+       61 ggggcagggg aggggctgca ggggtgacag agggtttgtg ttcaaggctg tatcactgtg
+      121 ttacgtgttc ggctcaggaa cccaactgac cgtccttggt gagtctcccc ctttccctct
+      181 ctttggggac cagagtgata ttttggacat tttcctctcc tttctttcct gactgtggct
+      241 ggggtctgaa cctctctggg gcccagcacc ttctctgttg ggtcaccccc aaaccccctt
+      301 caccctgttc tctcttctca gactcctggt cagggcagga caggatggtc ccagagaccc
+      361 cttcctgttc gccctcactc tgaccctgac tgggcactct ctggggtcct ctccctggtg
+      421 tcctgggtgt tcagtaacct gagttctccc tgaacccaca catgggaaat gagggatgaa
+      481 ggagcatagg actgggggac ttgggctggg gcacaaagac catgggttgt ggaaaaggtg
+      541 ctggtacagc tcaactgtcc aaacgtgtgt gacacttggg tcctgtgctt gccgggttct
+      601 aggtgggatc tagtgaagac tcgtggttgg cacgagatgg aagaggactc gggcaaaaga
+      661 aacaaggacc aagggaggat tttctatgac aaggtggcct cagaggaggg gtccctcgtc
+      721 ttcctccagg acaggcagga tctcctcaga ctgggcaggg cttaggccac tcaggtccca
+      781 agggttcccc agtcccatag aaatgctgga ggacagaccc ctgagcagat gctggagcat
+      841 ctggtgacgg gtgacccaca gggacaggga tggatcctac gtctgccagg cacactgcag
+      901 tgcttggaca ggcagatccc cagtataggg tcctgggcaa ggtgacccct aagaaaagcc
+      961 cctgctccag atacacacct cttccactaa ccctccaccg actgtactgg aatgcatccc
+     1021 acggcagact ctctctcccc ctcaggcagc ctcagagggt ctctgtcagg aagtggccag
+     1081 gagtgcattg atagattcag ggtaaacatg gaaaatcccg cccagaaagg gttgagagcc
+     1141 tagcaccatg acagacagat gaggtctaca tgaccagact ccagacttgg acctggcggg
+     1201 acacgccata ggacagacag ggaaagacga agtgtcctgc tgataaatcc actaacaagg
+     1261 gaacccatgg gggacaaacg tggggaataa ggacatgtga cgatggagag ggaggacacg
+     1321 acagtggggc tcagctcttc caaaattgga cattcggatg ctcccccaat ggaaggtgag
+     1381 ttatcctaat accatagctg atgtgacctc aaggagcaag gaccgcctga ggcccaagac
+     1441 atggacatga cacagctgta cctccacacc agcactcagg taggtgctga cacaacaaac
+     1501 atctgccttg acccaccggc cttccgtccc cacaggtcag cccaaggcct ccccctcggt
+     1561 cacactcttc ccgccctcct ctgaggagct cggcgccaac aaggccaccc tggtgtgcct
+     1621 catcagcgac ttctacccca gcggcgtgac ggtggcctgg aaggcagacg gcagccccat
+     1681 cacccagggc gtggagacca ccaagccctc caagcagagc aacaacaagt acgcggccag
+     1741 cagctacctg agcctgacgc ctgacaagtg gaaatctcac agcagcttca gctgcctggt
+     1801 cacgcacgag gggagcactg tggagaagaa ggtggccccc gcagagtgct cttaggttcc
+     1861 cgatgccccc cgcccaccga agggggctcg gagcctcagg acctccagga ggatcttgcc
+     1921 tcccatctgg gtcttcccag cccttttccc cacactcagg caacactcaa taaagtgtcc
+     1981 tttattcaat cagaa
+//
+

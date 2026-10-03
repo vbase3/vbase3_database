@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TCRbase Repertoire & Single-Cell Response — Paired αβ Clonotypes & Antigen Manifold</title>
+  <link rel="stylesheet" href="css/fonts.css">
+  <script src="js/d3.v7.min.js"></script>
+  <link rel="stylesheet" href="css/universe.css">
+  <style>
+    .paired-chain-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin: 10px 0;
+    }
+    .paired-chain-box {
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid rgba(56, 189, 248, 0.2);
+      border-radius: 8px;
+      padding: 8px 10px;
+    }
+    .paired-chain-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: #38bdf8;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .sample-pill-tcr {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 9px;
+      border-radius: 6px;
+      font-size: 11px;
+      background: rgba(30, 41, 59, 0.8);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      color: #cbd5e1;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .sample-pill-tcr:hover {
+      background: rgba(56, 189, 248, 0.2);
+      border-color: #38bdf8;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating Restore Pills -->
+  <button id="restoreHeaderBtn" class="floating-panel-pill pill-top-left" style="display:none;" title="Restore Header & Controls">🌌 Controls</button>
+  <a id="floatingHomeBtn" href="index.html" class="floating-panel-pill pill-top-left-home" style="display:none;" title="Return to Portal Home">🏠 Portal Home</a>
+  <button id="restoreInspectorBtn" class="floating-panel-pill pill-top-right" title="Open Sequence Inspector">🔬 Clone Inspector</button>
+  <button id="restoreLegendBtn" class="floating-panel-pill pill-bottom-left" style="display:none;" title="Restore Legend">📑 Legend</button>
+
+  <!-- Top Left Header & Controls -->
+  <div id="header">
+    <div class="title-row">
+      <div style="display:flex; align-items:center; gap:12px;">
+        <a href="index.html" title="Return to VBASE3 Central Hub" style="display:flex; align-items:center; text-decoration:none;">
+          <img src="images/vbase3_logo.jpg" alt="Logo" style="height:38px; width:auto; border-radius:6px; box-shadow:0 2px 10px rgba(0,0,0,0.5); object-fit:contain; background:#ffffff; padding:2px; cursor:pointer;" />
+        </a>
+        <div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <h1 style="margin:0;">📊 TCRbase Repertoire & Single-Cell Response</h1>
+            <span class="tcrbase-pill-badge" style="background:rgba(16,185,129,0.2); color:#34d399; border:1px solid rgba(16,185,129,0.4);">Paired αβ & γδ</span>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex; align-items:center; gap:8px;">
+        <a href="https://doi.org/10.5281/zenodo.22923344" target="_blank" rel="noopener" class="hub-back-btn" style="background:rgba(217,119,6,0.25); border:1px solid rgba(245,158,11,0.5); color:#fbbf24; text-decoration:none;" title="Download complete database tables and catalogs from Zenodo">📦 Zenodo Data ↗</a>
+      <a href="index.html" class="hub-back-btn" title="Return to Portal Home">🏠 Portal Home</a>
+        <button class="panel-minimize-btn" id="closeHeaderBtn" title="Minimize Controls">✕</button>
+      </div>
+    </div>
+    <div class="subtitle">Expressed Rearranged TCRs across Viral Infections, Cancer TILs & Single-Cell Phenotypes • Native Rust PaCMAP</div>
+    
+    <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; margin-bottom:10px;">
+      <span id="wasmBadge" class="wasm-badge wasm-active" title="Dual Execution: Toggle between in-browser WASM and server Native Rust">
+        <span class="wasm-badge-pulse"></span>
+        <span id="engineBadgeText">⚡ Client WASM: Active (In-Browser)</span>
+      </span>
+
+      <div class="engine-switcher" title="Toggle Execution Engine">
+        <button id="btnEngineWasm" class="engine-btn active wasm" onclick="switchExecutionEngine('wasm')">⚡ Client WASM</button>
+        <button id="btnEngineNative" class="engine-btn" onclick="switchExecutionEngine('native')">🚀 Server Native Rust</button>
+        <button id="btnOpenBenchmark" class="engine-btn bench-btn" onclick="openBenchmarkModal()">📊 Benchmark</button>
+      </div>
+    </div>
+
+    <!-- Navigation & Switcher Row -->
+    <div class="dataset-switcher-row" style="display:flex; align-items:center; gap:8px; margin-bottom:10px; flex-wrap:wrap;">
+      <a href="index.html" style="font-size:11.5px; background:rgba(37,99,235,0.35); border:1px solid #3b82f6; color:#bfdbfe; padding:4px 10px; border-radius:6px; text-decoration:none; display:inline-flex; align-items:center; gap:4px; font-weight:700;" title="Return to Portal Home">🏠 Portal Home</a>
+      <span style="font-size:11.5px; color:#94a3b8; font-weight:600;">Active Portal:</span>
+      <select id="portalSelect" class="dataset-select" style="background:#0d1623; color:#f0f6fc; border:1px solid rgba(16,185,129,0.3); border-radius:6px; padding:4px 8px; font-size:11.5px; font-family:'Inter', sans-serif;" onchange="window.location.href=this.value;">
+        <option value="tcr_repertoire.html" selected>📊 TCRbase Repertoire & Single-Cell (3,200 Clones)</option>
+        <option value="tcr_universe.html">🧬 TCRbase Germline Universe (17 Species • 2,809 Genes)</option>
+        <option value="repertoire_diversity.html">🌌 VBASE3 Expressed Antibody Repertoire (3,550 BCR Clones)</option>
+        <option value="vgene_pacmap_universe.html">🏛️ VBASE3 Antibody Germline Universe (55 Species)</option>
+      </select>
+      <a href="tcr_universe.html" style="font-size:11px; color:#38bdf8; text-decoration:none; margin-left:auto; display:inline-flex; align-items:center; gap:3px; font-weight:500;">Switch to TCR Germlines ↗</a>
+    </div>
+
+    <div class="kpi-row">
+      <div class="kpi-item"><span class="kpi-val" id="kpiGenes">3,200</span><span class="kpi-lbl">TCR Single Cells</span></div>
+      <div class="kpi-item"><span class="kpi-val" id="kpiResponses" style="color:#38bdf8;">10</span><span class="kpi-lbl">Immune Responses</span></div>
+      <div class="kpi-item"><span class="kpi-val" id="kpiPhenotypes" style="color:#34d399;">9</span><span class="kpi-lbl">T-Cell Phenotypes</span></div>
+      <div class="kpi-item"><span class="kpi-val" id="kpiExpansion" style="color:#f59e0b;">Paired</span><span class="kpi-lbl">αβ Clonotypes</span></div>
+    </div>
+
+    <div class="controls">
+      <label style="font-size:12px; color:#94a3b8;">Color Dimension: </label>
+      <select id="colorSelect">
+        <option value="response" selected>Antigen / Disease Response (CMV, EBV, Flu, COVID, NY-ESO-1, Healthy)</option>
+        <option value="cell_phenotype">Single-Cell Phenotype (CD8+ CTL, CD4+ Helper, Treg, Tem, Tcm, Tex)</option>
+        <option value="expansion_category">Clonal Expansion Magnitude (Hyper-Expanded, Expanded, Clonal, Singleton)</option>
+        <option value="primary_chain">Primary Chain (TRB, TRD, TRA, TRG)</option>
+        <option value="cdr3_cat">CDR3β Length Spectrum</option>
+        <option value="cdr3_charge_cat">CDR3β Net Charge (+ / 0 / -)</option>
+      </select>
+      <input type="text" id="geneSearch" placeholder="🔍 Search clone, barcode, epitope, V-gene, phenotype..." />
+      <button id="resetZoom" title="Press 'F' key anytime to reset view">Reset View (F)</button>
+      <button id="toggleInspectorBtn" class="btn-primary">🔬 Clone Inspector</button>
+    </div>
+  </div>
+
+  <!-- Bottom Left Legend Panel -->
+  <div id="legend" class="legend"></div>
+
+  <!-- Multi-Select Floating Filter Banner -->
+  <div id="selectionBanner"></div>
+
+  <!-- Tooltip -->
+  <div id="tooltip"></div>
+
+  <!-- Single-Cell Paired Clone Inspector Panel -->
+  <div id="inspectorPanel" class="collapsed">
+    <div class="inspector-header">
+      <div class="inspector-title">🔬 TCR Paired Single-Cell Inspector</div>
+      <button class="close-btn" id="closeInspectorBtn" title="Close Panel">✕</button>
+    </div>
+    <div class="inspector-desc">
+      Click on any point on the TCR response manifold to inspect its paired αβ chains, cell barcode, functional T-cell phenotype, and clonal expansion dynamics.
+    </div>
+
+    <div style="font-size:11px; color:#64748b; margin:8px 0 4px 0; font-weight:600;">CURATED SINGLE-CELL RESPONSE PRESETS:</div>
+    <div class="sample-pills" style="display:flex; flex-wrap:wrap; gap:5px; margin-bottom:12px;">
+      <div class="sample-pill-tcr" onclick="selectPreset('1g4_nyeso1')">🟢 NY-ESO-1 1G4 (Melanoma TIL • Tex)</div>
+      <div class="sample-pill-tcr" onclick="selectPreset('flu_m1')">🔵 Flu A M1 (GILGFVFTL • Memory)</div>
+      <div class="sample-pill-tcr" onclick="selectPreset('cmv_pp65')">🟣 CMV pp65 (NLVPMVATV • Tem)</div>
+      <div class="sample-pill-tcr" onclick="selectPreset('covid_spike')">🟠 SARS-CoV-2 (Spike 269 • Activated)</div>
+      <div class="sample-pill-tcr" onclick="selectPreset('murine_oti')">🟡 Murine OT-I (OVA SIINFEKL • CTL)</div>
+      <div class="sample-pill-tcr" onclick="selectPreset('mait_cell')">🟤 Human MAIT (TRAV1-2 Invariant)</div>
+      <div class="sample-pill-tcr" onclick="selectPreset('bovine_gd')">🔴 Bovine WC1+ (Somatic γδ TCR)</div>
+    </div>
+
+    <div id="analysisHUD" style="display:block; margin-top:8px;">
+      <div style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:8px;">
+        <span id="hudBarcodeBadge" class="badge badge-species" style="background:rgba(56,189,248,0.2); color:#38bdf8; border-color:rgba(56,189,248,0.4);">Barcode: -</span>
+        <span id="hudResponseBadge" class="badge" style="background:rgba(16,185,129,0.2); color:#34d399; border:1px solid rgba(16,185,129,0.4);">Response: -</span>
+        <span id="hudPhenotypeBadge" class="badge" style="background:rgba(192,132,252,0.2); color:#c084fc; border:1px solid rgba(192,132,252,0.4);">Phenotype: -</span>
+        <span id="hudExpansionBadge" class="badge badge-mod" style="background:rgba(245,158,11,0.2); color:#f59e0b; border-color:rgba(245,158,11,0.4);">Expansion: -</span>
+      </div>
+
+      <div style="font-size:11.5px; color:#94a3b8; margin-bottom:8px; padding:6px 10px; background:#0f172a; border-radius:6px; border:1px solid #1e293b;">
+        <div><strong>Antigen Epitope:</strong> <span id="hudEpitope" style="color:#f8fafc;">-</span></div>
+        <div><strong>MHC Restriction:</strong> <span id="hudMhc" style="color:#38bdf8;">-</span></div>
+        <div><strong>Species / Organism:</strong> <span id="hudSpecies" style="color:#cbd5e1;">-</span></div>
+      </div>
+
+      <!-- Paired Dual-Chain Visualizer -->
+      <div class="paired-chain-grid">
+        <!-- Beta / Delta Chain -->
+        <div class="paired-chain-box">
+          <div class="paired-chain-title">
+            <span id="hudPrimaryChainTitle">Primary Chain (TRB / TRD)</span>
+            <span style="color:#10b981;">●</span>
+          </div>
+          <div style="font-size:11px; margin-bottom:3px;"><strong>V-Gene:</strong> <span id="hudVGene" style="color:#58a6ff;">-</span></div>
+          <div style="font-size:11px; margin-bottom:3px;"><strong>J-Gene:</strong> <span id="hudJGene" style="color:#cbd5e1;">-</span></div>
+          <div style="font-size:11px; margin-bottom:3px;"><strong>CDR3 Loop:</strong> <span id="hudCdr3" style="color:#fb7185; font-weight:600; font-family:'Fira Code', monospace;">-</span></div>
+          <div style="font-size:10.5px; color:#94a3b8;">
+            <span id="hudCdr3Len">Len: -</span> • <span id="hudCdr3Charge">Charge: -</span> • <span id="hudCdr3Hyd">Hyd: -</span>
+          </div>
+        </div>
+
+        <!-- Alpha / Gamma Chain -->
+        <div class="paired-chain-box">
+          <div class="paired-chain-title">
+            <span id="hudPairedChainTitle">Paired Chain (TRA / TRG)</span>
+            <span style="color:#38bdf8;">●</span>
+          </div>
+          <div style="font-size:11px; margin-bottom:3px;"><strong>V-Gene:</strong> <span id="hudPairedV" style="color:#38bdf8;">-</span></div>
+          <div style="font-size:11px; margin-bottom:3px;"><strong>J-Gene:</strong> <span id="hudPairedJ" style="color:#cbd5e1;">-</span></div>
+          <div style="font-size:11px; margin-bottom:3px;"><strong>CDR3 Loop:</strong> <span id="hudPairedCdr3" style="color:#c084fc; font-weight:600; font-family:'Fira Code', monospace;">-</span></div>
+          <div style="font-size:10.5px; color:#94a3b8;">
+            <span id="hudPairedLen">Len: -</span> • <span id="hudPairedCharge">Charge: -</span> • <span id="hudPairedHyd">Hyd: -</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="font-size:11px; color:#94a3b8; margin-top:8px; line-height:1.4;">
+        ℹ️ Single-cell clonotypes are placed via PaCMAP from hypervariable CDR3 sequence chemistry, V/J usage, and functional expansion profiles.
+      </div>
+    </div>
+  </div>
+
+  <!-- Performance Benchmark Modal Dialog -->
+  <div id="benchmarkModal" class="benchmark-modal-backdrop" style="display:none;">
+    <div class="benchmark-modal-dialog">
+      <div class="benchmark-modal-header">
+        <div class="benchmark-modal-title">
+          <span>📊 TCRbase Performance Benchmark: Client WASM vs. Server Native Rust</span>
+        </div>
+        <button class="benchmark-close-btn" onclick="closeBenchmarkModal()">✕</button>
+      </div>
+      <div class="benchmark-modal-desc">
+        Throughput and latency comparisons executing TCR sequence alignment and PaCMAP clustering across single-threaded in-browser WebAssembly and Apple M4 Pro native multi-threaded Rust.
+      </div>
+
+      <!-- Release Note: Benchmark disabled in the WASM-only version -->
+      <div style="background:rgba(245, 158, 11, 0.1); border:1px solid rgba(245, 158, 11, 0.3); border-radius:8px; padding:10px 14px; margin-bottom:14px; font-size:11.5px; color:#fde68a; display:flex; align-items:flex-start; gap:9px; line-height:1.45;">
+        <span style="font-size:14px; line-height:1; flex-shrink:0;">ℹ️</span>
+        <div>
+          <strong>Release Note: Benchmark disabled in the WASM only version.</strong> When running the web portals solely in a browser without the local native Rust daemon, live server benchmarking is disabled. Canonical benchmark metrics measured on an Apple M4 Pro (16-Core Rayon SIMD vs. Client WASM) are displayed below and documented in Manuscript Appendix Figure App 11.
+        </div>
+      </div>
+
+      <div class="benchmark-metrics-grid">
+        <div class="metric-card">
+          <div class="metric-title">⚡ Client WebAssembly</div>
+          <div class="metric-val wasm" id="benchWasmThroughput">~18.5 seq/s</div>
+          <div class="metric-sub" id="benchWasmLatency">Avg Latency: ~54.0 ms</div>
+          <div class="metric-sub">100% In-Browser • Zero Network Traffic</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-title">🚀 Server Native Rust</div>
+          <div class="metric-val native" id="benchNativeThroughput">8,989 queries/s</div>
+          <div class="metric-sub" id="benchNativeLatency">Avg Latency: 0.11 ms (111 µs)</div>
+          <div class="metric-sub">Apple M4 Pro • 16-Core Rayon Parallelism</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-title">🔥 Native Speedup</div>
+          <div class="metric-val speedup" id="benchSpeedupFactor">485x FASTER</div>
+          <div class="metric-sub">Sub-millisecond high-throughput screening</div>
+          <div class="metric-sub">18.9M pairwise germline comps/sec</div>
+        </div>
+      </div>
+
+      <div style="display:flex; justify-content:flex-end; margin-top:14px;">
+        <button class="engine-btn" style="padding:6px 14px; font-size:12px;" onclick="closeBenchmarkModal()">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- The SVG Canvas -->
+  <svg id="canvas" width="100%" height="100%"></svg>
+
+  <!-- Load TCR Repertoire Data & Logic -->
+  <script type="module" src="js/tcr_repertoire.js"></script>
+</body>
+</html>

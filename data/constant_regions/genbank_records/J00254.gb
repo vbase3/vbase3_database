@@ -1,0 +1,69 @@
+ID   J00254; SV 1; linear; gDNA; STD; HUM; 315 BP.
+XX
+AC   J00254;
+XX
+DT   15-MAY-1995 (Rel. 199520-1, arrived in LIGM-DB)
+DT   17-JAN-2013 (Rel. 201303-4, Last updated, Version 12)
+XX
+DE   Homo sapiens immunoglobulin lambda light chain C3 region (IGLC3) gene,
+DE   partial cds.
+XX
+KW   antigen receptor; Immunoglobulin superfamily (IgSF); immunoglobulin (IG);
+KW   IG-Light; IG-Light-Lambda-IGL; constant; IMGT reference sequence; regular;
+KW   gDNA; undefined; functional; C-gene.
+XX
+OS   Homo sapiens (human)
+OC   cellular organisms; Eukaryota; Opisthokonta; Metazoa; Eumetazoa; Bilateria;
+OC   Deuterostomia; Chordata; Craniata; Vertebrata; Gnathostomata; Teleostomi;
+OC   Euteleostomi; Sarcopterygii; Dipnotetrapodomorpha; Tetrapoda; Amniota;
+OC   Mammalia; Theria; Eutheria; Boreoeutheria; Euarchontoglires; Primates;
+OC   Haplorrhini; Simiiformes; Catarrhini; Hominoidea; Hominidae; Homininae;
+OC   Homo; Homo sapiens.
+XX
+RN   [1]
+RP   1-315
+RA   Seemann G., Bosslet K.;
+RT   "Antigranulocyte antibody construct, preparation and use thereof.";
+RL   Patent number EP0585570-A/2, 09-MAR-1994.
+RL   BEHRINGWERKE AG (DE).
+XX
+DR   ENA; J00254.
+DR   GDB; 120692.
+XX
+CC   IMGT/LIGM-DB annotation level: by annotators
+CC   
+CC   There are 6 Ig lambda C-regions evenly spaced over a stretch of 50
+CC   kb, in the order Mcg, Ke- Oz-, Ke- Oz+, 4, 5, 6. There are at least
+CC   three other lambda C-region genes elsewhere in the genome. There is
+CC   an unstable region of DNA in area of genes 2 and 3.
+XX
+FH   Key                 Location/Qualifiers
+FH   
+FT   C-GENE              <1..315
+FT                       /partial
+FT                       /chromosome="22"
+FT                       /db_xref="taxon:9606"
+FT                       /dev_stage="foetus"
+FT                       /functional
+FT                       /IMGT_allele="IGLC3*01"
+FT                       /IMGT_gene="IGLC3"
+FT                       /IMGT_map="22q11.2"
+FT                       /mol_type="genomic DNA"
+FT                       /organism="Homo sapiens"
+FT                       /tissue_type="liver"
+FT   C-REGION            <1..312
+FT                       /partial
+FT                       /translation="PKAAPSVTLFPPSSEELQANKATLVCLISDFYPGAVTVAWK
+FT                       ADSSPVKAGVETTTPSKQSNNKYAASSYLSLTPEQWKSHKSYSCQVTHEGSTVEK
+FT                       TVAPTECS"
+FT                       /protein_id="AAA59109.1"
+FT   STOP-CODON          313..315
+XX
+SQ   Sequence 315 BP; 81 A; 101 C; 84 G; 49 T; 0 other;
+     cccaaggctg ccccctcggt cactctgttc ccaccctcct ctgaggagct tcaagccaac        60
+     aaggccacac tggtgtgtct cataagtgac ttctacccgg gagccgtgac agttgcctgg       120
+     aaggcagata gcagccccgt caaggcgggg gtggagacca ccacaccctc caaacaaagc       180
+     aacaacaagt acgcggccag cagctacctg agcctgacgc ctgagcagtg gaagtcccac       240
+     aaaagctaca gctgccaggt cacgcatgaa gggagcaccg tggagaagac agttgcccct       300
+     acggaatgtt catag                                                        315
+//

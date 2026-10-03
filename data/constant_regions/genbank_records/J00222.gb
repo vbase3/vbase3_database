@@ -1,0 +1,216 @@
+ID   J00222; SV 1; linear; gDNA; STD; HUM; 3389 BP.
+XX
+AC   J00222;
+XX
+DT   15-MAY-1995 (Rel. 199520-1, arrived in LIGM-DB)
+DT   06-FEB-2014 (Rel. 201406-4, Last updated, Version 22)
+XX
+DE   Human Ig germline H-chain G-E-A region B: epsilon-1 C-region, 3' end.
+XX
+KW   antigen receptor; Immunoglobulin superfamily (IgSF); immunoglobulin (IG);
+KW   IG-Heavy; IG-Heavy-Epsilon; constant; IMGT reference sequence; regular;
+KW   gDNA; undefined; functional; C-gene.
+XX
+OS   Homo sapiens (human)
+OC   cellular organisms; Eukaryota; Opisthokonta; Metazoa; Eumetazoa; Bilateria;
+OC   Deuterostomia; Chordata; Craniata; Vertebrata; Gnathostomata; Teleostomi;
+OC   Euteleostomi; Sarcopterygii; Dipnotetrapodomorpha; Tetrapoda; Amniota;
+OC   Mammalia; Theria; Eutheria; Boreoeutheria; Euarchontoglires; Primates;
+OC   Haplorrhini; Simiiformes; Catarrhini; Hominoidea; Hominidae; Homininae;
+OC   Homo; Homo sapiens.
+XX
+RN   [1]
+RP   1-3389
+RX   DOI; 10.1073/pnas.79.6.1984.
+RX   PUBMED; 6804948.
+RA   Ellison J., Hood L.;
+RT   "Linkage and sequence homology of two human immunoglobulin gamma heavy
+RT   chain constant region genes";
+RL   Proc. Natl. Acad. Sci. U.S.A. 79(6):1984-1988(1982).
+XX
+RN   [2]
+RP   1112-3108
+RX   DOI; 10.1016/0092-8674(82)90185-4.
+RX   PUBMED; 6288268.
+RA   Max E.E., Battey J., Ney R., Kirsch I.R., Leder P.;
+RT   "Duplication and deletion in the human immunoglobulin epsilon genes";
+RL   Cell 29(2):691-699(1982).
+XX
+RN   [3]
+RP   1-3389
+RX   PUBMED; 6327276.
+RA   Ueda S., Nakai S., Nishida Y., Hisajima H., Honjo T.;
+RT   "Long terminal repeat-like elements flank a human immunoglobulin epsilon
+RT   pseudogene that lacks introns";
+RL   EMBO J. 1(12):1539-1544(1982).
+XX
+RN   [4]
+RP   2032-3388
+RX   PUBMED; 6407005.
+RA   Hisajima H., Nishida Y., Nakai S., Takahashi N., Ueda S., Honjo T.;
+RT   "Structure of the human immunoglobulin C epsilon 2 gene, a truncated
+RT   pseudogene: implications for its evolutionary origin";
+RL   Proc. Natl. Acad. Sci. U.S.A. 80(10):2995-2999(1983).
+XX
+DR   ENA; J00222.
+XX
+CC   IMGT/LIGM-DB annotation level: by annotators
+CC   
+CC   The germline sequence in [2] is derived by combining the germline
+CC   5' flanking sequence with the rearranged C-region sequence. The
+CC   sequence in [2] and [3] differs from the germline sequence [1] at
+CC   13 positions, all of which are in the flanking or intron regions
+CC   except one (base 2774), which changes the deduced amino acid at
+CC   that position from Trp to Leu. The authors state that this is
+CC   consistent with the amino acid sequence of the myeloma protein.
+CC   Also reported [2] is a rearranged pseudogene epsilon-3. [1] reports
+CC   a germline pseudogene epsilon-2 and the alpha-1 and alpha-2 genes.
+CC   [3] reports the epsilon-2 gene.
+CC   This entry is part of a multigene region (region B), which includes
+CC   the gamma-2, gamma-4, epsilon-1, and alpha-2 genes. See segment 1
+CC   for more comments.
+CC   Complete source information:
+CC   Human placenta DNA [1], clone 38A; 5' flank -- fetal liver DNA
+CC   library (clone CH4A-H-Ig-epsilon-12) [2], C-region -- myeloma cell
+CC   line 266b1 (clone CH4A-H-Ig-epsilon-11) [2]; fetal liver DNA,
+CC   library of T. Maniatis [3].
+XX
+FH   Key                 Location/Qualifiers
+FH   
+FT   C-GENE              1..>3389
+FT                       /partial
+FT                       /db_xref="taxon:9606"
+FT                       /functional
+FT                       /IMGT_allele="IGHE*01"
+FT                       /IMGT_gene="IGHE"
+FT                       /IMGT_map="14q32.33"
+FT                       /mol_type="genomic DNA"
+FT                       /organism="Homo sapiens"
+FT   5'UTR               1..1209
+FT   ACCEPTOR-SPLICE     1207..1211
+FT   C-GENE-UNIT         1210..>3389
+FT                       /partial
+FT                       /db_xref="HGNC:5522"
+FT                       /db_xref="InterPro:IPR003006"
+FT                       /db_xref="InterPro:IPR003597"
+FT                       /db_xref="InterPro:IPR007110"
+FT                       /db_xref="InterPro:IPR013151"
+FT                       /db_xref="InterPro:IPR013783"
+FT                       /db_xref="PDB:1F6A"
+FT                       /db_xref="PDB:1FP5"
+FT                       /db_xref="PDB:1G84"
+FT                       /db_xref="PDB:1IGE"
+FT                       /db_xref="PDB:1O0V"
+FT                       /db_xref="UniProtKB/Swiss-Prot:P01854"
+FT                       /protein_id="AAB59395.1"
+FT   CH1                 1210..1518
+FT                       /codon_start=3
+FT                       /translation="STQSPSVFPLTRCCKNIPSNATSVTLGCLATGYFPEPVMVT
+FT                       CDTGSLNGTTMTLPATTLTLSGHYATISLLTVSGAWAKQMFTCRVAHTPSSTDWV
+FT                       DNKTFS"
+FT   DONOR-SPLICE        1518..1520
+FT   INTRON              1519..1725
+FT   ACCEPTOR-SPLICE     1723..1727
+FT   CH2                 1726..2046
+FT                       /codon_start=3
+FT                       /translation="CSRDFTPPTVKILQSSCDGGGHFPPTIQLLCLVSGYTPGTI
+FT                       NITWLEDGQVMDVDLSTASTTQEGELASTQSELTLSQKHWLSDRTYTCQVTYQGH
+FT                       TFEDSTKKCA"
+FT                       /splice-expected-nt="g"
+FT                       /splice-expectedcodon="gtc [V]"
+FT                       /splicing-frame="sf1"
+FT   DONOR-SPLICE        2046..2048
+FT   INTRON              2047..2132
+FT   ACCEPTOR-SPLICE     2130..2134
+FT   CH3                 2133..2456
+FT                       /codon_start=3
+FT                       /translation="SNPRGVSAYLSRPSPFDLFIRKSPTITCLVVDLAPSKGTVN
+FT                       LTWSRASGKPVNHSTRKEEKQRNGTLTVTSTLPVGTRDWIEGETYQCRVTHPHLP
+FT                       RALMRSTTKTS"
+FT                       /splice-expected-nt="g"
+FT                       /splice-expectedcodon="gat [D]"
+FT                       /splicing-frame="sf1"
+FT   DONOR-SPLICE        2456..2458
+FT   INTRON              2457..2539
+FT   ACCEPTOR-SPLICE     2537..2541
+FT   CH4-CHS             2540..2868
+FT                       /codon_start=3
+FT                       /translation="PRAAPEVYAFATPEWPGSRDKRTLACLIQNFMPEDISVQWL
+FT                       HNEVQLPDARHSTTQPRKTKGSGFFVFSRLEVTRAEWEQKDEFICRAVHEAASPS
+FT                       QTVQRAVSVNPGK"
+FT                       /splice-expected-nt="g"
+FT                       /splice-expectedcodon="ggc [G]"
+FT                       /splicing-frame="sf1"
+FT   CH4                 2540..2862
+FT                       /codon_start=3
+FT                       /translation="PRAAPEVYAFATPEWPGSRDKRTLACLIQNFMPEDISVQWL
+FT                       HNEVQLPDARHSTTQPRKTKGSGFFVFSRLEVTRAEWEQKDEFICRAVHEAASPS
+FT                       QTVQRAVSVNP"
+FT   CHS                 2863..2868
+FT                       /translation="GK"
+FT                       /IMGT_note="For complete translation nucleotide G at 
+FT                       position 2863 has been included in CH-S"
+FT   INT-DONOR-SPLICE    2863..2865
+FT   INTRON              2869..>3389
+FT                       /partial
+FT   STOP-CODON          2869..2871
+XX
+SQ   Sequence 3389 BP; 663 A; 1034 C; 1108 G; 584 T; 0 other;
+     gctggactgg gctgagctag actgggcaac tgtattcagc tgggctggcc tggcctcggc        60
+     tgggctgggt tcagctgggc tgggctgagc aggcctgagc aggattagtt gagctggtcg       120
+     taactggatt taactagcta ggctaggctt aactgactaa gctgatctgg actgtattca       180
+     tctggatgaa gctggggtga ggtggctact ttaggtcagc tttgctgagc taaactggac       240
+     cgggctaaat tgatctggac tgaccattct cacctggcta agaggagctg agtcagaagc       300
+     aagctggttg agctggctgg actgaaataa gagtttgctg cctgcaaggg gaggtcctgg       360
+     gctgacctgg gccaggctga accaggctgg cttagagtga acttcagagg gcgactcccc       420
+     cggtaggcca gtctcagctg aacttggctg tcccggtggg cagagcgggg ctggatactg       480
+     tgattttggg ggtacctaga gcagacttca agaccaagct aaactgggct ccaggggcag       540
+     gatgggctgg ggacttggga ctccaggcca ggggcgaagg gccacgctgt acagaccgca       600
+     ctatctgggc cagggttctg tggtgggagg gactgactgc ctggggcatc agggcaagtc       660
+     ttcccgccct cccctagagg tcaggggtgg gcagagcacc atgggggtct ggcaggtcag       720
+     gtgagggctg ctgtgatggg gagatccagg cttggcactc aagagcccga ggagctgaga       780
+     ccacagcctt ggggggttgg ggtcagggtt ggagggcagg cagaccatcc accatgagcc       840
+     cagagagagt ttgaaggggg agggctctgg ggtccggccc atggggtccc tgggtttcag       900
+     cctaggggca tggcccagtg tctctgctcc tgagtgccca ccgtgcagca cttgcagggg       960
+     gaggctgggg tcatcctgga ggcacccccc ttcctgagcc cagcctgatg atagtggctg      1020
+     agcaacagct tctggtgggg gaatgggccc tgggagccgc cctgggcctg gggattgtgg      1080
+     ggaaaaaggc ccagaatgag cctagccatc tggatccctg ccacggggtc cccagctccc      1140
+     ccatccaggc cccccaggcc tgatgggcgc tggcctgagg ctggcactga ctaggttctg      1200
+     tcctcacagc ctccacacag agcccatccg tcttcccctt gacccgctgc tgcaaaaaca      1260
+     ttccctccaa tgccacctcc gtgactctgg gctgcctggc cacgggctac ttcccggagc      1320
+     cggtgatggt gacctgcgac acaggctccc tcaacgggac aactatgacc ttaccagcca      1380
+     ccaccctcac gctctctggt cactatgcca ccatcagctt gctgaccgtc tcgggtgcgt      1440
+     gggccaagca gatgttcacc tgccgtgtgg cacacactcc atcgtccaca gactgggtcg      1500
+     acaacaaaac cttcagcggt aagagagggc caagctcaga gaccacagtt cccaggagtg      1560
+     ccaggctgag ggctggcaga gtgggcaggg gttgaggggg tgggtgggct caaacgtggg      1620
+     aacacccagc atgcctgggg acccgggcca ggacgtgggg gcaagaggag ggcacacaga      1680
+     gctcagagag gccaacaacc ctcatgacca ccagctctcc cccagtctgc tccagggact      1740
+     tcaccccgcc caccgtgaag atcttacagt cgtcctgcga cggcggcggg cacttccccc      1800
+     cgaccatcca gctcctgtgc ctcgtctctg ggtacacccc agggactatc aacatcacct      1860
+     ggctggagga cgggcaggtc atggacgtgg acttgtccac cgcctctacc acgcaggagg      1920
+     gtgagctggc ctccacacaa agcgagctca ccctcagcca gaagcactgg ctgtcagacc      1980
+     gcacctacac ctgccaggtc acctatcaag gtcacacctt tgaggacagc accaagaagt      2040
+     gtgcaggtac gttcccacct gccctggtgg ccgccacgga ggccagagaa gaggggcggg      2100
+     tgggcctcac acagccctcc ggtgtaccac agattccaac ccgagagggg tgagcgccta      2160
+     cctaagccgg cccagcccgt tcgacctgtt catccgcaag tcgcccacga tcacctgtct      2220
+     ggtggtggac ctggcaccca gcaaggggac cgtgaacctg acctggtccc gggccagtgg      2280
+     gaagcctgtg aaccactcca ccagaaagga ggagaagcag cgcaatggca cgttaaccgt      2340
+     cacgtccacc ctgccggtgg gcacccgaga ctggatcgag ggggagacct accagtgcag      2400
+     ggtgacccac ccccacctgc ccagggccct catgcggtcc acgaccaaga ccagcggtga      2460
+     gccatgggca ggccggggtc gtgggggaag ggagggagcg agtgagcggg gcccgggctg      2520
+     accccacgtc tggccacagg cccgcgtgct gccccggaag tctatgcgtt tgcgacgccg      2580
+     gagtggccgg ggagccggga caagcgcacc ctcgcctgcc tgatccagaa cttcatgcct      2640
+     gaggacatct cggtgcagtg gctgcacaac gaggtgcagc tcccggacgc ccggcacagc      2700
+     acgacgcagc cccgcaagac caagggctcc ggcttcttcg tcttcagccg cctggaggtg      2760
+     accagggccg aatgggagca gaaagatgag ttcatctgcc gtgcagtcca tgaggcagcg      2820
+     agcccctcac agaccgtcca gcgagcggtg tctgtaaatc ccggtaaatg acgtactcct      2880
+     gcctccctcc ctcccagggc tccatccagc tgtgcagtgg ggaggactgg ccagaccttc      2940
+     tgtccactgt tgcaatgacc ccaggaagct acccccaata aactgtgcct gctcagagcc      3000
+     ccaggtacac ccattcttgg gagcgggcag ggctgtgggc aggtgcatct tggcacagag      3060
+     gaatggcccc caggaggggc agtgggagga ggtgggcagg gctgagcccc ccctggagag      3120
+     gcggtgggag gaggtgggca gggctgaggt gccactcatc catctgcctt cgtgtcaggg      3180
+     ttatttgtca aacagcatat ctgcagggac tcatcacagc taccccgggc cctctctgcc      3240
+     cccactctgg gtctaccccc tccaaggagt ccaaagaccc aggggaggtc ctcagggaag      3300
+     gggcaaggga gcccacagcc ctctctcttg ggggcttggc ttctaccccc ctggacagga      3360
+     gcccctgcac ccccaggtat agatgggca                                        3389
+//

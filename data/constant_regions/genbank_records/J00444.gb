@@ -1,0 +1,111 @@
+ID   J00444; SV 1; linear; gDNA; STD; MUS; 720 BP.
+XX
+AC   J00444; V00816;
+XX
+DT   15-MAY-1995 (Rel. 199520-1, arrived in LIGM-DB)
+DT   18-DEC-2014 (Rel. 201451-4, Last updated, Version 20)
+XX
+DE   Mouse germline IgM gene, DJC region: membrane bound exons.
+XX
+KW   antigen receptor; Immunoglobulin superfamily (IgSF); immunoglobulin (IG);
+KW   IG-Heavy; IG-Heavy-Mu; constant; alternative splicing;
+KW   IMGT reference sequence; regular; gDNA; undefined; C-gene.
+XX
+OS   Mus musculus (house mouse)
+OC   Sarcopterygii; Dipnotetrapodomorpha; Tetrapoda; Amniota; Mammalia; Theria;
+OC   Eutheria; Boreoeutheria; Euarchontoglires; Glires; Rodentia; Myomorpha;
+OC   Muroidea; Muridae; Murinae; Mus; Mus; Mus musculus.
+XX
+RN   [1]
+RP   155-270
+RX   DOI; 10.1016/0092-8674(80)90616-9.
+RX   PUBMED; 6771019.
+RA   Rogers J., Early P., Carter C., Calame K., Bond M., Hood L., Wall R.;
+RT   "Two mRNAs with different 3' ends encode membrane-bound and secreted forms
+RT   of immunoglobulin mu chain";
+RL   Cell 20(2):303-312(1980).
+XX
+RN   [1]
+RP   389-664
+RX   DOI; 10.1016/0092-8674(80)90616-9.
+RX   PUBMED; 6771019.
+RA   Rogers J., Early P., Carter C., Calame K., Bond M., Hood L., Wall R.;
+RT   "Two mRNAs with different 3' ends encode membrane-bound and secreted forms
+RT   of immunoglobulin mu chain";
+RL   Cell 20(2):303-312(1980).
+XX
+RN   [2]
+RP   1-720
+RA   Pilkington G.R., Gilmour J.R., Gilmour P.S.;
+RT   ;
+RL   Submitted (11-AUG-1997) to the INSDC.
+RL   Intracel Corp., 1871 NW Gilman Blvd, Issaquah, WA 98027, USA
+XX
+DR   ENA; J00444.
+DR   MGI; 96448; Igh-6.
+DR   UniProtKB/Swiss-Prot; P01872; MUC_MOUSE.
+DR   UniProtKB/Swiss-Prot; P01873; MUCM_MOUSE.
+XX
+CC   IMGT/LIGM-DB annotation level: by annotators
+CC   
+CC   On Nov 21, 2003 this sequence version replaced gi:52343.
+CC   For an overview of the musigdjc loci see the first paragraph of
+CC   'comment' in musigdjc01, and for an explanation of the processing
+CC   of the c-mu region see the second paragraph of 'comment' in
+CC   musigdjc10.
+XX
+FH   Key                 Location/Qualifiers
+FH   
+FT   C-GENE              <1..720
+FT                       /partial
+FT                       /cell_line="J606; 2PK-3; IGE-53-569"
+FT                       /db_xref="taxon:10090"
+FT                       /dev_stage="newborn; embryo"
+FT                       /functional
+FT                       /IMGT_allele="IGHM*01"
+FT                       /IMGT_gene="IGHM"
+FT                       /IMGT_map="12F2 (58.0 cM)"
+FT                       /mol_type="genomic DNA"
+FT                       /organism="Mus musculus"
+FT                       /strain="BALB/c"
+FT                       /sub_species="domesticus"
+FT                       /tissue_lib="EcoRI"
+FT                       /tissue_type="myeloma; liver; B-cell lymphoma; 
+FT                       hybridoma"
+FT   C-GENE-UNIT         <1..397
+FT                       /partial
+FT                       /db_xref="GOA:P01873"
+FT                       /db_xref="InterPro:IPR003006"
+FT                       /db_xref="InterPro:IPR003597"
+FT                       /db_xref="InterPro:IPR007110"
+FT                       /db_xref="InterPro:IPR013783"
+FT                       /protein_id="AAB59651.1"
+FT   INTRON              <1..154
+FT                       /partial
+FT   ACCEPTOR-SPLICE     152..156
+FT   M1                  155..270
+FT                       /codon_start=3
+FT                       /translation="GEVNAEEEGFENLWTTASTFIVLFLLSLFYSTTVTLFK"
+FT   DONOR-SPLICE        270..272
+FT   INTRON              271..386
+FT   ACCEPTOR-SPLICE     386..390
+FT   M2                  389..394
+FT                       /codon_start=3
+FT                       /translation="E"
+FT   3'UTR               395..720
+FT   STOP-CODON          395..397
+XX
+SQ   Sequence 720 BP; 167 A; 197 C; 158 G; 198 T; 0 other;
+     ggcctgttct gtgcctccgt ctagcttgag ctattagggg accagtcaat actcgctaag        60
+     attctccaga accatcaggg caccccaacc cttatgcaaa tgctcagtca ccccaagact       120
+     tggcttgacc ctccctctct gtgtcccttc atagaggggg aggtgaatgc tgaggaggaa       180
+     ggctttgaga acctgtggac cactgcctcc accttcatcg tcctcttcct cctgagcctc       240
+     ttctacagca ccaccgtcac cctgttcaag gtagtatggt tgtggggctg aggacacagg       300
+     gctgggacag ggagtcacca gtcctcactg cctctacctc tactccctac aagtggacag       360
+     caattcacac tgtctctgtc acctgcaggt gaaatgactc tcagcatgga aggacagcag       420
+     agaccaagag atcctcccac agggacacta cctctgggcc tgggatacct gactgtatga       480
+     ctagtaaact tattcttacg tctttcctgt gttgccctcc agcttttatc tctgagatgg       540
+     tcttctttct agactgacca aagacttttt gtcaacttgt acaatctgaa gcaatgtctg       600
+     gcccacagac agctgagctg taaacaaatg tcacatggaa ataaatactt tatcttgtga       660
+     actcacttta ttgtgaagga atttgttttg tttttcaaac ctttcctgcg gtgttgacag       720
+//

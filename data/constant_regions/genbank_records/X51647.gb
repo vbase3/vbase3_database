@@ -1,0 +1,115 @@
+ID   X51647; SV 1; linear; gDNA; STD; MAM; 1427 BP.
+XX
+AC   X51647;
+XX
+DT   15-MAY-1995 (Rel. 199520-1, arrived in LIGM-DB)
+DT   10-MAY-2019 (Rel. 201919-5, Last updated, Version 15)
+XX
+DE   O.cuniculus gene for C alpha1 IgA heavy chain constant region
+XX
+KW   antigen receptor; Immunoglobulin superfamily (IgSF); immunoglobulin (IG);
+KW   IG-Heavy; IG-Heavy-Alpha; constant; IMGT reference sequence; regular; gDNA;
+KW   undefined; functional; C-gene.
+XX
+OS   Oryctolagus cuniculus (rabbit)
+OC   Vertebrata; Gnathostomata; Teleostomi; Euteleostomi; Sarcopterygii;
+OC   Dipnotetrapodomorpha; Tetrapoda; Amniota; Mammalia; Theria; Eutheria;
+OC   Boreoeutheria; Euarchontoglires; Glires; Lagomorpha; Leporidae;
+OC   Oryctolagus; Oryctolagus cuniculus.
+XX
+RN   [1]
+RP   1-1427
+RX   DOI; 10.1007/s002510100336.
+RX   PUBMED; 11486282.
+RA   Lam M.K., Belov K., Harrison G.A., Cooper D.W.;
+RT   "An Mhc class I gene in the Australian brushtail possum (Trichosurus
+RT   vulpecula)";
+RL   Immunogenetics 53(5):430-433(2001).
+XX
+DR   ENA; X51647.
+XX
+CC   IMGT/LIGM-DB annotation level: by annotators
+XX
+FH   Key                 Location/Qualifiers
+FH   
+FT   C-GENE              <1..1427
+FT                       /partial
+FT                       /clone="cos 28.7"
+FT                       /clone_lib="cosmid"
+FT                       /db_xref="taxon:9986"
+FT                       /functional
+FT                       /IMGT_allele="IGHA1*01"
+FT                       /IMGT_gene="IGHA1"
+FT                       /isolate="X314-6"
+FT                       /mol_type="genomic DNA"
+FT                       /organism="Oryctolagus cuniculus"
+FT                       /tissue_type="sperm"
+FT   ACCEPTOR-SPLICE     <1..4
+FT                       /partial
+FT   CH1                 3..290
+FT                       /codon_start=3
+FT                       /translation="PATTPILFPLSLPCPLSGQPVVVGCLIQGFFPLGPLNVKWT
+FT                       ISGENVTFPPVQLDTSGLYTTSSLLNLTDEECPTCVACHVEHNEVDRYLILPCP"
+FT   DONOR-SPLICE        290..292
+FT   INTRON              291..427
+FT   ACCEPTOR-SPLICE     425..429
+FT   H-CH2               428..766
+FT                       /codon_start=3
+FT                       /translation="THSSCPPTSCGEPSLSLQRPDLRDLLLGSDASLTCTLRGLK
+FT                       DPKDAVFTWEPTNGNEPVQQSPQRDPCGCYSVSSVLPGCAETWTAGTEFTCTVTH
+FT                       PEIEGSSLTATIRKDT"
+FT   H                   428..456
+FT                       /codon_start=3
+FT                       /translation="THSSCPPTS"
+FT   CH2                 457..766
+FT                       /translation="CGEPSLSLQRPDLRDLLLGSDASLTCTLRGLKDPKDAVFTW
+FT                       EPTNGNEPVQQSPQRDPCGCYSVSSVLPGCAETWTAGTEFTCTVTHPEIEGSSLT
+FT                       ATIRKDT"
+FT   DONOR-SPLICE        766..768
+FT   INTRON              767..944
+FT   ACCEPTOR-SPLICE     942..946
+FT   CH3-CHS             945..1336
+FT                       /codon_start=3
+FT                       /translation="SLTPPQVHLLPPPSEELALNALVTLTCLVRGFSPKDVLVYW
+FT                       TNKGVVVPKDSFLVWKPLPEPGQEPTTYAVTSLLRVSAEDWNQGDSYSCVVGHEG
+FT                       LAEHFTQKTIDRQAGKPTHVNVSVVVADVEGVCY"
+FT                       /IMGT_note="For complete translation nucleotide G at 
+FT                       position 1277 has been included in CH-S."
+FT   CH3                 945..1276
+FT                       /codon_start=3
+FT                       /translation="SLTPPQVHLLPPPSEELALNALVTLTCLVRGFSPKDVLVYW
+FT                       TNKGVVVPKDSFLVWKPLPEPGQEPTTYAVTSLLRVSAEDWNQGDSYSCVVGHEG
+FT                       LAEHFTQKTIDRQA"
+FT   CHS                 1277..1336
+FT                       /translation="GKPTHVNVSVVVADVEGVCY"
+FT   INT-DONOR-SPLICE    1277..1279
+FT   3'UTR               1337..1427
+FT   STOP-CODON          1337..1339
+FT   POLYA_SIGNAL        1357..1362
+XX
+SQ   Sequence 1427 BP; 263 A; 505 C; 411 G; 248 T; 0 other;
+     agatcccgca accaccccca tcctcttccc gctgagcctc ccctgtcctc tctctggaca        60
+     gcccgtggtc gtcggctgcc tgatccaggg cttcttcccc ctgggccctc tgaatgtgaa       120
+     gtggaccatc agcggggaga acgtgacctt ccctcctgtc cagttggaca cctcaggcct       180
+     gtacaccacg agtagcctac tgaacctgac agatgaagag tgtcctacat gtgtggcctg       240
+     ccacgtggaa cacaatgaag tggacagata tctgatcctg ccctgcccag gtaggagggg       300
+     cggctggggg gccctgaggc tgcatgtggg ctgctgggct ggacaatact tgggggatgg       360
+     cagcctgggc caggatgtgt gagctgcaca ctgacagatg tggctctctc tgtttccaca       420
+     tgtccagata cccacagctc ctgccccccc acctcctgcg gggagcccag cctgtccctg       480
+     cagcggccag acctcagaga cctgctcctg ggctcagacg ccagcctcac ctgcaccctg       540
+     agaggcctga aggaccccaa ggatgccgtc ttcacctggg agcccacaaa cgggaacgaa       600
+     ccggtccagc agagccccca gcgtgacccc tgcggctgct acagtgtgtc cagtgtgctg       660
+     cccggctgtg cggagacctg gactgcgggg acagagttca cctgcacagt cacccaccct       720
+     gagatagagg gcagctccct gacagccacc atcagaaaag acacaggtgg gcctgccccc       780
+     acccccaggc aatgggatgc tctcctcacc ctggcctgac tcctccctcc cctcctgggc       840
+     tccgaggctc cctccccgta aaacagaggg aaactgaggc cggcgtgcag gacagtgggg       900
+     ctcagtcctc ccccgccacc ttgaccccac tctccccctt ccaggcagcc tcaccccgcc       960
+     ccaggtccac ctgctgccgc cgccatcaga agagctggcc ctcaacgcgc tggtgacgct      1020
+     gacctgcctg gtgaggggct tcagccccaa ggacgtgctg gtgtactgga caaacaaagg      1080
+     cgtggtggtc ccaaaagaca gcttcctggt gtggaagccc ctgccagagc ccggccagga      1140
+     acccaccacc tacgccgtca ccagcctgct gcgcgtgtcg gccgaggact ggaaccaggg      1200
+     ggacagctac tcctgcgtgg tgggccatga gggcctggcc gagcacttca cccagaagac      1260
+     catcgaccgc caagcgggta aacccaccca cgtcaacgtg tctgtggtcg tggcagacgt      1320
+     ggaaggcgtg tgctactgag cccctggcct gccctgaata aactctgtgc tcgcccacag      1380
+     cagccctgcg ggttcattgt gcctgtctgt ctcctcgggg gctgcag                    1427
+//

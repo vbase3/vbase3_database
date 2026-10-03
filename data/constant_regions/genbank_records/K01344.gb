@@ -1,0 +1,57 @@
+ID   K01344; SV 1; linear; gDNA; STD; MUS; 159 BP.
+XX
+AC   K01344;
+XX
+DT   15-MAY-1995 (Rel. 199520-1, arrived in LIGM-DB)
+DT   17-JAN-2013 (Rel. 201303-4, Last updated, Version 6)
+XX
+DE   Mouse plasmacytoma HOPC1 M(12;15) translocation, Ig alpha switch/ c-myc
+DE   intron 1.
+XX
+KW   antigen receptor; Immunoglobulin superfamily (IgSF); immunoglobulin (IG);
+KW   IG-Heavy; translocated; switch; regular; gDNA; germline.
+XX
+OS   Mus musculus (house mouse)
+OC   Sarcopterygii; Dipnotetrapodomorpha; Tetrapoda; Amniota; Mammalia; Theria;
+OC   Eutheria; Boreoeutheria; Euarchontoglires; Glires; Rodentia; Myomorpha;
+OC   Muroidea; Muridae; Murinae; Mus; Mus; Mus musculus.
+XX
+RN   [1]
+RP   1-159
+RA   Shinohara S., Satorius C.;
+RT   ;
+RL   Submitted (14-FEB-2005) to the INSDC.
+RL   Contact:Satoshi Shinohara National Institute of Arthritis and
+RL   Musculoskeletal and Skin Diseases, Autoimmunity Branch; 9000 Rockville Pike
+RL   Bldg10/6D44, Bethesda, Maryland 20892-1592, USA
+XX
+DR   ENA; K01344.
+XX
+CC   IMGT/LIGM-DB annotation level: by annotators
+CC   
+CC   This sequence spans the recombination junction of the translocation
+CC   product of chromosomes 15 and 12. [1] calls this 12;15 product M
+CC   and the 15;12 reciprocal product R. This sequence contains a 106 bp
+CC   repeat (bases 19-124) from the c-myc oncogene, which occurred in
+CC   translocation. Thus, the same sequence occurs in the 15;12
+CC   translocation. There is also a 1.6 kb deletion in the C-alpha
+CC   sequence.
+CC   The two genes are situated in opposite transcriptional orientation.
+CC   [1] also reports reciprocal translocation sequences from three
+CC   other plasmacytomas. [1] suggests that viable switch sequences play
+CC   a role in the trantlocation mechanism.
+XX
+FH   Key                 Location/Qualifiers
+FH   
+FT   J-C-INTRON          1..159
+FT                       /partial
+FT                       /db_xref="taxon:10090"
+FT                       /mol_type="genomic DNA"
+FT                       /organism="Mus musculus"
+FT   SWITCH              1..159
+XX
+SQ   Sequence 159 BP; 27 A; 34 C; 47 G; 51 T; 0 other;
+     gctgtcacac cagcccagct gtgttctttc tgcgtcttga attgtagcgg ccggttagga        60
+     cagtctttct tccattcctg tgcttttgac acttttctca agagtagttg gggtaggctg       120
+     gggtagatct gagtcggggt agagcgactt gtcaagatg                              159
+//

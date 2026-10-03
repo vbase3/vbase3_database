@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VBASE3 Species Status & Coverage Monitor — Quality Gating Policy</title>
+    <link rel="stylesheet" href="css/fonts.css">
+    <style>
+        :root {
+            --bg-base: #060d17;
+            --bg-card: rgba(13, 27, 42, 0.85);
+            --bg-card-hover: rgba(20, 39, 61, 0.95);
+            --border-glass: rgba(56, 189, 248, 0.22);
+            --accent-emerald: #10b981;
+            --accent-blue: #38bdf8;
+            --accent-amber: #f59e0b;
+            --accent-purple: #a855f7;
+            --accent-rose: #f43f5e;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background: var(--bg-base);
+            color: var(--text-primary);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            min-height: 100vh;
+            line-height: 1.5;
+            background-image: 
+                radial-gradient(circle at 10% 10%, rgba(6, 182, 212, 0.12) 0%, transparent 45%),
+                radial-gradient(circle at 90% 90%, rgba(16, 185, 129, 0.10) 0%, transparent 50%);
+            background-attachment: fixed;
+        }
+        header {
+            background: rgba(6, 13, 23, 0.92);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border-glass);
+            position: sticky; top: 0; z-index: 100;
+        }
+        .header-content {
+            max-width: 1440px; margin: 0 auto; padding: 14px 24px;
+            display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;
+        }
+        .logo-box { display: flex; align-items: center; gap: 12px; }
+        .nav-links { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+        .nav-link {
+            text-decoration: none; color: var(--text-secondary); font-size: 12px; font-weight: 500;
+            padding: 5px 12px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.06);
+            background: rgba(15, 23, 42, 0.4); transition: all 0.15s;
+        }
+        .nav-link:hover { color: #ffffff; background: rgba(56, 189, 248, 0.15); border-color: rgba(56, 189, 248, 0.4); }
+        .nav-link.active { color: #38bdf8; background: rgba(56, 189, 248, 0.2); border-color: #38bdf8; font-weight: 600; }
+        main { max-width: 1440px; margin: 0 auto; padding: 24px; }
+        .hero-banner {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(13, 27, 42, 0.95));
+            border: 1px solid var(--border-glass); border-radius: 12px; padding: 24px; margin-bottom: 24px;
+        }
+        .hero-kpis {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 16px; margin-top: 18px;
+        }
+        .kpi-card {
+            background: rgba(6, 13, 23, 0.6); border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px; padding: 14px 18px;
+        }
+        .kpi-val { font-size: 26px; font-weight: 800; font-family: 'Outfit', sans-serif; }
+        .kpi-label { font-size: 11.5px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+        .policy-box {
+            background: rgba(56, 189, 248, 0.08); border: 1px solid rgba(56, 189, 248, 0.3);
+            border-radius: 8px; padding: 16px 20px; margin-bottom: 24px; font-size: 13.5px; line-height: 1.6;
+        }
+        .filter-row {
+            display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; align-items: center; justify-content: space-between;
+        }
+        .search-input {
+            background: rgba(13, 27, 42, 0.8); border: 1px solid var(--border-glass);
+            border-radius: 8px; padding: 10px 16px; color: #fff; font-size: 13.5px; min-width: 320px;
+        }
+        .table-card {
+            background: var(--bg-card); border: 1px solid var(--border-glass); border-radius: 12px; overflow: hidden;
+        }
+        table { width: 100%; border-collapse: collapse; font-size: 13px; text-align: left; }
+        th {
+            background: rgba(6, 13, 23, 0.95); padding: 12px 16px; font-size: 11.5px;
+            text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.5px; border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        td { padding: 14px 16px; border-bottom: 1px solid rgba(255, 255, 255, 0.05); vertical-align: middle; }
+        tr:hover td { background: rgba(56, 189, 248, 0.04); }
+        .badge-status {
+            display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px; border-radius: 6px; font-size: 11.5px; font-weight: 600;
+        }
+        .badge-unlocked { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4); }
+        .badge-progress { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+        .progress-bar {
+            width: 110px; height: 8px; background: rgba(255, 255, 255, 0.1); border-radius: 4px; overflow: hidden; display: inline-block; vertical-align: middle; margin-right: 8px;
+        }
+        .progress-fill { height: 100%; border-radius: 4px; }
+        .btn-launch {
+            text-decoration: none; padding: 6px 14px; border-radius: 6px; font-size: 12px; font-weight: 600;
+            background: linear-gradient(135deg, #0284c7, #10b981); color: #fff; display: inline-flex; align-items: center; gap: 6px;
+            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.25); transition: all 0.15s;
+        }
+        .btn-launch:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4); }
+        .btn-disabled {
+            padding: 6px 14px; border-radius: 6px; font-size: 12px; font-weight: 500;
+            background: rgba(255, 255, 255, 0.05); color: var(--text-muted); border: 1px solid rgba(255, 255, 255, 0.08); display: inline-block; cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo-box">
+                <span style="font-size:24px;">📊</span>
+                <div>
+                    <h1 style="font-size:17px; font-weight:700; color:#ffffff;">VBASE3 Species Status & Coverage Monitor <span style="font-size:11px; background:rgba(168,85,247,0.25); color:#d8b4fe; border:1px solid rgba(168,85,247,0.5); padding:2px 8px; border-radius:12px; vertical-align:middle; margin-left:8px; font-weight:600;">Beta Edition</span></h1>
+                    <p style="font-size:11.5px; color:var(--text-secondary);">Quality Gating Policy • Automated Alignment Deployment • Assembly Readiness</p>
+                </div>
+            </div>
+            <nav class="nav-links">
+                <a href="https://doi.org/10.5281/zenodo.22923344" target="_blank" rel="noopener" class="nav-link" style="color:#fbbf24; font-weight:700; border:1px solid rgba(245,158,11,0.5); background:rgba(217,119,6,0.2); padding:4px 10px; border-radius:6px;" title="Download complete database tables and catalogs from Zenodo">📦 Zenodo Data ↗</a>
+      <a href="index.html" class="nav-link" title="Return to Portal Home">🏠 Portal Home</a>
+                <a href="dnaplot.html" class="nav-link">🔬 DNAPLOT Workbench</a>
+                <a href="repertoire_analysis.html" class="nav-link">📊 Repertoire Portal</a>
+                <a href="vgene_pacmap_universe.html" class="nav-link">🌌 PaCMAP Universe</a>
+                <a href="vbase3_status.html" class="nav-link active">📊 Status & Coverage</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="hero-banner">
+            <h2 style="font-size:22px; font-weight:700; color:#38bdf8;">Immunogenomic Coverage & Alignment Release Policy</h2>
+            <p style="font-size:13.5px; color:var(--text-secondary); margin-top:6px; max-width:1100px;">
+                To guarantee synthesis-grade fidelity and eliminate spurious alignments from draft fragment loci, VBASE3 adheres to an objective <strong>Coverage Gating Policy</strong>. Dedicated search portals and SIMD alignment workbenches are provided for any vertebrate species that achieves <strong>&ge; 80% verified coverage</strong> (confirmed functional Class I germlines, physiological AIRR repertoire validation, and strict J-segment boundary compliance). Species currently under 80% remain transparently cataloged as assemblies mature.
+            </p>
+            <div class="hero-kpis">
+                <div class="kpi-card">
+                    <div class="kpi-val" style="color:#38bdf8;">53</div>
+                    <div class="kpi-label">Master Release Taxa (55 Assemblies)</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-val" style="color:#34d399;">2,857</div>
+                    <div class="kpi-label">Class I Master Export (Stratum 3)</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-val" style="color:#f59e0b;">16</div>
+                    <div class="kpi-label">Dedicated Search Portals (&ge;80%)</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-val" style="color:#a855f7;">8,329</div>
+                    <div class="kpi-label">Total Curated Alleles (Stratum 1 Archive)</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="policy-box">
+            <h3 style="font-size:14px; font-weight:700; color:#38bdf8; margin-bottom:6px;">⚖️ Objective Coverage Gating Criteria</h3>
+            <ul style="padding-left:20px; line-height:1.7;">
+                <li><strong>&ge; 80% Coverage (Search Portal Live)</strong>: High-confidence chromosome-level or deep Sanger locus assembly, verified functional Class I V-genes confirmed with rearranged repertoire reads, multi-locus heavy and light chain representation, and exact IMGT C-terminal J-segment boundaries (<code>TVSS</code>/<code>TVSA</code> for Heavy; <code>VEIK</code>/<code>LEIK</code> for Kappa; <code>TVL</code> for Lambda).</li>
+                <li><strong>&lt; 80% Coverage (Assembly & Curation in Progress)</strong>: Fragmentary scaffolds, unverified pseudogene arrays, or pending AIRR-seq experimental verification. Kept active in internal research partitions and monitored dynamically until coverage milestones are met.</li>
+            </ul>
+        </div>
+
+        <div class="filter-row">
+            <input type="text" id="speciesSearch" class="search-input" placeholder="🔍 Filter species by common name, latin name, or clade..." oninput="filterTable()">
+            <div style="font-size:12.5px; color:var(--text-muted);" id="counterDisplay">Showing 43 detailed workbench species (from 53 master release taxa)</div>
+        </div>
+
+        <div class="table-card">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Vertebrate Species</th>
+                        <th>Clade</th>
+                        <th>Estimated Coverage</th>
+                        <th>Class I V-Genes</th>
+                        <th>Pseudogenes</th>
+                        <th>J & D Segments</th>
+                        <th>Repertoire Evidence</th>
+                        <th>Synthesis Boundaries</th>
+                        <th>Search Portal</th>
+                    </tr>
+                </thead>
+                <tbody id="speciesTableBody">
+                    <tr data-search="house mouse mus musculus rodents">
+                        <td>
+                            <strong style="color:#ffffff; font-size:14px;">House Mouse</strong><br>
+                            <span style="font-size:11.5px; color:var(--text-secondary); font-style:italic;">Mus musculus</span>
+                        </td>
+                        <td><span style="font-size:12px; color:var(--text-secondary);">Rodents</span></td>
+                        <td>
+                            <div class="progress-bar"><div class="progress-fill" style="width:98%; background:#10b981;"></div></div>
+                            <span style="font-weight:700; color:#10b981; font-size:12.5px;">98%</span>
+                        </td>
+                        <td><strong style="color:#38bdf8;">2,763</strong></td>
+                        <td><span style="color:var(--text-muted);">345</span></td>
+                        <td><span style="font-size:12px; color:#34d399;">✅ Verified</span></td>
+                        <td style="font-size:12px; color:var(--text-secondary); max-width:220px;">15M+ AIRR reads, Dildrop families</td>
+                        <td style="font-size:11.5px; color:var(--text-secondary); max-width:200px; font-family:monospace;">TVSS (Heavy) / VEIK (Kappa)</td>
+                        <td><a href="mouse_vbase3_analyzer.html" class="btn-launch">⚡ Launch Search</a></td>
+                    </tr>
+                    <tr data-search="human homo sapiens primates">
+                        <td>
+                            <strong style="color:#ffffff; font-size:14px;">Human</strong><br>
+                            <span style="font-size:11.5px; color:var(--text-secondary); font-style:italic;">Homo sapiens</span>
+                        </td>
+                        <td><span style="font-size:12px; color:var(--text-secondary);">Primates</span></td>
+                        <td>
+                            <div class="progress-bar"><div class="progress-fill" style="width:98%; background:#10b981;"></div></div>
+                            <span style="font-weight:700; color:#10b981; font-size:12.5px;">98%</span>
+                        </td>
+                        <td><strong style="color:#38bdf8;">850</strong></td>
+                        <td><span style="color:var(--text-muted);">634</span></td>
+                        <td><span style="font-size:12px; color:#34d399;">✅ Verified</span></td>
+                        <td style="font-size:12px; color:var(--text-secondary); max-width:220px;">30M+ AIRR reads (OAS/iReceptor)</td>
+                        <td style="font-size:11.5px; color:var(--text-secondary); max-width:200px; font-family:monospace;">TVSS (Heavy) / VEIK (Kappa) / TVL (Lambda)</td>
+                        <td><a href="human_vbase3_analyzer.html" class="btn-launch">⚡ Launch Search</a></td>
+                    </tr>
+                    <tr data-search="alpaca vicugna pacos camelids">
+                        <td>
+                            <strong style="color:#ffffff; font-size:14px;">Alpaca</strong><br>
+                            <span style="font-size:11.5px; color:var(--text-secondary); font-style:italic;">Vicugna pacos</span>
+                        </td>
+                        <td><span style="font-size:12px; color:var(--text-secondary);">Camelids</span></td>
+                        <td>
+                            <div class="progress-bar"><div class="progress-fill" style="width:96%; background:#10b981;"></div></div>
+                            <span style="font-weight:700; color:#10b981; font-size:12.5px;">96%</span>
+                        </td>
+                        <td><strong style="color:#38bdf8;">312</strong></td>
+                        <td><span style="color:var(--text-muted);">55</span></td>
+                        <td><span style="font-size:12px; color:#34d399;">✅ Verified</span></td>
+                        <td style="font-size:12px; color:var(--text-secondary); max-width:220px;">Autonomous VHH Nanobodies</td>
+                        <td style="font-size:11.5px; color:var(--text-secondary); max-width:200px; font-family:monospace;">TVSS (FR2 Hallmarks)</td>
+                        <td><a href="camelid_vbase3_analyzer.html" class="btn-launch">⚡ Launch Search</a></td>
+                    </tr>
+                    <tr data-search="european rabbit oryctolagus cuniculus lagomorphs">
+                        <td>
+                            <strong style="color:#ffffff; font-size:14px;">European Rabbit</strong><br>
+                            <span style="font-size:11.5px; color:var(--text-secondary); font-style:italic;">Oryctolagus cuniculus</span>
+                        </td>
+                        <td><span style="font-size:12px; color:var(--text-secondary);">Lagomorphs</span></td>
+                        <td>
+                            <div class="progress-bar"><div class="progress-fill" style="width:95%; background:#10b981;"></div></div>
+                            <span style="font-weight:700; color:#10b981; font-size:12.5px;">95%</span>
+                        </td>
+                        <td><strong style="color:#38bdf8;">345</strong></td>
+                        <td><span style="color:var(--text-muted);">858</span></td>
+                        <td><span style="font-size:12px; color:#34d399;">✅ Verified</span></td>
+                        <td style="font-size:12px; color:var(--text-secondary); max-width:220px;">Rab_IGHV1 + GALT gene conversion</td>
+                        <td style="font-size:11.5px; color:var(--text-secondary); max-width:200px; font-family:monospace;">TVSS / VEIK (Cys21-Cys79 bridge)</td>
+                        <td><a href="rabbit_vbase3_analyzer.html" class="btn-launch">⚡ Launch Search</a></td>
+                    </tr>
+                    <tr data-search="chicken gallus gallus birds">
+                        <td>
+                            <strong style="color:#ffffff; font-size:14px;">Chicken</strong><br>
+                            <span style="font-size:11.5px; color:var(--text-secondary); font-style:italic;">Gallus gallus</span>
+                        </td>
+                        <td><span style="font-size:12px; color:var(--text-secondary);">Birds</span></td>
+                        <td>
+                            <div class="progress-bar"><div class="progress-fill" style="width:95%; background:#10b981;"></div></div>
+                            <span style="font-weight:700; color:#10b981; font-size:12.5px;">95%</span>
+                        </td>
+                        <td><strong style="color:#38bdf8;">2</strong></td>
+                        <td><span style="color:var(--text-muted);">240</span></td>
+                        <td><span style="font-size:12px; color:#34d399;">✅ Verified</span></td>
+                        <td style="font-size:12px; color:var(--text-secondary); max-width:220px;">OmniChicken & DT40 Gene Conversion</td>
+                        <td style="font-size:11.5px; color:var(--text-secondary); max-width:200px; font-family:monospace;">TVSS / TVL (Single V-region)</td>
+                        <td><a href="chicken_vbase3_analyzer.html" class="btn-launch">⚡ Launch Search</a></td>
+                    </tr>
+                    <tr data-search="rhesus macaque macaca mulatta primates">
+                        <td>
+                            <strong style="color:#ffffff; font-size:14px;">Rhesus Macaque</strong><br>
+                            <span style="font-size:11.5px; color:var(--text-secondary); font-style:italic;">Macaca mulatta</span>
+                        </td>
+                        <td><span style="font-size:12px; color:var(--text-secondary);">Primates</span></td>
+                        <td>
+                            <div class="progress-bar"><div class="progress-fill" style="width:94%; background:#10b981;"></div></div>
+                            <span style="font-weight:700; color:#10b981; font-size:12.5px;">94%</span>
+                        </td>
+                        <td><strong style="color:#38bdf8;">476</strong></td>
+                        <td><span style="color:var(--text-muted);">341</span></td>
+                        <td><span style="font-size:12px; color:#34d399;">✅ Verified</span></td>
+                        <td style="font-size:12px; color:var(--text-secondary); max-width:220px;">5M+ AIRR reads (NHP models)</td>
+                        <td style="font-size:11.5px; color:var(--text-secondary); max-width:200px; font-family:monospace;">TVSS / VEIK / TVL</td>
+                        <td><a href="dnaplot.html?species=rhesus" class="btn-launch">⚡ Launch Search</a></td>
+                    </tr>
+                    <tr data-search="norway rat rattus norvegicus rodents">
+                        <td>
+                            <strong style="color:#ffffff; font-size:14px;">Norway Rat</strong><br>
+                            <span style="font-size:11.5px; color:var(--text-secondary); font-style:italic;">Rattus norvegicus</span>
+                        </td>
+                        <td><span style="font-size:12px; color:var(--text-secondary);">Rodents</span></td>
+                        <td>
+                            <div class="progress-bar"><div class="progress-fill" style="width:92%; background:#10b981;"></div></div>
+                            <span style="font-weight:700; color:#10b981; font-size:12.5px;">92%</span>
+                        </td>
+                        <td><strong style="color:#38bdf8;">537</strong></td>
+                        <td><span style="color:var(--text-muted);">121</span></td>
+                        <td><span style="font-size:12px; color:#34d399;">✅ Verified</span></td>
+                        <td style="font-size:12px; color:var(--text-secondary); max-width:220px;">2M+ AIRR reads</td>
+                        <td style="font-size:11.5px; color:var(--text-secondary); max-width:200px; font-family:monospace;">TVSS / VEIK</td>
+                        <td><a href="dnaplot.html?species=rat" class="btn-launch">⚡ Launch Search</a></td>
+                    </tr>
+                    <tr data-search="domestic dog canis lupus familiaris carnivores">
+                        <td>
+                            <strong style="color:#ffffff; font-size:14px;">Domestic Dog</strong><br>
+                            <span style="font-size:11.5px; color:var(--text-secondary); font-style:italic;">Canis lupus familiaris</span>
+                        </td>
+                        <td><span style="font-size:12px; color:var(--text-secondary);">Carnivores</span></td>
+                        <td>
+                            <div class="progress-bar"><div class="progress-fill" style="width:92%; background:#10b981;"></div></div>
+                            <span style="font-weight:700; color:#10b981; font-size:12.5px;">92%</span>
+                        </td>
+                        <td><strong style="color:#38bdf8;">142</strong></td>
+                        <td><span style="color:var(--text-muted);">140</span></td>
+                        <td><span style="font-size:12px; color:#34d399;">✅ Verified</span></td>
+                        <td style="font-size:12px; color:var(--text-secondary); max-width:220px;">Veterinary mAbs (Lokivetmab)</td>
+                        <td style="font-size:11.5px; color:var(--text-secondary); max-width:200px; font-family:monospace;">TVSS / TVL (~90% Lambda)</td>
+                        <td><a href="dog_vbase3_analyzer.html" class="btn-launch">⚡ Launch Search</a></td>
+                    </tr>
+                    <tr data-search="african clawed frog xenopus laevis amphibians">
+                        <td>
+                            <strong style="color:#ffffff; font-size:14px;">African Clawed Frog</strong><br>
+                            <span style="font-size:11.5px; color:var(--text-secondary); font-style:italic;">Xenopus laevis</span>
+                        </td>
+                        <td><span style="font-size:12px; color:var(--text-secondary);">Amphibians</span></td>
+                        <td>
+                            <div class="progress-bar"><div class="progress-fill" style="width:90%; background:#10b981;"></div></div>
+                            <span style="font-weight:700; color:#10b981; font-size:12.5px;">90%</span>
+                        </td>
+                        <td><strong style="color:#38bdf8;">300</strong></td>
+                        <td><span style="color:var(--text-muted);">712</span></td>
+                        <td><span style="font-size:12px; color:#34d399;">✅ Verified</span></td>
+                        <td style="font-size:12px; color:var(--text-secondary); max-width:220px;">Allotetraploid L/S subgenomes</td>
+                        <td style="font-size:11.5px; color:var(--text-secondary); max-width:200px; font-family:monospace;">TVSS / TVL (Ig-Rho / Ig-Sigma)</td>
+                        <td><a href="xenopus_du_pasquier_hsu.html" class="btn-launch">⚡ Launch Search</a></td>
+                    </tr>
+                    <tr data-search="cattle bos taurus artiodactyls">
+                        <td>
+                            <strong style="color:#ffffff; font-size:14px;">Cattle</strong><br>
+                            <span style="font-size:11.5px; color:var(--text-secondary); font-style:italic;">Bos taurus</span>
+                        </td>
+                        <td><span style="font-size:12px; color:var(--text-secondary);">Artiodactyls</span></td>
+                        <td>
+                            <div class="progress-bar"><div class="progress-fill" style="width:88%; background:#10b981;"></div></div>
+                            <span style="font-weight:700; color:#10b981; font-size:12.5px;">88%</span>
+                        </td>
+                        <td><strong style="color:#38bdf8;">174</strong></td>
+                        <td><span style="color:var(--text-muted);">92,218</span></td>
+                        <td><span style="font-size:12px; color:#34d399;">✅ Verified</span></td>
+                        <td style="font-size:12px; color:var(--text-secondary); max-width:220px;">Ultralong CDR-H3 (up to 68 aa)</td>
+                        <td style="font-size:11.5px; color:var(--text-secondary); max-width:200px; font-family:monospace;">TVSS / TVL (~95% Lambda)</td>
+                        <td><a href="repertoire_analysis.html?species=bovine" class="btn-launch">⚡ Launch Search</a></td>
+                    </tr>
+                    <tr data-search="arabian camel camelus dromedarius camelids">
+                        <td>
+                            <strong style="color:#ffffff; font-size:14px;">Arabian Camel</strong><br>
+                            <span style="font-size:11.5px; color:var(--text-secondary); font-style:italic;">Camelus dromedarius</span>
+                        </td>
+                        <td><span style="font-size:12px; color:var(--text-secondary);">Camelids</span></td>
+                        <td>
+                            <div class="progress-bar"><div class="progress-fill" style="width:88%; background:#10b981;"></div></div>
+                            <span style="font-weight:700; color:#10b981; font-size:12.5px;">88%</span>
+                        </td>
+                        <td><strong style="color:#38bdf8;">55</strong></td>
+                        <td><span style="color:var(--text-muted);">71</span></td>
+                        <td><span style="font-size:12px; color:#fbbf24;">⚠️ Draft</span></td>
+                        <td style="font-size:12px; color:var(--text-secondary); max-width:220px;">VHH single-domain libraries</td>
+                        <td style="font-size:11.5px; color:var(--text-secondary); max-width:200px; font-family:monospace;">TVSS</td>
+                        <td><a href="camelid_vbase3_analyzer.html" class="btn-launch">⚡ Launch Search</a></td>
+                    </tr>
+                    <tr data-search="wild boar / swine sus scrofa artiodactyls">
+                        <td>
+                            <strong style="color:#ffffff; font-size:14px;">Wild Boar / Swine</strong><br>
+                            <span style="font-size:11.5px; color:var(--text-secondary); font-style:italic;">Sus scrofa</span>
+                        </td>
+                        <td><span style="font-size:12px; color:var(--text-secondary);">Artiodactyls</span></td>
+                        <td>
+                            <div class="progress-bar"><div class="progress-fill" style="width:86%; background:#10b981;"></div></div>
+                            <span style="font-weight:700; color:#10b981; font-size:12.5px;">86%</span>
+                        </td>
+                        <td><strong style="color:#38bdf8;">207</strong></td>
+                        <td><span style="color:var(--text-muted);">360</span></td>
+                        <td><span style="font-size:12px; color:#34d399;">✅ Verified</span></td>
+                        <td style="font-size:12px; color:var(--text-secondary); max-width:220px;">Porcine xenotransplantation models</td>
+                        <td style="font-size:11.5px; color:var(--text-secondary); max-width:200px; font-family:monospace;">TVSS / VEIK</td>
+                        <td><a href="dnaplot.html?species=pig" class="btn-launch">⚡ Launch Search</a></td>
+                    </tr>
+                    <tr data-search="horse equus caballus perissodactyls">
+                        <td>
+                            <strong style="color:#ffffff; font-size:14px;">Horse</strong><br>
+                            <span style="font-size:11.5px; color:var(--text-secondary); font-style:italic;">Equus caballus</span>
+                        </td>
+                        <td><span style="font-size:12px; color:var(--text-secondary);">Perissodactyls</span></td>
+                        <td>
+                            <div class="progress-bar"><div class="progress-fill" style="width:85%; background:#10b981;"></div></div>
+                            <span style="font-weight:700; color:#10b981; font-size:12.5px;">85%</span>
+                        </td>
+                        <td><strong style="color:#38bdf8;">192</strong></td>
+                        <td><span style="color:var(--text-muted);">274,546</span></td>
+                        <td><span style="font-size:12px; color:#34d399;">✅ Verified</span></td>
+                        <td style="font-size:12px; color:var(--text-secondary); max-width:220px;">Equine therapeutic repertoires</td>
+                        <td style="font-size:11.5px; color:var(--text-secondary); max-width:200px; font-family:monospace;">TVSS / TVL (~90% Lambda)</td>
+                        <td><a href="dnaplot.html?species=horse" class="btn-launch">⚡ Launch Search</a></td>
+                    </tr>
+                    <tr data-search="domestic cat felis catus carnivores">
+                        <td>
+                            <strong style="color:#ffffff; font-size:14px;">Domestic Cat</strong><br>
+                            <span style="font-size:11.5px; color:var(--text-secondary); font-style:italic;">Felis catus</span>
+                        </td>
+                        <td><span style="font-size:12px; color:var(--text-secondary);">Carnivores</span></td>
+                        <td>
+                            <div class="progress-bar"><div class="progress-fill" style="width:85%; background:#10b981;"></div></div>
+                            <span style="font-weight:700; color:#10b981; font-size:12.5px;">85%</span>
+                        </td>
+                        <td><strong style="color:#38bdf8;">85</strong></td>
+                        <td><span style="color:var(--text-muted);">0</span></td>
+                        <td><span style="font-size:12px; color:#fbbf24;">⚠️ Draft</span></td>
+                        <td style="font-size:12px; color:var(--text-secondary); max-width:220px;">Veterinary mAbs (Frunevetmab)</td>
+                        <td style="font-size:11.5px; color:var(--text-secondary); max-width:200px; font-family:monospace;">TVSS / VEIK / TVL</td>
+                        <td><a href="dnaplot.html?species=cat" class="btn-launch">⚡ Launch Search</a></td>
+                    </tr>
+                    <tr data-search="domestic sheep ovis aries artiodactyls">
+                        <td>
+                            <strong style="color:#ffffff; font-size:14px;">Domestic Sheep</strong><br>
+                            <span style="font-size:11.5px; color:var(--text-secondary); font-style:italic;">Ovis aries</span>
+                        </td>
+                        <td><span style="font-size:12px; color:var(--text-secondary);">Artiodactyls</span></td>
+                        <td>
+                            <div class="progress-bar"><div class="progress-fill" style="width:84%; background:#10b981;"></div></div>
+                            <span style="font-weight:700; color:#10b981; font-size:12.5px;">84%</span>
+                        </td>
+                        <td><strong style="color:#38bdf8;">145</strong></td>
+                        <td><span style="color:var(--text-muted);">32,672</span></td>
+                        <td><span style="font-size:12px; color:#34d399;">✅ Verified</span></td>
+                        <td style="font-size:12px; color:var(--text-secondary); max-width:220px;">Ileal Peyer patch diversification</td>
+                        <td style="font-size:11.5px; color:var(--text-secondary); max-width:200px; font-family:monospace;">TVSS / TVL</td>
+                        <td><a href="dnaplot.html?species=sheep" class="btn-launch">⚡ Launch Search</a></td>
+                    </tr>
+                    <tr data-search="crab-eating macaque macaca fascicularis primates">
+                        <td>
+                            <strong style="color:#ffffff; font-size:14px;">Crab-eating Macaque</strong><br>
+                            <span style="font-size:11.5px; color:var(--text-secondary); font-style:italic;">Macaca fascicularis</span>
+                        </td>
+                        <td><span style="font-size:12px; color:var(--text-secondary);">Primates</span></td>
+                        <td>
+                            <div class="progress-bar"><div class="progress-fill" style="width:82%; background:#10b981;"></div></div>
+                            <span style="font-weight:700; color:#10b981; font-size:12.5px;">82%</span>
+                        </td>
+                        <td><strong style="color:#38bdf8;">249</strong></td>
+                        <td><span style="color:var(--text-muted);">4</span></td>
+                        <td><span style="font-size:12px; color:#fbbf24;">⚠️ Draft</span></td>
+                        <td style="font-size:12px; color:var(--text-secondary); max-width:220px;">Preclinical toxicology models</td>
+                        <td style="font-size:11.5px; color:var(--text-secondary); max-width:200px; font-family:monospace;">TVSS / VEIK</td>
+                        <td><a href="dnaplot.html?species=cynomolgus" class="btn-launch">⚡ Launch Search</a></td>
+                    </tr>
+                    <tr data-search="zebrafish danio rerio teleost fish">
+                        <td>
+                            <strong style="color:#ffffff; font-size:14px;">Zebrafish</strong><br>
+                            <span style="font-size:11.5px; color:var(--text-secondary); font-style:italic;">Danio rerio</span>
+                        </td>
+                        <td><span style="font-size:12px; color:var(--text-secondary);">Teleost Fish</span></td>
+                        <td>
+                            <div class="progress-bar"><div class="progress-fill" style="width:78%; background:#f59e0b;"></div></div>
+                            <span style="font-weight:700; color:#f59e0b; font-size:12.5px;">78%</span>
+                        </td>
+                        <td><strong style="color:#38bdf8;">204</strong></td>
+                        <td><span style="color:var(--text-muted);">72</span></td>
+                        <td><span style="font-size:12px; color:#fbbf24;">⚠️ Draft</span></td>
+                        <td style="font-size:12px; color:var(--text-secondary); max-width:220px;">IgZ/IgT mucosal teleost model</td>
+                        <td style="font-size:11.5px; color:var(--text-secondary); max-width:200px; font-family:monospace;">TVSS / TVL (Pending J-refinement)</td>
+                        <td><span class="btn-disabled">⏳ Maturing (&lt;80%)</span></td>
+                    </tr>
+                    <tr data-search="rainbow trout oncorhynchus mykiss teleost fish">
+                        <td>
+                            <strong style="color:#ffffff; font-size:14px;">Rainbow Trout</strong><br>
+                            <span style="font-size:11.5px; color:var(--text-secondary); font-style:italic;">Oncorhynchus mykiss</span>
+                        </td>
+                        <td><span style="font-size:12px; color:var(--text-secondary);">Teleost Fish</span></td>
+                        <td>
+                            <div class="progress-bar"><div class="progress-fill" style="width:68%; background:#f59e0b;"></div></div>
+                            <span style="font-weight:700; color:#f59e0b; font-size:12.5px;">68%</span>
+                        </td>
+                        <td><strong style="color:#38bdf8;">199</strong></td>
+                        <td><span style="color:var(--text-muted);">14</span></td>
+                        <td><span style="font-size:12px; color:#fbbf24;">⚠️ Draft</span></td>
+                        <td style="font-size:12px; color:var(--text-secondary); max-width:220px;">Teleost tetrameric IgM</td>
+                        <td style="font-size:11.5px; color:var(--text-secondary); max-width:200px; font-family:monospace;">In Progress</td>
+                        <td><span class="btn-disabled">⏳ Maturing (&lt;80%)</span></td>
+                    </tr>
+                    <tr data-search="ferret mustela putorius furo carnivores">
+                        <td>
+                            <strong style="color:#ffffff; font-size:14px;">Ferret</strong><br>
+                            <span style="font-size:11.5px; color:var(--text-secondary); font-style:italic;">Mustela putorius furo</span>
+                        </td>
+                        <td><span style="font-size:12px; color:var(--text-secondary);">Carnivores</span></td>
+                        <td>
+                            <div class="progress-bar"><div class="progress-fill" style="width:62%; background:#f59e0b;"></div></div>
+                            <span style="font-weight:700; color:#f59e0b; font-size:12.5px;">62%</span>
+                        </td>
+                        <td><strong style="color:#38bdf8;">83</strong></td>
+                        <td><span style="color:var(--text-muted);">3</span></td>
+                        <td><span style="font-size:12px; color:#fbbf24;">⚠️ Draft</span></td>
+                        <td style="font-size:12px; color:var(--text-secondary); max-width:220px;">Respiratory influenza models</td>
+                        <td style="font-size:11.5px; color:var(--text-secondary); max-width:200px; font-family:monospace;">In Progress</td>
+                        <td><span class="btn-disabled">⏳ Maturing (&lt;80%)</span></td>
+                    </tr>
+                    <tr data-search="guinea pig cavia porcellus rodents">
+                        <td>
+                            <strong style="color:#ffffff; font-size:14px;">Guinea Pig</strong><br>
+                            <span style="font-size:11.5px; color:var(--text-secondary); font-style:italic;">Cavia porcellus</span>
+                        </td>
+                        <td><span style="font-size:12px; color:var(--text-secondary);">Rodents</span></td>
+                        <td>
+                            <div class="progress-bar"><div class="progress-fill" style="width:58%; background:#f59e0b;"></div></div>
+                            <span style="font-weight:700; color:#f59e0b; font-size:12.5px;">58%</span>
+                        </td>
+                        <td><strong style="color:#38bdf8;">154</strong></td>
+                        <td><span style="color:var(--text-muted);">0</span></td>
+                        <td><span style="font-size:12px; color:#fbbf24;">⚠️ Draft</span></td>
+                        <td style="font-size:12px; color:var(--text-secondary); max-width:220px;">Contact hypersensitivity model</td>
+                        <td style="font-size:11.5px; color:var(--text-secondary); max-width:200px; font-family:monospace;">In Progress</td>
+                        <td><span class="btn-disabled">⏳ Maturing (&lt;80%)</span></td>
+                    </tr>
+                    <tr data-search="mallard duck anas platyrhynchos birds">
+                        <td>
+                            <strong style="color:#ffffff; font-size:14px;">Mallard Duck</strong><br>
+                            <span style="font-size:11.5px; color:var(--text-secondary); font-style:italic;">Anas platyrhynchos</span>
+                        </td>
+                        <td><span style="font-size:12px; color:var(--text-secondary);">Birds</span></td>
+                        <td>
+                            <div class="progress-bar"><div class="progress-fill" style="width:55%; background:#f59e0b;"></div></div>
+                            <span style="font-weight:700; color:#f59e0b; font-size:12.5px;">55%</span>
+                        </td>
+                        <td><strong style="color:#38bdf8;">103</strong></td>
+                        <td><span style="color:var(--text-muted);">95,464</span></td>
+                        <td><span style="font-size:12px; color:#fbbf24;">⚠️ Draft</span></td>
+                        <td style="font-size:12px; color:var(--text-secondary); max-width:220px;">Avian influenza reservoir</td>
+                        <td style="font-size:11.5px; color:var(--text-secondary); max-width:200px; font-family:monospace;">In Progress</td>
+                        <td><span class="btn-disabled">⏳ Maturing (&lt;80%)</span></td>
+                    </tr>
+                    <tr data-search="gray short-tailed opossum monodelphis domestica marsupials">
+                        <td>
+                            <strong style="color:#ffffff; font-size:14px;">Gray Short-tailed Opossum</strong><br>
+                            <span style="font-size:11.5px; color:var(--text-secondary); font-style:italic;">Monodelphis domestica</span>
+                        </td>
+                        <td><span style="font-size:12px; color:var(--text-secondary);">Marsupials</span></td>
+                        <td>
+                            <div class="progress-bar"><div class="progress-fill" style="width:52%; background:#f59e0b;"></div></div>
+                            <span style="font-weight:700; color:#f59e0b; font-size:12.5px;">52%</span>
+                        </td>
+                        <td><strong style="color:#38bdf8;">108</strong></td>
+                        <td><span style="color:var(--text-muted);">0</span></td>
+                        <td><span style="font-size:12px; color:#fbbf24;">⚠️ Draft</span></td>
+                        <td style="font-size:12px; color:var(--text-secondary); max-width:220px;">Metatherian comparative immunology</td>
+                        <td style="font-size:11.5px; color:var(--text-secondary); max-width:200px; font-family:monospace;">In Progress</td>
+                        <td><span class="btn-disabled">⏳ Maturing (&lt;80%)</span></td>
+                    </tr>
+                    <tr data-search="platypus ornithorhynchus anatinus monotremes">
+                        <td>
+                            <strong style="color:#ffffff; font-size:14px;">Platypus</strong><br>
+                            <span style="font-size:11.5px; color:var(--text-secondary); font-style:italic;">Ornithorhynchus anatinus</span>
+                        </td>
+                        <td><span style="font-size:12px; color:var(--text-secondary);">Monotremes</span></td>
+                        <td>
+                            <div class="progress-bar"><div class="progress-fill" style="width:50%; background:#f59e0b;"></div></div>
+                            <span style="font-weight:700; color:#f59e0b; font-size:12.5px;">50%</span>
+                        </td>
+                        <td><strong style="color:#38bdf8;">31</strong></td>
+                        <td><span style="color:var(--text-muted);">0</span></td>
+                        <td><span style="font-size:12px; color:#fbbf24;">⚠️ Draft</span></td>
+                        <td style="font-size:12px; color:var(--text-secondary); max-width:220px;">Prototherian ancestral locus</td>
+                        <td style="font-size:11.5px; color:var(--text-secondary); max-width:200px; font-family:monospace;">In Progress</td>
+                        <td><span class="btn-disabled">⏳ Maturing (&lt;80%)</span></td>
+                    </tr>
+                    <tr data-search="elephant shark callorhinchus milii chondrichthyes">
+                        <td>
+                            <strong style="color:#ffffff; font-size:14px;">Elephant Shark</strong><br>
+                            <span style="font-size:11.5px; color:var(--text-secondary); font-style:italic;">Callorhinchus milii</span>
+                        </td>
+                        <td><span style="font-size:12px; color:var(--text-secondary);">Chondrichthyes</span></td>
+                        <td>
+                            <div class="progress-bar"><div class="progress-fill" style="width:48%; background:#f59e0b;"></div></div>
+                            <span style="font-weight:700; color:#f59e0b; font-size:12.5px;">48%</span>
+                        </td>
+                        <td><strong style="color:#38bdf8;">1</strong></td>
+                        <td><span style="color:var(--text-muted);">462,315</span></td>
+                        <td><span style="font-size:12px; color:#fbbf24;">⚠️ Draft</span></td>
+                        <td style="font-size:12px; color:var(--text-secondary); max-width:220px;">Cartilaginous fish NAR / IgW</td>
+                        <td style="font-size:11.5px; color:var(--text-secondary); max-width:200px; font-family:monospace;">In Progress</td>
+                        <td><span class="btn-disabled">⏳ Maturing (&lt;80%)</span></td>
+                    </tr>
+                    <tr data-search="small-spotted catshark scyliorhinus canicula chondrichthyes">
+                        <td>
+                            <strong style="color:#ffffff; font-size:14px;">Small-spotted Catshark</strong><br>
+                            <span style="font-size:11.5px; color:var(--text-secondary); font-style:italic;">Scyliorhinus canicula</span>
+                        </td>
+                        <td><span style="font-size:12px; color:var(--text-secondary);">Chondrichthyes</span></td>
+                        <td>
+                            <div class="progress-bar"><div class="progress-fill" style="width:45%; background:#f59e0b;"></div></div>
+                            <span style="font-weight:700; color:#f59e0b; font-size:12.5px;">45%</span>
+                        </td>
+                        <td><strong style="color:#38bdf8;">31</strong></td>
+                        <td><span style="color:var(--text-muted);">0</span></td>
+                        <td><span style="font-size:12px; color:#fbbf24;">⚠️ Draft</span></td>
+                        <td style="font-size:12px; color:var(--text-secondary); max-width:220px;">Cartilaginous fish ancestral cluster</td>
+                        <td style="font-size:11.5px; color:var(--text-secondary); max-width:200px; font-family:monospace;">In Progress</td>
+                        <td><span class="btn-disabled">⏳ Maturing (&lt;80%)</span></td>
+                    </tr>
+                    <tr data-search="chimpanzee chimpanzee other vertebrate">
+                        <td>
+                            <strong style="color:#ffffff; font-size:14px;">Chimpanzee</strong><br>
+                            <span style="font-size:11.5px; color:var(--text-secondary); font-style:italic;">Chimpanzee</span>
+                        </td>
+                        <td><span style="font-size:12px; color:var(--text-secondary);">Other Vertebrate</span></td>
+                        <td>
+                            <div class="progress-bar"><div class="progress-fill" style="width:40%; background:#f59e0b;"></div></div>
+                            <span style="font-weight:700; color:#f59e0b; font-size:12.5px;">40%</span>
+                        </td>
+                        <td><strong style="color:#38bdf8;">123</strong></td>
+                        <td><span style="color:var(--text-muted);">0</span></td>
+                        <td><span style="font-size:12px; color:#fbbf24;">⚠️ Draft</span></td>
+                        <td style="font-size:12px; color:var(--text-secondary); max-width:220px;">Genomic assembly curation</td>
+                        <td style="font-size:11.5px; color:var(--text-secondary); max-width:200px; font-family:monospace;">Under Investigation</td>
+                        <td><span class="btn-disabled">⏳ Maturing (&lt;80%)</span></td>
+                    </tr>
+                    <tr data-search="marmoset marmoset other vertebrate">
+                        <td>
+                            <strong style="color:#ffffff; font-size:14px;">Marmoset</strong><br>
+                            <span style="font-size:11.5px; color:var(--text-secondary); font-style:italic;">Marmoset</span>
+                        </td>
+                        <td><span style="font-size:12px; color:var(--text-secondary);">Other Vertebrate</span></td>
+                        <td>
+                            <div class="progress-bar"><div class="progress-fill" style="width:40%; background:#f59e0b;"></div></div>
+                            <span style="font-weight:700; color:#f59e0b; font-size:12.5px;">40%</span>
+                        </td>
+                        <td><strong style="color:#38bdf8;">101</strong></td>
+                        <td><span style="color:var(--text-muted);">5</span></td>
+                        <td><span style="font-size:12px; color:#fbbf24;">⚠️ Draft</span></td>
+                        <td style="font-size:12px; color:var(--text-secondary); max-width:220px;">Genomic assembly curation</td>
+                        <td style="font-size:11.5px; color:var(--text-secondary); max-width:200px; font-family:monospace;">Under Investigation</td>
+                        <td><span class="btn-disabled">⏳ Maturing (&lt;80%)</span></td>
+                    </tr>
+                    <tr data-search="shark shark other vertebrate">
+                        <td>
+                            <strong style="color:#ffffff; font-size:14px;">Shark</strong><br>
+                            <span style="font-size:11.5px; color:var(--text-secondary); font-style:italic;">Shark</span>
+                        </td>
+                        <td><span style="font-size:12px; color:var(--text-secondary);">Other Vertebrate</span></td>
+                        <td>
+                            <div class="progress-bar"><div class="progress-fill" style="width:40%; background:#f59e0b;"></div></div>
+                            <span style="font-weight:700; color:#f59e0b; font-size:12.5px;">40%</span>
+                        </td>
+                        <td><strong style="color:#38bdf8;">80</strong></td>
+                        <td><span style="color:var(--text-muted);">0</span></td>
+                        <td><span style="font-size:12px; color:#fbbf24;">⚠️ Draft</span></td>
+                        <td style="font-size:12px; color:var(--text-secondary); max-width:220px;">Genomic assembly curation</td>
+                        <td style="font-size:11.5px; color:var(--text-secondary); max-width:200px; font-family:monospace;">Under Investigation</td>
+                        <td><span class="btn-disabled">⏳ Maturing (&lt;80%)</span></td>
+                    </tr>
+                    <tr data-search="bat bat other vertebrate">
+                        <td>
+                            <strong style="color:#ffffff; font-size:14px;">Bat</strong><br>
+                            <span style="font-size:11.5px; color:var(--text-secondary); font-style:italic;">Bat</span>
+                        </td>
+                        <td><span style="font-size:12px; color:var(--text-secondary);">Other Vertebrate</span></td>
+                        <td>
+                            <div class="progress-bar"><div class="progress-fill" style="width:40%; background:#f59e0b;"></div></div>
+                            <span style="font-weight:700; color:#f59e0b; font-size:12.5px;">40%</span>
+                        </td>
+                        <td><strong style="color:#38bdf8;">77</strong></td>
+                        <td><span style="color:var(--text-muted);">0</span></td>
+                        <td><span style="font-size:12px; color:#fbbf24;">⚠️ Draft</span></td>
+                        <td style="font-size:12px; color:var(--text-secondary); max-width:220px;">Genomic assembly curation</td>
+                        <td style="font-size:11.5px; color:var(--text-secondary); max-width:200px; font-family:monospace;">Under Investigation</td>
+                        <td><span class="btn-disabled">⏳ Maturing (&lt;80%)</span></td>
+                    </tr>
+                    <tr data-search="salmon salmon other vertebrate">
+                        <td>
+                            <strong style="color:#ffffff; font-size:14px;">Salmon</strong><br>
+                            <span style="font-size:11.5px; color:var(--text-secondary); font-style:italic;">Salmon</span>
+                        </td>
+                        <td><span style="font-size:12px; color:var(--text-secondary);">Other Vertebrate</span></td>
+                        <td>
+                            <div class="progress-bar"><div class="progress-fill" style="width:40%; background:#f59e0b;"></div></div>
+                            <span style="font-weight:700; color:#f59e0b; font-size:12.5px;">40%</span>
+                        </td>
+                        <td><strong style="color:#38bdf8;">65</strong></td>
+                        <td><span style="color:var(--text-muted);">3</span></td>
+                        <td><span style="font-size:12px; color:#fbbf24;">⚠️ Draft</span></td>
+                        <td style="font-size:12px; color:var(--text-secondary); max-width:220px;">Genomic assembly curation</td>
+                        <td style="font-size:11.5px; color:var(--text-secondary); max-width:200px; font-family:monospace;">Under Investigation</td>
+                        <td><span class="btn-disabled">⏳ Maturing (&lt;80%)</span></td>
+                    </tr>
+                    <tr data-search="goat goat other vertebrate">
+                        <td>
+                            <strong style="color:#ffffff; font-size:14px;">Goat</strong><br>
+                            <span style="font-size:11.5px; color:var(--text-secondary); font-style:italic;">Goat</span>
+                        </td>
+                        <td><span style="font-size:12px; color:var(--text-secondary);">Other Vertebrate</span></td>
+                        <td>
+                            <div class="progress-bar"><div class="progress-fill" style="width:40%; background:#f59e0b;"></div></div>
+                            <span style="font-weight:700; color:#f59e0b; font-size:12.5px;">40%</span>
+                        </td>
+                        <td><strong style="color:#38bdf8;">46</strong></td>
+                        <td><span style="color:var(--text-muted);">0</span></td>
+                        <td><span style="font-size:12px; color:#fbbf24;">⚠️ Draft</span></td>
+                        <td style="font-size:12px; color:var(--text-secondary); max-width:220px;">Genomic assembly curation</td>
+                        <td style="font-size:11.5px; color:var(--text-secondary); max-width:200px; font-family:monospace;">Under Investigation</td>
+                        <td><span class="btn-disabled">⏳ Maturing (&lt;80%)</span></td>
+                    </tr>
+                    <tr data-search="baboon baboon other vertebrate">
+                        <td>
+                            <strong style="color:#ffffff; font-size:14px;">Baboon</strong><br>
+                            <span style="font-size:11.5px; color:var(--text-secondary); font-style:italic;">Baboon</span>
+                        </td>
+                        <td><span style="font-size:12px; color:var(--text-secondary);">Other Vertebrate</span></td>
+                        <td>
+                            <div class="progress-bar"><div class="progress-fill" style="width:40%; background:#f59e0b;"></div></div>
+                            <span style="font-weight:700; color:#f59e0b; font-size:12.5px;">40%</span>
+                        </td>
+                        <td><strong style="color:#38bdf8;">28</strong></td>
+                        <td><span style="color:var(--text-muted);">2</span></td>
+                        <td><span style="font-size:12px; color:#fbbf24;">⚠️ Draft</span></td>
+                        <td style="font-size:12px; color:var(--text-secondary); max-width:220px;">Genomic assembly curation</td>
+                        <td style="font-size:11.5px; color:var(--text-secondary); max-width:200px; font-family:monospace;">Under Investigation</td>
+                        <td><span class="btn-disabled">⏳ Maturing (&lt;80%)</span></td>
+                    </tr>
+                    <tr data-search="water buffalo water buffalo other vertebrate">
+                        <td>
+                            <strong style="color:#ffffff; font-size:14px;">Water buffalo</strong><br>
+                            <span style="font-size:11.5px; color:var(--text-secondary); font-style:italic;">Water buffalo</span>
+                        </td>
+                        <td><span style="font-size:12px; color:var(--text-secondary);">Other Vertebrate</span></td>
+                        <td>
+                            <div class="progress-bar"><div class="progress-fill" style="width:40%; background:#f59e0b;"></div></div>
+                            <span style="font-weight:700; color:#f59e0b; font-size:12.5px;">40%</span>
+                        </td>
+                        <td><strong style="color:#38bdf8;">24</strong></td>
+                        <td><span style="color:var(--text-muted);">76</span></td>
+                        <td><span style="font-size:12px; color:#fbbf24;">⚠️ Draft</span></td>
+                        <td style="font-size:12px; color:var(--text-secondary); max-width:220px;">Genomic assembly curation</td>
+                        <td style="font-size:11.5px; color:var(--text-secondary); max-width:200px; font-family:monospace;">Under Investigation</td>
+                        <td><span class="btn-disabled">⏳ Maturing (&lt;80%)</span></td>
+                    </tr>
+                    <tr data-search="dolphin dolphin other vertebrate">
+                        <td>
+                            <strong style="color:#ffffff; font-size:14px;">Dolphin</strong><br>
+                            <span style="font-size:11.5px; color:var(--text-secondary); font-style:italic;">Dolphin</span>
+                        </td>
+                        <td><span style="font-size:12px; color:var(--text-secondary);">Other Vertebrate</span></td>
+                        <td>
+                            <div class="progress-bar"><div class="progress-fill" style="width:40%; background:#f59e0b;"></div></div>
+                            <span style="font-weight:700; color:#f59e0b; font-size:12.5px;">40%</span>
+                        </td>
+                        <td><strong style="color:#38bdf8;">14</strong></td>
+                        <td><span style="color:var(--text-muted);">0</span></td>
+                        <td><span style="font-size:12px; color:#fbbf24;">⚠️ Draft</span></td>
+                        <td style="font-size:12px; color:var(--text-secondary); max-width:220px;">Genomic assembly curation</td>
+                        <td style="font-size:11.5px; color:var(--text-secondary); max-width:200px; font-family:monospace;">Under Investigation</td>
+                        <td><span class="btn-disabled">⏳ Maturing (&lt;80%)</span></td>
+                    </tr>
+                    <tr data-search="buffalo buffalo other vertebrate">
+                        <td>
+                            <strong style="color:#ffffff; font-size:14px;">Buffalo</strong><br>
+                            <span style="font-size:11.5px; color:var(--text-secondary); font-style:italic;">Buffalo</span>
+                        </td>
+                        <td><span style="font-size:12px; color:var(--text-secondary);">Other Vertebrate</span></td>
+                        <td>
+                            <div class="progress-bar"><div class="progress-fill" style="width:40%; background:#f59e0b;"></div></div>
+                            <span style="font-weight:700; color:#f59e0b; font-size:12.5px;">40%</span>
+                        </td>
+                        <td><strong style="color:#38bdf8;">5</strong></td>
+                        <td><span style="color:var(--text-muted);">0</span></td>
+                        <td><span style="font-size:12px; color:#fbbf24;">⚠️ Draft</span></td>
+                        <td style="font-size:12px; color:var(--text-secondary); max-width:220px;">Genomic assembly curation</td>
+                        <td style="font-size:11.5px; color:var(--text-secondary); max-width:200px; font-family:monospace;">Under Investigation</td>
+                        <td><span class="btn-disabled">⏳ Maturing (&lt;80%)</span></td>
+                    </tr>
+                    <tr data-search="arabian camel arabian camel other vertebrate">
+                        <td>
+                            <strong style="color:#ffffff; font-size:14px;">Arabian camel</strong><br>
+                            <span style="font-size:11.5px; color:var(--text-secondary); font-style:italic;">Arabian camel</span>
+                        </td>
+                        <td><span style="font-size:12px; color:var(--text-secondary);">Other Vertebrate</span></td>
+                        <td>
+                            <div class="progress-bar"><div class="progress-fill" style="width:40%; background:#f59e0b;"></div></div>
+                            <span style="font-weight:700; color:#f59e0b; font-size:12.5px;">40%</span>
+                        </td>
+                        <td><strong style="color:#38bdf8;">4</strong></td>
+                        <td><span style="color:var(--text-muted);">1</span></td>
+                        <td><span style="font-size:12px; color:#fbbf24;">⚠️ Draft</span></td>
+                        <td style="font-size:12px; color:var(--text-secondary); max-width:220px;">Genomic assembly curation</td>
+                        <td style="font-size:11.5px; color:var(--text-secondary); max-width:200px; font-family:monospace;">Under Investigation</td>
+                        <td><span class="btn-disabled">⏳ Maturing (&lt;80%)</span></td>
+                    </tr>
+                    <tr data-search="gorilla gorilla other vertebrate">
+                        <td>
+                            <strong style="color:#ffffff; font-size:14px;">Gorilla</strong><br>
+                            <span style="font-size:11.5px; color:var(--text-secondary); font-style:italic;">Gorilla</span>
+                        </td>
+                        <td><span style="font-size:12px; color:var(--text-secondary);">Other Vertebrate</span></td>
+                        <td>
+                            <div class="progress-bar"><div class="progress-fill" style="width:40%; background:#f59e0b;"></div></div>
+                            <span style="font-weight:700; color:#f59e0b; font-size:12.5px;">40%</span>
+                        </td>
+                        <td><strong style="color:#38bdf8;">4</strong></td>
+                        <td><span style="color:var(--text-muted);">2</span></td>
+                        <td><span style="font-size:12px; color:#fbbf24;">⚠️ Draft</span></td>
+                        <td style="font-size:12px; color:var(--text-secondary); max-width:220px;">Genomic assembly curation</td>
+                        <td style="font-size:11.5px; color:var(--text-secondary); max-width:200px; font-family:monospace;">Under Investigation</td>
+                        <td><span class="btn-disabled">⏳ Maturing (&lt;80%)</span></td>
+                    </tr>
+                    <tr data-search="hamster hamster other vertebrate">
+                        <td>
+                            <strong style="color:#ffffff; font-size:14px;">Hamster</strong><br>
+                            <span style="font-size:11.5px; color:var(--text-secondary); font-style:italic;">Hamster</span>
+                        </td>
+                        <td><span style="font-size:12px; color:var(--text-secondary);">Other Vertebrate</span></td>
+                        <td>
+                            <div class="progress-bar"><div class="progress-fill" style="width:40%; background:#f59e0b;"></div></div>
+                            <span style="font-weight:700; color:#f59e0b; font-size:12.5px;">40%</span>
+                        </td>
+                        <td><strong style="color:#38bdf8;">3</strong></td>
+                        <td><span style="color:var(--text-muted);">1</span></td>
+                        <td><span style="font-size:12px; color:#fbbf24;">⚠️ Draft</span></td>
+                        <td style="font-size:12px; color:var(--text-secondary); max-width:220px;">Genomic assembly curation</td>
+                        <td style="font-size:11.5px; color:var(--text-secondary); max-width:200px; font-family:monospace;">Under Investigation</td>
+                        <td><span class="btn-disabled">⏳ Maturing (&lt;80%)</span></td>
+                    </tr>
+                    <tr data-search="turtle turtle other vertebrate">
+                        <td>
+                            <strong style="color:#ffffff; font-size:14px;">Turtle</strong><br>
+                            <span style="font-size:11.5px; color:var(--text-secondary); font-style:italic;">Turtle</span>
+                        </td>
+                        <td><span style="font-size:12px; color:var(--text-secondary);">Other Vertebrate</span></td>
+                        <td>
+                            <div class="progress-bar"><div class="progress-fill" style="width:40%; background:#f59e0b;"></div></div>
+                            <span style="font-weight:700; color:#f59e0b; font-size:12.5px;">40%</span>
+                        </td>
+                        <td><strong style="color:#38bdf8;">3</strong></td>
+                        <td><span style="color:var(--text-muted);">0</span></td>
+                        <td><span style="font-size:12px; color:#fbbf24;">⚠️ Draft</span></td>
+                        <td style="font-size:12px; color:var(--text-secondary); max-width:220px;">Genomic assembly curation</td>
+                        <td style="font-size:11.5px; color:var(--text-secondary); max-width:200px; font-family:monospace;">Under Investigation</td>
+                        <td><span class="btn-disabled">⏳ Maturing (&lt;80%)</span></td>
+                    </tr>
+                    <tr data-search="bottlenose dolphin bottlenose dolphin other vertebrate">
+                        <td>
+                            <strong style="color:#ffffff; font-size:14px;">Bottlenose dolphin</strong><br>
+                            <span style="font-size:11.5px; color:var(--text-secondary); font-style:italic;">Bottlenose dolphin</span>
+                        </td>
+                        <td><span style="font-size:12px; color:var(--text-secondary);">Other Vertebrate</span></td>
+                        <td>
+                            <div class="progress-bar"><div class="progress-fill" style="width:40%; background:#f59e0b;"></div></div>
+                            <span style="font-weight:700; color:#f59e0b; font-size:12.5px;">40%</span>
+                        </td>
+                        <td><strong style="color:#38bdf8;">1</strong></td>
+                        <td><span style="color:var(--text-muted);">0</span></td>
+                        <td><span style="font-size:12px; color:#fbbf24;">⚠️ Draft</span></td>
+                        <td style="font-size:12px; color:var(--text-secondary); max-width:220px;">Genomic assembly curation</td>
+                        <td style="font-size:11.5px; color:var(--text-secondary); max-width:200px; font-family:monospace;">Under Investigation</td>
+                        <td><span class="btn-disabled">⏳ Maturing (&lt;80%)</span></td>
+                    </tr>
+                    <tr data-search="elephant elephant other vertebrate">
+                        <td>
+                            <strong style="color:#ffffff; font-size:14px;">Elephant</strong><br>
+                            <span style="font-size:11.5px; color:var(--text-secondary); font-style:italic;">Elephant</span>
+                        </td>
+                        <td><span style="font-size:12px; color:var(--text-secondary);">Other Vertebrate</span></td>
+                        <td>
+                            <div class="progress-bar"><div class="progress-fill" style="width:40%; background:#f59e0b;"></div></div>
+                            <span style="font-weight:700; color:#f59e0b; font-size:12.5px;">40%</span>
+                        </td>
+                        <td><strong style="color:#38bdf8;">1</strong></td>
+                        <td><span style="color:var(--text-muted);">0</span></td>
+                        <td><span style="font-size:12px; color:#fbbf24;">⚠️ Draft</span></td>
+                        <td style="font-size:12px; color:var(--text-secondary); max-width:220px;">Genomic assembly curation</td>
+                        <td style="font-size:11.5px; color:var(--text-secondary); max-width:200px; font-family:monospace;">Under Investigation</td>
+                        <td><span class="btn-disabled">⏳ Maturing (&lt;80%)</span></td>
+                    </tr>
+                    <tr data-search="gibbon gibbon other vertebrate">
+                        <td>
+                            <strong style="color:#ffffff; font-size:14px;">Gibbon</strong><br>
+                            <span style="font-size:11.5px; color:var(--text-secondary); font-style:italic;">Gibbon</span>
+                        </td>
+                        <td><span style="font-size:12px; color:var(--text-secondary);">Other Vertebrate</span></td>
+                        <td>
+                            <div class="progress-bar"><div class="progress-fill" style="width:40%; background:#f59e0b;"></div></div>
+                            <span style="font-weight:700; color:#f59e0b; font-size:12.5px;">40%</span>
+                        </td>
+                        <td><strong style="color:#38bdf8;">1</strong></td>
+                        <td><span style="color:var(--text-muted);">1</span></td>
+                        <td><span style="font-size:12px; color:#fbbf24;">⚠️ Draft</span></td>
+                        <td style="font-size:12px; color:var(--text-secondary); max-width:220px;">Genomic assembly curation</td>
+                        <td style="font-size:11.5px; color:var(--text-secondary); max-width:200px; font-family:monospace;">Under Investigation</td>
+                        <td><span class="btn-disabled">⏳ Maturing (&lt;80%)</span></td>
+                    </tr>
+                    <tr data-search="orangutan orangutan other vertebrate">
+                        <td>
+                            <strong style="color:#ffffff; font-size:14px;">Orangutan</strong><br>
+                            <span style="font-size:11.5px; color:var(--text-secondary); font-style:italic;">Orangutan</span>
+                        </td>
+                        <td><span style="font-size:12px; color:var(--text-secondary);">Other Vertebrate</span></td>
+                        <td>
+                            <div class="progress-bar"><div class="progress-fill" style="width:40%; background:#f59e0b;"></div></div>
+                            <span style="font-weight:700; color:#f59e0b; font-size:12.5px;">40%</span>
+                        </td>
+                        <td><strong style="color:#38bdf8;">1</strong></td>
+                        <td><span style="color:var(--text-muted);">3</span></td>
+                        <td><span style="font-size:12px; color:#fbbf24;">⚠️ Draft</span></td>
+                        <td style="font-size:12px; color:var(--text-secondary); max-width:220px;">Genomic assembly curation</td>
+                        <td style="font-size:11.5px; color:var(--text-secondary); max-width:200px; font-family:monospace;">Under Investigation</td>
+                        <td><span class="btn-disabled">⏳ Maturing (&lt;80%)</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <script>
+        function filterTable() {
+            const query = document.getElementById('speciesSearch').value.toLowerCase().trim();
+            const rows = document.querySelectorAll('#speciesTableBody tr');
+            let count = 0;
+            rows.forEach(r => {
+                const text = r.getAttribute('data-search') || '';
+                if (text.includes(query)) {
+                    r.style.display = '';
+                    count++;
+                } else {
+                    r.style.display = 'none';
+                }
+            });
+            document.getElementById('counterDisplay').innerText = `Showing ${count} species`;
+        }
+    </script>
+</body>
+</html>

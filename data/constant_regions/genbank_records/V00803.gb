@@ -1,0 +1,62 @@
+ID   V00803; SV 1; linear; gDNA; STD; MUS; 833 BP.
+XX
+AC   V00803;
+XX
+DT   15-MAY-1995 (Rel. 199520-1, arrived in LIGM-DB)
+DT   18-JAN-2013 (Rel. 201303-5, Last updated, Version 5)
+XX
+DE   Part of the gene for murine kappa-immunoglobulin (cell line MPC11).
+XX
+KW   antigen receptor; Immunoglobulin superfamily (IgSF); immunoglobulin (IG);
+KW   IG-Light; IG-Light-Kappa-IGK; variable; regular; gDNA.
+XX
+OS   Mus musculus (house mouse)
+OC   Sarcopterygii; Dipnotetrapodomorpha; Tetrapoda; Amniota; Mammalia; Theria;
+OC   Eutheria; Boreoeutheria; Euarchontoglires; Glires; Rodentia; Myomorpha;
+OC   Muroidea; Muridae; Murinae; Mus; Mus; Mus musculus.
+XX
+RN   [1]
+RC   Contact ncbi-contacts@bcm.tmc.edu for more information.
+RP   1-833
+RA   Rat Genome Sequencing Consortium;
+RT   ;
+RL   Submitted (11-JUL-2003) to the INSDC.
+RL   Human Genome Sequencing Center, Department of Molecular and Human Genetics,
+RL   Baylor College of Medicine, One Baylor Plaza, Houston, TX 77030, USA
+XX
+DR   ENA; V00803.
+DR   TRANSFAC; R00888; MOUSE$IGKL_12.
+DR   TRANSFAC; R00889; MOUSE$IGKL_13.
+DR   TRANSFAC; R00890; MOUSE$IGKL_14.
+XX
+CC   IMGT/LIGM-DB annotation level: keyword level
+CC   
+CC   KST MMU.IGKAP.MPC11
+XX
+FH   Key             Location/Qualifiers (from EMBL)
+FH   
+FT   source          1..833
+FT                   /organism="Mus musculus"
+FT                   /mol_type="genomic DNA"
+FT                   /db_xref="taxon:10090"
+FT   sig_peptide     145..192
+FT                   /note="first part of reading frame (leader)"
+FT   V_region        435..740
+FT                   /product="kappa immunoglobulin light chain"
+XX
+SQ   Sequence 833 BP; 222 A; 173 C; 198 G; 225 T; 15 other;
+     acatgtgatg ttctagtaaa ttttctgcta acaccaactt cctctgggtg ggtgaaacag        60
+     gggcaggtgc acatggagaa acagtacata tactctgctg atttgcatat gaaataattt       120
+     tataacagcc tggcnnnnnc tgcgatggag acagacacac tcctgctatg ggtgctnctg       180
+     ctctgggttc caggtgaggg cgtcagaagt gccgagagaa acctctgtgg acatcatgat       240
+     tttgcatgcc tatgggttca taaacactat aattaatgca ctgtaattgg ttattgtttc       300
+     ctggagaccc cttcatttac ctggatgtct aatagtgatg tccgcaagta ttcttgatat       360
+     ttttgttgaa aggtnnnctc tgctgggaag gcttttatac ataaataaca atagtctgtg       420
+     tgtttatcat tccaggttcc acaggtgaca ttgtgctgac ccaatctccg gcttctttgg       480
+     ctgtgtctct agggcagagg gccaccatat cctgcagagc cagtgaaagt gttgatagtt       540
+     atggcaatag ttttatgcac tggtaccagc agaaaccagg acagccaccc aaactcctca       600
+     tctatcgtgc atccaaccta gaatctggga tccctgccag gttcagtggc agtgggtcta       660
+     ggacagnnnn nnccctcacc attaatcctg tggaggctga tgatgttgca acctattact       720
+     gtcagcaaag taatgaggat ccgcacagtg ataggaacag agccactaat ctgaagagaa       780
+     cagagatgtg acagactaca ctaatgtgtg aaaaacaagg aaaggggtga ctt              833
+//

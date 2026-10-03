@@ -1,0 +1,119 @@
+ID   X14939; SV 1; linear; gDNA; STD; HUM; 1464 BP.
+XX
+AC   X14939;
+XX
+DT   03-MAY-1996 (Rel. 199618-5, arrived in LIGM-DB)
+DT   01-DEC-2022 (Rel. 202248-4, Last updated, Version 13)
+XX
+DE   Human C mu gene for IgM heavy chain, membrane exons
+XX
+KW   antigen receptor; Immunoglobulin superfamily (IgSF); immunoglobulin (IG);
+KW   IG-Heavy; IG-Heavy-Mu; constant; alternative splicing;
+KW   IMGT reference sequence; regular; gDNA; undefined; functional; C-gene.
+XX
+OS   Homo sapiens (human)
+OC   cellular organisms; Eukaryota; Opisthokonta; Metazoa; Eumetazoa; Bilateria;
+OC   Deuterostomia; Chordata; Craniata; Vertebrata; Gnathostomata; Teleostomi;
+OC   Euteleostomi; Sarcopterygii; Dipnotetrapodomorpha; Tetrapoda; Amniota;
+OC   Mammalia; Theria; Eutheria; Boreoeutheria; Euarchontoglires; Primates;
+OC   Haplorrhini; Simiiformes; Catarrhini; Hominoidea; Hominidae; Homininae;
+OC   Homo; Homo sapiens.
+XX
+RN   [1]
+RC   Contact ncbi-contacts@bcm.tmc.edu for more information.
+RP   1-1464
+RA   Rat Genome Sequencing Consortium;
+RT   ;
+RL   Submitted (11-JUL-2003) to the INSDC.
+RL   Human Genome Sequencing Center, Department of Molecular and Human Genetics,
+RL   Baylor College of Medicine, One Baylor Plaza, Houston, TX 77030, USA
+XX
+RN   [2]
+RC   NIH-MGC Project URL: http://mgc.nci.nih.gov
+RP   1-1464
+RA   Strausberg R.;
+RT   ;
+RL   Submitted (10-MAY-2004) to the INSDC.
+RL   National Institutes of Health, Mammalian Gene Collection (MGC), Cancer
+RL   Genomics Office, National Cancer Institute, 31 Center Drive, Room 11A03,
+RL   Bethesda, MD 20892-2590, USA
+XX
+DR   ENA; X14939.
+DR   GDB; GDB:120086.
+DR   GDB; GDB:174869.
+XX
+CC   IMGT/LIGM-DB annotation level: by annotators
+CC   
+CC   membrane exons M1 and M2 are located approximately 1.9kb
+CC   downstream from the CH4 exon (see X14940)
+XX
+FH   Key                 Location/Qualifiers
+FH   
+FT   C-GENE              <1..1464
+FT                       /partial
+FT                       /cell_line="HeLa"
+FT                       /cell_type="fibroblast"
+FT                       /chromosome="14"
+FT                       /clone_lib="lambda phage, EMBL 3"
+FT                       /db_xref="taxon:9606"
+FT                       /functional
+FT                       /IMGT_allele="IGHM*01"
+FT                       /IMGT_gene="IGHM"
+FT                       /IMGT_map="14q32.33"
+FT                       /organism="Homo sapiens"
+FT                       /tissue_type="muscle"
+FT   C-GENE-UNIT         <1..786
+FT                       /partial
+FT                       /db_xref="GOA:P20769"
+FT                       /db_xref="PID:e21240"
+FT                       /db_xref="UniProtKB/Swiss-Prot:P20769"
+FT                       /protein_id="CAA33065.1"
+FT   INTRON              <1..489
+FT                       /partial
+FT   ACCEPTOR-SPLICE     487..491
+FT   M1                  490..605
+FT                       /codon_start=3
+FT                       /translation="GEVSADEEGFENLWATASTFIVLFLLSLFYSTTVTLFK"
+FT   DONOR-SPLICE        605..607
+FT   CONNECTING-REGION   490..527
+FT                       /codon_start=3
+FT                       /translation="GEVSADEEGFEN"
+FT   TM-PART1            528..605
+FT                       /translation="LWATASTFIVLFLLSLFYSTTVTLFK"
+FT   INTRON              606..777
+FT   ACCEPTOR-SPLICE     775..779
+FT   M2                  778..783
+FT                       /translation="VK"
+FT   TM-PART2            778..780
+FT   CYTOPLASMIC-REGION  781..783
+FT   STOP-CODON          784..786
+FT   3'UTR               784..1464
+FT   POLYA_SIGNAL        1016..1022
+XX
+SQ   Sequence 1464 BP; 269 A; 475 C; 440 G; 280 T; 0 other;
+     cctgggtcct gggtcctggc agggtaggac aagtccgcca ggatgtcccc atgcagactc        60
+     tgctccaaga gggagctgga gagtcagggc cttggtgagg gagtcaggat cgggttcccc       120
+     cagctcagtc ctcccacctg ccagccccca cagcacaggg cagggccaca ccccctgctt       180
+     ccccctccag gagagtcagg acatgctggc cgctgctcgt ccgatcccca gctctctctg       240
+     catccaggat ctgaggaaaa gacctcagag tccgaccctg cccagcctcg gcctgcgccc       300
+     cgctgcatag gctttcaggg gcccagccca tgccctgggc agtgcccgag cccccctgca       360
+     cttgctctcc ccacccctgg gtgcagcaca gcctaggggc caagggtggg cctagaggat       420
+     gggccccggg gggctttgct gggtgccacc ccagcctgac cctattcccc cgtgctgtgt       480
+     ctcctgcaga gggggaggtg agcgccgacg aggagggctt tgagaacctg tgggccaccg       540
+     cctccacctt catcgtcctc ttcctcctga gcctcttcta cagtaccacc gtcaccttgt       600
+     tcaaggtagc acggctgtgg cacagggagg agggtgcagg gcgagtgtgg ggcccaggga       660
+     gcagcctggg ctggacgtct agcccggagg cccccacacc accccactgg gtcatctctg       720
+     ccccggctcc cttcccgacc acaggaaagc atttcacact gtctctgttg cctgtaggtg       780
+     aaatgatccc aacagaagaa catcggagac cagagagagg aactcaaagg gcgctgctcc       840
+     gggtctgggg tcctggcctg cgtggcctgt tggcacgtgt ttctcttccc cgcccggcct       900
+     ccagaagaga gctctcacac aggcttcctt ctcgaccggc aggggctggc tggcttgcag       960
+     gccacgaggt gggctctacc ccacactgct ttgcagagat acgcttgttg ccctgaaata      1020
+     aatatgcaca ttttatccat gaaactgctt tctggtgagg gtttttgttt ctttttcaaa      1080
+     cttcatgcta catggcatct caaggggacc ccagttccaa agggagctgt gaaaagagcg      1140
+     ctgggtcagc cagcgcaggg ggtttcgagg aaagccacgt gcccaggaaa ggggccgcag      1200
+     aagcaggtgg gccagactca gactcgggca tgcccagcct gatggaagga aggggactga      1260
+     gcaggagagg gttccaggcc tggtcctcca agcacagcct gaattgggag actggggctc      1320
+     agcctcgggg gcctctgtgt gtgctccaca tgcctacaac tgcccgggtc accttgccac      1380
+     ccttcccagc aagcccagac agttcttggc cttgccccaa accttcatga tgtgtggtgc      1440
+     acgccaccgg gatcctctag agtc                                             1464
+//

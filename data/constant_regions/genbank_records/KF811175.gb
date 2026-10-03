@@ -1,0 +1,62 @@
+LOCUS       KF811175                1005 bp    mRNA    linear   MAM 28-MAR-2014
+DEFINITION  Felis catus immunoglobulin G2 heavy chain consant region mRNA,
+            partial cds.
+ACCESSION   KF811175
+VERSION     KF811175.1
+KEYWORDS    .
+SOURCE      Felis catus (domestic cat)
+  ORGANISM  Felis catus
+            Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi;
+            Mammalia; Eutheria; Laurasiatheria; Carnivora; Feliformia; Felidae;
+            Felinae; Felis.
+REFERENCE   1  (bases 1 to 1005)
+  AUTHORS   Strietzel,C.J., Bergeron,L.M., Oliphant,T., Mutchler,V.T.,
+            Choromanski,L.J. and Bainbridge,G.
+  TITLE     In Vitro functional characterization of feline IgGs
+  JOURNAL   Vet. Immunol. Immunopathol. 158 (3-4), 214-233 (2014)
+   PUBMED   24560097
+REFERENCE   2  (bases 1 to 1005)
+  AUTHORS   Strietzel,C.J., Bergeron,L.M. and Bainbridge,G.
+  TITLE     Direct Submission
+  JOURNAL   Submitted (06-NOV-2013) Biotherapeutics, Zoetis, Inc., 333 Portage
+            Rd, Kalamazoo, MI 49006, USA
+COMMENT     ##Assembly-Data-START##
+            Sequencing Technology :: Sanger dideoxy sequencing
+            ##Assembly-Data-END##
+FEATURES             Location/Qualifiers
+     source          1..1005
+                     /organism="Felis catus"
+                     /mol_type="mRNA"
+                     /isolation_source="spleen"
+                     /db_xref="taxon:9685"
+     CDS             <1..>1005
+                     /codon_start=1
+                     /product="immunoglobulin G2 heavy chain consant region"
+                     /protein_id="AHH34165.1"
+                     /translation="ASTTASSVFPLAPSCGTTSGATVALACLVLGYFPEPVTVSWNSG
+                     ALTSGVHTFPSVLQASGLYSLSSMVTVPSSRWLSDTFTCNVAHRPSSTKVDKTVPKTA
+                     STIESKTGEGPKCPVPEIPGAPSVFIFPPKPKDTLSISRTPEVTCLVVDLGPDDSNVQ
+                     ITWFVDNTEMHTAKTRPREEQFNSTYRVVSVLPILHQDWLKGKEFKCKVNSKSLPSAM
+                     ERTISKAKGQPHEPQVYVLPPTQEELSENKVSVTCLIKGFHPPDIAVEWEITGQPEPE
+                     NNYQTTPPQLDSDGTYFLYSRLSVDRSHWQRGNTYTCSVSHEALHSHHTQKSLTQSPG
+                     K"
+ORIGIN      
+        1 gcctccacca cggcctcatc ggtgttccca ctggccccca gctgcgggac cacatctggc
+       61 gccaccgtgg ccctggcctg cctggtgtta ggctacttcc ctgagccggt gaccgtgtcc
+      121 tggaactccg gcgccctgac cagcggtgtg cacaccttcc catccgtcct gcaggcctcg
+      181 gggctgtact ctctcagcag catggtgaca gtgccctcca gcaggtggct cagtgacacc
+      241 ttcacctgca acgtggccca ccggcccagc agcaccaaag tggacaagac cgtacccaaa
+      301 acagcgtcta caatagagtc caaaaccggg gaaggtccca aatgcccagt tcctgagatt
+      361 cctggagcac cgtccgtctt catcttcccc ccaaaaccca aggacaccct ctcgatttcc
+      421 cggacgcccg aggtcacgtg cttggtggtg gacttgggcc cagatgactc caatgtccag
+      481 atcacatggt ttgtggataa caccgagatg cacacagcca agacgaggcc gcgtgaggag
+      541 cagttcaaca gcacctaccg tgtggtcagt gtcctcccca tcctacacca ggactggctc
+      601 aaggggaagg agttcaagtg caaggtcaac agcaaatccc tcccctctgc catggagagg
+      661 accatctcca aggccaaagg acagccccac gagccccagg tgtacgtcct gcctccaacc
+      721 caggaggagc tcagcgagaa caaagtcagt gtgacctgcc tgatcaaagg cttccacccg
+      781 cctgacattg ccgtcgagtg ggagatcacc ggacagccgg agccagagaa caactaccag
+      841 acgaccccgc cccagctgga cagcgacggg acctacttcc tgtacagcag gctctcggtg
+      901 gacaggtccc actggcagag gggaaacacc tacacctgct cggtgtcaca cgaagctctg
+      961 cacagccacc acacacagaa atccctcacc cagtctccgg gtaaa
+//
+

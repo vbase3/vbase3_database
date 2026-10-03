@@ -1,0 +1,231 @@
+ID   J00221; SV 1; linear; gDNA; STD; HUM; 2516 BP.
+XX
+AC   J00221;
+XX
+DT   15-MAY-1995 (Rel. 199520-1, arrived in LIGM-DB)
+DT   08-FEB-2023 (Rel. 202306-3, Last updated, Version 38)
+XX
+DE   Human Ig germline H-chain G-E-A region B: alpha-2 A2m(1) allele constant
+DE   region, 3' end.
+XX
+KW   antigen receptor; Immunoglobulin superfamily (IgSF); immunoglobulin (IG);
+KW   IG-Heavy; IG-Heavy-Alpha; constant; IG-Heavy-Alpha-2-IGHA2; regular; gDNA;
+KW   undefined; functional; C-gene.
+XX
+OS   Homo sapiens (human)
+OC   cellular organisms; Eukaryota; Opisthokonta; Metazoa; Eumetazoa; Bilateria;
+OC   Deuterostomia; Chordata; Craniata; Vertebrata; Gnathostomata; Teleostomi;
+OC   Euteleostomi; Sarcopterygii; Dipnotetrapodomorpha; Tetrapoda; Amniota;
+OC   Mammalia; Theria; Eutheria; Boreoeutheria; Euarchontoglires; Primates;
+OC   Haplorrhini; Simiiformes; Catarrhini; Hominoidea; Hominidae; Homininae;
+OC   Homo; Homo sapiens.
+XX
+RN   [1]
+RP   1-2516
+RX   DOI; 10.1073/pnas.79.6.1984.
+RX   PUBMED; 6804948.
+RA   Ellison J., Hood L.;
+RT   "Linkage and sequence homology of two human immunoglobulin gamma heavy
+RT   chain constant region genes";
+RL   Proc. Natl. Acad. Sci. U.S.A. 79(6):1984-1988(1982).
+XX
+RN   [2]
+RP   737-1016
+RX   DOI; 10.1038/300709a0.
+RX   PUBMED; 6817141.
+RA   Flanagan J.G., Rabbitts T.H.;
+RT   "Arrangement of human immunoglobulin heavy chain constant region genes
+RT   implies evolutionary duplication of a segment containing gamma, epsilon and
+RT   alpha genes";
+RL   Nature 300(5894):709-713(1982).
+XX
+RN   [3]
+RP   49-229
+RX   PUBMED; 6407005.
+RA   Hisajima H., Nishida Y., Nakai S., Takahashi N., Ueda S., Honjo T.;
+RT   "Structure of the human immunoglobulin C epsilon 2 gene, a truncated
+RT   pseudogene: implications for its evolutionary origin";
+RL   Proc. Natl. Acad. Sci. U.S.A. 80(10):2995-2999(1983).
+XX
+RN   [3]
+RP   425-514
+RX   PUBMED; 6407005.
+RA   Hisajima H., Nishida Y., Nakai S., Takahashi N., Ueda S., Honjo T.;
+RT   "Structure of the human immunoglobulin C epsilon 2 gene, a truncated
+RT   pseudogene: implications for its evolutionary origin";
+RL   Proc. Natl. Acad. Sci. U.S.A. 80(10):2995-2999(1983).
+XX
+RN   [4]
+RP   1-2516
+RX   DOI; 10.1016/0092-8674(84)90348-9.
+RX   PUBMED; 6421489.
+RA   Flanagan J.G., Lefranc M.P., Rabbitts T.H.;
+RT   "Mechanisms of divergence and convergence of the human immunoglobulin alpha
+RT   1 and alpha 2 constant region gene sequences";
+RL   Cell 36(3):681-688(1984).
+XX
+DR   ENA; J00221.
+DR   GDB; GDB:119333.
+DR   GDB; GDB:185637.
+DR   GDB; GDB:9879528.
+XX
+CC   IMGT/LIGM-DB annotation level: by annotators
+CC   
+CC   [3] also reports the complete alpha-1 gene and part of the A2m(2)
+CC   alpha-2 allele (bases 737-2516; see Sites table). Comparison of the
+CC   three sequences suggests that the A2m(1) alpha-2 allele might be a
+CC   hybrid of the alpha-1 gene and A2m(2) alpha-2 allele. The hinge
+CC   region in the alpha genes occurs at beginning of the CH2 domain.
+CC   The alpha-1 hinge region is 13 amino acids longer than that in
+CC   alpha-2. Both hinge regions consist of approximate tandem repeats
+CC   of a 15 bp sequence. The first repeat occurs 5' to the mRNA splice
+CC   site and is non-coding. The authors [3] suggest that this
+CC   repetitive structure provides a possible mechanism for the large
+CC   number of variations observed in hinge regions. There is a coupled
+CC   30 bp insertion, 9 bp deletion in alpha-2 relative to alpha-1
+CC   (starting at base 97).
+CC   [1] also reports sequences for the epsilon-1 and epsilon-2
+CC   (pseudogene) C-region genes. The authors [1] determined the
+CC   physical linkage between epsilon-1 and alpha-2 and that between
+CC   epsilon-2 and alpha-1. [2] also reports the alpha-1 CH2 domain and
+CC   epsilon-2.
+CC   This entry is part of a multigene region (region B), which includes
+CC   the gamma-2, gamma-4, epsilon-1 and alpha-2 genes. See segment 1
+CC   for more comments.
+CC   Complete source information:
+CC   Human genomic DNA, cosmid Ig10 [1],[3]; placenta DNA [2] clone
+CC   H-Ig-alpha-25; genomic DNA from TOU II-5 library clone
+CC   lambda-TOU-alpha2 (for A2m(2) allele) [3].
+XX
+FH   Key                 Location/Qualifiers
+FH   
+FT   C-GENE              1..>2516
+FT                       /partial
+FT                       /db_xref="taxon:9606"
+FT                       /functional
+FT                       /IMGT_allele="IGHA2*01"
+FT                       /IMGT_gene="IGHA2"
+FT                       /IMGT_map="14q32.33"
+FT                       /organism="Homo sapiens"
+FT   5'UTR               1..163
+FT   ACCEPTOR-SPLICE     161..165
+FT   C-GENE-UNIT         164..>2516
+FT                       /partial
+FT                       /db_xref="Genew:5479"
+FT                       /db_xref="GOA:P01877"
+FT                       /db_xref="HSSP:1OW0"
+FT                       /db_xref="UniProtKB/Swiss-Prot:P01877"
+FT                       /protein_id="AAB59396.1"
+FT   CH1                 164..469
+FT                       /codon_start=3
+FT                       /translation="SPTSPKVFPLSLDSTPQDGNVVVACLVQGFFPQEPLSVTWS
+FT                       ESGQNVTARNFPPSQDASGDLYTTSSQLTLPATQCPDGKSVTCHVKHYTNPSQDV
+FT                       TVPCP"
+FT   DONOR-SPLICE        469..471
+FT   INTRON              470..983
+FT   ACCEPTOR-SPLICE     681..685
+FT   H-CH2               684..1004
+FT                       /codon_start=3
+FT                       /translation="PPPPPCCHPRLSLHRPALEDLLLGSEANLTCTLTGLRDASG
+FT                       ATFTWTPSSGKSAVQGPPERDLCGCYSVSSVLPGCAQPWNHGETFTCTAAHPELK
+FT                       TPLTANITKS"
+FT                       /splice-expected-nt="g"
+FT                       /splice-expectedcodon="gtt [V]"
+FT                       /splicing-frame="sf1"
+FT   H                   684..700
+FT                       /codon_start=3
+FT                       /translation="PPPPP"
+FT   CH2                 701..1004
+FT                       /translation="CCHPRLSLHRPALEDLLLGSEANLTCTLTGLRDASGATFTW
+FT                       TPSSGKSAVQGPPERDLCGCYSVSSVLPGCAQPWNHGETFTCTAAHPELKTPLTA
+FT                       NITKS"
+FT   DONOR-SPLICE        1004..1006
+FT   INTRON              1005..1226
+FT   ACCEPTOR-SPLICE     1224..1228
+FT   CH3-CHS             1227..1618
+FT                       /codon_start=3
+FT                       /translation="NTFRPEVHLLPPPSEELALNELVTLTCLARGFSPKDVLVRW
+FT                       LQGSQELPREKYLTWASRQEPSQGTTTFAVTSILRVAAEDWKKGDTFSCMVGHEA
+FT                       LPLAFTQKTIDRLAGKPTHVNVSVVMAEVDGTCY"
+FT                       /splice-expected-nt="g"
+FT                       /splice-expectedcodon="gga [G]"
+FT                       /splicing-frame="sf1"
+FT   CH3                 1227..1558
+FT                       /codon_start=3
+FT                       /translation="NTFRPEVHLLPPPSEELALNELVTLTCLARGFSPKDVLVRW
+FT                       LQGSQELPREKYLTWASRQEPSQGTTTFAVTSILRVAAEDWKKGDTFSCMVGHEA
+FT                       LPLAFTQKTIDRLA"
+FT   CHS                 1559..1618
+FT                       /translation="GKPTHVNVSVVMAEVDGTCY"
+FT                       /IMGT_note="For complete translation nucleotide G at 
+FT                       position 1576 has been included in CH-S"
+FT   INT-DONOR-SPLICE    1559..1561
+FT   MISC_FEATURE        1434
+FT                       /note="t in allele A2m(1); a in allele A2m(2)"
+FT   MISC_FEATURE        1441
+FT                       /note="g in allele A2m(1); a  in allele A2m(2)"
+FT   MISC_FEATURE        1465
+FT                       /note="c in allele A2m(1); t in allele A2m(2)"
+FT   MISC_FEATURE        1486
+FT                       /note="c in allele A2m(1); g in allele A2m(2)"
+FT   MISC_FEATURE        1553
+FT                       /note="t in allele A2m(1); a in allele A2m(2)"
+FT   MISC_FEATURE        1573..1574
+FT                       /note="tg in allele A2m(1); ca in allele A2m(2)"
+FT   MISC_FEATURE        1602..1606
+FT                       /note="tggac in allele A2m(1); cggat in allele A2m(2)"
+FT   MISC_FEATURE        2060
+FT                       /note="c in allele A2m(1); t in allele A2m(2)"
+FT   MISC_FEATURE        2384
+FT                       /note="a in allele A2m(1); c in allele A2m(2)"
+FT   MISC_FEATURE        2390
+FT                       /note="c in allele A2m(1); g in allele A2m(2)"
+FT   INTRON              1619..>2516
+FT                       /partial
+FT   STOP-CODON          1619..1621
+FT   POLYA_SIGNAL        1646..1651
+XX
+SQ   Sequence 2516 BP; 488 A; 861 C; 754 G; 413 T; 0 other;
+     ggtccaaccg caggcccatg gtgcaggagc tgtgtaacct atggggctgt caccaggcct        60
+     ctctgtgctg ggttcctcca gtgtagagga gaggcaggta cagcctgtcc tcctggggac       120
+     atggcatgag ggccgcgtcc tcacagcgca ttctgtgttc cagcatcccc gaccagcccc       180
+     aaggtcttcc cgctgagcct cgacagcacc ccccaagatg ggaacgtggt cgtcgcatgc       240
+     ctggtccagg gcttcttccc ccaggagcca ctcagtgtga cctggagcga aagcggacag       300
+     aacgtgaccg ccagaaactt cccacctagc caggatgcct ccggggacct gtacaccacg       360
+     agcagccagc tgaccctgcc ggccacacag tgcccagacg gcaagtccgt gacatgccac       420
+     gtgaagcact acacgaatcc cagccaggat gtgactgtgc cctgcccagg tcagagggca       480
+     ggctggggag tggggcgggg ccaccccgtc ctgccctgac actgcgcctg cacccgtgtt       540
+     ccccacaggg agccgcccct tcactcacac cagagtggac cccgggccga gccccaggag       600
+     gtggtggtgg acaggccagg aggggcgagg cgggggcacg gggaagggcg ttctgaccag       660
+     ctcaggccat ctctccactc cagttccccc acctccccca tgctgccacc cccgactgtc       720
+     gctgcaccga ccggccctcg aggacctgct cttaggttca gaagcgaacc tcacgtgcac       780
+     actgaccggc ctgagagatg cctctggtgc caccttcacc tggacgccct caagtgggaa       840
+     gagcgctgtt caaggaccac ctgagcgtga cctctgtggc tgctacagcg tgtccagtgt       900
+     cctgcctggc tgtgcccagc catggaacca tggggagacc ttcacctgca ctgctgccca       960
+     ccccgagttg aagaccccac taaccgccaa catcacaaaa tccggtgggt ccagaccctg      1020
+     ctcggggccc tgctcagtgc tctggtttgc aaagcatatt cccggcctgc ctcctccctc      1080
+     ccaatcctgg gctccagtgc tcatgccaag tacacaggga aactgaggca ggctgagggg      1140
+     ccaggacaca gcccagggtg cccaccagag cagaggggct ctctcatccc ctgcccagcc      1200
+     ccctgacctg gctctctacc ctccaggaaa cacattccgg cccgaggtcc acctgctgcc      1260
+     gccgccgtcg gaggagctgg ccctgaacga gctggtgacg ctgacgtgcc tggcacgtgg      1320
+     cttcagcccc aaggatgtgc tggttcgctg gctgcagggg tcacaggagc tgccccgcga      1380
+     gaagtacctg acttgggcat cccggcagga gcccagccag ggcaccacca ccttcgctgt      1440
+     gaccagcata ctgcgcgtgg cagccgagga ctggaagaag ggggacacct tctcctgcat      1500
+     ggtgggccac gaggccctgc cgctggcctt cacacagaag accatcgacc gcttggcggg      1560
+     taaacccacc catgtcaatg tgtctgttgt catggcggag gtggacggca cctgctactg      1620
+     agccgcccgc ctgtccccac ccctgaataa actccatgct cccccaagca gccccacgct      1680
+     tccatccggc gcctgtctgt ccatcctcag ggtctcagca cttgggaaag ggccagggca      1740
+     tggacaggga agaatacccc ctgccctgag cctcgggggg cccctggcac ccccatgaga      1800
+     ctttccaccc tggtgtgagt gtgagttgtg agtgtgagag tgtgtggtgc aggaggcctc      1860
+     gctggtgtga gatcttaggt ctgccaaggc aggcacagcc caggatgggt tctgagagac      1920
+     gcacatgccc cggacagttc tgagtgagca gtggcatggc cgtttgtccc tgagagagcc      1980
+     gcctctggct gtagctggga gggaataggg agggtaaaag gagcaggcta gccaagaaag      2040
+     gcgcaggtag tggcaggagc ggcgagggag tgaggggctg gactccaggg ccccactggg      2100
+     aggacaagct ccaggagggc cccaccaccc tagtgggtgg gcctcaggac gtcccactga      2160
+     cgcatgcagg aaggggcacc tccccttaac cacactgctc tgtacggggc acgtgggcac      2220
+     acatgcacac tcacactcac atatacgcct gagccctgca ggagtggaac gttcacagcc      2280
+     cagacccagt tccagaaaag ccaggggagt cccctcccaa gcccccaagc tcagcctgct      2340
+     cccccaggcc cctctggctt ccctgtgttt ccactgtgca cagatcaggc accaactcca      2400
+     cagacccctc ccaggcagcc cctgctccct gcctggccaa gtctcccatc ccttcctaag      2460
+     cccaactagg acccaaagca tagacaggga ggggccgcgt ggggtggcat cagaag          2516
+//

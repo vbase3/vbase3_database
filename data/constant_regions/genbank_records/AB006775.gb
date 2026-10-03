@@ -1,0 +1,77 @@
+ID   AB006775; SV 1; linear; gDNA; STD; HUM; 170 BP.
+XX
+AC   AB006775;
+XX
+DT   11-SEP-1998 (Rel. 199837-5, arrived in LIGM-DB)
+DT   01-DEC-2022 (Rel. 202248-4, Last updated, Version 15)
+XX
+DE   Homo sapiens gene for membrane-bound form of IgG2 heavy chain, M1 exon.
+XX
+KW   antigen receptor; Immunoglobulin superfamily (IgSF); immunoglobulin (IG);
+KW   IG-Heavy; IG-Heavy-Gamma; constant; IG-Heavy-Gamma-2-IGHG2;
+KW   IMGT reference sequence; regular; gDNA; undefined; functional; C-gene.
+XX
+OS   Homo sapiens (human)
+OC   cellular organisms; Eukaryota; Opisthokonta; Metazoa; Eumetazoa; Bilateria;
+OC   Deuterostomia; Chordata; Craniata; Vertebrata; Gnathostomata; Teleostomi;
+OC   Euteleostomi; Sarcopterygii; Dipnotetrapodomorpha; Tetrapoda; Amniota;
+OC   Mammalia; Theria; Eutheria; Boreoeutheria; Euarchontoglires; Primates;
+OC   Haplorrhini; Simiiformes; Catarrhini; Hominoidea; Hominidae; Homininae;
+OC   Homo; Homo sapiens.
+XX
+RN   [1]
+RC   Contact ncbi-contacts@bcm.tmc.edu for more information.
+RP   1-680
+RA   Rat Genome Sequencing Consortium;
+RT   ;
+RL   Submitted (11-JUL-2003) to the INSDC.
+RL   Human Genome Sequencing Center, Department of Molecular and Human Genetics,
+RL   Baylor College of Medicine, One Baylor Plaza, Houston, TX 77030, USA
+XX
+RN   [2]
+RX   DOI; 10.1016/S0165-2478(97)00101-6.
+RX   PUBMED; 9373213.
+RA   Fukuoka M., Tokushima M., Koarada S., Sai T., Miyake K., Kimoto M.;
+RT   "Analysis of Vbeta4 T cell receptor CDR3 repertoire in BALB/c and (NZB x
+RT   NZW)F1 mice";
+RL   Immunol. Lett. 59(2):63-69(1997).
+XX
+DR   ENA; AB006775.
+XX
+CC   IMGT/LIGM-DB annotation level: by annotators
+XX
+FH   Key                 Location/Qualifiers
+FH   
+FT   C-GENE              <1..>170
+FT                       /partial
+FT                       /chromosome="14"
+FT                       /dev_stage="fetal"
+FT                       /functional
+FT                       /IMGT_allele="IGHG2*01"
+FT                       /IMGT_gene="IGHG2"
+FT                       /IMGT_map="14q32.33"
+FT                       /organism="Homo sapiens"
+FT                       /sequenced_mol="DNA"
+FT                       /tissue_type="liver"
+FT   C-GENE-UNIT         <1..>170
+FT                       /partial
+FT   INTRON              1..22
+FT   ACCEPTOR-SPLICE     20..24
+FT   M1                  23..153
+FT                       /codon_start=3
+FT                       /translation="LQLEESCAEAQDGELDGLWTTITIFITLFLLSVCYSATITF
+FT                       FK"
+FT   DONOR-SPLICE        153..155
+FT   CONNECTING-REGION   23..75
+FT                       /codon_start=3
+FT                       /translation="LQLEESCAEAQDGELDG"
+FT   TM-PART1            76..153
+FT                       /translation="LWTTITIFITLFLLSVCYSATITFFK"
+FT   INTRON              154..>170
+FT                       /partial
+XX
+SQ   Sequence 170 BP; 33 A; 53 C; 48 G; 36 T; 0 other;
+     tgaccaccca cttcctgtcc agagctgcaa ctggaggaga gctgtgcgga ggcgcaggac        60
+     ggggagctgg acgggctgtg gacgaccatc accatcttca tcacactctt cctgctaagc       120
+     gtgtgctaca gtgccaccat caccttcttc aaggttggcc gcacgttgtc                  170
+//

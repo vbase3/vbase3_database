@@ -1,0 +1,785 @@
+{
+  "species": "human",
+  "chain": "heavy",
+  "total_sequences": 269190468,
+  "v_j_matrix": {
+    "IGHV4-4": {
+      "IGHJ5": 1504972,
+      "IGHJ6": 1429683,
+      "IGHJ4": 3295088,
+      "IGHJ2": 139469,
+      "IGHJ3": 580625,
+      "IGHJ1": 79460
+    },
+    "IGHV4-30-4": {
+      "IGHJ1": 64332,
+      "IGHJ4": 2498256,
+      "IGHJ6": 1145516,
+      "IGHJ3": 389055,
+      "IGHJ5": 1143239,
+      "IGHJ2": 126240
+    },
+    "IGHV4-59": {
+      "IGHJ6": 3521199,
+      "IGHJ4": 7288350,
+      "IGHJ5": 3059108,
+      "IGHJ3": 1445519,
+      "IGHJ2": 292170,
+      "IGHJ1": 165257
+    },
+    "IGHV1-8": {
+      "IGHJ6": 1761371,
+      "IGHJ4": 2366310,
+      "IGHJ5": 1217115,
+      "IGHJ3": 460046,
+      "IGHJ2": 72309,
+      "IGHJ1": 56457
+    },
+    "IGHV1-69": {
+      "IGHJ6": 8249529,
+      "IGHJ4": 8650009,
+      "IGHJ5": 3062960,
+      "IGHJ3": 2127445,
+      "IGHJ2": 500026,
+      "IGHJ1": 346558
+    },
+    "IGHV4-61": {
+      "IGHJ4": 1873054,
+      "IGHJ6": 1054860,
+      "IGHJ5": 787834,
+      "IGHJ3": 260141,
+      "IGHJ2": 62379,
+      "IGHJ1": 50458
+    },
+    "IGHV4-34": {
+      "IGHJ4": 4676173,
+      "IGHJ5": 2162569,
+      "IGHJ6": 2781530,
+      "IGHJ3": 812946,
+      "IGHJ2": 208762,
+      "IGHJ1": 149773
+    },
+    "IGHV1-2": {
+      "IGHJ5": 1090038,
+      "IGHJ4": 2844754,
+      "IGHJ6": 2289934,
+      "IGHJ3": 778150,
+      "IGHJ1": 96980,
+      "IGHJ2": 82553
+    },
+    "IGHV4-31": {
+      "IGHJ6": 1855694,
+      "IGHJ5": 2353363,
+      "IGHJ4": 4536789,
+      "IGHJ2": 210781,
+      "IGHJ3": 923102,
+      "IGHJ1": 138211
+    },
+    "IGHV3-11": {
+      "IGHJ4": 2134007,
+      "IGHJ5": 525635,
+      "IGHJ6": 1026403,
+      "IGHJ3": 443555,
+      "IGHJ2": 86257,
+      "IGHJ1": 60952
+    },
+    "IGHV4-39": {
+      "IGHJ4": 6560791,
+      "IGHJ2": 206369,
+      "IGHJ6": 2211292,
+      "IGHJ5": 2621371,
+      "IGHJ3": 959619,
+      "IGHJ1": 192266
+    },
+    "IGHV5-51": {
+      "IGHJ3": 1194923,
+      "IGHJ4": 3321538,
+      "IGHJ5": 1008227,
+      "IGHJ6": 2907726,
+      "IGHJ2": 83159,
+      "IGHJ1": 99320
+    },
+    "IGHV1-3": {
+      "IGHJ4": 3056022,
+      "IGHJ6": 1281704,
+      "IGHJ5": 1013451,
+      "IGHJ3": 504610,
+      "IGHJ2": 100959,
+      "IGHJ1": 90081
+    },
+    "IGHV3-30": {
+      "IGHJ4": 6400525,
+      "IGHJ6": 3289814,
+      "IGHJ5": 951366,
+      "IGHJ3": 937980,
+      "IGHJ2": 192955,
+      "IGHJ1": 272925
+    },
+    "IGHV1-18": {
+      "IGHJ4": 9556162,
+      "IGHJ6": 4628199,
+      "IGHJ5": 2893947,
+      "IGHJ3": 1630994,
+      "IGHJ1": 271503,
+      "IGHJ2": 243448
+    },
+    "IGHV3-13": {
+      "IGHJ4": 271771,
+      "IGHJ3": 123267,
+      "IGHJ2": 56661,
+      "IGHJ5": 87933,
+      "IGHJ6": 428706,
+      "IGHJ1": 5065
+    },
+    "IGHV3-23": {
+      "IGHJ6": 4525256,
+      "IGHJ4": 15998345,
+      "IGHJ5": 2910673,
+      "IGHJ3": 2663529,
+      "IGHJ2": 561672,
+      "IGHJ1": 510413
+    },
+    "IGHV1-46": {
+      "IGHJ5": 925724,
+      "IGHJ4": 2844947,
+      "IGHJ6": 1334875,
+      "IGHJ3": 602872,
+      "IGHJ1": 121022,
+      "IGHJ2": 54625
+    },
+    "IGHV3-53": {
+      "IGHJ4": 1498716,
+      "IGHJ6": 739947,
+      "IGHJ5": 262601,
+      "IGHJ3": 441713,
+      "IGHJ1": 63453,
+      "IGHJ2": 62822
+    },
+    "IGHV3-15": {
+      "IGHJ6": 915497,
+      "IGHJ4": 3037496,
+      "IGHJ5": 391776,
+      "IGHJ3": 451126,
+      "IGHJ1": 80356,
+      "IGHJ2": 36386
+    },
+    "IGHV3-21": {
+      "IGHJ2": 94246,
+      "IGHJ6": 1951274,
+      "IGHJ4": 3356376,
+      "IGHJ3": 809115,
+      "IGHJ5": 811687,
+      "IGHJ1": 108259
+    },
+    "IGHV3-9": {
+      "IGHJ4": 1622482,
+      "IGHJ6": 850072,
+      "IGHJ3": 508935,
+      "IGHJ2": 65885,
+      "IGHJ5": 256906,
+      "IGHJ1": 131044
+    },
+    "IGHV3-48": {
+      "IGHJ4": 3339945,
+      "IGHJ5": 740736,
+      "IGHJ6": 1625604,
+      "IGHJ3": 728814,
+      "IGHJ2": 110656,
+      "IGHJ1": 103459
+    },
+    "IGHV3-49": {
+      "IGHJ4": 629177,
+      "IGHJ6": 314550,
+      "IGHJ5": 106617,
+      "IGHJ3": 105460,
+      "IGHJ1": 24192,
+      "IGHJ2": 14885
+    },
+    "IGHV2-70": {
+      "IGHJ2": 5281,
+      "IGHJ4": 301502,
+      "IGHJ6": 220010,
+      "IGHJ5": 56772,
+      "IGHJ3": 56916,
+      "IGHJ1": 3195
+    },
+    "IGHV6-1": {
+      "IGHJ4": 1211037,
+      "IGHJ5": 641954,
+      "IGHJ2": 30760,
+      "IGHJ6": 1003137,
+      "IGHJ3": 328214,
+      "IGHJ1": 18556
+    },
+    "IGHV3-74": {
+      "IGHJ4": 3333629,
+      "IGHJ6": 1060374,
+      "IGHJ3": 553302,
+      "IGHJ5": 648185,
+      "IGHJ2": 82502,
+      "IGHJ1": 85435
+    },
+    "IGHV3-66": {
+      "IGHJ6": 621387,
+      "IGHJ5": 159817,
+      "IGHJ4": 937033,
+      "IGHJ3": 251485,
+      "IGHJ1": 44120,
+      "IGHJ2": 40938
+    },
+    "IGHV2-5": {
+      "IGHJ4": 4065524,
+      "IGHJ6": 807256,
+      "IGHJ5": 1291966,
+      "IGHJ3": 631191,
+      "IGHJ2": 131043,
+      "IGHJ1": 138485
+    },
+    "IGHV3-33": {
+      "IGHJ4": 3959737,
+      "IGHJ5": 634120,
+      "IGHJ2": 143240,
+      "IGHJ6": 2239584,
+      "IGHJ3": 773236,
+      "IGHJ1": 109382
+    },
+    "IGHV3-43D": {
+      "IGHJ4": 44209,
+      "IGHJ3": 4295,
+      "IGHJ6": 32266,
+      "IGHJ5": 4233,
+      "IGHJ2": 671,
+      "IGHJ1": 1610
+    },
+    "IGHV3-7": {
+      "IGHJ6": 1259305,
+      "IGHJ1": 109319,
+      "IGHJ5": 594995,
+      "IGHJ4": 3661173,
+      "IGHJ3": 796015,
+      "IGHJ2": 91188
+    },
+    "IGHV1-24": {
+      "IGHJ4": 880196,
+      "IGHJ3": 204525,
+      "IGHJ5": 235974,
+      "IGHJ6": 313749,
+      "IGHJ2": 21340,
+      "IGHJ1": 29558
+    },
+    "IGHV1-58": {
+      "IGHJ4": 558875,
+      "IGHJ6": 445562,
+      "IGHJ5": 114865,
+      "IGHJ3": 168535,
+      "IGHJ1": 25903,
+      "IGHJ2": 16232
+    },
+    "IGHV3-64": {
+      "IGHJ6": 225903,
+      "IGHJ5": 32808,
+      "IGHJ4": 298174,
+      "IGHJ3": 70640,
+      "IGHJ1": 7407,
+      "IGHJ2": 17266
+    },
+    "IGHV3-73": {
+      "IGHJ4": 638364,
+      "IGHJ6": 327446,
+      "IGHJ3": 111313,
+      "IGHJ5": 129119,
+      "IGHJ1": 15837,
+      "IGHJ2": 30507
+    },
+    "IGHV3-NL1": {
+      "IGHJ5": 1343,
+      "IGHJ6": 4327,
+      "IGHJ4": 8533,
+      "IGHJ3": 2428,
+      "IGHJ2": 231,
+      "IGHJ1": 543
+    },
+    "IGHV3-43": {
+      "IGHJ4": 204860,
+      "IGHJ6": 134884,
+      "IGHJ3": 35426,
+      "IGHJ2": 4979,
+      "IGHJ5": 24130,
+      "IGHJ1": 7824
+    },
+    "IGHV3-20": {
+      "IGHJ4": 210910,
+      "IGHJ6": 81487,
+      "IGHJ2": 13236,
+      "IGHJ3": 62977,
+      "IGHJ5": 45182,
+      "IGHJ1": 4925
+    },
+    "IGHV3-69-1": {
+      "IGHJ4": 3701,
+      "IGHJ3": 871,
+      "IGHJ6": 1645,
+      "IGHJ5": 482,
+      "IGHJ2": 176,
+      "IGHJ1": 90
+    },
+    "IGHV3-72": {
+      "IGHJ6": 203751,
+      "IGHJ3": 118965,
+      "IGHJ4": 963541,
+      "IGHJ5": 94121,
+      "IGHJ1": 22009,
+      "IGHJ2": 34891
+    },
+    "IGHV2-26": {
+      "IGHJ5": 207266,
+      "IGHJ6": 209512,
+      "IGHJ4": 315454,
+      "IGHJ2": 27082,
+      "IGHJ3": 54630,
+      "IGHJ1": 5195
+    },
+    "IGHV3-71": {
+      "IGHJ5": 45,
+      "IGHJ3": 88,
+      "IGHJ4": 297,
+      "IGHJ6": 186,
+      "IGHJ2": 8,
+      "IGHJ1": 22
+    },
+    "IGHV1-68": {
+      "IGHJ4": 74,
+      "IGHJ6": 39,
+      "IGHJ3": 26,
+      "IGHJ1": 4,
+      "IGHJ5": 20,
+      "IGHJ2": 3
+    },
+    "IGHV4-28": {
+      "IGHJ6": 17720,
+      "IGHJ4": 113144,
+      "IGHJ3": 15003,
+      "IGHJ5": 17582,
+      "IGHJ2": 2892,
+      "IGHJ1": 778
+    },
+    "IGHV3-47": {
+      "IGHJ2": 16,
+      "IGHJ4": 498,
+      "IGHJ6": 429,
+      "IGHJ3": 212,
+      "IGHJ5": 85,
+      "IGHJ1": 217
+    },
+    "IGHV3-52": {
+      "IGHJ5": 248,
+      "IGHJ6": 752,
+      "IGHJ4": 1393,
+      "IGHJ3": 413,
+      "IGHJ2": 58,
+      "IGHJ1": 96
+    },
+    "IGHV1-45": {
+      "IGHJ4": 59805,
+      "IGHJ3": 16924,
+      "IGHJ5": 10787,
+      "IGHJ1": 732,
+      "IGHJ6": 9943,
+      "IGHJ2": 584
+    },
+    "IGHV3/OR16-10": {
+      "IGHJ6": 36,
+      "IGHJ3": 27,
+      "IGHJ4": 43,
+      "IGHJ5": 5,
+      "IGHJ1": 4,
+      "IGHJ2": 2
+    },
+    "IGHV4-38-2": {
+      "IGHJ4": 851305,
+      "IGHJ3": 118021,
+      "IGHJ5": 369002,
+      "IGHJ6": 222262,
+      "IGHJ2": 22010,
+      "IGHJ1": 18025
+    },
+    "IGHV1/OR15-3": {
+      "IGHJ5": 78,
+      "IGHJ6": 114,
+      "IGHJ1": 7,
+      "IGHJ4": 183,
+      "IGHJ3": 52,
+      "IGHJ2": 9
+    },
+    "IGHV4-30-2": {
+      "IGHJ3": 252446,
+      "IGHJ4": 1686831,
+      "IGHJ6": 424752,
+      "IGHJ5": 1006463,
+      "IGHJ1": 36016,
+      "IGHJ2": 86073
+    },
+    "IGHV3-30-3": {
+      "IGHJ4": 3262529,
+      "IGHJ6": 1855720,
+      "IGHJ3": 513127,
+      "IGHJ2": 159298,
+      "IGHJ5": 518273,
+      "IGHJ1": 116529
+    },
+    "IGHV1/OR15-2": {
+      "IGHJ4": 70,
+      "IGHJ6": 36,
+      "IGHJ3": 8,
+      "IGHJ5": 25,
+      "IGHJ1": 1,
+      "IGHJ2": 4
+    },
+    "IGHV3-22": {
+      "IGHJ4": 106,
+      "IGHJ6": 38,
+      "IGHJ5": 13,
+      "IGHJ3": 29,
+      "IGHJ1": 3,
+      "IGHJ2": 3
+    },
+    "IGHV7-4-1": {
+      "IGHJ4": 75670,
+      "IGHJ6": 109823,
+      "IGHJ5": 25435,
+      "IGHJ2": 3137,
+      "IGHJ3": 18108,
+      "IGHJ1": 1386
+    },
+    "IGHV3-35": {
+      "IGHJ4": 1866,
+      "IGHJ6": 2283,
+      "IGHJ3": 702,
+      "IGHJ5": 520,
+      "IGHJ2": 54,
+      "IGHJ1": 95
+    },
+    "IGHV3-64D": {
+      "IGHJ4": 430272,
+      "IGHJ3": 67063,
+      "IGHJ6": 123909,
+      "IGHJ5": 75665,
+      "IGHJ1": 11116,
+      "IGHJ2": 4460
+    },
+    "IGHV5-10-1": {
+      "IGHJ4": 964230,
+      "IGHJ3": 211593,
+      "IGHJ5": 338826,
+      "IGHJ6": 1094061,
+      "IGHJ2": 15787,
+      "IGHJ1": 13241
+    },
+    "IGHV1-69-2": {
+      "IGHJ4": 24742,
+      "IGHJ6": 14027,
+      "IGHJ5": 8032,
+      "IGHJ3": 2867,
+      "IGHJ2": 783,
+      "IGHJ1": 528
+    },
+    "IGHV4-55": {
+      "IGHJ4": 146,
+      "IGHJ3": 18,
+      "IGHJ5": 32,
+      "IGHJ2": 6,
+      "IGHJ6": 45,
+      "IGHJ1": 4
+    },
+    "IGHV4/OR15-8": {
+      "IGHJ6": 306,
+      "IGHJ5": 270,
+      "IGHJ4": 838,
+      "IGHJ2": 96,
+      "IGHJ1": 56,
+      "IGHJ3": 210
+    },
+    "IGHV1/OR15-1": {
+      "IGHJ5": 33,
+      "IGHJ4": 85,
+      "IGHJ6": 38,
+      "IGHJ3": 20,
+      "IGHJ1": 3,
+      "IGHJ2": 9
+    },
+    "IGHV2-70D": {
+      "IGHJ4": 2168,
+      "IGHJ6": 327,
+      "IGHJ3": 568,
+      "IGHJ5": 499,
+      "IGHJ1": 48,
+      "IGHJ2": 82
+    },
+    "IGHV3-30-5": {
+      "IGHJ4": 4
+    },
+    "IGHV3-19": {
+      "IGHJ4": 1129,
+      "IGHJ6": 575,
+      "IGHJ5": 239,
+      "IGHJ3": 211,
+      "IGHJ2": 48,
+      "IGHJ1": 22
+    },
+    "IGHV3-23D": {
+      "IGHJ4": 13,
+      "IGHJ3": 2,
+      "IGHJ1": 1
+    },
+    "IGHV5-78": {
+      "IGHJ4": 2,
+      "IGHJ6": 2,
+      "IGHJ3": 1
+    },
+    "IGHV3-38-3": {
+      "IGHJ5": 100,
+      "IGHJ3": 207,
+      "IGHJ4": 620,
+      "IGHJ6": 342,
+      "IGHJ1": 57,
+      "IGHJ2": 28
+    },
+    "IGHV3-62": {
+      "IGHJ4": 16,
+      "IGHJ3": 3,
+      "IGHJ6": 1
+    },
+    "IGHV3/OR16-9": {
+      "IGHJ5": 7,
+      "IGHJ4": 31,
+      "IGHJ6": 11,
+      "IGHJ3": 5,
+      "IGHJ1": 1,
+      "IGHJ2": 2
+    },
+    "IGHV3-38": {
+      "IGHJ4": 36,
+      "IGHJ6": 41,
+      "IGHJ3": 21,
+      "IGHJ1": 9,
+      "IGHJ5": 8,
+      "IGHJ2": 4
+    },
+    "IGHV3-16": {
+      "IGHJ4": 4,
+      "IGHJ6": 4,
+      "IGHJ1": 1
+    },
+    "IGHV1/OR15-9": {
+      "IGHJ5": 1,
+      "IGHJ4": 4,
+      "IGHJ6": 2
+    },
+    "IGHV7-81": {
+      "IGHJ6": 30,
+      "IGHJ4": 48,
+      "IGHJ3": 5,
+      "IGHJ5": 10,
+      "IGHJ1": 4,
+      "IGHJ2": 1
+    },
+    "IGHV2-10": {
+      "IGHJ3": 4,
+      "IGHJ4": 8,
+      "IGHJ5": 6,
+      "IGHJ6": 3,
+      "IGHJ1": 1
+    },
+    "IGHV3/OR16-8": {
+      "IGHJ6": 2,
+      "IGHJ5": 2,
+      "IGHJ1": 1,
+      "IGHJ3": 2,
+      "IGHJ4": 3
+    },
+    "IGHV1/OR15-4": {
+      "IGHJ4": 3,
+      "IGHJ3": 1
+    },
+    "IGHV3-41": {
+      "IGHJ4": 10,
+      "IGHJ3": 2,
+      "IGHJ6": 6,
+      "IGHJ5": 2,
+      "IGHJ1": 1
+    },
+    "IGHV3/OR16-17": {
+      "IGHJ6": 2,
+      "IGHJ3": 1
+    },
+    "IGHV1/OR15-5": {
+      "IGHJ6": 1,
+      "IGHJ4": 2,
+      "IGHJ5": 2
+    },
+    "IGHV1-38-4": {
+      "IGHJ6": 25,
+      "IGHJ3": 3,
+      "IGHJ1": 1,
+      "IGHJ5": 1
+    },
+    "IGHV3/OR16-16": {
+      "IGHJ6": 1
+    },
+    "IGHV3-54": {
+      "IGHJ3": 1
+    },
+    "IGHV3/OR16-20": {
+      "IGHJ6": 2,
+      "IGHJ4": 3,
+      "IGHJ3": 5
+    },
+    "IGHV3/OR16-13": {
+      "IGHJ3": 4,
+      "IGHJ6": 2,
+      "IGHJ4": 3
+    },
+    "IGHV3/OR16-12": {
+      "IGHJ3": 1,
+      "IGHJ6": 2
+    },
+    "IGHV1-NL1": {
+      "IGHJ6": 15,
+      "IGHJ4": 26,
+      "IGHJ5": 7,
+      "IGHJ3": 6
+    },
+    "IGHV3-25": {
+      "IGHJ4": 11,
+      "IGHJ5": 4,
+      "IGHJ6": 7,
+      "IGHJ3": 2,
+      "IGHJ2": 1
+    },
+    "IGHV7-34-1": {
+      "IGHJ6": 2
+    }
+  },
+  "top_cdr3_clones": [
+    {
+      "cdr3": "CARDMHAGFTHYFDPW",
+      "count": 147554
+    },
+    {
+      "cdr3": "CARGRYGDYW",
+      "count": 147274
+    },
+    {
+      "cdr3": "CARVPDYW",
+      "count": 143660
+    },
+    {
+      "cdr3": "CARSVFPW",
+      "count": 122085
+    },
+    {
+      "cdr3": "CARGGTPIDYW",
+      "count": 120855
+    },
+    {
+      "cdr3": "CARQIYDSDTGPNFQYYFDSW",
+      "count": 113683
+    },
+    {
+      "cdr3": "CARESEDLTSNFDYW",
+      "count": 112071
+    },
+    {
+      "cdr3": "CARDKITGLFDYW",
+      "count": 103557
+    },
+    {
+      "cdr3": "CARETYGDYVGYFDPW",
+      "count": 92747
+    },
+    {
+      "cdr3": "CARGGGYDSFDFW",
+      "count": 82728
+    },
+    {
+      "cdr3": "CAHRVLRTVFGLVTTTAIYFDFW",
+      "count": 82698
+    },
+    {
+      "cdr3": "CASSSLYGMDVW",
+      "count": 74002
+    },
+    {
+      "cdr3": "CARVPDRW",
+      "count": 71690
+    },
+    {
+      "cdr3": "CARVERGTATTVVDAFDIW",
+      "count": 65205
+    },
+    {
+      "cdr3": "CARGRYCLTGRCFPNWFDSW",
+      "count": 64247
+    },
+    {
+      "cdr3": "CARHISNFRYYYYAMDVW",
+      "count": 62571
+    },
+    {
+      "cdr3": "CSGAESPDTAYFSLYW",
+      "count": 57050
+    },
+    {
+      "cdr3": "CVRDGTKTLRDWFDPW",
+      "count": 54393
+    },
+    {
+      "cdr3": "CARSQGSSTSLEIYYYYYYGMDVW",
+      "count": 53777
+    },
+    {
+      "cdr3": "CAMVDNYVTPTPQDVW",
+      "count": 53596
+    },
+    {
+      "cdr3": "CAKGGRQWLVTSDFNYW",
+      "count": 52524
+    },
+    {
+      "cdr3": "CARVPGPW",
+      "count": 52477
+    },
+    {
+      "cdr3": "CARGGHVVVVTAALDYW",
+      "count": 52334
+    },
+    {
+      "cdr3": "CARDLWGYCGTDCYPLDVW",
+      "count": 50918
+    },
+    {
+      "cdr3": "CARVGPWVPYYYDSSPYTFENWFDPW",
+      "count": 50845
+    },
+    {
+      "cdr3": "CARRYGSCFDYW",
+      "count": 50134
+    },
+    {
+      "cdr3": "CRFWSGYYKNDYW",
+      "count": 47547
+    },
+    {
+      "cdr3": "CATRITVFGLLIPPFDPW",
+      "count": 47372
+    },
+    {
+      "cdr3": "CAAGGGLPRYYW",
+      "count": 47287
+    },
+    {
+      "cdr3": "CARLEGLATISYYFDFW",
+      "count": 47066
+    }
+  ]
+}

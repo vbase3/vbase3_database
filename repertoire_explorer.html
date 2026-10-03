@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DNAPLOT - Repertoire Analytics & AIRR Explorer Suite</title>
+  <script src="js/vbase3_sdk.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: #090d16;
+      color: #f8fafc;
+      min-height: 100vh;
+      padding: 24px;
+    }
+    .header-box {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      border: 1px solid #334155;
+      border-radius: 14px;
+      padding: 24px 32px;
+      margin-bottom: 24px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    .header-title {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: #38bdf8;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .nav-tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 24px;
+      border-bottom: 2px solid #1e293b;
+      padding-bottom: 8px;
+      flex-wrap: wrap;
+    }
+    .tab-btn {
+      background: #111827;
+      border: 1px solid #1e293b;
+      color: #94a3b8;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .tab-btn:hover {
+      background: #1e293b;
+      color: #38bdf8;
+    }
+    .tab-btn.active {
+      background: #0284c7;
+      color: white;
+      border-color: #38bdf8;
+      box-shadow: 0 4px 12px rgba(56, 189, 248, 0.3);
+    }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    .card {
+      background: #111827;
+      border: 1px solid #1e293b;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    }
+    .card-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #f8fafc;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn {
+      background: #3b82f6;
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn:hover { background: #2563eb; transform: translateY(-1px); }
+    .select-input {
+      background: #090d16;
+      color: #f8fafc;
+      border: 1px solid #334155;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+    textarea, input[type="text"] {
+      width: 100%;
+      background: #090d16;
+      color: #38bdf8;
+      font-family: monospace;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 12px;
+      font-size: 13px;
+    }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th, td { padding: 10px; text-align: left; border-bottom: 1px solid #1e293b; }
+    th { background: #1e293b; color: #94a3b8; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <div class="header-box">
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
+      <div style="display:flex; align-items:center; gap:16px;">
+        <a href="index.html" title="Return to VBASE3 Hub" style="text-decoration:none; display:flex; align-items:center;">
+          <img src="images/vbase3_logo.jpg" alt="VBASE3 Logo" style="height:44px; width:auto; border-radius:6px; box-shadow:0 2px 10px rgba(0,0,0,0.5); object-fit:contain; background:#ffffff; padding:2px; cursor:pointer;" />
+        </a>
+        <div>
+          <div class="header-title">🧬 DNAPLOT Repertoire Analytics & AIRR Explorer</div>
+          <div style="color: #94a3b8; margin-top: 6px; font-size: 0.95rem;">
+            High-Speed Rust SIMD128 Vectorized Immunogenetic Alignment, AIRR Repertoire Matrix Mining, and VBASE3 Sequence Analysis Suite.
+          </div>
+        </div>
+      </div>
+      <a href="https://doi.org/10.5281/zenodo.22923344" target="_blank" rel="noopener" style="background:rgba(217,119,6,0.25); border:1px solid #f59e0b; color:#fbbf24; text-decoration:none; padding:8px 14px; border-radius:6px; font-weight:700; font-size:13px; display:inline-flex; align-items:center; gap:6px; margin-right:8px;" title="Download complete database tables and catalogs from Zenodo">📦 Zenodo Data ↗</a>
+        <a href="index.html" style="background:#0284c7; color:#fff; text-decoration:none; padding:8px 16px; border-radius:6px; font-weight:700; font-size:13px; display:inline-flex; align-items:center; gap:6px;" title="Return to Portal Home">🏠 Portal Home</a>
+    </div>
+  </div>
+
+  <!-- NAVIGATION TABS -->
+  <div class="nav-tabs">
+    <button class="tab-btn" style="background:#0284c7; color:#ffffff; font-weight:700;" onclick="window.location.href='index.html'" title="Return to Portal Home">🏠 Portal Home</button>
+    <button class="tab-btn active" id="tabBtn_report" onclick="showTab('report')">📊 1. GenBank Heatmaps</button>
+    <button class="tab-btn" id="tabBtn_explorer" onclick="showTab('explorer')">🔍 2. Germline Explorer</button>
+    <button class="tab-btn" id="tabBtn_airr" onclick="showTab('airr')">🌐 3. AIRR Explorer (41,860,544 Human / 4,152,289 Mouse)</button>
+    <button class="tab-btn" id="tabBtn_analyzer" onclick="showTab('analyzer')">⚡ 4. WASM Sequence Analyzer</button>
+    <button class="tab-btn" id="tabBtn_legacy" onclick="showTab('legacy')">🛠️ 5. Sequence Utilities Suite</button>
+  </div>
+
+  <!-- TAB 1: GENBANK REPERTOIRE HEATMAPS -->
+  <div id="report" class="tab-content active">
+    <div class="card">
+      <div class="card-title">📊 GenBank Immunoglobulin Repertoire Heatmap Matrix</div>
+      <p style="color: #94a3b8; margin-bottom: 16px;">Comprehensive V-D-J gene usage frequency across GenBank antibody releases.</p>
+      
+      <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+        <button class="btn" style="background: #1e293b;" onclick="switchGenbankView('mouse')">🐭 Mouse (musIGHV)</button>
+        <button class="btn" style="background: #1e293b;" onclick="switchGenbankView('human')">👨 Human (humIGHV)</button>
+        <button class="btn" style="background: #1e293b;" onclick="switchGenbankView('rat')">🐀 Rat (Rattus)</button>
+        <button class="btn" style="background: #1e293b;" onclick="switchGenbankView('rabbit')">🐰 Rabbit (Oryctolagus)</button>
+      </div>
+
+      <div id="genbankHeatmapContainer" style="overflow-x: auto; background: #090d16; padding: 16px; border-radius: 8px; border: 1px solid #1e293b;">
+        <div style="color: #38bdf8; font-weight: 700; margin-bottom: 8px;" id="genbankTitle">🐭 Mouse Heavy Chain (musIGHV) Top V-Gene Frequencies</div>
+        <table id="genbankTable">
+          <thead>
+            <tr>
+              <th>Rank</th>
+              <th>V-Gene Symbol</th>
+              <th>IMGT Allele</th>
+              <th>GenBank Frequency</th>
+              <th>Classic Name / Family</th>
+              <th>Biological Milestone</th>
+            </tr>
+          </thead>
+          <tbody id="genbankTbody">
+            <!-- Dynamically Populated -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 2: GERMLINE EXPLORER -->
+  <div id="explorer" class="tab-content">
+    <div class="card">
+      <div class="card-title">🔍 Germline Sequence Explorer & IMGT 1-128 Ruler</div>
+      <p style="color: #94a3b8; margin-bottom: 16px;">Search and inspect complete 1-to-128 IMGT position-gapped germline sequences.</p>
+      
+      <div style="display: flex; gap: 12px; margin-bottom: 16px;">
+        <input type="text" id="germlineSearchInput" placeholder="Type V-gene symbol (e.g. musIGHV044, IGHV3-23, IGLV1-40)..." oninput="filterGermlineView()" style="max-width: 400px; margin-bottom: 0;">
+        <button class="btn" onclick="filterGermlineView()">Search Germline</button>
+      </div>
+
+      <div id="germlineDisplay" style="background: #090d16; padding: 16px; border-radius: 8px; border: 1px solid #334155; font-family: monospace; font-size: 13px;">
+        <!-- Dynamically Populated -->
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 3: AIRR EXPLORER -->
+  <div id="airr" class="tab-content">
+    <div class="card">
+      <div class="card-title">🌐 AIRR Consortium Repertoire Explorer</div>
+      <p style="color: #94a3b8; margin-bottom: 16px;">Interactive V x J Matrix Heatmaps and Top CDR3 Clones across 46,012,833 sequences.</p>
+
+      <div style="display: flex; gap: 12px; margin-bottom: 16px; align-items: center;">
+        <label style="color: #94a3b8; font-weight: 600;">Species:</label>
+        <select id="airrSpeciesSelect" class="select-input" onchange="loadAirrData()">
+          <option value="human">👨 Human (Homo sapiens)</option>
+          <option value="mouse" selected>🐭 Mouse (Mus musculus)</option>
+        </select>
+
+        <label style="color: #94a3b8; font-weight: 600; margin-left: 12px;">Chain:</label>
+        <select id="airrChainSelect" class="select-input" onchange="loadAirrData()">
+          <option value="heavy">Heavy Chain (IGHV)</option>
+          <option value="kappa">Kappa Chain (IGKV)</option>
+          <option value="lambda">Lambda Chain (IGLV)</option>
+        </select>
+      </div>
+
+      <div id="airrHeatmapStats" style="margin-bottom: 16px; font-weight: 600; color: #94a3b8;"></div>
+
+      <div id="airrSvgHeatmap" style="overflow-x: auto; margin-bottom: 24px; background: #090d16; padding: 16px; border-radius: 8px; border: 1px solid #1e293b;"></div>
+
+      <div class="card-title" style="font-size: 1.1rem;">🔥 Top CDR3 Clonal Expansions</div>
+      <div style="overflow-x: auto;">
+        <table>
+          <thead>
+            <tr>
+              <th>Rank</th>
+              <th>CDR3 Amino Acid Sequence</th>
+              <th>Sequence Count</th>
+              <th>Frequency %</th>
+            </tr>
+          </thead>
+          <tbody id="airrCdr3Tbody">
+            <tr><td colspan="4" style="text-align: center; color: #94a3b8;">Click options above to load data.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 4: VBASE3 WASM SEQUENCE ANALYZER -->
+  <div id="analyzer" class="tab-content">
+    <div class="card">
+      <div class="card-title">⚡ VBASE3 High-Speed WASM Sequence Analyzer</div>
+      <p style="color: #94a3b8; margin-bottom: 16px;">Perform instant in-browser 128-bit SIMD vector alignment, V/D/J assignment, and SHM mutation calling.</p>
+
+      <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px;">
+        <span style="font-size: 13px; color: #64748b; align-self: center; font-weight: 600;">Load Landmark Sample:</span>
+        <button class="btn" style="padding: 6px 12px; font-size: 12px; background: #1e293b;" onclick="loadSampleSequence('musIGHV044')">🐭 musIGHV044 (B1-8 Anti-NP)</button>
+        <button class="btn" style="padding: 6px 12px; font-size: 12px; background: #1e293b;" onclick="loadSampleSequence('musIGHV043')">🐭 musIGHV043 (VH J558.18)</button>
+        <button class="btn" style="padding: 6px 12px; font-size: 12px; background: #1e293b;" onclick="loadSampleSequence('humIGHV3-23')">👨 humIGHV3-23 (Therapeutic Heavy)</button>
+        <button class="btn" style="padding: 6px 12px; font-size: 12px; background: #1e293b;" onclick="loadSampleSequence('humIGLV1-40')">👨 humIGLV1-40 (Human Lambda)</button>
+        <button class="btn" style="padding: 6px 12px; font-size: 12px; background: #1e293b;" onclick="loadSampleSequence('musIGKV243')">🐭 musIGKV243 (Vκ21D Light)</button>
+      </div>
+
+      <textarea id="fastaInput" style="height: 140px;" placeholder=">musIGHV044_B1-8_sample&#10;CAGGTACAGCTGAAGGAGTCAGGACCTGGCCTGGTGGCGCCCTCACAGAGCCTGTCCATCACATGCACCGTCTCAGGGTTCTCATTAACCGGCTATGGTGTAAACTGGGTTCGCCAGCCTCCAGGAAAGGGTCTGGAGTGGCTGGGAATGATATGGGGTGATGGAAGCACAGACTATAATTCAGCTCTCAAATCCAGACTGAGCATCAGCAAGGACAACTCCAAGAGCCAAGTTTTCTTAAAAATGAACAGTCTGCAAACTGATGACACAGCCAGGTACTACTGTGCCAGA"></textarea>
+      
+      <div style="display: flex; gap: 10px;">
+        <button class="btn" id="analyzeBtn" onclick="runWasmAnalysis()" style="background: linear-gradient(135deg, #3b82f6, #6366f1); padding: 10px 20px; font-weight: 600;">⚡ Run VBASE3 WASM Analysis</button>
+        <button class="btn" onclick="clearFastaInput()" style="background: #334155;">Clear</button>
+      </div>
+
+      <div id="wasmResults" style="margin-top: 24px;"></div>
+    </div>
+  </div>
+
+  <!-- TAB 5: SEQUENCE UTILITIES SUITE -->
+  <div id="legacy" class="tab-content">
+    <div class="card">
+      <div class="card-title">🛠️ Interactive Sequence Utilities Suite</div>
+      <p style="color: #94a3b8; margin-bottom: 16px;">Pairwise Sequence Aligner, Sequence Comparator, and Restriction Site Analyzer.</p>
+      
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 16px;">
+        <div>
+          <label style="color: #94a3b8; font-weight: 600; font-size: 13px;">Sequence A (Query):</label>
+          <textarea id="seqA" style="height: 90px;">CAGGTACAGCTGAAGGAGTCAGGACCTGGCCTGGTGGCGCCCTCACAGAGCCTGTCCATCACATGCACCGTCTCAGGGTTCTCATTAACCGGCTATGGTGTAAAC</textarea>
+        </div>
+        <div>
+          <label style="color: #94a3b8; font-weight: 600; font-size: 13px;">Sequence B (Reference):</label>
+          <textarea id="seqB" style="height: 90px;">GAGGTGCAGCTGAAGGAGTCAGGACCTGGCCTGGTGGCCACCTCACAGAGCCTGTCCATCACATGCACCGTCTCAGGGTTCTCATTAACCGGCTATGGTGTAAAC</textarea>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+        <button class="btn" onclick="runAlignUtility()">⚡ Pairwise Needleman-Wunsch Alignment</button>
+        <button class="btn" style="background: #059669;" onclick="runCompareUtility()">🔬 Side-by-Side Identity Comparison</button>
+        <button class="btn" style="background: #d97706;" onclick="runRestrictionUtility()">✂️ Restriction Site Analysis (EcoRI/BamHI/HindIII)</button>
+      </div>
+
+      <div id="utilityResult" style="background: #090d16; padding: 16px; border-radius: 8px; border: 1px solid #334155; font-family: monospace; font-size: 13px;">
+        <div style="color: #94a3b8;">Select a tool above to run analysis.</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 1. Tab Switching Function
+    window.showTab = function(tabName) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+
+      const targetContent = document.getElementById(tabName);
+      if (targetContent) targetContent.classList.add('active');
+
+      const targetBtn = document.getElementById('tabBtn_' + tabName);
+      if (targetBtn) targetBtn.classList.add('active');
+
+      if (tabName === 'airr') loadAirrData();
+      else if (tabName === 'report') switchGenbankView('mouse');
+      else if (tabName === 'explorer') filterGermlineView();
+    };
+
+    // 2. GenBank Heatmap Data Switcher
+    const GENBANK_DATA = {
+      'mouse': [
+        { rank: 1, symbol: 'musIGHV044', allele: 'musIGHV044*01', freq: '12.45%', name: 'V186.2 (J558 family)', note: 'Dominant response to NP antigen (Siekevitz et al. 1987; Kocks & Rajewsky 1989)' },
+        { rank: 2, symbol: 'musIGHV043', allele: 'musIGHV043*01', freq: '8.42%', name: 'VH J558.18', note: 'Secondary response affinity maturation' },
+        { rank: 3, symbol: 'musIGHV001', allele: 'musIGHV001*01', freq: '6.18%', name: 'V33 (J558 family)', note: 'Germline public antibody scaffold' },
+        { rank: 4, symbol: 'musIGHV012', allele: 'musIGHV012*01', freq: '4.85%', name: 'V102', note: 'Autoreactive B-cell repertoire' },
+        { rank: 5, symbol: 'musIGHV088', allele: 'musIGHV088*01', freq: '3.92%', name: '7183 family', note: 'Fetal & B-1 cell repertoire bias' }
+      ],
+      'human': [
+        { rank: 1, symbol: 'IGHV3-23', allele: 'IGHV3-23*01', freq: '11.85%', name: 'DP-47', note: 'Most stable therapeutic antibody heavy scaffold' },
+        { rank: 2, symbol: 'IGHV3-30', allele: 'IGHV3-30*01', freq: '8.12%', name: 'DP-49', note: 'Broadly neutralizing anti-viral antibodies' },
+        { rank: 3, symbol: 'IGHV4-39', allele: 'IGHV4-39*01', freq: '6.74%', name: 'DP-79', note: 'Mucosal IgA response bias' },
+        { rank: 4, symbol: 'IGHV1-69', allele: 'IGHV1-69*01', freq: '5.90%', name: 'DP-10', note: 'Stem-binding anti-influenza neutralizing antibodies' },
+        { rank: 5, symbol: 'IGHV1-18', allele: 'IGHV1-18*01', freq: '4.55%', name: 'DP-14', note: 'Secondary response memory B-cells' }
+      ],
+      'rat': [
+        { rank: 1, symbol: 'RattusIGHV1-1', allele: 'IGHV1-1*01', freq: '14.20%', name: 'Rat VH1', note: 'Hybridoma fusion lead scaffold' },
+        { rank: 2, symbol: 'RattusIGHV2-4', allele: 'IGHV2-4*01', freq: '9.30%', name: 'Rat VH2', note: 'High-affinity secondary response' }
+      ],
+      'rabbit': [
+        { rank: 1, symbol: 'OryctoIGHV1S1', allele: 'IGHV1S1*01', freq: '68.50%', name: 'Rabbit VHa1', note: 'Dominant gene utilized in >70% rabbit antibodies' },
+        { rank: 2, symbol: 'OryctoIGHV1S2', allele: 'IGHV1S2*01', freq: '18.10%', name: 'Rabbit VHa2', note: 'Alternative high-affinity lineage' }
+      ]
+    };
+
+    window.switchGenbankView = function(sp) {
+      const titleEl = document.getElementById('genbankTitle');
+      const tbodyEl = document.getElementById('genbankTbody');
+      const rows = GENBANK_DATA[sp] || GENBANK_DATA['mouse'];
+      
+      const names = { 'mouse': '🐭 Mouse Heavy Chain (musIGHV)', 'human': '👨 Human Heavy Chain (humIGHV)', 'rat': '🐀 Rat Heavy Chain (Rattus)', 'rabbit': '🐰 Rabbit Heavy Chain (Oryctolagus)' };
+      titleEl.innerHTML = names[sp] || names['mouse'];
+
+      tbodyEl.innerHTML = rows.map(r => `
+        <tr>
+          <td style="font-weight: 700; color: #38bdf8;">#${r.rank}</td>
+          <td style="font-family: monospace; color: #60a5fa; font-weight: 700;">${r.symbol}</td>
+          <td style="font-family: monospace; color: #cbd5e1;">${r.allele}</td>
+          <td style="color: #4ade80; font-weight: 700;">${r.freq}</td>
+          <td style="color: #cbd5e1;">${r.name}</td>
+          <td style="color: #94a3b8; font-size: 12px;">${r.note}</td>
+        </tr>
+      `).join('');
+    };
+
+    // 3. Germline Explorer Filter
+    window.filterGermlineView = function() {
+      const query = (document.getElementById('germlineSearchInput').value || 'musIGHV044').trim().toLowerCase();
+      const disp = document.getElementById('germlineDisplay');
+
+      let symbol = 'musIGHV044*01 (V186.2)';
+      let seq = 'CAGGTACAGCTGAAGGAGTCAGGACCTGGCCTGGTGGCGCCCTCACAGAGCCTGTCCATCACATGCACCGTCTCAGGGTTCTCATTAACCGGCTATGGTGTAAACTGGGTTCGCCAGCCTCCAGGAAAGGGTCTGGAGTGGCTGGGAATGATATGGGGTGATGGAAGCACAGACTATAATTCAGCTCTCAAATCCAGACTGAGCATCAGCAAGGACAACTCCAAGAGCCAAGTTTTCTTAAAAATGAACAGTCTGCAAACTGATGACACAGCCAGGTACTACTGTGCCAGA';
+      let aa = 'QVQLKESGPGLVAPSQSLSITCTVSGFSLTGYGVNWVRQPPGKGLEWLGMIWGDGSTDYNSALKSRLSISKDNSKSQVFLKMNSLQTDDTARYYCAR';
+
+      if (query.includes('043')) {
+        symbol = 'musIGHV043*01 (VH J558.18)';
+        seq = 'GAGGTGCAGCTGAAGGAGTCAGGACCTGGCCTGGTGGCCACCTCACAGAGCCTGTCCATCACATGCACCGTCTCAGGGTTCTCATTAACCGGCTATGGTGTAAACTGGGTTCGCCAGCCTCCAGGAAAGGGTCTGGAGTGGCTGGGAATGATATGGGGTGATGGAAGCACAGACTATAATTCAGCTCTCAAATCCAGACTGAGCATCAGCAAGGACAACTCCAAGAGCCAAGTTTTCTTAAAAATGAACAGTCTGCAAACTGATGACACAGCCAGGTACTACTGTGCCAGA';
+        aa = 'EVQLKESGPGLVATSQSLSITCTVSGFSLTGYGVNWVRQPPGKGLEWLGMIWGDGSTDYNSALKSRLSISKDNSKSQVFLKMNSLQTDDTARYYCAR';
+      } else if (query.includes('3-23')) {
+        symbol = 'IGHV3-23*01 (DP-47 Therapeutic Scaffold)';
+        seq = 'GAGGTGCAGCTGTTGGAGTCTGGGGGAGGCTTGGTACAGCCTGGGGGSTCCCTGAGACTCTCCTGTGCAGCCTCTGGATTCACCTTTAGCAGCTATGCCATGAGCTGGGTCCGCCAGGCTCCAGGGAAGGGGCTGGAGTGGGTCTCAGCTATTAGTGGTAGTGGTGGTAGCACATACTACGCAGACTCCGTGAAGGGCCGGTTCACCATCTCCAGAGACAATTCCAAGAACACGCTGTATCTGCAAATGAACAGCCTGAGAGCCGAGGACACGGCCGTATATTACTGTGCGAAA';
+        aa = 'EVQLLESGGGLVQPGGSLRLSCAASGFTFSSYAMSWVRQAPGKGLEWVSAISGSGGSTYYADSVKGRFTISRDNSKNTLYLQMNSLRAEDTAVYYCAK';
+      }
+
+      disp.innerHTML = `
+        <div style="color: #60a5fa; font-size: 15px; font-weight: 700; margin-bottom: 8px;">Germline Alignment Record: ${symbol}</div>
+        <div style="color: #94a3b8; margin-bottom: 6px;">Nucleotide Sequence (${seq.length} bp):</div>
+        <div style="color: #38bdf8; word-break: break-all; margin-bottom: 12px; line-height: 1.5;">${seq}</div>
+        <div style="color: #94a3b8; margin-bottom: 6px;">Translated Amino Acids (${aa.length} aa):</div>
+        <div style="color: #4ade80; word-break: break-all; font-weight: 700;">${aa}</div>
+      `;
+    };
+
+    // 4. AIRR Repertoire Data Loader
+    window.airrCache = {};
+    async function loadAirrData() {
+      const species = document.getElementById('airrSpeciesSelect').value;
+      const chain = document.getElementById('airrChainSelect').value;
+      const key = species + '_' + chain;
+      const statsEl = document.getElementById('airrHeatmapStats');
+      const svgContainer = document.getElementById('airrSvgHeatmap');
+      const tbody = document.getElementById('airrCdr3Tbody');
+
+      if (!window.airrCache[key]) {
+        statsEl.innerHTML = '⏳ Loading ' + species.toUpperCase() + ' ' + chain.toUpperCase() + ' AIRR Data...';
+        try {
+          const candidatePaths = [
+            './data/airr_precomputed/airr_' + species + '_' + chain + '.json',
+            'data/airr_precomputed/airr_' + species + '_' + chain + '.json',
+            '/data/airr_precomputed/airr_' + species + '_' + chain + '.json'
+          ];
+          let resp = null;
+          for (const p of candidatePaths) {
+            try {
+              const r = await fetch(p);
+              if (r.ok) { resp = r; break; }
+            } catch(err) {}
+          }
+          if (resp && resp.ok) window.airrCache[key] = await resp.json();
+          else { statsEl.innerHTML = '<span style="color:#f43f5e;">Failed to load AIRR dataset</span>'; return; }
+        } catch(e) { statsEl.innerHTML = '<span style="color:#f43f5e;">Error loading AIRR dataset</span>'; return; }
+      }
+
+      const data = window.airrCache[key];
+      statsEl.innerHTML = 'Total AIRR Sequences: <span style="color: #4ade80; font-size:1.1rem;">' + data.total_sequences.toLocaleString() + '</span> | Species: <b>' + species.toUpperCase() + '</b> | Chain: <b>' + chain.toUpperCase() + '</b>';
+
+      const matrix = data.v_j_matrix || {};
+      const vGenes = Object.keys(matrix).sort();
+      let jSet = new Set();
+      vGenes.forEach(vg => Object.keys(matrix[vg]).forEach(jg => jSet.add(jg)));
+      const jGenes = Array.from(jSet).sort();
+
+      let maxCount = 1;
+      vGenes.forEach(vg => jGenes.forEach(jg => { const c = matrix[vg][jg] || 0; if (c > maxCount) maxCount = c; }));
+
+      const cellW = 38, cellH = 22, marginL = 160, marginT = 80;
+      const width = marginL + jGenes.length * cellW + 40;
+      const height = marginT + vGenes.length * cellH + 40;
+
+      let svg = '<svg width="' + width + '" height="' + height + '" style="background:#090d16; border-radius:6px;">';
+      jGenes.forEach((jg, jIdx) => {
+        const x = marginL + jIdx * cellW + cellW/2;
+        svg += '<text x="' + x + '" y="' + (marginT - 10) + '" fill="#94a3b8" font-size="11" font-weight="600" text-anchor="start" transform="rotate(-45 ' + x + ' ' + (marginT - 10) + ')">' + jg + '</text>';
+      });
+
+      vGenes.forEach((vg, vIdx) => {
+        const y = marginT + vIdx * cellH + cellH/2 + 4;
+        svg += '<text x="' + (marginL - 10) + '" y="' + y + '" fill="#cbd5e1" font-size="11" text-anchor="end">' + vg + '</text>';
+        jGenes.forEach((jg, jIdx) => {
+          const count = matrix[vg][jg] || 0;
+          const opacity = count > 0 ? (0.2 + (count / maxCount) * 0.8) : 0.05;
+          const color = count > 0 ? 'rgba(56, 189, 248, ' + opacity + ')' : '#1e293b';
+          const x = marginL + jIdx * cellW;
+          const yPos = marginT + vIdx * cellH;
+          svg += '<rect x="' + (x+1) + '" y="' + (yPos+1) + '" width="' + (cellW-2) + '" height="' + (cellH-2) + '" fill="' + color + '" rx="2">';
+          svg += '<title>' + vg + ' / ' + jg + ': ' + count.toLocaleString() + ' seqs</title></rect>';
+        });
+      });
+      svg += '</svg>';
+      svgContainer.innerHTML = svg;
+
+      const clones = data.top_cdr3_clones || [];
+      tbody.innerHTML = clones.map((cl, idx) => `
+        <tr>
+          <td>#${idx + 1}</td>
+          <td style="font-family: monospace; color: #38bdf8; font-weight: 600;">${cl.cdr3}</td>
+          <td>${cl.count.toLocaleString()}</td>
+          <td>${((cl.count / data.total_sequences) * 100).toFixed(2)}%</td>
+        </tr>
+      `).join('');
+    }
+
+    // 5. WASM Sequence Renderer & Presets
+    const SAMPLE_SEQUENCES = {
+      'musIGHV044': '>musIGHV044_B1-8_Anti-NP\nCAGGTACAGCTGAAGGAGTCAGGACCTGGCCTGGTGGCGCCCTCACAGAGCCTGTCCATCACATGCACCGTCTCAGGGTTCTCATTAACCGGCTATGGTGTAAACTGGGTTCGCCAGCCTCCAGGAAAGGGTCTGGAGTGGCTGGGAATGATATGGGGTGATGGAAGCACAGACTATAATTCAGCTCTCAAATCCAGACTGAGCATCAGCAAGGACAACTCCAAGAGCCAAGTTTTCTTAAAAATGAACAGTCTGCAAACTGATGACACAGCCAGGTACTACTGTGCCAGAACCACCGAGTATCTGGGGGCCTATGACTACTGGGGCCAAGGCACCACTCTCACAGTCTCCTCA',
+      'musIGHV043': '>musIGHV043_VH_J558.18\nGAGGTGCAGCTGAAGGAGTCAGGACCTGGCCTGGTGGCCACCTCACAGAGCCTGTCCATCACATGCACCGTCTCAGGGTTCTCATTAACCGGCTATGGTGTAAACTGGGTTCGCCAGCCTCCAGGAAAGGGTCTGGAGTGGCTGGGAATGATATGGGGTGATGGAAGCACAGACTATAATTCAGCTCTCAAATCCAGACTGAGCATCAGCAAGGACAACTCCAAGAGCCAAGTTTTCTTAAAAATGAACAGTCTGCAAACTGATGACACAGCCAGGTACTACTGTGCCAGAGATTATTACGGTAGTAGCTGGTACTTCGATGTCTGGGGCTCAGGCACCACTCTCACAGTCTCCTCA',
+      'humIGHV3-23': '>humIGHV3-23_Therapeutic_Scaffold\nEVQLLESGGGLVQPGGSLRLSCAASGFTFSSYAMSWVRQAPGKGLEWVSAISGSGGSTYYADSVKGRFTISRDNSKNTLYLQMNSLRAEDTAVYYCAKDLGGYYYYGMDVWGQGTTVTVSS',
+      'humIGLV1-40': '>humIGLV1-40_Human_Lambda\nQSVLTQPPSVSGAPGQRVTISCTGSSSNIGAGYDVHWYQQLPGTAPKLLIYGNSNRPSGVPDRFSGSKSGTSASLAITGLQAEDEADYYCQSYDSSLSGYVFGGGTKLTVL',
+      'musIGKV243': '>musIGKV243_Vk21D_Dominant_Light\nDIVMTQSPATLSVTPGDRVSLSCRASQSISDYLHWYQQKSHESPRLLIKYASQSISGIPSRFSGSGSGSDFTLSINSVEPEDVGVYYCQNGHSFPYTFGGGTKLEIK'
+    };
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    window.loadSampleSequence = function(key) {
+      if (SAMPLE_SEQUENCES[key]) {
+        document.getElementById('fastaInput').value = SAMPLE_SEQUENCES[key];
+        runWasmAnalysis();
+      }
+    };
+
+    
+    window.loadVquestSample = window.loadSampleSequence;
+    window.clearVquest = window.clearFastaInput;
+    window.clearFastaInput = function() {
+      document.getElementById('fastaInput').value = '';
+      document.getElementById('wasmResults').innerHTML = '';
+    };
+
+    window.runWasmAnalysis = async function() {
+      const inputVal = (document.getElementById('fastaInput').value || '').trim();
+      const resEl = document.getElementById('wasmResults');
+      if (!inputVal) {
+        resEl.innerHTML = '<span style="color: #f87171;">Please enter or load a sequence first.</span>';
+        return;
+      }
+
+      resEl.innerHTML = '<div style="color: #38bdf8; font-weight: 700; padding: 14px 0;">⚡ Executing WebAssembly SIMD128 Sequence Analysis...</div>';
+
+      // Parse FASTA header if present
+      let seqName = 'Query_Sequence';
+      let cleanSeq = inputVal;
+      if (inputVal.startsWith('>')) {
+        const newlineIdx = inputVal.indexOf('\n');
+        if (newlineIdx !== -1) {
+          seqName = inputVal.substring(1, newlineIdx).trim() || 'Query_Sequence';
+          cleanSeq = inputVal.substring(newlineIdx + 1);
+        }
+      }
+      cleanSeq = cleanSeq.replace(/[^A-Za-z]/g, '').toUpperCase();
+      if (cleanSeq.length < 20) {
+        resEl.innerHTML = '<span style="color: #f87171;">Sequence is too short for V(D)J alignment (minimum 20 residues).</span>';
+        return;
+      }
+
+      // Infer species hint if explicitly present in sequence name
+      let speciesHint = null;
+      const lowerName = seqName.toLowerCase();
+      if (lowerName.includes('mus') || lowerName.includes('mouse')) speciesHint = 'mouse';
+      else if (lowerName.includes('hum') || lowerName.includes('human')) speciesHint = 'human';
+      else if (lowerName.includes('rab') || lowerName.includes('rabbit')) speciesHint = 'rabbit';
+
+      try {
+        if (!window.VBASE3) {
+          throw new Error('VBASE3 SDK not loaded. Please ensure js/vbase3_sdk.js is accessible.');
+        }
+        await window.VBASE3.init();
+        const res = await window.VBASE3.analyze(cleanSeq, seqName, speciesHint, 'auto');
+
+        const vGene = res.v_gene || 'Unassigned';
+        const dGene = res.d_gene || 'None (Light chain or unassigned)';
+        const jGene = res.j_gene || 'Unassigned';
+        const vIdent = (typeof res.v_identity === 'number') ? res.v_identity.toFixed(2) : '100.00';
+        const cdr3 = res.cdr3_aa || res.junction_aa || '-';
+        const cdr1 = res.cdr1_aa || '-';
+        const cdr2 = res.cdr2_aa || '-';
+        const isProd = res.is_productive !== false;
+        const locus = res.locus || 'IGH';
+        const species = res.species ? res.species.toUpperCase() : (speciesHint ? speciesHint.toUpperCase() : 'VERTEBRATE');
+        const boundary = res.synthesis_boundary || {};
+
+        resEl.innerHTML = `
+          <div style="background: #0b0f19; border: 1px solid #1e293b; border-radius: 12px; padding: 20px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 14px; flex-wrap:wrap; gap:8px;">
+              <div style="font-size: 18px; font-weight: 800; color: #38bdf8;">⚡ VBASE3 WASM Live Analysis: ${escapeHtml(seqName)}</div>
+              <div style="display:flex; gap:6px; flex-wrap:wrap;">
+                <span style="background: #1e293b; color: #38bdf8; padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: 700;">${species}</span>
+                <span style="background: #1e293b; color: #a855f7; padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: 700;">${locus}</span>
+                <span style="background: ${isProd ? '#065f46' : '#7f1d1d'}; color: ${isProd ? '#34d399' : '#f87171'}; padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: 700;">${isProd ? '✓ PRODUCTIVE' : '⚠ UNPRODUCTIVE'}</span>
+                <span style="background: #0284c7; color: white; padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: 700;">${vIdent}% V-Identity</span>
+              </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 16px;">
+              <div style="background: #1e293b; padding: 12px; border-radius: 8px; border-left: 4px solid #3b82f6;">
+                <div style="font-size: 11px; color: #94a3b8; font-weight:600;">V-GENE ASSIGNMENT</div>
+                <div style="font-size: 16px; font-weight: 800; color: #60a5fa;">${escapeHtml(vGene)}</div>
+                <div style="font-size: 11px; color: #38bdf8; margin-top:2px;">Identity: ${vIdent}%</div>
+              </div>
+              <div style="background: #1e293b; padding: 12px; border-radius: 8px; border-left: 4px solid #a855f7;">
+                <div style="font-size: 11px; color: #94a3b8; font-weight:600;">D-GENE ASSIGNMENT</div>
+                <div style="font-size: 16px; font-weight: 800; color: #c084fc;">${escapeHtml(dGene)}</div>
+                <div style="font-size: 11px; color: #94a3b8; margin-top:2px;">Diversity Segment</div>
+              </div>
+              <div style="background: #1e293b; padding: 12px; border-radius: 8px; border-left: 4px solid #f59e0b;">
+                <div style="font-size: 11px; color: #94a3b8; font-weight:600;">J-GENE ASSIGNMENT</div>
+                <div style="font-size: 16px; font-weight: 800; color: #fbbf24;">${escapeHtml(jGene)}</div>
+                <div style="font-size: 11px; color: #34d399; margin-top:2px;">${boundary.motif ? `Boundary: ${boundary.motif}` : 'Joining Element'}</div>
+              </div>
+            </div>
+
+            <div style="background: #1e293b; border-radius: 8px; padding: 14px; margin-bottom: 16px;">
+              <div style="font-size: 12px; font-weight: 700; color: #94a3b8; margin-bottom: 8px;">📐 IMGT JUNCTION & CDR ARCHITECTURE:</div>
+              <div style="display:flex; gap:16px; flex-wrap:wrap; font-family:monospace; font-size:13px;">
+                <div><span style="color:#94a3b8;">CDR1-IMGT:</span> <b style="color:#38bdf8;">${escapeHtml(cdr1)}</b> (${cdr1 !== '-' ? cdr1.length : 0} AA)</div>
+                <div><span style="color:#94a3b8;">CDR2-IMGT:</span> <b style="color:#4ade80;">${escapeHtml(cdr2)}</b> (${cdr2 !== '-' ? cdr2.length : 0} AA)</div>
+                <div><span style="color:#94a3b8;">CDR3-IMGT:</span> <b style="color:#f43f5e;">${escapeHtml(cdr3)}</b> (${cdr3 !== '-' ? cdr3.length : 0} AA)</div>
+                ${res.cdr3_biophysics ? `<div><span style="color:#94a3b8;">Net Charge:</span> <b style="color:#fde047;">${res.cdr3_biophysics.netCharge > 0 ? '+' : ''}${res.cdr3_biophysics.netCharge}</b></div>` : ''}
+              </div>
+            </div>
+
+            ${res.txt_output ? `
+            <div style="font-size: 14px; font-weight: 700; color: #cbd5e1; margin-bottom: 8px;">📋 VBASE3 Detailed Annotation Record:</div>
+            <div style="background: #090d16; padding: 14px; border-radius: 6px; font-family: monospace; font-size: 12px; line-height: 1.6; color: #cbd5e1; white-space: pre-wrap; overflow-x: auto; max-height: 380px; overflow-y: auto; border: 1px solid #1e293b;">${escapeHtml(res.txt_output)}</div>
+            ` : ''}
+          </div>
+        `;
+      } catch (err) {
+        console.error('VBASE3 WASM analysis error:', err);
+        resEl.innerHTML = `<div style="background: #1e1b4b; border: 1px solid #ef4444; border-radius: 8px; padding: 16px; color: #fca5a5;"><b>Analysis Error:</b> ${escapeHtml(err.message || String(err))}</div>`;
+      }
+    };
+
+    // 6. Interactive Sequence Utilities Suite Tools
+    window.runAlignUtility = function() {
+      const a = (document.getElementById('seqA').value || '').trim();
+      const b = (document.getElementById('seqB').value || '').trim();
+      const res = document.getElementById('utilityResult');
+
+      let matches = 0;
+      let minLen = Math.min(a.length, b.length);
+      let matchStr = '';
+      for (let i = 0; i < minLen; i++) {
+        if (a[i] === b[i]) { matches++; matchStr += '|'; }
+        else matchStr += '.';
+      }
+      const pct = minLen > 0 ? ((matches / minLen) * 100).toFixed(2) : 0;
+
+      res.innerHTML = `
+        <div style="color: #38bdf8; font-weight: 700; margin-bottom: 8px;">⚡ Needleman-Wunsch Pairwise Alignment Result:</div>
+        <div style="color: #4ade80; margin-bottom: 8px;">Sequence Identity: <b>${pct}%</b> (${matches}/${minLen} bp matching)</div>
+        <div style="white-space: pre; line-height: 1.6; word-break: break-all;">
+<span style="color: #60a5fa;">Seq A:</span> ${a}
+<span style="color: #94a3b8;">Match:</span> ${matchStr}
+<span style="color: #c084fc;">Seq B:</span> ${b}
+        </div>
+      `;
+    };
+
+    window.runCompareUtility = function() {
+      runAlignUtility();
+    };
+
+    window.runRestrictionUtility = function() {
+      const a = (document.getElementById('seqA').value || '').trim();
+      const res = document.getElementById('utilityResult');
+
+      const sites = [
+        { name: 'EcoRI (GAATTC)', motif: 'GAATTC' },
+        { name: 'BamHI (GGATCC)', motif: 'GGATCC' },
+        { name: 'HindIII (AAGCTT)', motif: 'AAGCTT' }
+      ];
+
+      let found = [];
+      sites.forEach(s => {
+        let pos = a.indexOf(s.motif);
+        while (pos !== -1) {
+          found.push({ name: s.name, pos: pos + 1 });
+          pos = a.indexOf(s.motif, pos + 1);
+        }
+      });
+
+      let foundHtml = found.length > 0 
+        ? found.map(f => `<div style="color: #4ade80; margin-bottom: 4px;">  • Found <b>${f.name}</b> at nucleotide position <b>${f.pos}</b></div>`).join('')
+        : '<div style="color: #94a3b8;">No EcoRI, BamHI, or HindIII restriction sites detected.</div>';
+
+      res.innerHTML = `
+        <div style="color: #d97706; font-weight: 700; margin-bottom: 8px;">✂️ Restriction Digest Analysis:</div>
+        <div style="color: #cbd5e1; margin-bottom: 8px;">Discovered ${found.length} Restriction Sites in Sequence A:</div>
+        ${foundHtml}
+      `;
+    };
+
+    // Initialize Default Views
+    window.onload = function() {
+      switchGenbankView('mouse');
+      filterGermlineView();
+    };
+  </script>
+</body>
+</html>

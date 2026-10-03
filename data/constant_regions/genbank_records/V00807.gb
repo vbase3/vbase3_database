@@ -1,0 +1,86 @@
+ID   V00807; SV 1; linear; gDNA; STD; MUS; 1090 BP.
+XX
+AC   V00807;
+XX
+DT   15-MAY-1995 (Rel. 199520-1, arrived in LIGM-DB)
+DT   08-JUN-2022 (Rel. 202223-3, Last updated, Version 14)
+XX
+DE   Part of the germ line murine gene for kappa-immunoglobulin (last exon).
+XX
+KW   antigen receptor; Immunoglobulin superfamily (IgSF); immunoglobulin (IG);
+KW   IG-Light; IG-Light-Kappa-IGK; constant; regular; gDNA; undefined;
+KW   functional; C-gene.
+XX
+OS   Mus musculus (house mouse)
+OC   Sarcopterygii; Dipnotetrapodomorpha; Tetrapoda; Amniota; Mammalia; Theria;
+OC   Eutheria; Boreoeutheria; Euarchontoglires; Glires; Rodentia; Myomorpha;
+OC   Muroidea; Muridae; Murinae; Mus; Mus; Mus musculus.
+XX
+RN   [1]
+RP   1-1090
+RX   PUBMED; 11207285.
+RA   Shum B.P., Guethlein L., Flodin L.R., Adkison M.A., Hedrick R.P.,
+RA   Nehring R.B., Stet R.J.M., Secombes C., Parham P.;
+RT   "Modes of salmonid MHC class I and II evolution differ from the primate
+RT   paradigm";
+RL   J. Immunol. 166(5):3297-3308(2001).
+XX
+DR   ENA; V00807.
+DR   GOA; P01837.
+DR   MGD; MGI:96495; Igk-C.
+DR   SWISS-PROT; P01837; KAC_MOUSE.
+XX
+CC   IMGT/LIGM-DB annotation level: by annotators
+CC   
+CC   KST MMU.IGKAP.GL.4
+XX
+FH   Key                 Location/Qualifiers
+FH   
+FT   C-GENE              1..1090
+FT                       /db_xref="taxon:10090"
+FT                       /functional
+FT                       /IMGT_allele="IGKC*01"
+FT                       /IMGT_gene="IGKC"
+FT                       /mol_type="genomic DNA"
+FT                       /organism="Mus musculus"
+FT   J-C-INTRON          1..210
+FT   ACCEPTOR-SPLICE     208..212
+FT   C-GENE-UNIT         211..533
+FT                       /IMGT_allele="IGKC*01"
+FT                       /IMGT_gene="IGKC"
+FT                       /protein_id="CAA24189.1"
+FT   C-REGION            211..530
+FT                       /codon_start=3
+FT                       /translation="ADAAPTVSIFPPSSEQLTSGGASVVCFLNNFYPKDINVKWK
+FT                       IDGSERQNGVLNSWTDQDSKDSTYSMSSTLTLTKDEYERHNSYTCEATHKTSTSP
+FT                       IVKSFNRNEC"
+FT                       /db_xref="GOA:P01837"
+FT                       /db_xref="SWISS-PROT:P01837"
+FT                       /IMGT_allele="IGKC*01"
+FT                       /IMGT_gene="IGKC"
+FT                       /protein_id="CAA24189.1"
+FT   STOP-CODON          531..533
+FT   3'UTR               531..1090
+FT   POLYA_SITE          719..724
+XX
+SQ   Sequence 1090 BP; 288 A; 281 C; 207 G; 311 T; 3 other;
+     aatttacttt ctaaagaagt agctaggaac tagggaataa cttagaaaca acaagattgt        60
+     atatatgtgc atcctggccc attgttcctt atctgtaggg ataagcgtgc ttttttgtgt       120
+     gttgtatata acataactgt ttacacataa tacactgaaa tggagccctt ccttgttact       180
+     tcataccatc ctctgtgctt ccttcctcag gggctgatgc tgcaccaact gtatccatct       240
+     tcccaccatc cagtgagcag ttaacatctg gaggtgcctc agtcgtgtgc ttcttgaaca       300
+     acttctaccc caaagacatc aatgtcaagt ggaagattga tggcagtgaa cgacaaaatg       360
+     gcgtcctgaa cagttggact gatcaggaca gcaaagacag cacctacagc atgagcagca       420
+     ccctcacgtt gaccaaggac gagtatgaac gacataacag ctatacctgt gaggccactc       480
+     acaagacatc aacttcaccc attgtcaaga gcttcaacag gaatgagtgt tagagacaaa       540
+     ggtcctgaga cgccaccacc agctccccag ctccatccta tcttcccttc taaggtcttg       600
+     gaggcttccc cacaagcgac ctaccactgt tgcggtgctc caaacctcct ccccacctcc       660
+     ttctcctcct cctccctttc cttggctttt atcatgctaa tatttgcaga aaatattcaa       720
+     taaagtgagt ctttgcactt gagatctctg tctttcttac taaatggtag taatcagttg       780
+     tttttccagt tacctgggtt tctcttctaa agaagttnaa tgtttagttg ccctgaaatc       840
+     caccacactt aaaggataaa taaaaccctc cacttgccct ggttggctgt ccactacatg       900
+     gcagtccttt ctaaggttca cgagtactat tcatggctta tttctctggc catggtaggt       960
+     ttgaggaggc atacctccta gttttcttcc cctaagtcgt caaagtcctg aagggggaca      1020
+     gtctttacaa gcacatgttc tgnnctgatt caacctaccc agtaaacttg gcgaagcagt      1080
+     agcatcatta                                                             1090
+//

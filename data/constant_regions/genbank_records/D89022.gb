@@ -1,0 +1,52 @@
+LOCUS       D89022                   339 bp    mRNA    linear   MAM 25-JUL-2016
+DEFINITION  Felis catus mRNA for TCR alpha constant chain, partial cds.
+ACCESSION   D89022
+VERSION     D89022.1
+KEYWORDS    .
+SOURCE      Felis catus (domestic cat)
+  ORGANISM  Felis catus
+            Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi;
+            Mammalia; Eutheria; Laurasiatheria; Carnivora; Feliformia; Felidae;
+            Felinae; Felis.
+REFERENCE   1
+  AUTHORS   Cho,K., Youn,H.Y., Okuda,M., Satoh,H., Cevario,S., O'Brien,S.J.,
+            Watari,T., Tsujimoto,H. and Hasegawa,A.
+  TITLE     Cloning and mapping of cat (Felis catus) immunoglobulin and T-cell
+            receptor genes
+  JOURNAL   Immunogenetics 47 (3), 226-233 (1998)
+   PUBMED   9435341
+REFERENCE   2  (bases 1 to 339)
+  AUTHORS   Cho,K.-W.
+  TITLE     Direct Submission
+  JOURNAL   Submitted (12-NOV-1996) Contact:Kyu-Woan Cho Department of
+            Veterinary Internal Medicine, Faculty of Agriculture, The
+            University of Tokyo; 1-1-1 Yayoi, Bunkyo-ku, Tokyo 113, Japan
+FEATURES             Location/Qualifiers
+     source          1..339
+                     /organism="Felis catus"
+                     /mol_type="mRNA"
+                     /db_xref="taxon:9685"
+                     /chromosome="B3"
+                     /clone="FTAC381"
+                     /sex="male"
+                     /tissue_type="normal PBMC"
+     gene            <1..>339
+                     /gene="TRAC"
+     CDS             <1..>339
+                     /gene="TRAC"
+                     /codon_start=1
+                     /product="TCR alpha constant chain"
+                     /protein_id="BAA24988.1"
+                     /db_xref="IMGT/LIGM:D89022"
+                     /translation="TSSKASNPSTISVCLFTDFDSEVNVNPSTESNMIRLKSTSLDMK
+                     TMDSKSNWALAWSNSFDLGCNSTFNYTFHSSSEFPCDANVVEKGFETDMNLNFDNLTV
+                     IMLRIIFLKAV"
+ORIGIN      
+        1 accagctcga aagcctcgaa tcccagtacc atctctgtct gcctgttcac tgattttgat
+       61 tcggaagtca atgtgaatcc atccacagag tccaacatga ttagattgaa aagtacttca
+      121 ctggacatga agactatgga ttccaagagc aactgggccc tggcctggag caacagcttt
+      181 gatttgggat gcaacagtac cttcaactac accttccact ccagctcaga atttccctgc
+      241 gatgccaatg tggtagagaa aggctttgaa acagatatga acctaaattt cgacaacctg
+      301 acagtgatca tgctccgcat catcttcctg aaggcggtt
+//
+

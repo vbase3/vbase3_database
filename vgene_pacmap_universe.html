@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VBASE3 PaCMAP Universe — Pan-Vertebrate Manifold (Stratum 4 • 2,048 Points across 32 Benchmark Taxa)</title>
+  <link rel="stylesheet" href="css/fonts.css">
+  <script src="js/d3.v7.min.js"></script>
+  <link rel="stylesheet" href="css/universe.css?v=2.4">
+</head>
+<body>
+
+  <!-- Floating Restore Pills (Visible when panels are minimized) -->
+  <button id="restoreHeaderBtn" class="floating-panel-pill pill-top-left" style="display:none;" title="Restore Header & Controls">🌌 Controls</button>
+  <a id="floatingHomeBtn" href="index.html" class="floating-panel-pill pill-top-left-home" style="display:none;" title="Return to Portal Home">🏠 Portal Home</a>
+  <button id="restoreInspectorBtn" class="floating-panel-pill pill-top-right" title="Open Query Inspector">🔬 Query Inspector</button>
+  <button id="restoreLegendBtn" class="floating-panel-pill pill-bottom-left" style="display:none;" title="Restore Legend">📑 Legend</button>
+  <button id="restoreEvoBtn" class="floating-panel-pill pill-bottom-evo" style="display:none;" title="Restore Evolution Movie Bar">⏳ Evolution Movie</button>
+  <button id="restoreAlignmentBtn" class="floating-panel-pill pill-bottom-align" style="display:none;" title="Open Sequence Alignment Drawer">🧬 Alignment (<span id="alignCountBadge">0</span>)</button>
+
+  <!-- Sequence Alignment Drawer (IMGT 1..104 Canonical Gapped Alignment) -->
+  <div id="alignmentDrawer" class="collapsed">
+    <div class="alignment-header">
+      <div class="alignment-title-row">
+        <span class="alignment-title">🧬 IMGT Sequence Alignment</span>
+        <span id="alignModeBadge" class="align-mode-badge single">Single Sequence</span>
+        <span id="alignSelectionCount" style="font-size:11.5px; color:#94a3b8; margin-left:8px;">0 genes</span>
+      </div>
+      <div class="alignment-actions">
+        <button id="copyAlignmentFastaBtn" class="drawer-action-btn" title="Copy selection as FASTA">📋 Copy FASTA</button>
+        <button id="clearSelectionBtn" class="drawer-action-btn" title="Clear selection">🧹 Clear</button>
+        <button class="panel-minimize-btn" id="closeAlignmentBtn" title="Minimize Alignment Drawer">✕</button>
+      </div>
+    </div>
+    <div id="alignmentBody" class="alignment-body"></div>
+  </div>
+
+  <!-- Top Left Header & Controls -->
+  <div id="header">
+    <div class="title-row">
+      <div style="display:flex; align-items:center; gap:12px;">
+        <a href="index.html" title="Return to VBASE3 Central Hub" style="display:flex; align-items:center; text-decoration:none;">
+          <img src="images/vbase3_logo.jpg" alt="VBASE3 Logo" style="height:44px; width:auto; border-radius:6px; box-shadow:0 2px 10px rgba(0,0,0,0.5); object-fit:contain; background:#ffffff; padding:2px; cursor:pointer;" />
+        </a>
+        <div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <h1 style="margin:0; font-size:1.35rem;">🌌 VBASE3 <span style="color:#64748b; font-weight:400; font-size:16px;">•</span> <span style="color:#38bdf8;">BCRbase</span></h1>
+            <span style="background:rgba(56,189,248,0.15); border:1px solid #38bdf8; color:#38bdf8; font-size:10px; font-weight:700; padding:2px 7px; border-radius:12px;">BCR Universe</span>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex; align-items:center; gap:8px;">
+        <a href="https://doi.org/10.5281/zenodo.22923344" target="_blank" rel="noopener" class="hub-back-btn" style="background:rgba(217,119,6,0.25); border:1px solid rgba(245,158,11,0.5); color:#fbbf24; text-decoration:none;" title="Download complete database tables and catalogs from Zenodo">📦 Zenodo Data ↗</a>
+      <a href="index.html" class="hub-back-btn" title="Return to Portal Home">🏠 Portal Home</a>
+        <button class="panel-minimize-btn" id="closeHeaderBtn" title="Minimize Controls (leaves small icon)">✕</button>
+      </div>
+    </div>
+    <div class="subtitle">Vertebrate B-Cell Receptor & Antibody Universe • Complete Heavy & Light Chains across 33 Benchmark Taxa (from 53 Master Taxa) • <a href="https://doi.org/10.1016/0167-5699(84)90034-3" target="_blank" rel="noopener" style="color:#38bdf8; text-decoration:underline;">Renate Dildrop (1984) ↗</a> 14 Families • Real-Time Zero-Shift Projection<br><span style="color:#38bdf8; font-size:11px; opacity:0.9;">✨ Human-AI Collaborative Experiment: Werner Müller &amp; Google Antigravity (Gemini Models)</span></div>
+    
+    <!-- Unified VBASE3 Portals Bar -->
+    <div class="vbase-portal-nav" style="display:flex; gap:6px; margin-bottom:12px; background:rgba(15,23,42,0.85); border:1px solid #334155; border-radius:8px; padding:3px; flex-wrap:wrap;">
+      <a href="index.html" class="portal-nav-tab" style="flex:1; min-width:105px; text-align:center; padding:6px 10px; border-radius:6px; font-size:12px; font-weight:700; text-decoration:none; display:flex; align-items:center; justify-content:center; gap:6px; background:rgba(37,99,235,0.35); border:1px solid #3b82f6; color:#bfdbfe; transition:all 0.2s;" title="Return to Main Overview">
+        <span>🏠 Portal Home</span>
+      </a>
+      <a href="vgene_pacmap_universe.html" class="portal-nav-tab active" style="flex:1; min-width:110px; text-align:center; padding:6px 10px; border-radius:6px; font-size:12px; font-weight:700; text-decoration:none; display:flex; align-items:center; justify-content:center; gap:6px; background:#0284c7; color:#ffffff; box-shadow:0 2px 8px rgba(2,132,199,0.4);">
+        <span>🛡️ BCRbase</span>
+        <span style="font-size:10px; opacity:0.85; font-weight:500;">(Antibodies)</span>
+      </a>
+      <a href="tcr_universe.html" class="portal-nav-tab" style="flex:1; min-width:110px; text-align:center; padding:6px 10px; border-radius:6px; font-size:12px; font-weight:600; text-decoration:none; display:flex; align-items:center; justify-content:center; gap:6px; background:transparent; color:#94a3b8; border:1px solid transparent; transition:all 0.2s;">
+        <span>🧬 TCRbase</span>
+        <span style="font-size:10px; opacity:0.75; font-weight:400;">(TCRs)</span>
+      </a>
+    </div>
+    
+    <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; margin-bottom:10px;">
+      <span id="wasmBadge" class="wasm-badge wasm-active" title="Dual Execution: Toggle between in-browser WASM and server Native Rust">
+        <span class="wasm-badge-pulse"></span>
+        <span id="engineBadgeText">⚡ Client WASM: Active (In-Browser)</span>
+      </span>
+
+      <div class="engine-switcher" title="Toggle Execution Engine">
+        <button id="btnEngineWasm" class="engine-btn active wasm" onclick="switchExecutionEngine('wasm')">⚡ Client WASM</button>
+        <button id="btnEngineNative" class="engine-btn" onclick="switchExecutionEngine('native')">🚀 Server Native Rust</button>
+        <button id="btnOpenBenchmark" class="engine-btn bench-btn" onclick="openBenchmarkModal()">📊 Benchmark</button>
+      </div>
+    </div>
+    
+    <div class="dataset-switcher-row" style="display:flex; align-items:center; gap:8px; margin-bottom:10px; flex-wrap:wrap;">
+      <span style="font-size:11.5px; color:#94a3b8; font-weight:600;">Reference Catalog:</span>
+      <select id="universeDatasetSelect" class="dataset-select" style="background:#0d1623; color:#f0f6fc; border:1px solid rgba(56,189,248,0.3); border-radius:6px; padding:4px 8px; font-size:11.5px; font-family:'Inter', sans-serif;">
+        <option value="vgene_pacmap_data.json" selected>🌌 VBASE3 Vertebrate Universe (Stratum 4 Manifold: 32 Benchmark Taxa • 2,048 Points)</option>
+        <option value="vbase2_pacmap_data.json">🏛️ VBASE2 Legacy Universe (Human & Mouse • 1,052 Genes)</option>
+        <option value="tcrbase_pacmap_data.json">🧬 TCRbase Universe (Comparative αβ & γδ TCR • 826 Genes)</option>
+      </select>
+      <a href="tcr_universe.html" style="font-size:11px; color:#34d399; text-decoration:none; margin-left:auto; display:inline-flex; align-items:center; gap:3px; font-weight:500;">TCRbase Portal ↗</a>
+    </div>
+    
+    <div class="kpi-row">
+      <div class="kpi-item"><span class="kpi-val" id="kpiGenes">-</span><span class="kpi-lbl">V-Genes</span></div>
+      <div class="kpi-item"><span class="kpi-val" id="kpiSpecies">-</span><span class="kpi-lbl">Species</span></div>
+      <div class="kpi-item"><span class="kpi-val" id="kpiClans">9 Clans</span><span class="kpi-lbl">Ancestral Lineages</span></div>
+      <div class="kpi-item"><span class="kpi-val" id="kpiFamilies" style="color:#34d399;">-</span><span class="kpi-lbl">V-Gene Families</span></div>
+    </div>
+
+    <div class="controls">
+      <label style="font-size:12px; color:#94a3b8;">Hierarchy & Color: </label>
+      <select id="colorSelect">
+        <option value="hierarchical" selected>Hierarchical (Species & Chain → Family)</option>
+        <option value="family">V-Gene Family (Renate Dildrop Murine & IMGT)</option>
+        <option value="clan">Ancestral Clan & Subgroup</option>
+        <option value="species">Species / Organism</option>
+        <option value="chain">Chain / Locus Type</option>
+        <option value="vbase2_class">VBASE3 Functional Class (Class I / II / III)</option>
+      </select>
+      <input type="text" id="geneSearch" placeholder="🔍 Search gene, family, species..." />
+      <button id="btnLocateV186" style="background:linear-gradient(135deg, rgba(245,158,11,0.25), rgba(217,119,6,0.45)); border:1px solid #f59e0b; color:#fef08a; border-radius:6px; padding:6px 12px; font-size:12px; font-weight:700; cursor:pointer; display:inline-flex; align-items:center; gap:5px; box-shadow:0 0 12px rgba(245,158,11,0.3);" title="Locate the landmark V186.2 (B1-8) star in the BCR universe">🌟 Star of V186.2</button>
+      <div style="position:relative; display:inline-block;">
+        <button id="btnLandmarksMenu" style="background:linear-gradient(135deg, rgba(30,58,138,0.4), rgba(15,23,42,0.85)); border:1px solid #38bdf8; color:#f0f9ff; border-radius:6px; padding:6px 12px; font-size:12px; font-weight:700; cursor:pointer; display:inline-flex; align-items:center; gap:5px;" onclick="const d = document.getElementById('landmarksDropdown'); d.style.display = (d.style.display === 'block' ? 'none' : 'block'); event.stopPropagation();">
+          <span>✨ Landmark Constellations</span>
+          <span style="font-size:10px;">▼</span>
+        </button>
+        <div id="landmarksDropdown" style="display:none; position:absolute; top:36px; left:0; min-width:320px; background:#0b1322; border:1px solid #1e3a8a; border-radius:10px; padding:6px; box-shadow:0 15px 35px rgba(0,0,0,0.85); z-index:9999; backdrop-filter:blur(12px);">
+          <div style="font-size:10px; font-weight:700; color:#94a3b8; padding:4px 8px; text-transform:uppercase; letter-spacing:0.5px; border-bottom:1px solid #1e293b; margin-bottom:4px;">Historical Landmark Stars (Easter Eggs)</div>
+          <div class="landmark-item" onclick="igniteLandmarkStar('v186'); document.getElementById('landmarksDropdown').style.display='none';" style="padding:7px 10px; border-radius:6px; cursor:pointer; font-size:12px; color:#fef08a; display:flex; align-items:center; gap:8px;">
+            <span>🌟</span> <div><strong>V186.2 (B1-8)</strong> <span style="font-size:10.5px; color:#94a3b8;">• Reth & Rajewsky (1978)</span></div>
+          </div>
+          <div class="landmark-item" onclick="igniteLandmarkStar('wabl'); document.getElementById('landmarksDropdown').style.display='none';" style="padding:7px 10px; border-radius:6px; cursor:pointer; font-size:12px; color:#f472b6; display:flex; align-items:center; gap:8px;">
+            <span>🌸</span> <div><strong>17.2.25 QM Mouse</strong> <span style="font-size:10.5px; color:#94a3b8;">• Wabl & Cascalho (1996)</span></div>
+          </div>
+          <div class="landmark-item" onclick="igniteLandmarkStar('winter'); document.getElementById('landmarksDropdown').style.display='none';" style="padding:7px 10px; border-radius:6px; cursor:pointer; font-size:12px; color:#38bdf8; display:flex; align-items:center; gap:8px;">
+            <span>🔵</span> <div><strong>DP-47 (IGHV3-23)</strong> <span style="font-size:10.5px; color:#94a3b8;">• Winter & Tomlinson (1992)</span></div>
+          </div>
+          <div class="landmark-item" onclick="igniteLandmarkStar('dupasquier'); document.getElementById('landmarksDropdown').style.display='none';" style="padding:7px 10px; border-radius:6px; cursor:pointer; font-size:12px; color:#34d399; display:flex; align-items:center; gap:8px;">
+            <span>🟢</span> <div><strong>Xen-IGHVH1</strong> <span style="font-size:10.5px; color:#94a3b8;">• Du Pasquier & Hsu (1989)</span></div>
+          </div>
+          <div class="landmark-item" onclick="igniteLandmarkStar('milstein'); document.getElementById('landmarksDropdown').style.display='none';" style="padding:7px 10px; border-radius:6px; cursor:pointer; font-size:12px; color:#f43f5e; display:flex; align-items:center; gap:8px;">
+            <span>🔴</span> <div><strong>MOPC-21 Lineage</strong> <span style="font-size:10.5px; color:#94a3b8;">• Köhler & Milstein (1975)</span></div>
+          </div>
+          <div class="landmark-item" onclick="igniteLandmarkStar('kabat'); document.getElementById('landmarksDropdown').style.display='none';" style="padding:7px 10px; border-radius:6px; cursor:pointer; font-size:12px; color:#c084fc; display:flex; align-items:center; gap:8px;">
+            <span>🟣</span> <div><strong>Bence Jones VκI (Roy/Ag)</strong> <span style="font-size:10.5px; color:#94a3b8;">• Kabat & Wu (1970)</span></div>
+          </div>
+          <div class="landmark-item" onclick="igniteLandmarkStar('lysozyme'); document.getElementById('landmarksDropdown').style.display='none';" style="padding:7px 10px; border-radius:6px; cursor:pointer; font-size:12px; color:#22d3ee; display:flex; align-items:center; gap:8px;">
+            <span>🔷</span> <div><strong>Anti-Lysozyme Enigma</strong> <span style="font-size:10.5px; color:#94a3b8;">• Recombinant Benchmark</span></div>
+          </div>
+        </div>
+      </div>
+      <button id="resetZoom" title="Press 'F' key anytime to reset and center map">Reset View (F)</button>
+      <button id="toggleInspectorBtn" class="btn-primary">🔬 Query Inspector</button>
+      <button id="aboutUniverseBtn" style="background:#1e293b; border:1px solid #38bdf8; color:#38bdf8; border-radius:6px; padding:6px 12px; font-size:12px; font-weight:700; cursor:pointer;" onclick="document.getElementById('aboutPacmapUniverseModal').style.display='flex'">ℹ️ About PaCMAP</button>
+    </div>
+    <div id="selectionBanner"></div>
+  </div>
+
+  <!-- Universal Antibody Sequence Inspector & Projection Engine Panel -->
+  <div id="inspectorPanel" class="collapsed">
+    <div class="inspector-header">
+      <div class="inspector-title">🔬 Universal Sequence Projection Engine</div>
+      <button class="close-btn" id="closeInspectorBtn" title="Close Panel">✕</button>
+    </div>
+    <div class="inspector-desc">
+      Paste unknown antibody sequence (DNA or Protein) from <em>any</em> species. The engine automatically identifies species, chain, Dildrop/IMGT family, closest germline, D/J elements, and projects the query directly onto the 2D universe manifold!
+    </div>
+    
+    <div style="font-size:11px; color:#64748b; margin-bottom:4px; font-weight:600;">QUICK TEST EXAMPLES:</div>
+    <div class="sample-pills">
+      <div class="sample-pill" onclick="loadSample('trastuzumab')">🔵 Trastuzumab VH (Human IGHV3)</div>
+      <div class="sample-pill" onclick="loadSample('pertuzumab')">🟣 Pertuzumab VL (Kappa)</div>
+      <div class="sample-pill" onclick="loadSample('vhh')">🟠 Alpaca VHH Nb</div>
+      <div class="sample-pill" onclick="loadSample('mouse_186')">🟢 Mouse B1-8 (Germline V186.2 / J558)</div>
+      <div class="sample-pill" onclick="loadSample('mouse_186_w33l')">⚡ Mouse B1-8 Matured (W33L SHM)</div>
+      <div class="sample-pill" onclick="loadSample('mouse_qm_17225')">🌸 Mouse 17.2.25 (QM Mouse BALB/c)</div>
+      <div class="sample-pill" onclick="loadSample('xenopus')">🐸 Xenopus IgY VH</div>
+      <div class="sample-pill" onclick="loadSample('shark')">🦈 Nurse Shark VNAR</div>
+      <div class="sample-pill" onclick="loadSample('duck')">🦆 Duck IgY VH</div>
+    </div>
+
+    <textarea id="seqTextarea" placeholder="Paste antibody nucleotide or amino acid sequence..."></textarea>
+    
+    <div class="action-bar">
+      <button id="analyzeBtn" class="btn-primary" style="flex:1;">🚀 Analyze & Project onto Universe</button>
+      <button id="clearBtn" style="background:#21262d;">Clear</button>
+    </div>
+
+    <!-- Live Analysis & Manifold Locator Card -->
+    <div id="analysisHUD">
+      <div class="hud-title-row">
+        <div class="hud-beacon-alert">
+          <span style="display:inline-block; width:9px; height:9px; border-radius:50%; background:#34d399; box-shadow:0 0 8px #34d399;"></span>
+          Manifold Coordinates Projected!
+        </div>
+        <div id="hudCoordBadge" style="font-family:'Fira Code', monospace; font-size:11px; color:#38bdf8;">(x: 0, y: 0)</div>
+      </div>
+
+      <div style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:10px;">
+        <span id="hudSpeciesBadge" class="badge badge-species">Species: -</span>
+        <span id="hudChainBadge" class="badge badge-chain">Chain: -</span>
+        <span id="hudFamilyBadge" class="badge badge-family">Family: -</span>
+        <span id="hudClanBadge" class="badge badge-clan">Clan: -</span>
+        <span id="hudShmBadge" class="badge badge-low">0 SHM</span>
+      </div>
+
+      <div class="hud-grid">
+        <div class="hud-box">
+          <div class="hud-label">Closest Germline V-Gene</div>
+          <div class="hud-value" id="hudVGene" style="color:#58a6ff;">-</div>
+          <div style="font-size:10.5px; color:#94a3b8; margin-top:2px;" id="hudVIdent">-</div>
+        </div>
+        <div class="hud-box">
+          <div class="hud-label">Diversity Element (D)</div>
+          <div class="hud-value" id="hudDGene">-</div>
+          <div style="font-size:10.5px; color:#94a3b8; margin-top:2px;" id="hudDFrame">-</div>
+        </div>
+        <div class="hud-box">
+          <div class="hud-label">Joining Element (J)</div>
+          <div class="hud-value" id="hudJGene">-</div>
+          <div style="font-size:10.5px; color:#34d399; margin-top:2px;" id="hudJBoundary">-</div>
+        </div>
+        <div class="hud-box">
+          <div class="hud-label">CDR3 Region</div>
+          <div class="hud-value" id="hudCdr3" style="color:#fb7185;">-</div>
+          <div style="font-size:10.5px; color:#94a3b8; margin-top:2px;" id="hudCdr3Len">-</div>
+        </div>
+      </div>
+
+      <div style="font-size:11px; color:#94a3b8; margin-bottom:4px; font-weight:600;">IMGT DOMAIN ARCHITECTURE:</div>
+      <div class="hud-ribbon" id="hudRibbon">
+        <!-- Rendered with colored FR & CDR residues -->
+      </div>
+    </div>
+  </div>
+
+  <div id="tooltip"></div>
+  <div id="legend" class="legend"></div>
+
+  <!-- Evolutionary Timeline & Emergence Movie Bar -->
+  <div id="evoBar" class="evo-bar">
+    <div class="evo-header">
+      <div class="evo-title">
+        <span style="font-size: 15px;">⏳</span> <strong>Vertebrate Evolution & Lineage Emergence Movie</strong>
+      </div>
+      <div class="evo-controls">
+        <button id="evoPlayBtn" class="btn-evo">▶ Play Movie</button>
+        <button id="evoResetBtn" class="btn-evo-ghost">Show All (Present)</button>
+        <button class="panel-minimize-btn" id="closeEvoBtn" title="Minimize Evolution Movie Bar">✕</button>
+      </div>
+    </div>
+    <div class="evo-slider-row">
+      <span class="evo-age-tag">~500 Mya (Origin)</span>
+      <input type="range" id="evoSlider" min="0" max="500" value="500" step="5" />
+      <span class="evo-age-tag" id="evoCurrentAgeTag">0 Mya (Present)</span>
+    </div>
+    <div class="evo-epoch-info" id="evoEpochInfo">
+      <span id="evoEpochBadge" class="evo-badge">🧬 Modern Vertebrate Universe</span>
+      <span id="evoEpochDesc" style="font-size:11px; color:#cbd5e1; flex:1; margin-left:10px;">All 33 benchmark taxa & modern mammalian repertoires displayed.</span>
+      <span id="evoCountBadge" style="font-family:'Fira Code', monospace; font-size:11px; color:#38bdf8;">- genes</span>
+    </div>
+  </div>
+
+  <!-- Live Benchmark Modal Dialog -->
+  <div id="benchmarkModal" class="benchmark-modal-backdrop" style="display:none;">
+    <div class="benchmark-modal-card">
+      <div class="benchmark-header">
+        <div class="benchmark-title">
+          <span>⚡</span> VBASE3 Performance Benchmark: Client WASM vs. Server Native Rust
+        </div>
+        <button class="panel-minimize-btn" onclick="closeBenchmarkModal()" title="Close Benchmark">✕</button>
+      </div>
+
+      <div style="font-size:12px; color:#94a3b8; margin-bottom:12px; line-height:1.5;">
+        Side-by-side benchmark executing identical antibody query sets across the <strong>Browser WebAssembly Engine</strong> (single-threaded client sandbox) and <strong>Server Native Rust</strong> (Apple M4 Pro host with multi-core Rayon parallelization and NEON 128-bit SIMD).
+      </div>
+
+      <!-- Release Note: Benchmark disabled in the WASM-only version -->
+      <div style="background:rgba(245, 158, 11, 0.1); border:1px solid rgba(245, 158, 11, 0.3); border-radius:8px; padding:10px 14px; margin-bottom:14px; font-size:11.5px; color:#fde68a; display:flex; align-items:flex-start; gap:9px; line-height:1.45;">
+        <span style="font-size:14px; line-height:1; flex-shrink:0;">ℹ️</span>
+        <div>
+          <strong>Release Note: Benchmark disabled in the WASM only version.</strong> When running the web pages solely in a web browser without the local native Rust server daemon (<code>dnaplot_server</code>), live server benchmarking cannot connect to <code>/api/benchmark</code>. Canonical reference metrics measured on an Apple M4 Pro (16-Core Rayon SIMD, 509x speedup) are displayed below and documented in Manuscript Appendix Figure App 11.
+        </div>
+      </div>
+
+      <div class="benchmark-grid">
+        <!-- Client WASM Card -->
+        <div class="benchmark-col-card wasm-col">
+          <div class="bench-col-title">
+            <span style="color:#34d399;">⚡ Client WebAssembly (In-Browser)</span>
+            <span style="font-size:11px; color:#94a3b8;">V8 / WebKit</span>
+          </div>
+          <div class="bench-stat-row">
+            <span class="bench-stat-label">Architecture</span>
+            <span class="bench-stat-value">wasm32-unknown-unknown</span>
+          </div>
+          <div class="bench-stat-row">
+            <span class="bench-stat-label">Concurrency</span>
+            <span class="bench-stat-value">1 Thread (Browser Sandbox)</span>
+          </div>
+          <div class="bench-stat-row">
+            <span class="bench-stat-label">Alignment Throughput</span>
+            <span class="bench-stat-value" id="benchWasmAlignThroughput">17.8 seqs / sec</span>
+          </div>
+          <div class="bench-stat-row">
+            <span class="bench-stat-label">Alignment Latency</span>
+            <span class="bench-stat-value" id="benchWasmAlignLatency">56.21 ms / seq</span>
+          </div>
+          <div class="bench-stat-row">
+            <span class="bench-stat-label">PaCMAP Embedding (100 seqs)</span>
+            <span class="bench-stat-value" id="benchWasmPacmapTime">7.5 ms (Single-Core)</span>
+          </div>
+          <div class="bench-stat-row">
+            <span class="bench-stat-label">Network Overhead</span>
+            <span class="bench-stat-value" style="color:#34d399;">0 ms (100% Local)</span>
+          </div>
+        </div>
+
+        <!-- Server Native Rust Card -->
+        <div class="benchmark-col-card native-col">
+          <div class="bench-col-title">
+            <span style="color:#38bdf8;">🚀 Server Native Rust</span>
+            <span style="font-size:11px; color:#94a3b8;">Apple M4 Pro</span>
+          </div>
+          <div class="bench-stat-row">
+            <span class="bench-stat-label">Architecture & SIMD</span>
+            <span class="bench-stat-value">aarch64 • NEON 128-bit</span>
+          </div>
+          <div class="bench-stat-row">
+            <span class="bench-stat-label">Concurrency</span>
+            <span class="bench-stat-value" id="benchNativeCores">16 Cores (Rayon Work-Stealing)</span>
+          </div>
+          <div class="bench-stat-row">
+            <span class="bench-stat-label">Alignment Throughput</span>
+            <span class="bench-stat-value" id="benchNativeAlignThroughput" style="color:#38bdf8;">9,064 queries / sec</span>
+          </div>
+          <div class="bench-stat-row">
+            <span class="bench-stat-label">Alignment Latency</span>
+            <span class="bench-stat-value" id="benchNativeAlignLatency" style="color:#38bdf8;">110.33 µs / query</span>
+          </div>
+          <div class="bench-stat-row">
+            <span class="bench-stat-label">PaCMAP Embedding (100 seqs)</span>
+            <span class="bench-stat-value" id="benchNativePacmapTime" style="color:#38bdf8;">153.75 ms (650.4 seqs/s)</span>
+          </div>
+          <div class="bench-stat-row">
+            <span class="bench-stat-label">Zero-Shift Pairwise Rate</span>
+            <span class="bench-stat-value" id="benchNativePairwiseRate" style="color:#38bdf8;">19.1 M comparisons/sec</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Speedup Multiplier & Summary -->
+      <div id="benchmarkSummaryBar" style="background:rgba(15, 23, 42, 0.7); border:1px solid rgba(56, 189, 248, 0.2); border-radius:8px; padding:10px 14px; display:flex; justify-content:space-between; align-items:center; font-size:12px;">
+        <div>
+          <span style="color:#94a3b8;">Comparative Speedup:</span>
+          <strong id="benchSpeedupText" style="margin-left:6px; color:#f1f5f9;">Server Native Rust on Apple M4 Pro achieves <span style="color:#38bdf8; font-weight:700;">509x higher throughput</span> (19.1M pairwise comparisons/sec).</strong>
+        </div>
+        <div id="benchSpeedupBadge" class="speedup-badge" style="display:inline-flex;">
+          <span>🚀</span> <span id="benchSpeedupFactor">509x FASTER (M4 Pro)</span>
+        </div>
+      </div>
+
+      <div class="benchmark-run-bar">
+        <button id="runLiveBenchmarkBtn" class="btn-primary" onclick="runSideBySideBenchmark()" style="flex:1; padding:9px 18px; font-weight:600;">
+          ⚡ Test In-Browser Client WASM Speed
+        </button>
+        <button onclick="closeBenchmarkModal()" style="padding:9px 16px; background:#1e293b; color:#cbd5e1; border:1px solid #334155; border-radius:8px; cursor:pointer;">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ABOUT PACMAP UNIVERSE MODAL -->
+  <div id="aboutPacmapUniverseModal" style="display:none; position:fixed; inset:0; z-index:9999; background:rgba(3, 7, 18, 0.82); backdrop-filter:blur(10px); align-items:center; justify-content:center; padding:20px;">
+    <div style="background:#0b1322; border:1px solid #1e3a8a; border-radius:14px; max-width:820px; width:100%; max-height:85vh; display:flex; flex-direction:column; box-shadow:0 25px 50px -12px rgba(0,0,0,0.85); overflow:hidden;">
+      <div style="padding:16px 22px; border-bottom:1px solid #1e293b; display:flex; align-items:center; justify-content:space-between; background:linear-gradient(90deg, rgba(30,58,138,0.35), rgba(15,23,42,0.6));">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <span style="font-size:20px;">🌌</span>
+          <h2 style="margin:0; font-size:17px; color:#f8fafc; font-weight:700;">VBASE3 PaCMAP Manifold — Stratum 4 (2,048 Points Across 32 Benchmark Taxa)</h2>
+        </div>
+        <button onclick="document.getElementById('aboutPacmapUniverseModal').style.display='none'" style="background:transparent; border:none; color:#94a3b8; font-size:20px; cursor:pointer; padding:4px 8px; line-height:1;" title="Close Modal">✕</button>
+      </div>
+      
+      <div style="padding:22px; overflow-y:auto; font-size:13px; line-height:1.65; color:#cbd5e1; display:flex; flex-direction:column; gap:16px;">
+        <div style="background:rgba(2,132,199,0.1); border-left:4px solid #38bdf8; padding:10px 14px; border-radius:4px;">
+          <strong style="color:#e0f2fe;">Universal Pan-Vertebrate Manifold:</strong>
+          VBASE3 projects 2,048 Class I confirmed functional V-genes across 32 key benchmark vertebrate taxa (spanning ~500 million years of evolutionary history, sampled from 53 master taxa screened against 55 chromosome-level assemblies) into an invariant 2D manifold using <strong>PaCMAP (Pairwise Controlled Manifold Approximation and Projection)</strong> (*Wang et al., 2021*).
+        </div>
+
+        <div>
+          <h3 style="color:#60a5fa; margin:0 0 6px 0; font-size:14px;">1. Why PaCMAP Outperforms t-SNE and UMAP for Repertoires</h3>
+          <p style="margin:0;">
+            Antibody repertoires operate simultaneously across three distinct biological scales: micro-scale somatic hypermutation (SHM) clouds differing by single amino acids; meso-scale V(D)J combinatorial usage and CDR3 loop diversity; and macro-scale ancestral framework constraints. While <em>t</em>-SNE destroys global phylogeny (causing arbitrary cluster scattering) and UMAP introduces artificial cluster boundaries, PaCMAP optimizes a balanced three-tier triplet loss:
+            <code style="display:block; background:#030712; padding:8px 12px; border-radius:6px; border:1px solid #1e293b; margin:6px 0; color:#38bdf8; font-family:'Fira Code', monospace; font-size:12px;">
+              Loss = w_NB · Σ [d² / (10 + d²)] + w_MN · Σ [d² / (10000 + d²)] + w_FP · Σ [1 / (1 + d²)]
+            </code>
+            • <strong>Nearest Neighbors (k-NN)</strong>: Preserves fine clonal micro-structure and SHM variants.<br>
+            • <strong>Mid-Near Pairs (MN)</strong>: Preserves intermediate structural relatedness, grouping V families and ancestral Kabat/Dildrop clans.<br>
+            • <strong>Further Pairs (FP)</strong>: Preserves global repulsion across the embedding space, cleanly separating Heavy, Light (κ, λ, ρ, σ), and species lineages.
+          </p>
+        </div>
+
+        <div>
+          <h3 style="color:#60a5fa; margin:0 0 6px 0; font-size:14px;">2. Complete Variable Regions & Paired Heavy-Light Chains</h3>
+          <p style="margin:0;">
+            • <strong>Complete Rearranged Variable Region</strong>: VBASE3 embeds the full mature variable domain exon (<span style="color:#93c5fd; font-family:monospace;">FR1 → CDR1 → FR2 → CDR2 → FR3 → CDR3 → FR4</span>), strictly terminating at canonical synthesis motifs (e.g. <code>TVSS</code>/<code>TVSA</code> for Heavy, <code>VEIK</code>/<code>LEIK</code>/<code>TVL</code> for Light) with zero constant-region contamination.<br>
+            • <strong>Native Paired Chains (VH ⊕ VL)</strong>: For single-cell BCR-seq, heavy and light chain vectors are concatenated to directly map complete paratope geometries, pairing preferences, and public clonotypes.
+          </p>
+        </div>
+
+        <div style="background:rgba(16, 185, 129, 0.08); border:1px solid rgba(16, 185, 129, 0.3); border-radius:8px; padding:12px 14px;">
+          <h3 style="color:#34d399; margin:0 0 6px 0; font-size:14px; display:flex; align-items:center; gap:6px;">
+            <span>🎯</span> Future Horizon: Antigen Specificity via AIRR TSV Standards
+          </h3>
+          <p style="margin:0;">
+            When antibody specificity or target antigen is experimentally determined, this functional metadata can be seamlessly integrated into the PaCMAP manifold using <strong>AIRR Community TSV standards</strong> (fields: <code>antigen</code>, <code>target_substrate</code>, <em>K<sub>D</sub></em>, IC<sub>50</sub>). This dual sequence–affinity manifold exposes:
+          </p>
+          <ul style="margin:6px 0 0 0; padding-left:18px;">
+            <li><strong>Convergent Paratopes Across Disparate V-Genes</strong>: Antibodies from completely distinct germline families converging onto the identical structural epitope.</li>
+            <li><strong>Public Neutralizing Footprints</strong>: Mapping shared immune responses across diverse patient cohorts against pathogens (e.g., SARS-CoV-2, HIV-1, Influenza).</li>
+            <li><strong>Off-Target & Polyreactivity Screening</strong>: Detecting biophysical clusters associated with non-specific binding prior to recombinant synthesis.</li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 style="color:#60a5fa; margin:0 0 6px 0; font-size:14px;">3. References & Precedents Across Biological Domains</h3>
+          <ol style="margin:0; padding-left:18px; font-size:12px; color:#94a3b8;">
+            <li><strong>Wang, Y., Huang, H., Rudin, C., & Shaposhnik, Y. (2021)</strong>. Understanding How Dimension Reduction Tools Work: An Empirical Approach to Deciphering t-SNE, UMAP, TriMAP, and PaCMAP for Data Visualization. <em>Journal of Machine Learning Research (JMLR)</em>, 22(201): 1–73.</li>
+            <li><strong>Sommer, M., Frank, R., & Heinz, S. (2023)</strong>. ProtSpace: Continuous visual embedding and interactive exploration of protein language model representations across multigene families (Kinases, GPCRs, Olfactory Receptors, Globins). <em>Bioinformatics Advances</em>, 3(1), vbad120.</li>
+            <li><strong>Cabello-Aguilar, S., et al. (2022)</strong>. TopoMetry: A framework for discovering the latent geometry of single-cell data and continuous immune trajectories. <em>eLife</em>, 11, e79294.</li>
+          </ol>
+        </div>
+      </div>
+      
+      <div style="padding:12px 22px; border-top:1px solid #1e293b; display:flex; justify-content:flex-end; background:#070d18;">
+        <button onclick="document.getElementById('aboutPacmapUniverseModal').style.display='none'" style="background:#1e293b; border:1px solid #334155; color:#f1f5f9; padding:6px 14px; border-radius:6px; font-size:12px; font-weight:600; cursor:pointer;">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <svg id="canvas" width="100%" height="100%"></svg>
+
+  <script type="module" src="js/universe.js?v=2.4"></script>
+</body>
+</html>

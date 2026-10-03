@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mouse VBASE2 Antibody Sequence Analyzer (Client-Side WASM)</title>
+  <style>
+    :root {
+      --bg: #090d16;
+      --card-bg: #1e293b;
+      --card-border: #334155;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent: #10b981;
+      --accent-hover: #34d399;
+      --success: #22c55e;
+      --warning: #f59e0b;
+      --code-bg: #0f172a;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 24px;
+    }
+    .container { max-width: 1200px; margin: 0 auto; }
+    .header-box {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 24px 32px;
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    }
+    .header-title { font-size: 1.8rem; font-weight: 800; color: var(--accent); display: flex; align-items: center; gap: 12px; }
+    .nav-links { display: flex; gap: 12px; margin-top: 8px; }
+    .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 13px; font-weight: 600; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--accent); }
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .badge-mouse { background: #065f46; color: #d1fae5; }
+    .badge-wasm { background: rgba(34, 197, 94, 0.2); color: var(--success); border: 1px solid var(--success); }
+    .badge-dna { background: rgba(16, 185, 129, 0.2); color: var(--accent); border: 1px solid var(--accent); }
+    .badge-aa { background: rgba(245, 158, 11, 0.2); color: var(--warning); border: 1px solid var(--warning); }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+    }
+    .card-title { font-size: 1.15rem; font-weight: 700; color: var(--accent); margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; }
+    textarea {
+      width: 100%;
+      background: var(--code-bg);
+      color: #34d399;
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 14px;
+      font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+      font-size: 13.5px;
+      line-height: 1.5;
+      resize: vertical;
+    }
+    textarea:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 2px rgba(16,185,129,0.2); }
+    .btn-row { display: flex; gap: 12px; align-items: center; margin-top: 16px; flex-wrap: wrap; }
+    .btn {
+      background: var(--accent);
+      color: #090d16;
+      border: none;
+      padding: 10px 22px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn:hover { background: var(--accent-hover); transform: translateY(-1px); }
+    .btn-secondary { background: #334155; color: #f8fafc; }
+    .btn-secondary:hover { background: #475569; }
+    .status-indicator { font-size: 13px; font-weight: 600; color: var(--warning); }
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px; }
+    .stat-box { background: var(--code-bg); border: 1px solid var(--card-border); border-radius: 8px; padding: 16px; text-align: center; }
+    .stat-val { font-size: 24px; font-weight: 800; color: var(--accent); font-family: monospace; }
+    .stat-lbl { font-size: 11px; text-transform: uppercase; color: var(--text-muted); margin-top: 4px; letter-spacing: 0.5px; }
+    .result-table { width: 100%; border-collapse: collapse; margin-top: 16px; font-size: 13.5px; }
+    .result-table th { background: #0f172a; color: var(--text-muted); text-align: left; padding: 10px 14px; font-size: 11px; text-transform: uppercase; border-bottom: 1px solid var(--card-border); }
+    .result-table td { padding: 12px 14px; border-bottom: 1px solid #283548; font-family: monospace; }
+    .result-table tr:hover td { background: rgba(16,185,129,0.05); }
+    .pill { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; }
+    .pill-class1 { background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.4); }
+    .pill-class2 { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.4); }
+    .pill-class3 { background: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.4); }
+    .tag-jtrim { font-size: 11px; background: #10b981; color: #090d16; padding: 2px 6px; border-radius: 4px; font-weight: 800; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header-box">
+    <div>
+      <div style="display:flex; align-items:center; gap:12px;">
+        <a href="index.html" title="Return to VBASE3 Hub" style="text-decoration:none; display:flex; align-items:center;">
+          <img src="images/vbase3_logo.jpg" alt="VBASE3 Logo" style="height:38px; width:auto; border-radius:6px; box-shadow:0 2px 10px rgba(0,0,0,0.5); object-fit:contain; background:#ffffff; padding:2px; cursor:pointer;" />
+        </a>
+        <div class="header-title">
+          <span>🐭 Mouse VBASE2 Antibody Sequence Analyzer</span>
+          <span class="badge badge-mouse">Mouse Only</span>
+        </div>
+      </div>
+      <p style="color: var(--text-muted); font-size: 13.5px; margin-top: 6px;">
+        Dedicated mouse antibody sequence alignment against 554 mouse V-genes across IGH, IGK, and IGL. 100% client-side WASM.
+      </p>
+      <div class="nav-links"><a href="https://doi.org/10.5281/zenodo.22923344" target="_blank" rel="noopener" style="color:#fbbf24; font-weight:700; margin-left:12px; text-decoration:none; padding:4px 10px; border-radius:6px; background:rgba(217,119,6,0.2); border:1px solid rgba(245,158,11,0.5);" title="Download complete database tables and catalogs from Zenodo">📦 Zenodo Data ↗</a>
+        <a href="index.html" style="color:#38bdf8; font-weight:700;" title="Return to Portal Home">🏠 Portal Home</a>
+        <span style="color:#475569;">•</span>
+        <a href="vbase2_human_analyzer.html">Go to Human VBASE2 Analyzer →</a>
+        <span style="color:#475569;">•</span>
+        <a href="data/vbase2/vbase2_legacy_airr_germline_set.tsv" download>Download AIRR TSV</a>
+      </div>
+    </div>
+    <div style="text-align: right;">
+      <span class="badge badge-wasm">⚡ WASM SIMD Accelerated</span>
+      <div id="inputTypeBadge" style="margin-top: 6px;">
+        <span class="badge badge-dna">DNA / Protein Auto-Detect</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">
+      <span>1. Input Mouse Antibody Sequences (DNA or Amino Acid)</span>
+      <span id="detectedFormat" style="font-size: 12px; color: var(--text-muted); font-weight: normal;">Format: Auto</span>
+    </div>
+    <textarea id="seqInput" rows="7" placeholder="Paste FASTA or raw sequence here (Nucleotide DNA or Amino Acid Protein)...">>mus_sample_vh_dna
+GAGGTCCAGCTGCAACAGTCTGGACCTGAGCTGGTGAAGCCTGGGGCTTCAGTGAAGATATCCTGCAAGGCTTCTGGCTACACCTTCACTGACTACTACATGAAGTGGGTGAAGCAGAGTCATGGAAAGAGCCTTGAGTGGATTGGAGATATTAGTCCTAGCAATGGTGCTACTAGCTACAACCAGAAGTTCAAGGGCAAGGCCACATTGACTGTAGACAAGTCCTCCAGCACAGCCTACATGGAGCTCCGCAGCCTGACATCTGAGGATTCTGCAGTCTATTACTGTGCAAGA
+>mus_sample_vh_aa
+EVQLQQSGAELVKPGASVKLSCTASGFNIKDTYIHWVKQRPEQGLEWIGRIDPANGNTKYDPKFQGKATITADTSSNTAYLQLSSLTSEDTAVYYCARWGYWGQGTLVTVSA</textarea>
+
+    <div class="btn-row">
+      <button class="btn" id="analyzeBtn">⚡ Run Local WASM Analysis</button>
+      <button class="btn btn-secondary" id="loadDnaSample">Load Sample DNA</button>
+      <button class="btn btn-secondary" id="loadAaSample">Load Sample Amino Acid</button>
+      <button class="btn btn-secondary" id="clearBtn">Clear</button>
+      <span id="statusIndicator" class="status-indicator">⏳ Initializing WebAssembly Module...</span>
+    </div>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-box">
+      <div class="stat-val" id="statTime">0.0 ms</div>
+      <div class="stat-lbl">Execution Time</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-val" id="statSeqs">0</div>
+      <div class="stat-lbl">Sequences Analyzed</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-val" id="statIdent">-</div>
+      <div class="stat-lbl">Mean V Identity</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-val" style="color: var(--success);" id="statEngine">Client WASM</div>
+      <div class="stat-lbl">Privacy Guarantee (100% Local)</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">
+      <span>2. Mouse Alignment & Annotation Results</span>
+      <button class="btn btn-secondary" style="padding: 4px 12px; font-size: 12px;" id="exportTsvBtn">Export TSV</button>
+    </div>
+    <div style="overflow-x: auto;">
+      <table class="result-table">
+        <thead>
+          <tr>
+            <th>Query Sequence</th>
+            <th>Type</th>
+            <th>Matched Mouse VBASE2 ID</th>
+            <th>Class</th>
+            <th>V Identity</th>
+            <th>CDR1</th>
+            <th>CDR2</th>
+            <th>CDR3 / Junction</th>
+            <th>J-Boundary</th>
+          </tr>
+        </thead>
+        <tbody id="resultBody">
+          <tr>
+            <td colspan="9" style="text-align: center; color: var(--text-muted); padding: 30px;">
+              Ready. Paste Mouse sequences above and click "Run Local WASM Analysis".
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+import init, { analyze_sequence } from './pkg/dnaplot_wasm.js';
+
+let wasmReady = false;
+let lastResults = [];
+
+const statusEl = document.getElementById('statusIndicator');
+const seqInput = document.getElementById('seqInput');
+const resultBody = document.getElementById('resultBody');
+const statTime = document.getElementById('statTime');
+const statSeqs = document.getElementById('statSeqs');
+const statIdent = document.getElementById('statIdent');
+const detectedFormat = document.getElementById('detectedFormat');
+
+async function loadWasm() {
+  try {
+    await init();
+    wasmReady = true;
+    statusEl.textContent = '✅ WASM Engine Ready';
+    statusEl.style.color = '#22c55e';
+  } catch (err) {
+    statusEl.textContent = '❌ WASM Load Error: ' + err;
+    statusEl.style.color = '#ef4444';
+  }
+}
+loadWasm();
+
+function parseFasta(text) {
+  const records = [];
+  let curName = null;
+  let curSeq = [];
+  const lines = text.split('\n');
+  for (let line of lines) {
+    line = line.trim();
+    if (line.startsWith('>')) {
+      if (curName) {
+        records.push({ name: curName, seq: curSeq.join('') });
+      }
+      curName = line.substring(1).trim().split(/\s+/)[0];
+      curSeq = [];
+    } else if (line) {
+      curSeq.push(line);
+    }
+  }
+  if (curName) {
+    records.push({ name: curName, seq: curSeq.join('') });
+  } else if (curSeq.length > 0) {
+    records.push({ name: 'Mouse_Sequence', seq: curSeq.join('') });
+  }
+  return records;
+}
+
+function detectSeqType(seq) {
+  const upper = seq.toUpperCase().replace(/[\s\.\-]/g, '');
+  const aaChars = ['E', 'F', 'I', 'L', 'P', 'Q', 'V', 'W', 'Y'];
+  const hasAa = aaChars.some(c => upper.includes(c));
+  return hasAa ? 'Amino Acid (Protein)' : 'Nucleotide (DNA)';
+}
+
+seqInput.addEventListener('input', () => {
+  const recs = parseFasta(seqInput.value);
+  if (recs.length > 0) {
+    const t = detectSeqType(recs[0].seq);
+    detectedFormat.textContent = `Format: ${t}`;
+  }
+});
+
+document.getElementById('analyzeBtn').addEventListener('click', async () => {
+  if (!wasmReady) {
+    alert('WASM module is still loading. Please wait a moment.');
+    return;
+  }
+  const recs = parseFasta(seqInput.value);
+  if (recs.length === 0) {
+    alert('Please enter at least one sequence.');
+    return;
+  }
+
+  statusEl.textContent = '⚡ Aligning mouse sequences in browser...';
+  statusEl.style.color = '#10b981';
+  
+  const startTime = performance.now();
+  resultBody.innerHTML = '';
+  lastResults = [];
+  let totalIdent = 0;
+
+  for (let r of recs) {
+    try {
+      const typeStr = detectSeqType(r.seq);
+      // Explicitly pass "mouse" species hint
+      const res = analyze_sequence(r.seq, r.name, "mouse", null);
+      lastResults.push(res);
+      totalIdent += res.v_identity;
+
+      let classPill = '<span class="pill pill-class1">Class 1</span>';
+      if (res.v_gene.includes('musIGHV002') || res.v_gene.includes('003') || res.v_gene.includes('014')) {
+        classPill = '<span class="pill pill-class2">Class 2</span>';
+      }
+
+      let jTag = '';
+      if (r.seq.toUpperCase().includes('TVSS') || r.seq.toUpperCase().includes('TVSA')) {
+        jTag = '<span class="tag-jtrim">TVSA/S Verified</span>';
+      } else if (r.seq.toUpperCase().includes('TVL')) {
+        jTag = '<span class="tag-jtrim">TVL Verified</span>';
+      } else if (r.seq.toUpperCase().includes('VEIK') || r.seq.toUpperCase().includes('LEIK') || r.seq.toUpperCase().includes('VDIK') || r.seq.toUpperCase().includes('LDIK')) {
+        jTag = '<span class="tag-jtrim">VEIK Verified</span>';
+      }
+
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td style="font-weight:700; color:#f8fafc;">${res.sequence_name}</td>
+        <td><span class="badge ${typeStr.startsWith('Amino') ? 'badge-aa' : 'badge-dna'}">${typeStr.startsWith('Amino') ? 'AA' : 'DNA'}</span></td>
+        <td style="color:#34d399; font-weight:700;">${res.v_gene || 'N/A'}</td>
+        <td>${classPill}</td>
+        <td style="color:${res.v_identity >= 90 ? '#4ade80' : '#fbbf24'};">${res.v_identity.toFixed(1)}%</td>
+        <td title="${res.cdr1_nt || res.cdr1_aa}">${res.cdr1_aa || '-'}</td>
+        <td title="${res.cdr2_nt || res.cdr2_aa}">${res.cdr2_aa || '-'}</td>
+        <td title="${res.junction_nt || res.junction_aa}" style="color:#f472b6; font-weight:700;">${res.cdr3_aa || res.junction_aa || '-'}</td>
+        <td>${jTag || '-'}</td>
+      `;
+      resultBody.appendChild(tr);
+    } catch (e) {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td colspan="9" style="color:#ef4444;">Error on ${r.name}: ${e}</td>`;
+      resultBody.appendChild(tr);
+    }
+  }
+
+  const elapsed = performance.now() - startTime;
+  statTime.textContent = elapsed.toFixed(1) + ' ms';
+  statSeqs.textContent = recs.length;
+  statIdent.textContent = (totalIdent / recs.length).toFixed(1) + '%';
+  statusEl.textContent = '✅ Analysis Complete';
+  statusEl.style.color = '#22c55e';
+});
+
+document.getElementById('loadDnaSample').addEventListener('click', () => {
+  seqInput.value = `>mus_sample_dna_01
+GAGGTCCAGCTGCAACAGTCTGGACCTGAGCTGGTGAAGCCTGGGGCTTCAGTGAAGATATCCTGCAAGGCTTCTGGCTACACCTTCACTGACTACTACATGAAGTGGGTGAAGCAGAGTCATGGAAAGAGCCTTGAGTGGATTGGAGATATTAGTCCTAGCAATGGTGCTACTAGCTACAACCAGAAGTTCAAGGGCAAGGCCACATTGACTGTAGACAAGTCCTCCAGCACAGCCTACATGGAGCTCCGCAGCCTGACATCTGAGGATTCTGCAGTCTATTACTGTGCAAGA`;
+  detectedFormat.textContent = 'Format: Nucleotide (DNA)';
+});
+
+document.getElementById('loadAaSample').addEventListener('click', () => {
+  seqInput.value = `>mus_sample_protein_01
+EVQLQQSGAELVKPGASVKLSCTASGFNIKDTYIHWVKQRPEQGLEWIGRIDPANGNTKYDPKFQGKATITADTSSNTAYLQLSSLTSEDTAVYYCARWGYWGQGTLVTVSA`;
+  detectedFormat.textContent = 'Format: Amino Acid (Protein)';
+});
+
+document.getElementById('clearBtn').addEventListener('click', () => {
+  seqInput.value = '';
+  resultBody.innerHTML = `<tr><td colspan="9" style="text-align: center; color: var(--text-muted); padding: 30px;">Ready. Paste Mouse sequences above and click "Run Local WASM Analysis".</td></tr>`;
+  statTime.textContent = '0.0 ms';
+  statSeqs.textContent = '0';
+  statIdent.textContent = '-';
+  detectedFormat.textContent = 'Format: Auto';
+});
+
+document.getElementById('exportTsvBtn').addEventListener('click', () => {
+  if (lastResults.length === 0) {
+    alert('No results to export.');
+    return;
+  }
+  let tsv = 'sequence_name\tv_gene\tv_identity\tcdr1_aa\tcdr2_aa\tcdr3_aa\tjunction_aa\n';
+  for (let r of lastResults) {
+    tsv += `${r.sequence_name}\t${r.v_gene}\t${r.v_identity}\t${r.cdr1_aa}\t${r.cdr2_aa}\t${r.cdr3_aa}\t${r.junction_aa}\n`;
+  }
+  const blob = new Blob([tsv], { type: 'text/tab-separated-values' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'vbase2_mouse_analysis.tsv';
+  a.click();
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,79 @@
+ID   J00259; SV 1; linear; gDNA; STD; HUM; 108 BP.
+XX
+AC   J00259;
+XX
+DT   15-MAY-1995 (Rel. 199520-1, arrived in LIGM-DB)
+DT   18-OCT-2013 (Rel. 201342-5, Last updated, Version 37)
+XX
+DE   Human IgM germline chain J-delta region: mu CH3,.
+XX
+KW   antigen receptor; Immunoglobulin superfamily (IgSF); immunoglobulin (IG);
+KW   IG-Heavy; IG-Heavy-Mu; constant; regular; gDNA; undefined; functional;
+KW   C-gene.
+XX
+OS   Homo sapiens (human)
+OC   cellular organisms; Eukaryota; Opisthokonta; Metazoa; Eumetazoa; Bilateria;
+OC   Deuterostomia; Chordata; Craniata; Vertebrata; Gnathostomata; Teleostomi;
+OC   Euteleostomi; Sarcopterygii; Dipnotetrapodomorpha; Tetrapoda; Amniota;
+OC   Mammalia; Theria; Eutheria; Boreoeutheria; Euarchontoglires; Primates;
+OC   Haplorrhini; Simiiformes; Catarrhini; Hominoidea; Hominidae; Homininae;
+OC   Homo; Homo sapiens.
+XX
+RN   [1]
+RP   8-108
+RX   DOI; 10.1093/nar/8.24.5983.
+RX   PUBMED; 6450943.
+RA   Takahashi N., Nakai S., Honjo T.;
+RT   "Cloning of human immunoglobulin mu gene and comparison with mouse mu
+RT   gene";
+RL   Nucleic Acids Res. 8(24):5983-5991(1980).
+XX
+RN   [2]
+RP   1-108
+RA   Arenz M.;
+RT   ;
+RL   Submitted (04-FEB-1998) to the INSDC.
+RL   I. Medizinische Klinik, Johannes Gutenberg Universitat, Obere Zahlbacher
+RL   Str. 63, Mainz 55131, Germany
+XX
+DR   ENA; J00259.
+XX
+CC   IMGT/LIGM-DB annotation level: by annotators
+CC   
+CC   Compared in [1] with the mouse gene. The two are 68% homologous
+CC   overall, and are 80% homologous in the CH4 domain. This is part of
+CC   a multigene region containing the J-region, switch region,
+CC   C-mu-secreted, C-mu-membrane, and C-delta genes.
+XX
+FH   Key                 Location/Qualifiers
+FH   
+FT   C-GENE              <1..>108
+FT                       /partial
+FT                       /cell_type="lymphocyte"
+FT                       /db_xref="taxon:9606"
+FT                       /dev_stage="foetus"
+FT                       /functional
+FT                       /IMGT_allele="IGHM*02"
+FT                       /IMGT_gene="IGHM"
+FT                       /IMGT_map="14q32.33"
+FT                       /mol_type="genomic DNA"
+FT                       /organism="Homo sapiens"
+FT                       /tissue_lib="of Lawn et al."
+FT                       /tissue_type="liver; placenta"
+FT   C-GENE-UNIT         <1..>108
+FT                       /partial
+FT                       /protein_id="AAB59420.1"
+FT   CH3                 <1..83
+FT                       /partial
+FT                       /codon_start=2
+FT                       /translation="NSGERFTCTVTHTDLPSPLKQTISRPK"
+FT                       /note="C-region CH3 secreted domain"
+FT   DONOR-SPLICE        83..85
+FT   INTRON              84..>108
+FT                       /partial
+FT                       /note="intron C, G00-120-086"
+XX
+SQ   Sequence 108 BP; 21 A; 42 C; 27 G; 18 T; 0 other;
+     gaattcgggg gagaggttca cgtgcaccgt gacccacaca gacctgccct cgccactgaa        60
+     gcagaccatc tcccggccca agggtaggcc ccactcttgc cctcttcc                    108
+//

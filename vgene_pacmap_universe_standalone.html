@@ -1,0 +1,2631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VBASE3 PaCMAP Universe — 55 Vertebrate Species, Dildrop Families & Universal Antibody Projection</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    :root {
+      --bg-base: #05070a;
+      --bg-card: rgba(13, 22, 35, 0.88);
+      --bg-card-hover: rgba(20, 35, 55, 0.95);
+      --border-glass: rgba(56, 189, 248, 0.22);
+      --accent-cyan: #38bdf8;
+      --accent-emerald: #34d399;
+      --accent-amber: #f59e0b;
+      --accent-purple: #c084fc;
+      --accent-rose: #fb7185;
+      --text-primary: #f0f6fc;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 0;
+      background: radial-gradient(circle at 50% 50%, #0d1626 0%, #05070a 100%);
+      color: var(--text-primary);
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+    }
+    #header {
+      position: absolute;
+      top: 16px;
+      left: 20px;
+      z-index: 20;
+      background: var(--bg-card);
+      padding: 16px 22px;
+      border-radius: 14px;
+      border: 1px solid var(--border-glass);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 12px 36px rgba(0,0,0,0.65);
+      max-width: 580px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    #header.collapsed {
+      transform: translateY(-40px);
+      opacity: 0;
+      pointer-events: none;
+    }
+    .title-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 4px; }
+    h1 {
+      margin: 0;
+      font-family: 'Outfit', sans-serif;
+      font-size: 21px;
+      font-weight: 700;
+      background: linear-gradient(135deg, #58a6ff, #34d399);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .subtitle {
+      font-size: 12.5px;
+      color: var(--text-secondary);
+      margin-bottom: 12px;
+      line-height: 1.45;
+    }
+    .kpi-row {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 12px;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .kpi-item { display: flex; flex-direction: column; }
+    .kpi-val { font-size: 13px; font-weight: 700; color: #58a6ff; font-family: 'Fira Code', monospace; }
+    .kpi-lbl { font-size: 10.5px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      font-size: 12.5px;
+    }
+    select, input, button {
+      background: #16202e;
+      color: var(--text-primary);
+      border: 1px solid #304256;
+      padding: 7px 12px;
+      border-radius: 8px;
+      font-size: 12.5px;
+      font-family: inherit;
+      outline: none;
+      transition: all 0.2s;
+    }
+    input { width: 145px; }
+    select:hover, input:focus, button:hover {
+      border-color: #58a6ff;
+      background: #1c2a3d;
+      cursor: pointer;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #1f6feb, #10b981);
+      border: none;
+      color: #fff;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-primary:hover {
+      opacity: 0.92;
+      box-shadow: 0 0 14px rgba(56, 189, 248, 0.5);
+    }
+    #selectionBanner {
+      margin-top: 10px;
+      padding: 8px 12px;
+      background: rgba(88, 166, 255, 0.15);
+      border: 1px solid #58a6ff;
+      border-radius: 8px;
+      font-size: 12px;
+      color: #79c0ff;
+      display: none;
+    }
+
+    /* Universal Inspector & Projection Panel */
+    #inspectorPanel {
+      position: absolute;
+      top: 16px;
+      right: 20px;
+      z-index: 25;
+      background: var(--bg-card);
+      border: 1px solid var(--border-glass);
+      border-radius: 14px;
+      padding: 16px 20px;
+      width: 480px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 14px 42px rgba(0,0,0,0.75);
+      transition: transform 0.35s ease, opacity 0.35s ease;
+    }
+    #inspectorPanel.collapsed {
+      transform: translateX(520px);
+      pointer-events: none;
+      opacity: 0;
+    }
+    .inspector-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+    .inspector-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: #38bdf8;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .close-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 18px;
+      cursor: pointer;
+      padding: 2px 6px;
+    }
+    .close-btn:hover { color: #fff; }
+    .inspector-desc {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-bottom: 10px;
+      line-height: 1.4;
+    }
+    .sample-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+    .sample-pill {
+      font-size: 11px;
+      padding: 4px 8px;
+      border-radius: 6px;
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      color: #7dd3fc;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .sample-pill:hover {
+      background: rgba(56, 189, 248, 0.28);
+      border-color: #38bdf8;
+      color: #fff;
+    }
+    #seqTextarea {
+      width: 100%;
+      height: 85px;
+      background: #090e17;
+      color: #f1f5f9;
+      border: 1px solid #233549;
+      border-radius: 8px;
+      padding: 8px 10px;
+      font-family: 'Fira Code', monospace;
+      font-size: 11.5px;
+      resize: vertical;
+      outline: none;
+      margin-bottom: 10px;
+    }
+    #seqTextarea:focus { border-color: #38bdf8; }
+    .action-bar { display: flex; gap: 8px; margin-bottom: 14px; }
+    
+    /* Result Display Card inside Inspector */
+    #analysisHUD {
+      display: none;
+      background: rgba(9, 14, 23, 0.95);
+      border: 1px solid #1e3a5f;
+      border-radius: 10px;
+      padding: 14px;
+      margin-top: 10px;
+      animation: fadeIn 0.3s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .hud-title-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #1e293b;
+      padding-bottom: 8px;
+      margin-bottom: 10px;
+    }
+    .hud-beacon-alert {
+      font-size: 11.5px;
+      font-weight: 600;
+      color: #34d399;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .badge-species { background: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid #0284c7; }
+    .badge-chain { background: rgba(168, 85, 247, 0.2); color: #c084fc; border: 1px solid #9333ea; }
+    .badge-clan { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid #d97706; }
+    .badge-family { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid #059669; }
+    .badge-low { background: rgba(52, 211, 153, 0.2); color: #34d399; }
+    .badge-mod { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
+    .badge-high { background: rgba(244, 63, 94, 0.2); color: #fb7185; }
+    .hud-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 10px;
+      font-size: 12px;
+    }
+    .hud-box {
+      background: rgba(255,255,255,0.02);
+      padding: 6px 10px;
+      border-radius: 6px;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .hud-label { font-size: 10.5px; color: var(--text-muted); text-transform: uppercase; margin-bottom: 2px; }
+    .hud-value { font-family: 'Fira Code', monospace; font-size: 12px; font-weight: 600; color: #fff; }
+    .hud-ribbon {
+      background: #060a12;
+      border: 1px solid #1e293b;
+      border-radius: 6px;
+      padding: 8px;
+      font-family: 'Fira Code', monospace;
+      font-size: 11px;
+      word-break: break-all;
+      line-height: 1.5;
+    }
+    .rf-fr { color: #94a3b8; }
+    .rf-cdr1 { color: #38bdf8; font-weight: bold; background: rgba(56, 189, 248, 0.15); padding: 0 2px; border-radius: 2px; }
+    .rf-cdr2 { color: #34d399; font-weight: bold; background: rgba(52, 211, 153, 0.15); padding: 0 2px; border-radius: 2px; }
+    .rf-cdr3 { color: #f43f5e; font-weight: bold; background: rgba(244, 63, 94, 0.18); padding: 0 2px; border-radius: 2px; }
+
+    /* Tooltip */
+    #tooltip {
+      position: absolute;
+      display: none;
+      background: rgba(13, 22, 35, 0.96);
+      border: 1px solid #38bdf8;
+      border-radius: 10px;
+      padding: 14px 18px;
+      color: #f0f6fc;
+      font-size: 12px;
+      pointer-events: none;
+      z-index: 100;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+      max-width: 400px;
+    }
+
+    /* Legend with Checkboxes & Multi-Selection */
+    .legend {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-glass);
+      border-radius: 12px;
+      padding: 14px 16px;
+      font-size: 12px;
+      max-height: 480px;
+      overflow-y: auto;
+      backdrop-filter: blur(14px);
+      box-shadow: 0 8px 28px rgba(0,0,0,0.65);
+      width: 360px;
+      z-index: 15;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .legend.collapsed {
+      transform: translateX(-400px);
+      opacity: 0;
+      pointer-events: none;
+    }
+    .legend-header {
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      padding-bottom: 8px;
+      margin-bottom: 8px;
+    }
+    .legend-title {
+      font-weight: 700;
+      color: #38bdf8;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 6px;
+    }
+    .legend-badge {
+      font-size: 11px;
+      background: rgba(56, 189, 248, 0.15);
+      color: #38bdf8;
+      padding: 2px 7px;
+      border-radius: 10px;
+      font-weight: 600;
+    }
+    .legend-btn-row {
+      display: flex;
+      gap: 5px;
+      margin-top: 4px;
+      flex-wrap: wrap;
+    }
+    .legend-btn {
+      padding: 3px 8px;
+      font-size: 10.5px;
+      border-radius: 5px;
+      background: #1a2738;
+      border: 1px solid #304256;
+      color: #cbd5e1;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .legend-btn:hover {
+      background: #253850;
+      border-color: #38bdf8;
+      color: #fff;
+    }
+    .legend-instruction { font-size: 10px; color: var(--text-muted); margin-bottom: 8px; }
+
+    /* Hierarchical Tree Group Styles */
+    .legend-group {
+      margin-bottom: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 8px;
+      background: rgba(15, 23, 42, 0.45);
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+    .legend-group:hover {
+      border-color: rgba(56, 189, 248, 0.3);
+    }
+    .legend-group-header {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 5px 8px;
+      background: rgba(30, 41, 59, 0.65);
+      cursor: pointer;
+      user-select: none;
+      font-size: 11.5px;
+    }
+    .legend-group-header:hover {
+      background: rgba(56, 189, 248, 0.14);
+    }
+    .legend-arrow {
+      font-size: 9px;
+      color: #94a3b8;
+      width: 14px;
+      text-align: center;
+      transition: transform 0.2s ease;
+      cursor: pointer;
+    }
+    .legend-arrow.collapsed {
+      transform: rotate(-90deg);
+    }
+    .legend-group-cb {
+      cursor: pointer;
+      width: 14px;
+      height: 14px;
+      accent-color: #38bdf8;
+      flex-shrink: 0;
+    }
+    .legend-group-title {
+      font-weight: 600;
+      color: #f1f5f9;
+      flex: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .legend-group-badge {
+      font-size: 10px;
+      color: #94a3b8;
+      background: rgba(0, 0, 0, 0.35);
+      padding: 1px 6px;
+      border-radius: 8px;
+      flex-shrink: 0;
+    }
+    .legend-children {
+      padding: 4px 6px 6px 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      background: rgba(10, 15, 26, 0.35);
+    }
+    .legend-children.collapsed {
+      display: none;
+    }
+    .legend-child-item {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 3px 6px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 11px;
+      transition: background 0.15s;
+    }
+    .legend-child-item:hover {
+      background: rgba(56, 189, 248, 0.16);
+    }
+    .legend-child-item.checked-item {
+      background: rgba(56, 189, 248, 0.22);
+    }
+    .legend-child-cb {
+      cursor: pointer;
+      width: 13px;
+      height: 13px;
+      accent-color: #38bdf8;
+      flex-shrink: 0;
+    }
+
+    /* Flat Legend Item Fallback */
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 6px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.15s ease;
+      user-select: none;
+      font-size: 11.5px;
+    }
+    .legend-item:hover { background: rgba(56, 189, 248, 0.16); }
+    .legend-item.checked-item {
+      background: rgba(56, 189, 248, 0.22);
+      border: 1px solid rgba(56, 189, 248, 0.4);
+    }
+    .legend-cb {
+      cursor: pointer;
+      width: 14px;
+      height: 14px;
+      accent-color: #38bdf8;
+      flex-shrink: 0;
+    }
+    .legend-color { width: 11px; height: 11px; border-radius: 50%; flex-shrink: 0; }
+    .legend-label { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .legend-count { font-size: 10px; color: var(--text-muted); flex-shrink: 0; }
+
+    /* Pulsating Sonar Radar Beacon */
+    @keyframes sonarWave {
+      0% { r: 6px; opacity: 0.95; stroke-width: 3.5px; }
+      50% { opacity: 0.6; stroke-width: 2.5px; }
+      100% { r: 48px; opacity: 0; stroke-width: 0.5px; }
+    }
+    .sonar-beacon {
+      fill: none;
+      stroke: #38bdf8;
+      pointer-events: none;
+      animation: sonarWave 1.4s infinite cubic-bezier(0.2, 0.6, 0.3, 1);
+    }
+    .sonar-beacon-inner {
+      fill: #34d399;
+      stroke: #ffffff;
+      stroke-width: 2.5px;
+      pointer-events: none;
+    }
+
+    /* Evolutionary Timeline Bar */
+    .evo-bar {
+      position: absolute;
+      bottom: 20px;
+      left: 395px;
+      right: 20px;
+      max-width: 840px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-glass);
+      border-radius: 12px;
+      padding: 12px 18px;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 10px 32px rgba(0,0,0,0.7);
+      z-index: 20;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .evo-bar.collapsed {
+      transform: translateY(120px);
+      opacity: 0;
+      pointer-events: none;
+    }
+    .evo-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .evo-title {
+      font-size: 12.5px;
+      color: #38bdf8;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'Outfit', sans-serif;
+      letter-spacing: 0.3px;
+    }
+    .evo-controls {
+      display: flex;
+      gap: 8px;
+    }
+    .btn-evo {
+      background: linear-gradient(135deg, #0284c7, #10b981);
+      color: #fff;
+      border: none;
+      padding: 5px 14px;
+      border-radius: 6px;
+      font-size: 11.5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-evo:hover {
+      box-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
+    }
+    .btn-evo-ghost {
+      background: rgba(255,255,255,0.06);
+      color: var(--text-secondary);
+      border: 1px solid #304256;
+      padding: 5px 10px;
+      border-radius: 6px;
+      font-size: 11.5px;
+      cursor: pointer;
+    }
+    .btn-evo-ghost:hover {
+      background: #1c2a3d;
+      color: #fff;
+    }
+    .evo-slider-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .evo-slider-row input[type="range"] {
+      flex: 1;
+      accent-color: #38bdf8;
+      cursor: pointer;
+    }
+    .evo-age-tag {
+      font-family: 'Fira Code', monospace;
+      font-size: 11px;
+      color: var(--text-secondary);
+      min-width: 75px;
+    }
+    .evo-epoch-info {
+      font-size: 11.5px;
+      color: var(--text-secondary);
+      background: rgba(0,0,0,0.3);
+      padding: 6px 10px;
+      border-radius: 6px;
+      border: 1px solid rgba(255,255,255,0.05);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .evo-badge {
+      background: rgba(56, 189, 248, 0.2);
+      color: #38bdf8;
+      border: 1px solid #0284c7;
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 11px;
+      white-space: nowrap;
+    }
+
+    /* Minimize Button & Floating Restore Pills */
+    .panel-minimize-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 6px;
+      color: #94a3b8;
+      font-size: 12px;
+      cursor: pointer;
+      width: 22px;
+      height: 22px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      transition: all 0.15s ease;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+    .panel-minimize-btn:hover {
+      background: rgba(239, 68, 68, 0.2);
+      border-color: #ef4444;
+      color: #f87171;
+      transform: scale(1.08);
+    }
+    .floating-panel-pill {
+      position: absolute;
+      z-index: 30;
+      background: rgba(13, 22, 35, 0.9);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      border-radius: 20px;
+      padding: 7px 14px;
+      color: #f1f5f9;
+      font-family: 'Outfit', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      backdrop-filter: blur(14px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      user-select: none;
+    }
+    .floating-panel-pill:hover {
+      background: rgba(20, 35, 55, 0.98);
+      border-color: #38bdf8;
+      box-shadow: 0 0 16px rgba(56, 189, 248, 0.5);
+      transform: translateY(-2px);
+      color: #38bdf8;
+    }
+    .pill-top-left { top: 16px; left: 20px; }
+    .pill-top-right { top: 16px; right: 20px; }
+    .pill-bottom-left { bottom: 20px; left: 20px; }
+    .pill-bottom-evo { bottom: 20px; left: 395px; }
+    .pill-bottom-align { bottom: 20px; right: 20px; border-color: rgba(52, 211, 153, 0.4); }
+    .pill-bottom-align:hover { border-color: #34d399; box-shadow: 0 0 16px rgba(52, 211, 153, 0.5); color: #34d399; }
+
+    /* Sequence Alignment Drawer (1..104 Canonical IMGT Register) */
+    #alignmentDrawer {
+      position: fixed;
+      bottom: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(1340px, 96vw);
+      max-height: 420px;
+      background: rgba(10, 16, 26, 0.97);
+      border: 1px solid #1e3a5f;
+      border-radius: 12px;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.88);
+      display: flex;
+      flex-direction: column;
+      z-index: 45;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    #alignmentDrawer.collapsed {
+      transform: translateX(-50%) translateY(520px);
+      opacity: 0;
+      pointer-events: none;
+    }
+    .alignment-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 16px;
+      border-bottom: 1px solid #1e293b;
+      background: rgba(15, 23, 42, 0.75);
+      border-radius: 12px 12px 0 0;
+      user-select: none;
+    }
+    .alignment-title-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .alignment-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #38bdf8;
+    }
+    .align-mode-badge {
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-weight: 600;
+      letter-spacing: 0.2px;
+    }
+    .align-mode-badge.single {
+      background: rgba(56, 189, 248, 0.15);
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      color: #7dd3fc;
+    }
+    .align-mode-badge.multi {
+      background: rgba(52, 211, 153, 0.15);
+      border: 1px solid rgba(52, 211, 153, 0.4);
+      color: #6ee7b7;
+    }
+    .alignment-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .drawer-action-btn {
+      background: #152238;
+      border: 1px solid #233549;
+      color: #e2e8f0;
+      font-size: 11.5px;
+      font-family: 'Outfit', sans-serif;
+      padding: 4px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .drawer-action-btn:hover {
+      background: #1e3a5f;
+      border-color: #38bdf8;
+      color: #38bdf8;
+    }
+    .alignment-body {
+      flex: 1;
+      overflow-y: auto;
+      overflow-x: auto;
+      padding: 12px 16px;
+      font-family: 'Fira Code', monospace;
+      font-size: 12px;
+      line-height: 1.45;
+    }
+    .imgt-ruler-container {
+      position: sticky;
+      top: 0;
+      background: #090e17;
+      z-index: 5;
+      padding-bottom: 6px;
+      border-bottom: 1px solid #233549;
+      margin-bottom: 8px;
+      white-space: nowrap;
+      min-width: 1100px;
+    }
+    .ruler-region-row {
+      color: #94a3b8;
+      font-size: 11px;
+      font-weight: 600;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      line-height: 18px;
+    }
+    .ruler-ticks-row {
+      color: #64748b;
+      font-size: 10.5px;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      line-height: 16px;
+    }
+    .align-region-fr1 { display: inline-block; width: 26ch; min-width: 26ch; }
+    .align-region-cdr1 { display: inline-block; width: 12ch; min-width: 12ch; margin-left: 4px; }
+    .align-region-fr2 { display: inline-block; width: 17ch; min-width: 17ch; margin-left: 4px; }
+    .align-region-cdr2 { display: inline-block; width: 10ch; min-width: 10ch; margin-left: 4px; }
+    .align-region-fr3 { display: inline-block; width: 39ch; min-width: 39ch; margin-left: 4px; }
+
+    .align-row {
+      white-space: nowrap;
+      padding: 3px 6px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      min-width: 1100px;
+      transition: background 0.15s ease;
+    }
+    .align-row:hover {
+      background: rgba(30, 58, 95, 0.45);
+    }
+    .align-row.selected-align-row {
+      background: rgba(56, 189, 248, 0.12);
+      border-left: 2px solid rgba(56, 189, 248, 0.6);
+    }
+    .align-row.active-align-row {
+      background: rgba(56, 189, 248, 0.28) !important;
+      border-left: 4px solid #38bdf8 !important;
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.35);
+    }
+    .align-gene-tag {
+      display: inline-block;
+      width: 270px;
+      min-width: 270px;
+      color: #58a6ff;
+      font-weight: 600;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .align-seq-chars {
+      letter-spacing: 1.2px;
+      font-size: 11.5px;
+    }
+    .seq-gap {
+      color: #334155;
+    }
+    .seq-cdr1 {
+      color: #fbbf24;
+      background: rgba(251, 191, 36, 0.1);
+      padding: 1px 2px;
+      border-radius: 2px;
+    }
+    .seq-cdr2 {
+      color: #34d399;
+      background: rgba(52, 211, 153, 0.1);
+      padding: 1px 2px;
+      border-radius: 2px;
+    }
+    .single-seq-card {
+      background: rgba(13, 22, 35, 0.6);
+      border: 1px solid #1e293b;
+      border-radius: 8px;
+      padding: 14px 16px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating Restore Pills (Visible when panels are minimized) -->
+  <button id="restoreHeaderBtn" class="floating-panel-pill pill-top-left" style="display:none;" title="Restore Header & Controls">🌌 Controls</button>
+  <button id="restoreInspectorBtn" class="floating-panel-pill pill-top-right" title="Open Query Inspector">🔬 Query Inspector</button>
+  <button id="restoreLegendBtn" class="floating-panel-pill pill-bottom-left" style="display:none;" title="Restore Legend">📑 Legend</button>
+  <button id="restoreEvoBtn" class="floating-panel-pill pill-bottom-evo" style="display:none;" title="Restore Evolution Movie Bar">⏳ Evolution Movie</button>
+  <button id="restoreAlignmentBtn" class="floating-panel-pill pill-bottom-align" style="display:none;" title="Open Sequence Alignment Drawer">🧬 Alignment (<span id="alignCountBadge">0</span>)</button>
+
+  <!-- Sequence Alignment Drawer (IMGT 1..104 Canonical Gapped Alignment) -->
+  <div id="alignmentDrawer" class="collapsed">
+    <div class="alignment-header">
+      <div class="alignment-title-row">
+        <span class="alignment-title">🧬 IMGT Sequence Alignment</span>
+        <span id="alignModeBadge" class="align-mode-badge single">Single Sequence</span>
+        <span id="alignSelectionCount" style="font-size:11.5px; color:#94a3b8; margin-left:8px;">0 genes</span>
+      </div>
+      <div class="alignment-actions">
+        <button id="copyAlignmentFastaBtn" class="drawer-action-btn" title="Copy selection as FASTA">📋 Copy FASTA</button>
+        <button id="clearSelectionBtn" class="drawer-action-btn" title="Clear selection">🧹 Clear</button>
+        <button class="panel-minimize-btn" id="closeAlignmentBtn" title="Minimize Alignment Drawer">✕</button>
+      </div>
+    </div>
+    <div id="alignmentBody" class="alignment-body"></div>
+  </div>
+
+  <!-- Top Left Header & Controls -->
+  <div id="header">
+    <div class="title-row">
+      <div style="display:flex; align-items:center; gap:12px;">
+        <img src="images/vbase3_logo.jpg" alt="VBASE3 Logo" style="height:44px; width:auto; border-radius:6px; box-shadow:0 2px 10px rgba(0,0,0,0.5); object-fit:contain; background:#ffffff; padding:2px;" />
+        <div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <h1 style="margin:0; font-size:1.35rem;">🌌 VBASE3 <span style="color:#64748b; font-weight:400; font-size:16px;">•</span> <span style="color:#38bdf8;">BCRbase</span></h1>
+            <span style="background:rgba(56,189,248,0.15); border:1px solid #38bdf8; color:#38bdf8; font-size:10px; font-weight:700; padding:2px 7px; border-radius:12px;">BCR Universe</span>
+          </div>
+        </div>
+      </div>
+      <button class="panel-minimize-btn" id="closeHeaderBtn" title="Minimize Controls (leaves small icon)">✕</button>
+    </div>
+    <div class="subtitle">Vertebrate B-Cell Receptor & Antibody Universe • Complete Heavy & Light Chains across 55 Species • Renate Dildrop 14 Families • Real-Time Zero-Shift Projection</div>
+    
+    <!-- Unified VBASE3 Portals Bar -->
+    <div class="vbase-portal-nav" style="display:flex; gap:6px; margin-bottom:12px; background:rgba(15,23,42,0.85); border:1px solid #334155; border-radius:8px; padding:3px;">
+      <a href="vgene_pacmap_universe.html" class="portal-nav-tab active" style="flex:1; text-align:center; padding:6px 10px; border-radius:6px; font-size:12px; font-weight:700; text-decoration:none; display:flex; align-items:center; justify-content:center; gap:6px; background:#0284c7; color:#ffffff; box-shadow:0 2px 8px rgba(2,132,199,0.4);">
+        <span>🛡️ BCRbase</span>
+        <span style="font-size:10px; opacity:0.85; font-weight:500;">(Antibodies)</span>
+      </a>
+      <a href="tcr_universe.html" class="portal-nav-tab" style="flex:1; text-align:center; padding:6px 10px; border-radius:6px; font-size:12px; font-weight:600; text-decoration:none; display:flex; align-items:center; justify-content:center; gap:6px; background:transparent; color:#94a3b8; border:1px solid transparent; transition:all 0.2s;">
+        <span>🧬 TCRbase</span>
+        <span style="font-size:10px; opacity:0.75; font-weight:400;">(T-Cell Receptors)</span>
+      </a>
+    </div>
+    
+    <div class="kpi-row">
+      <div class="kpi-item"><span class="kpi-val" id="kpiGenes">-</span><span class="kpi-lbl">V-Genes</span></div>
+      <div class="kpi-item"><span class="kpi-val" id="kpiSpecies">-</span><span class="kpi-lbl">Species</span></div>
+      <div class="kpi-item"><span class="kpi-val">9 Clans</span><span class="kpi-lbl">Ancestral Lineages</span></div>
+      <div class="kpi-item"><span class="kpi-val" id="kpiFamilies" style="color:#34d399;">-</span><span class="kpi-lbl">V-Gene Families</span></div>
+    </div>
+
+    <div class="controls">
+      <label style="font-size:12px; color:#94a3b8;">Hierarchy & Color: </label>
+      <select id="colorSelect">
+        <option value="hierarchical" selected>Hierarchical (Species & Chain → Family)</option>
+        <option value="family">V-Gene Family (Renate Dildrop Murine & IMGT)</option>
+        <option value="clan">Ancestral Clan & Subgroup</option>
+        <option value="species">Species / Organism</option>
+        <option value="chain">Chain / Locus Type</option>
+      </select>
+      <input type="text" id="geneSearch" placeholder="🔍 Search gene, family, species..." />
+      <button id="resetZoom" title="Press 'F' key anytime to reset and center map">Reset View (F)</button>
+      <button id="toggleInspectorBtn" class="btn-primary">🔬 Query Inspector</button>
+    </div>
+    <div id="selectionBanner"></div>
+  </div>
+
+  <!-- Universal Antibody Sequence Inspector & Projection Engine Panel -->
+  <div id="inspectorPanel" class="collapsed">
+    <div class="inspector-header">
+      <div class="inspector-title">🔬 Universal Sequence Projection Engine</div>
+      <button class="close-btn" id="closeInspectorBtn" title="Close Panel">✕</button>
+    </div>
+    <div class="inspector-desc">
+      Paste unknown antibody sequence (DNA or Protein) from <em>any</em> species. The engine automatically identifies species, chain, Dildrop/IMGT family, closest germline, D/J elements, and projects the query directly onto the 2D universe manifold!
+    </div>
+    
+    <div style="font-size:11px; color:#64748b; margin-bottom:4px; font-weight:600;">QUICK TEST EXAMPLES:</div>
+    <div class="sample-pills">
+      <div class="sample-pill" onclick="loadSample('trastuzumab')">🔵 Trastuzumab VH (Human IGHV3)</div>
+      <div class="sample-pill" onclick="loadSample('pertuzumab')">🟣 Pertuzumab VL (Kappa)</div>
+      <div class="sample-pill" onclick="loadSample('vhh')">🟠 Alpaca VHH Nb</div>
+      <div class="sample-pill" onclick="loadSample('mouse_186')">🟢 Mouse B1-8 (Germline V186.2 / J558)</div>
+      <div class="sample-pill" onclick="loadSample('mouse_186_w33l')">⚡ Mouse B1-8 Matured (W33L SHM)</div>
+      <div class="sample-pill" onclick="loadSample('xenopus')">🐸 Xenopus IgY VH</div>
+      <div class="sample-pill" onclick="loadSample('shark')">🦈 Nurse Shark VNAR</div>
+      <div class="sample-pill" onclick="loadSample('duck')">🦆 Duck IgY VH</div>
+    </div>
+
+    <textarea id="seqTextarea" placeholder="Paste antibody nucleotide or amino acid sequence..."></textarea>
+    
+    <div class="action-bar">
+      <button id="analyzeBtn" class="btn-primary" style="flex:1;">🚀 Analyze & Project onto Universe</button>
+      <button id="clearBtn" style="background:#21262d;">Clear</button>
+    </div>
+
+    <!-- Live Analysis & Manifold Locator Card -->
+    <div id="analysisHUD">
+      <div class="hud-title-row">
+        <div class="hud-beacon-alert">
+          <span style="display:inline-block; width:9px; height:9px; border-radius:50%; background:#34d399; box-shadow:0 0 8px #34d399;"></span>
+          Manifold Coordinates Projected!
+        </div>
+        <div id="hudCoordBadge" style="font-family:'Fira Code', monospace; font-size:11px; color:#38bdf8;">(x: 0, y: 0)</div>
+      </div>
+
+      <div style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:10px;">
+        <span id="hudSpeciesBadge" class="badge badge-species">Species: -</span>
+        <span id="hudChainBadge" class="badge badge-chain">Chain: -</span>
+        <span id="hudFamilyBadge" class="badge badge-family">Family: -</span>
+        <span id="hudClanBadge" class="badge badge-clan">Clan: -</span>
+        <span id="hudShmBadge" class="badge badge-low">0 SHM</span>
+      </div>
+
+      <div class="hud-grid">
+        <div class="hud-box">
+          <div class="hud-label">Closest Germline V-Gene</div>
+          <div class="hud-value" id="hudVGene" style="color:#58a6ff;">-</div>
+          <div style="font-size:10.5px; color:#94a3b8; margin-top:2px;" id="hudVIdent">-</div>
+        </div>
+        <div class="hud-box">
+          <div class="hud-label">Diversity Element (D)</div>
+          <div class="hud-value" id="hudDGene">-</div>
+          <div style="font-size:10.5px; color:#94a3b8; margin-top:2px;" id="hudDFrame">-</div>
+        </div>
+        <div class="hud-box">
+          <div class="hud-label">Joining Element (J)</div>
+          <div class="hud-value" id="hudJGene">-</div>
+          <div style="font-size:10.5px; color:#34d399; margin-top:2px;" id="hudJBoundary">-</div>
+        </div>
+        <div class="hud-box">
+          <div class="hud-label">CDR3 Region</div>
+          <div class="hud-value" id="hudCdr3" style="color:#fb7185;">-</div>
+          <div style="font-size:10.5px; color:#94a3b8; margin-top:2px;" id="hudCdr3Len">-</div>
+        </div>
+      </div>
+
+      <div style="font-size:11px; color:#94a3b8; margin-bottom:4px; font-weight:600;">IMGT DOMAIN ARCHITECTURE:</div>
+      <div class="hud-ribbon" id="hudRibbon">
+        <!-- Rendered with colored FR & CDR residues -->
+      </div>
+    </div>
+  </div>
+
+  <div id="tooltip"></div>
+  <div id="legend" class="legend"></div>
+
+  <!-- Evolutionary Timeline & Emergence Movie Bar -->
+  <div id="evoBar" class="evo-bar">
+    <div class="evo-header">
+      <div class="evo-title">
+        <span style="font-size: 15px;">⏳</span> <strong>Vertebrate Evolution & Lineage Emergence Movie</strong>
+      </div>
+      <div class="evo-controls">
+        <button id="evoPlayBtn" class="btn-evo">▶ Play Movie</button>
+        <button id="evoResetBtn" class="btn-evo-ghost">Show All (Present)</button>
+        <button class="panel-minimize-btn" id="closeEvoBtn" title="Minimize Evolution Movie Bar">✕</button>
+      </div>
+    </div>
+    <div class="evo-slider-row">
+      <span class="evo-age-tag">~500 Mya (Origin)</span>
+      <input type="range" id="evoSlider" min="0" max="500" value="500" step="5" />
+      <span class="evo-age-tag" id="evoCurrentAgeTag">0 Mya (Present)</span>
+    </div>
+    <div class="evo-epoch-info" id="evoEpochInfo">
+      <span id="evoEpochBadge" class="evo-badge">🧬 Modern Vertebrate Universe</span>
+      <span id="evoEpochDesc" style="font-size:11px; color:#cbd5e1; flex:1; margin-left:10px;">All 55 species & modern mammalian repertoires displayed.</span>
+      <span id="evoCountBadge" style="font-family:'Fira Code', monospace; font-size:11px; color:#38bdf8;">- genes</span>
+    </div>
+  </div>
+
+  <svg id="canvas" width="100%" height="100%"></svg>
+
+  <script>
+    // 1. D/J Segment Reference Database (Embedded)
+    const DJ_DATABASE = {"d_genes": [{"gene_id": "Xen-IGHD1-01", "species": "xenopus", "dna_seq": "ATTACTATGGTG", "rev_dna_seq": "CACCATAGTAAT", "aa_rf1": "ITMV", "aa_rf2": "LLW", "aa_rf3": "YYG", "aa_inv_rf1": "HHSN", "aa_inv_rf2": "TIV", "aa_inv_rf3": "P**"}, {"gene_id": "Xen-IGHD2-01", "species": "xenopus", "dna_seq": "GATCGGGGGTTTGAC", "rev_dna_seq": "GTCAAACCCCCGATC", "aa_rf1": "DRGFD", "aa_rf2": "IGGL", "aa_rf3": "SGV*", "aa_inv_rf1": "VKPPI", "aa_inv_rf2": "SNPR", "aa_inv_rf3": "QTPD"}, {"gene_id": "Xen-IGHD3-01", "species": "xenopus", "dna_seq": "TACTATGATTAC", "rev_dna_seq": "GTAATCATAGTA", "aa_rf1": "YYDY", "aa_rf2": "TMI", "aa_rf3": "L*L", "aa_inv_rf1": "VIIV", "aa_inv_rf2": "*S*", "aa_inv_rf3": "NHS"}, {"gene_id": "Xen-IGHD4-01", "species": "xenopus", "dna_seq": "GTTACTATGGTG", "rev_dna_seq": "CACCATAGTAAC", "aa_rf1": "VTMV", "aa_rf2": "LLW", "aa_rf3": "YYG", "aa_inv_rf1": "HHSN", "aa_inv_rf2": "TIV", "aa_inv_rf3": "P**"}, {"gene_id": "Xen-IGHD5-01", "species": "xenopus", "dna_seq": "ATTGTAGTAGTTACT", "rev_dna_seq": "AGTAACTACTACAAT", "aa_rf1": "IVVVT", "aa_rf2": "L**L", "aa_rf3": "CSSY", "aa_inv_rf1": "SNYYN", "aa_inv_rf2": "VTTT", "aa_inv_rf3": "*LLQ"}, {"gene_id": "Xen-IGHD6-01", "species": "xenopus", "dna_seq": "TACTACGGTAGT", "rev_dna_seq": "ACTACCGTAGTA", "aa_rf1": "YYGS", "aa_rf2": "TTV", "aa_rf3": "LR*", "aa_inv_rf1": "TTVV", "aa_inv_rf2": "LP*", "aa_inv_rf3": "YRS"}, {"gene_id": "Xen-IGHD7-01", "species": "xenopus", "dna_seq": "GGGGACTACGTT", "rev_dna_seq": "AACGTAGTCCCC", "aa_rf1": "GDYV", "aa_rf2": "GTT", "aa_rf3": "GLR", "aa_inv_rf1": "NVVP", "aa_inv_rf2": "T*S", "aa_inv_rf3": "RSP"}, {"gene_id": "Xen-IGHD1-02", "species": "xenopus", "dna_seq": "ATTACTACTGTG", "rev_dna_seq": "CACAGTAGTAAT", "aa_rf1": "ITTV", "aa_rf2": "LLL", "aa_rf3": "YYC", "aa_inv_rf1": "HSSN", "aa_inv_rf2": "TVV", "aa_inv_rf3": "Q**"}, {"gene_id": "Xen-IGHD2-02", "species": "xenopus", "dna_seq": "GATCGGGGCTTTGAC", "rev_dna_seq": "GTCAAAGCCCCGATC", "aa_rf1": "DRGFD", "aa_rf2": "IGAL", "aa_rf3": "SGL*", "aa_inv_rf1": "VKAPI", "aa_inv_rf2": "SKPR", "aa_inv_rf3": "QSPD"}, {"gene_id": "Xen-IGHD3-02", "species": "xenopus", "dna_seq": "TACTATGATTACTAC", "rev_dna_seq": "GTAGTAATCATAGTA", "aa_rf1": "YYDYY", "aa_rf2": "TMIT", "aa_rf3": "L*LL", "aa_inv_rf1": "VVIIV", "aa_inv_rf2": "**S*", "aa_inv_rf3": "SNHS"}, {"gene_id": "Xen-IGHD4-02", "species": "xenopus", "dna_seq": "GTTACTACTGTG", "rev_dna_seq": "CACAGTAGTAAC", "aa_rf1": "VTTV", "aa_rf2": "LLL", "aa_rf3": "YYC", "aa_inv_rf1": "HSSN", "aa_inv_rf2": "TVV", "aa_inv_rf3": "Q**"}, {"gene_id": "Xen-IGHD5-02", "species": "xenopus", "dna_seq": "ATTGTAGTAGTT", "rev_dna_seq": "AACTACTACAAT", "aa_rf1": "IVVV", "aa_rf2": "L**", "aa_rf3": "CSS", "aa_inv_rf1": "NYYN", "aa_inv_rf2": "TTT", "aa_inv_rf3": "LLQ"}, {"gene_id": "Xen-IGHD6-02", "species": "xenopus", "dna_seq": "TACTACGGTAGCTAC", "rev_dna_seq": "GTAGCTACCGTAGTA", "aa_rf1": "YYGSY", "aa_rf2": "TTVA", "aa_rf3": "LR*L", "aa_inv_rf1": "VATVV", "aa_inv_rf2": "*LP*", "aa_inv_rf3": "SYRS"}, {"gene_id": "Xen-IGHD7-02", "species": "xenopus", "dna_seq": "GGGGACTACTAT", "rev_dna_seq": "ATAGTAGTCCCC", "aa_rf1": "GDYY", "aa_rf2": "GTT", "aa_rf3": "GLL", "aa_inv_rf1": "IVVP", "aa_inv_rf2": "**S", "aa_inv_rf3": "SSP"}, {"gene_id": "Xen-IGHD1-03", "species": "xenopus", "dna_seq": "ACTATGGTG", "rev_dna_seq": "CACCATAGT", "aa_rf1": "TMV", "aa_rf2": "LW", "aa_rf3": "YG", "aa_inv_rf1": "HHS", "aa_inv_rf2": "TI", "aa_inv_rf3": "P*"}, {"gene_id": "Xen-IGHD2-03", "species": "xenopus", "dna_seq": "GATAGGGGTTTTGAC", "rev_dna_seq": "GTCAAAACCCCTATC", "aa_rf1": "DRGFD", "aa_rf2": "IGVL", "aa_rf3": "*GF*", "aa_inv_rf1": "VKTPI", "aa_inv_rf2": "SKPL", "aa_inv_rf3": "QNPY"}, {"gene_id": "Xen-IGHD3-03", "species": "xenopus", "dna_seq": "TACTATGATTACTAC", "rev_dna_seq": "GTAGTAATCATAGTA", "aa_rf1": "YYDYY", "aa_rf2": "TMIT", "aa_rf3": "L*LL", "aa_inv_rf1": "VVIIV", "aa_inv_rf2": "**S*", "aa_inv_rf3": "SNHS"}, {"gene_id": "Xen-IGHD4-03", "species": "xenopus", "dna_seq": "GTTACTACT", "rev_dna_seq": "AGTAGTAAC", "aa_rf1": "VTT", "aa_rf2": "LL", "aa_rf3": "YY", "aa_inv_rf1": "SSN", "aa_inv_rf2": "VV", "aa_inv_rf3": "**"}, {"gene_id": "Xen-IGHD8-01", "species": "xenopus", "dna_seq": "TACTATGGTGTT", "rev_dna_seq": "AACACCATAGTA", "aa_rf1": "YYGV", "aa_rf2": "TMV", "aa_rf3": "LWC", "aa_inv_rf1": "NTIV", "aa_inv_rf2": "TP*", "aa_inv_rf3": "HHS"}, {"gene_id": "Xen-IGHD9-01", "species": "xenopus", "dna_seq": "TATGATTACTAC", "rev_dna_seq": "GTAGTAATCATA", "aa_rf1": "YDYY", "aa_rf2": "MIT", "aa_rf3": "*LL", "aa_inv_rf1": "VVII", "aa_inv_rf2": "**S", "aa_inv_rf3": "SNH"}, {"gene_id": "vic_IGHD4-01", "species": "alpaca", "dna_seq": "CTAACTGGGGA", "rev_dna_seq": "TCCCCAGTTAG", "aa_rf1": "LTG", "aa_rf2": "*LG", "aa_rf3": "NWG", "aa_inv_rf1": "SPV", "aa_inv_rf2": "PQL", "aa_inv_rf3": "PS*"}, {"gene_id": "gga_IGHD1*01", "species": "chicken", "dna_seq": "GGTAGTGGTTACTGTGGTAGTGGTGCTTAT", "rev_dna_seq": "ATAAGCACCACTACCACAGTAACCACTACC", "aa_rf1": "GSGYCGSGAY", "aa_rf2": "VVVTVVVVL", "aa_rf3": "*WLLW*WCL", "aa_inv_rf1": "ISTTTTVTTT", "aa_inv_rf2": "*APLPQ*PL", "aa_inv_rf3": "KHHYHSNHY"}, {"gene_id": "gga_IGHD2*01", "species": "chicken", "dna_seq": "GGTAGTGCTTGTTGTGGTCCTTAT", "rev_dna_seq": "ATAAGGACCACAACAAGCACTACC", "aa_rf1": "GSACCGPY", "aa_rf2": "VVLVVVL", "aa_rf3": "*CLLWSL", "aa_inv_rf1": "IRTTTSTT", "aa_inv_rf2": "*GPQQAL", "aa_inv_rf3": "KDHNKHY"}, {"gene_id": "gga_IGHD3*01", "species": "chicken", "dna_seq": "GGTACTTCTGGTGCCTGCACCTTTTTCTATCCTTCCTGCCCTTAT", "rev_dna_seq": "ATAAGGGCAGGAAGGATAGAAAAAGGTGCAGGCACCAGAAGTACC", "aa_rf1": "GTSGACTFFYPSCPY", "aa_rf2": "VLLVPAPFSILPAL", "aa_rf3": "YFWCLHLFLSFLPL", "aa_inv_rf1": "IRAGRIEKGAGTRST", "aa_inv_rf2": "*GQEG*KKVQAPEV", "aa_inv_rf3": "KGRKDRKRCRHQKY"}, {"gene_id": "gga_IGHD4*01", "species": "chicken", "dna_seq": "GGTCGTAGTGCTTACAGTTGTGGTGCTTAT", "rev_dna_seq": "ATAAGCACCACAACTGTAAGCACTACGACC", "aa_rf1": "GRSAYSCGAY", "aa_rf2": "VVVLTVVVL", "aa_rf3": "S*CLQLWCL", "aa_inv_rf1": "ISTTTVSTTT", "aa_inv_rf2": "*APQL*ALR", "aa_inv_rf3": "KHHNCKHYD"}, {"gene_id": "can_IGHD1-01", "species": "dog", "dna_seq": "GTTATTATGGTACTAGCTAC", "rev_dna_seq": "GTAGCTAGTACCATAATAAC", "aa_rf1": "VIMVLA", "aa_rf2": "LLWY*L", "aa_rf3": "YYGTSY", "aa_inv_rf1": "VASTII", "aa_inv_rf2": "*LVP**", "aa_inv_rf3": "S*YHNN"}, {"gene_id": "can_IGHD5-01", "species": "dog", "dna_seq": "CTAACTGGGGA", "rev_dna_seq": "TCCCCAGTTAG", "aa_rf1": "LTG", "aa_rf2": "*LG", "aa_rf3": "NWG", "aa_inv_rf1": "SPV", "aa_inv_rf2": "PQL", "aa_inv_rf3": "PS*"}, {"gene_id": "IGHD1-1*01", "species": "human", "dna_seq": "GGTACAACTGGAACGAC", "rev_dna_seq": "GTCGTTCCAGTTGTACC", "aa_rf1": "GTTGT", "aa_rf2": "VQLER", "aa_rf3": "YNWND", "aa_inv_rf1": "VVPVV", "aa_inv_rf2": "SFQLY", "aa_inv_rf3": "RSSCT"}, {"gene_id": "IGHD1-14*01", "species": "human", "dna_seq": "GGTATAACCGGAACCAC", "rev_dna_seq": "GTGGTTCCGGTTATACC", "aa_rf1": "GITGT", "aa_rf2": "V*PEP", "aa_rf3": "YNRNH", "aa_inv_rf1": "VVPVI", "aa_inv_rf2": "WFRLY", "aa_inv_rf3": "GSGYT"}, {"gene_id": "IGHD1-20*01", "species": "human", "dna_seq": "GGTATAACTGGAACGAC", "rev_dna_seq": "GTCGTTCCAGTTATACC", "aa_rf1": "GITGT", "aa_rf2": "V*LER", "aa_rf3": "YNWND", "aa_inv_rf1": "VVPVI", "aa_inv_rf2": "SFQLY", "aa_inv_rf3": "RSSYT"}, {"gene_id": "IGHD1-26*01", "species": "human", "dna_seq": "GGTATAGTGGGAGCTACTAC", "rev_dna_seq": "GTAGTAGCTCCCACTATACC", "aa_rf1": "GIVGAT", "aa_rf2": "V*WELL", "aa_rf3": "YSGSYY", "aa_inv_rf1": "VVAPTI", "aa_inv_rf2": "**LPLY", "aa_inv_rf3": "SSSHYT"}, {"gene_id": "IGHD1-7*01", "species": "human", "dna_seq": "GGTATAACTGGAACTAC", "rev_dna_seq": "GTAGTTCCAGTTATACC", "aa_rf1": "GITGT", "aa_rf2": "V*LEL", "aa_rf3": "YNWNY", "aa_inv_rf1": "VVPVI", "aa_inv_rf2": "*FQLY", "aa_inv_rf3": "SSSYT"}, {"gene_id": "IGHD2-8*02", "species": "human", "dna_seq": "AGGATATTGTACTGGTGGTGTATGCTATACC", "rev_dna_seq": "GGTATAGCATACACCACCAGTACAATATCCT", "aa_rf1": "RILYWWCMLY", "aa_rf2": "GYCTGGVCYT", "aa_rf3": "DIVLVVYAI", "aa_inv_rf1": "GIAYTTSTIS", "aa_inv_rf2": "V*HTPPVQYP", "aa_inv_rf3": "YSIHHQYNI"}, {"gene_id": "IGHD3-3*01", "species": "human", "dna_seq": "GTATTACGATTTTTGGAGTGGTTATTATACC", "rev_dna_seq": "GGTATAATAACCACTCCAAAAATCGTAATAC", "aa_rf1": "VLRFLEWLLY", "aa_rf2": "YYDFWSGYYT", "aa_rf3": "ITIFGVVII", "aa_inv_rf1": "GIITTPKIVI", "aa_inv_rf2": "V**PLQKS*Y", "aa_inv_rf3": "YNNHSKNRN"}, {"gene_id": "IGHD5-12*01", "species": "human", "dna_seq": "GTGGATATAGTGGCTACGATTAC", "rev_dna_seq": "GTAATCGTAGCCACTATATCCAC", "aa_rf1": "VDIVATI", "aa_rf2": "WI*WLRL", "aa_rf3": "GYSGYDY", "aa_inv_rf1": "VIVATIS", "aa_inv_rf2": "*S*PLYP", "aa_inv_rf3": "NRSHYIH"}, {"gene_id": "IGHD5-18*01", "species": "human", "dna_seq": "GTGGATACAGCTATGGTTAC", "rev_dna_seq": "GTAACCATAGCTGTATCCAC", "aa_rf1": "VDTAMV", "aa_rf2": "WIQLWL", "aa_rf3": "GYSYGY", "aa_inv_rf1": "VTIAVS", "aa_inv_rf2": "*P*LYP", "aa_inv_rf3": "NHSCIH"}, {"gene_id": "IGHD5-24*01", "species": "human", "dna_seq": "GTAGAGATGGCTACAATTAC", "rev_dna_seq": "GTAATTGTAGCCATCTCTAC", "aa_rf1": "VEMATI", "aa_rf2": "*RWLQL", "aa_rf3": "RDGYNY", "aa_inv_rf1": "VIVAIS", "aa_inv_rf2": "*L*PSL", "aa_inv_rf3": "NCSHLY"}, {"gene_id": "IGHD5-5*01", "species": "human", "dna_seq": "GTGGATACAGCTATGGTTAC", "rev_dna_seq": "GTAACCATAGCTGTATCCAC", "aa_rf1": "VDTAMV", "aa_rf2": "WIQLWL", "aa_rf3": "GYSYGY", "aa_inv_rf1": "VTIAVS", "aa_inv_rf2": "*P*LYP", "aa_inv_rf3": "NHSCIH"}, {"gene_id": "IGHD6-13*01", "species": "human", "dna_seq": "GGGTATAGCAGCAGCTGGTACTAC", "rev_dna_seq": "GTAGTACCAGCTGCTGCTATACCC", "aa_rf1": "GYSSSWYY", "aa_rf2": "GIAAAGT", "aa_rf3": "V*QQLVL", "aa_inv_rf1": "VVPAAAIP", "aa_inv_rf2": "*YQLLLY", "aa_inv_rf3": "STSCCYT"}, {"gene_id": "IGHD6-19*01", "species": "human", "dna_seq": "GGGTATAGCAGTGGCTGGTAC", "rev_dna_seq": "GTACCAGCCACTGCTATACCC", "aa_rf1": "GYSSGWY", "aa_rf2": "GIAVAG", "aa_rf3": "V*QWLV", "aa_inv_rf1": "VPATAIP", "aa_inv_rf2": "YQPLLY", "aa_inv_rf3": "TSHCYT"}, {"gene_id": "IGHD6-25*01", "species": "human", "dna_seq": "GGGTATAGCAGTGGCTGGTAC", "rev_dna_seq": "GTACCAGCCACTGCTATACCC", "aa_rf1": "GYSSGWY", "aa_rf2": "GIAVAG", "aa_rf3": "V*QWLV", "aa_inv_rf1": "VPATAIP", "aa_inv_rf2": "YQPLLY", "aa_inv_rf3": "TSHCYT"}, {"gene_id": "IGHD6-6*01", "species": "human", "dna_seq": "GAGTATAGCAGCTCGTCC", "rev_dna_seq": "GGACGAGCTGCTATACTC", "aa_rf1": "EYSSSS", "aa_rf2": "SIAAR", "aa_rf3": "V*QLV", "aa_inv_rf1": "GRAAIL", "aa_inv_rf2": "DELLY", "aa_inv_rf3": "TSCYT"}, {"gene_id": "IGHD7-27*01", "species": "human", "dna_seq": "CTAACTGGGGA", "rev_dna_seq": "TCCCCAGTTAG", "aa_rf1": "LTG", "aa_rf2": "*LG", "aa_rf3": "NWG", "aa_inv_rf1": "SPV", "aa_inv_rf2": "PQL", "aa_inv_rf3": "PS*"}, {"gene_id": "mus_DFL16.1", "species": "mouse", "dna_seq": "TTTATTACTACGGTAGTAGCTAC", "rev_dna_seq": "GTAGCTACTACCGTAGTAATAAA", "aa_rf1": "FITTVVA", "aa_rf2": "LLLR**L", "aa_rf3": "YYYGSSY", "aa_inv_rf1": "VATTVVI", "aa_inv_rf2": "*LLP***", "aa_inv_rf3": "SYYRSNK"}, {"gene_id": "mus_DFL16.2", "species": "mouse", "dna_seq": "TTCATTACTACGGCTAC", "rev_dna_seq": "GTAGCCGTAGTAATGAA", "aa_rf1": "FITTA", "aa_rf2": "SLLRL", "aa_rf3": "HYYGY", "aa_inv_rf1": "VAVVM", "aa_inv_rf2": "*P***", "aa_inv_rf3": "SRSNE"}, {"gene_id": "mus_DFL16.3", "species": "mouse", "dna_seq": "TATATAACTAAAGTGGTAGCTCA", "rev_dna_seq": "TGAGCTACCACTTTAGTTATATA", "aa_rf1": "YITKVVA", "aa_rf2": "I*LKW*L", "aa_rf3": "YN*SGSS", "aa_inv_rf1": "*ATTLVI", "aa_inv_rf2": "ELPL*LY", "aa_inv_rf3": "SYHFSYI"}, {"gene_id": "mus_DQ52a.1", "species": "mouse", "dna_seq": "CTAACTGGGAC", "rev_dna_seq": "GTCCCAGTTAG", "aa_rf1": "LTG", "aa_rf2": "*LG", "aa_rf3": "NWD", "aa_inv_rf1": "VPV", "aa_inv_rf2": "SQL", "aa_inv_rf3": "PS*"}, {"gene_id": "mus_DQ52a.2", "species": "mouse", "dna_seq": "CAACTGGGAC", "rev_dna_seq": "GTCCCAGTTG", "aa_rf1": "QLG", "aa_rf2": "NWD", "aa_rf3": "TG", "aa_inv_rf1": "VPV", "aa_inv_rf2": "SQL", "aa_inv_rf3": "PS"}, {"gene_id": "mus_DSP2.2", "species": "mouse", "dna_seq": "CTACTATGGTTACGAC", "rev_dna_seq": "GTCGTAACCATAGTAG", "aa_rf1": "LLWLR", "aa_rf2": "YYGYD", "aa_rf3": "TMVT", "aa_inv_rf1": "VVTIV", "aa_inv_rf2": "S*P**", "aa_inv_rf3": "RNHS"}, {"gene_id": "mus_DSP2.3", "species": "mouse", "dna_seq": "CCTACTATAGTAACTAC", "rev_dna_seq": "GTAGTTACTATAGTAGG", "aa_rf1": "PTIVT", "aa_rf2": "LL**L", "aa_rf3": "YYSNY", "aa_inv_rf1": "VVTIV", "aa_inv_rf2": "*LL**", "aa_inv_rf3": "SYYSR"}, {"gene_id": "mus_DSP2.4", "species": "mouse", "dna_seq": "TCTACTATGATTACGAC", "rev_dna_seq": "GTCGTAATCATAGTAGA", "aa_rf1": "STMIT", "aa_rf2": "LL*LR", "aa_rf3": "YYDYD", "aa_inv_rf1": "VVIIV", "aa_inv_rf2": "S*S**", "aa_inv_rf3": "RNHSR"}, {"gene_id": "mus_DSP2.5", "species": "mouse", "dna_seq": "TCTATGATGGTTACTAC", "rev_dna_seq": "GTAGTAACCATCATAGA", "aa_rf1": "SMMVT", "aa_rf2": "L*WLL", "aa_rf3": "YDGYY", "aa_inv_rf1": "VVTII", "aa_inv_rf2": "**PS*", "aa_inv_rf3": "SNHHR"}, {"gene_id": "mus_DSP2.7", "species": "mouse", "dna_seq": "ATTACTACGGTAGTAGCTAC", "rev_dna_seq": "GTAGCTACTACCGTAGTAAT", "aa_rf1": "ITTVVA", "aa_rf2": "LLR**L", "aa_rf3": "YYGSSY", "aa_inv_rf1": "VATTVV", "aa_inv_rf2": "*LLP**", "aa_inv_rf3": "SYYRSN"}, {"gene_id": "rab_DH1-01", "species": "rabbit", "dna_seq": "GCATATACTAGTAGTAGTGGTTATTATATAC", "rev_dna_seq": "GTATATAATAACCACTACTACTAGTATATGC", "aa_rf1": "AYTSSSGYYI", "aa_rf2": "HILVVVVIIY", "aa_rf3": "IY***WLLY", "aa_inv_rf1": "VYNNHYY*YM", "aa_inv_rf2": "YIITTTTSIC", "aa_inv_rf3": "I**PLLLVY"}, {"gene_id": "rab_DH3-03", "species": "rabbit", "dna_seq": "CCTATGGGGTCCTGGTTCCCATGGCTATGGGGTT", "rev_dna_seq": "AACCCCATAGCCATGGGAACCAGGACCCCATAGG", "aa_rf1": "PMGSWFPWLWG", "aa_rf2": "LWGPGSHGYGV", "aa_rf3": "YGVLVPMAMG", "aa_inv_rf1": "NPIAMGTRTP*", "aa_inv_rf2": "TP*PWEPGPHR", "aa_inv_rf3": "PHSHGNQDPI"}, {"gene_id": "rab_DH3-04", "species": "rabbit", "dna_seq": "CCTATGGGGTCCTGGTTCCCATGGCTATGGGGTT", "rev_dna_seq": "AACCCCATAGCCATGGGAACCAGGACCCCATAGG", "aa_rf1": "PMGSWFPWLWG", "aa_rf2": "LWGPGSHGYGV", "aa_rf3": "YGVLVPMAMG", "aa_inv_rf1": "NPIAMGTRTP*", "aa_inv_rf2": "TP*PWEPGPHR", "aa_inv_rf3": "PHSHGNQDPI"}, {"gene_id": "rab_DH3-05", "species": "rabbit", "dna_seq": "CCTATGGGGTCCTTGTTCCCATGGCTATGCAGTC", "rev_dna_seq": "GACTGCATAGCCATGGGAACAAGGACCCCATAGG", "aa_rf1": "PMGSLFPWLCS", "aa_rf2": "LWGPCSHGYAV", "aa_rf3": "YGVLVPMAMQ", "aa_inv_rf1": "DCIAMGTRTP*", "aa_inv_rf2": "TA*PWEQGPHR", "aa_inv_rf3": "LHSHGNKDPI"}, {"gene_id": "rab_DH4-06", "species": "rabbit", "dna_seq": "GTTACTATAGTAGTGGCTGGGGTG", "rev_dna_seq": "CACCCCAGCCACTACTATAGTAAC", "aa_rf1": "VTIVVAGV", "aa_rf2": "LL**WLG", "aa_rf3": "YYSSGWG", "aa_inv_rf1": "HPSHYYSN", "aa_inv_rf2": "TPATTIV", "aa_inv_rf3": "PQPLL**"}, {"gene_id": "rab_DH4-07", "species": "rabbit", "dna_seq": "GTTATGCTGGTAGTAGCTGGGATG", "rev_dna_seq": "CATCCCAGCTACTACCAGCATAAC", "aa_rf1": "VMLVVAGM", "aa_rf2": "LCW**LG", "aa_rf3": "YAGSSWD", "aa_inv_rf1": "HPSYYQHN", "aa_inv_rf2": "IPATTSI", "aa_inv_rf3": "SQLLPA*"}, {"gene_id": "rab_DH6-09", "species": "rabbit", "dna_seq": "GTTACTATAGTTATGGTTATGCTTATGCTACC", "rev_dna_seq": "GGTAGCATAAGCATAACCATAACTATAGTAAC", "aa_rf1": "VTIVMVMLML", "aa_rf2": "LL*LWLCLCY", "aa_rf3": "YYSYGYAYAT", "aa_inv_rf1": "GSISITITIV", "aa_inv_rf2": "VA*A*P*L**", "aa_inv_rf3": "*HKHNHNYSN"}, {"gene_id": "rab_DH7-10", "species": "rabbit", "dna_seq": "GTTATCCTGGTTATAGTACTGGTACC", "rev_dna_seq": "GGTACCAGTACTATAACCAGGATAAC", "aa_rf1": "VILVIVLV", "aa_rf2": "LSWL*YWY", "aa_rf3": "YPGYSTGT", "aa_inv_rf1": "GTSTITRI", "aa_inv_rf2": "VPVL*PG*", "aa_inv_rf3": "YQYYNQDN"}, {"gene_id": "rab_DH8-11", "species": "rabbit", "dna_seq": "GTTATGCTGGTAGTAGTTATTATACC", "rev_dna_seq": "GGTATAATAACTACTACCAGCATAAC", "aa_rf1": "VMLVVVII", "aa_rf2": "LCW**LLY", "aa_rf3": "YAGSSYYT", "aa_inv_rf1": "GIITTTSI", "aa_inv_rf2": "V**LLPA*", "aa_inv_rf3": "YNNYYQHN"}], "j_genes": [{"gene_id": "Xen-IGKJ1-02", "species": "xenopus", "chain_type": "Light-Kappa", "dna_seq": "TACACGTTCGGAGGGGGGACCAAGGTGGAGATCAAA", "aa_seq": "YTFGGGTKVEIK", "boundary_motif": "VEIK"}, {"gene_id": "Xen-IGLJ1-01", "species": "xenopus", "chain_type": "Light-Lambda", "dna_seq": "GTCACGTTCGGAGGAGGAACCAAGCTGACCGTCCTA", "aa_seq": "VTFGGGTKLTVL", "boundary_motif": "TVL"}, {"gene_id": "Xen-IGLJ1-02", "species": "xenopus", "chain_type": "Light-Lambda", "dna_seq": "GTCACGTTCGGAGGAGGAACCAAGCTGACCGTCCTA", "aa_seq": "VTFGGGTKLTVL", "boundary_motif": "TVL"}, {"gene_id": "Xen-IGRJ1-01", "species": "xenopus", "chain_type": "Light-Rho", "dna_seq": "TGGACGTTCGGTGGAGGCACCAAGCTGACCGTCCTA", "aa_seq": "WTFGGGTKLTVL", "boundary_motif": "TVL"}, {"gene_id": "Xen-IGRJ1-02", "species": "xenopus", "chain_type": "Light-Rho", "dna_seq": "TGGACGTTCGGTGGAGGCACCAAGCTGACCGTCCTA", "aa_seq": "WTFGGGTKLTVL", "boundary_motif": "TVL"}, {"gene_id": "Xen-IGSJ1-01", "species": "xenopus", "chain_type": "Light-Sigma", "dna_seq": "CTCACGTTCGGTGCTGGGACCAAGGTGGAGATCAAA", "aa_seq": "LTFGAGTKVEIK", "boundary_motif": "VEIK"}, {"gene_id": "Xen-IGSJ1-02", "species": "xenopus", "chain_type": "Light-Sigma", "dna_seq": "CTCACGTTCGGTGCTGGGACCAAGGTGGAGATCAAA", "aa_seq": "LTFGAGTKVEIK", "boundary_motif": "VEIK"}, {"gene_id": "Xen-IGHJ1-01", "species": "xenopus", "chain_type": "Heavy", "dna_seq": "ACTACTTGGGGCCAGGGCACTCTGGTCACCGTCTCCTCA", "aa_seq": "TTWGQGTLVTVSS", "boundary_motif": "TVSS"}, {"gene_id": "Xen-IGHJ2-01", "species": "xenopus", "chain_type": "Heavy", "dna_seq": "ATTTACTACTGGGGCCAGGGCACCCTGGTGACCGTGTCCGCA", "aa_seq": "IYYWGQGTLVTVSA", "boundary_motif": "TVSA"}, {"gene_id": "Xen-IGHJ3-01", "species": "xenopus", "chain_type": "Heavy", "dna_seq": "TTTGACTACTGGGGCCAGGGCACTCTGGTCACCGTCTCCTCA", "aa_seq": "FDYWGQGTLVTVSS", "boundary_motif": "TVSS"}, {"gene_id": "Xen-IGHJ6-01", "species": "xenopus", "chain_type": "Heavy", "dna_seq": "TACTACTGGGGCCAGGGCACTCTGGTCACCGTCTCCTCA", "aa_seq": "YYWGQGTLVTVSS", "boundary_motif": "TVSS"}, {"gene_id": "Xen-IGHJ1-02", "species": "xenopus", "chain_type": "Heavy", "dna_seq": "ACTACTTGGGGCCAGGGCACCCTGGTCACCGTCTCCTCA", "aa_seq": "TTWGQGTLVTVSS", "boundary_motif": "TVSS"}, {"gene_id": "Xen-IGHJ2-02", "species": "xenopus", "chain_type": "Heavy", "dna_seq": "ATTTACTACTGGGGCCAGGGCACCCTGGTGACCGTGTCTGCA", "aa_seq": "IYYWGQGTLVTVSA", "boundary_motif": "TVSA"}, {"gene_id": "Xen-IGHJ3-02", "species": "xenopus", "chain_type": "Heavy", "dna_seq": "TTTGACTACTGGGGCCAGGGCACCCTGGTCACCGTCTCCTCA", "aa_seq": "FDYWGQGTLVTVSS", "boundary_motif": "TVSS"}, {"gene_id": "Xen-IGHJ7-01", "species": "xenopus", "chain_type": "Heavy", "dna_seq": "GACTACTGGGGCCAGGGCACTCTGGTCACCGTCTCCTCA", "aa_seq": "DYWGQGTLVTVSS", "boundary_motif": "TVSS"}, {"gene_id": "Xen-IGHJ4-01", "species": "xenopus", "chain_type": "Heavy", "dna_seq": "GCTTACTGGGGCCAGGGTACTCTGGTCACCGTCTCCTCA", "aa_seq": "AYWGQGTLVTVSS", "boundary_motif": "TVSS"}, {"gene_id": "Xen-IGHJ5-01", "species": "xenopus", "chain_type": "Heavy", "dna_seq": "TTTGACCACTGGGGCCAGGGCACCCTGGTCACCGTCTCCTCA", "aa_seq": "FDHWGQGTLVTVSS", "boundary_motif": "TVSS"}, {"gene_id": "Xen-IGHJ8-01", "species": "xenopus", "chain_type": "Heavy", "dna_seq": "GCTTACTGGGGCCAGGGCACCCTGGTGACCGTGTCCGCA", "aa_seq": "AYWGQGTLVTVSA", "boundary_motif": "TVSA"}, {"gene_id": "Xen-IGHJ9-01", "species": "xenopus", "chain_type": "Heavy", "dna_seq": "TTTGACTACTGGGGCCAGGGCACCCTGGTGACCGTGTCCGCA", "aa_seq": "FDYWGQGTLVTVSA", "boundary_motif": "TVSA"}, {"gene_id": "Xen-IGKJ1-01", "species": "xenopus", "chain_type": "Light-Kappa", "dna_seq": "TACACGTTCGGAGGGGGGACCAAGCTGGAAATAAAA", "aa_seq": "YTFGGGTKLEIK", "boundary_motif": "LEIK"}, {"gene_id": "vic_IGKJ1", "species": "alpaca", "chain_type": "Kappa", "dna_seq": "TGGACGTTCGGCCAAGGGACCAAGGTGGAAATCAAA", "aa_seq": "WTFGQGTKVEIK", "boundary_motif": "VEIK"}, {"gene_id": "vic_IGLJ1", "species": "alpaca", "chain_type": "Lambda", "dna_seq": "GTGGTATTCGGCGGAGGGACCAAGCTGACCGTCCTA", "aa_seq": "VVFGGGTKLTVL", "boundary_motif": "TVL"}, {"gene_id": "vic_IGHJ1", "species": "alpaca", "chain_type": "Heavy", "dna_seq": "TACTACTTTGACTACTGGGGCCAGGGAACCCTGGTCACCGTCTCCTCA", "aa_seq": "YYFDYWGQGTLVTVSS", "boundary_motif": "TVSS"}, {"gene_id": "vic_IGHJ2", "species": "alpaca", "chain_type": "Heavy", "dna_seq": "GCTGAATACTTCCAGCACTGGGGCCAGGGCACCCTGGTCACCGTCTCCTCA", "aa_seq": "AEYFQHWGQGTLVTVSS", "boundary_motif": "TVSS"}, {"gene_id": "gga_IGHJ1", "species": "chicken", "chain_type": "Heavy", "dna_seq": "TACTATGCTATGGACTACTGGGGTCAAGGAACCTCAGTCACCGTCTCCTCA", "aa_seq": "YYAMDYWGQGTSVTVSS", "boundary_motif": "TVSS"}, {"gene_id": "gga_IGLJ1", "species": "chicken", "chain_type": "Lambda", "dna_seq": "TTTATTTTCGGCAGTGGAACCAAGGTCACTGTCCTA", "aa_seq": "FIFGSGTKVTVL", "boundary_motif": "TVL"}, {"gene_id": "bos_IGLJ1", "species": "cow", "chain_type": "Lambda", "dna_seq": "GTGGTATTCGGCGGAGGGACCAAGCTGACCGTCCTA", "aa_seq": "VVFGGGTKLTVL", "boundary_motif": "TVL"}, {"gene_id": "bos_IGLJ2", "species": "cow", "chain_type": "Lambda", "dna_seq": "TGGGTGTTCGGCGGAGGGACCAAGCTGACCGTCCTA", "aa_seq": "WVFGGGTKLTVL", "boundary_motif": "TVL"}, {"gene_id": "bos_IGLJ3", "species": "cow", "chain_type": "Lambda", "dna_seq": "TATGTCTTCGGAACTGGGACCAAGGTCACCGTCCTA", "aa_seq": "YVFGTGTKVTVL", "boundary_motif": "TVL"}, {"gene_id": "bos_IGHJ1", "species": "cow", "chain_type": "Heavy", "dna_seq": "TACTACTTTGACTACTGGGGCCAGGGAACCCTGGTCACCGTCTCCTCA", "aa_seq": "YYFDYWGQGTLVTVSS", "boundary_motif": "TVSS"}, {"gene_id": "bos_IGHJ2", "species": "cow", "chain_type": "Heavy", "dna_seq": "TACTGGTACTTCGATCTCTGGGGCCGTGGCACCCTGGTCACTGTCTCCTCA", "aa_seq": "YWYFDLWGRGTLVTVSS", "boundary_motif": "TVSS"}, {"gene_id": "can_IGKJ1", "species": "dog", "chain_type": "Kappa", "dna_seq": "TGGACGTTCGGCCAAGGGACCAAGGTGGAAATCAAA", "aa_seq": "WTFGQGTKVEIK", "boundary_motif": "VEIK"}, {"gene_id": "can_IGKJ2", "species": "dog", "chain_type": "Kappa", "dna_seq": "TACACTTTTGGCCAGGGGACCAAGCTGGAGATCAAA", "aa_seq": "YTFGQGTKLEIK", "boundary_motif": "LEIK"}, {"gene_id": "can_IGLJ1", "species": "dog", "chain_type": "Lambda", "dna_seq": "GTGGTATTCGGCGGAGGGACCAAGCTGACCGTCCTA", "aa_seq": "VVFGGGTKLTVL", "boundary_motif": "TVL"}, {"gene_id": "can_IGHJ1", "species": "dog", "chain_type": "Heavy", "dna_seq": "TACTACTTTGACTACTGGGGCCAGGGAACCCTGGTCACCGTCTCCTCA", "aa_seq": "YYFDYWGQGTLVTVSS", "boundary_motif": "TVSS"}, {"gene_id": "can_IGHJ2", "species": "dog", "chain_type": "Heavy", "dna_seq": "TACTGGTACTTCGATCTCTGGGGCCGTGGCACCCTGGTCACTGTCTCCTCA", "aa_seq": "YWYFDLWGRGTLVTVSS", "boundary_motif": "TVSS"}, {"gene_id": "eca_IGKJ1", "species": "horse", "chain_type": "Kappa", "dna_seq": "TGGACGTTCGGCCAAGGGACCAAGGTGGAAATCAAA", "aa_seq": "WTFGQGTKVEIK", "boundary_motif": "VEIK"}, {"gene_id": "eca_IGLJ1", "species": "horse", "chain_type": "Lambda", "dna_seq": "GTGGTATTCGGCGGAGGGACCAAGCTGACCGTCCTA", "aa_seq": "VVFGGGTKLTVL", "boundary_motif": "TVL"}, {"gene_id": "eca_IGHJ1", "species": "horse", "chain_type": "Heavy", "dna_seq": "TACTACTTTGACTACTGGGGCCAGGGAACCCTGGTCACCGTCTCCTCA", "aa_seq": "YYFDYWGQGTLVTVSS", "boundary_motif": "TVSS"}, {"gene_id": "eca_IGHJ2", "species": "horse", "chain_type": "Heavy", "dna_seq": "TACTGGTACTTCGATCTCTGGGGCCGTGGCACCCTGGTCACTGTCTCCTCA", "aa_seq": "YWYFDLWGRGTLVTVSS", "boundary_motif": "TVSS"}, {"gene_id": "hum_IGHJ1*01", "species": "human", "chain_type": "Heavy", "dna_seq": "GCTGAATACTTCCAGCACTGGGGCCAGGGCACCCTGGTCACCGTCTCCTCA", "aa_seq": "AEYFQHWGQGTLVTVSS", "boundary_motif": "TVSS"}, {"gene_id": "hum_IGHJ2*01", "species": "human", "chain_type": "Heavy", "dna_seq": "TACTGGTACTTCGATCTCTGGGGCCGTGGCACCCTGGTCACTGTCTCCTCA", "aa_seq": "YWYFDLWGRGTLVTVSS", "boundary_motif": "TVSS"}, {"gene_id": "hum_IGHJ3*01", "species": "human", "chain_type": "Heavy", "dna_seq": "GATGCTTTTGATATCTGGGGCCAAGGGACAATGGTCACCGTCTCTTCA", "aa_seq": "DAFDIWGQGTMVTVSS", "boundary_motif": "TVSS"}, {"gene_id": "hum_IGHJ3*02", "species": "human", "chain_type": "Heavy", "dna_seq": "GATGCTTTTGATATCTGGGGCCAAGGGACAATGGTCACCGTCTCTTCA", "aa_seq": "DAFDIWGQGTMVTVSS", "boundary_motif": "TVSS"}, {"gene_id": "hum_IGHJ4*01", "species": "human", "chain_type": "Heavy", "dna_seq": "TACTTTGACTACTGGGGCCAGGGAACCCTGGTCACCGTCTCCTCA", "aa_seq": "YFDYWGQGTLVTVSS", "boundary_motif": "TVSS"}, {"gene_id": "hum_IGHJ4*02", "species": "human", "chain_type": "Heavy", "dna_seq": "TACTTTGACTACTGGGGCCAGGGAACCCTGGTCACCGTCTCCTCA", "aa_seq": "YFDYWGQGTLVTVSS", "boundary_motif": "TVSS"}, {"gene_id": "hum_IGHJ4*03", "species": "human", "chain_type": "Heavy", "dna_seq": "TACTTTGACTACTGGGGCCAAGGAACCCTGGTCACCGTCTCCTCA", "aa_seq": "YFDYWGQGTLVTVSS", "boundary_motif": "TVSS"}, {"gene_id": "hum_IGHJ5*01", "species": "human", "chain_type": "Heavy", "dna_seq": "AACTGGTTCGACCCCTGGGGCCAGGGAACCCTGGTCACCGTCTCCTCA", "aa_seq": "NWFDPWGQGTLVTVSS", "boundary_motif": "TVSS"}, {"gene_id": "hum_IGHJ5*02", "species": "human", "chain_type": "Heavy", "dna_seq": "AACTGGTTCGACCCCTGGGGCCAGGGAACCCTGGTCACCGTCTCCTCA", "aa_seq": "NWFDPWGQGTLVTVSS", "boundary_motif": "TVSS"}, {"gene_id": "hum_IGHJ6*01", "species": "human", "chain_type": "Heavy", "dna_seq": "TACTACTACTACTACGGTATGGACGTCTGGGGCCAAGGGACCACGGTCACCGTCTCCTCA", "aa_seq": "YYYYYGMDVWGQGTTVTVSS", "boundary_motif": "TVSS"}, {"gene_id": "hum_IGHJ6*02", "species": "human", "chain_type": "Heavy", "dna_seq": "TACTACTACTACTACGGTATGGACGTCTGGGGCCAAGGGACCACGGTCACCGTCTCCTCA", "aa_seq": "YYYYYGMDVWGQGTTVTVSS", "boundary_motif": "TVSS"}, {"gene_id": "hum_IGHJ6*03", "species": "human", "chain_type": "Heavy", "dna_seq": "TACTACTACTACTACTACATGGACGTCTGGGGCAAAGGGACCACGATCACCGTCTCCTCA", "aa_seq": "YYYYYYMDVWGKGTTITVSS", "boundary_motif": "TVSS"}, {"gene_id": "hum_IGHJ6*04", "species": "human", "chain_type": "Heavy", "dna_seq": "TACTACTACTACTACGGTATGGACGTCTGGGGCCAAGGGACCACGGTCACCGTCTCCTCA", "aa_seq": "YYYYYGMDVWGQGTTVTVSS", "boundary_motif": "TVSS"}, {"gene_id": "hum_IGLJ1*01", "species": "human", "chain_type": "Lambda", "dna_seq": "TATGTCTTCGGAACTGGGACCAAGGTCACCGTCCTA", "aa_seq": "YVFGTGTKVTVL", "boundary_motif": "TVL"}, {"gene_id": "hum_IGLJ2*01", "species": "human", "chain_type": "Lambda", "dna_seq": "GTGGTATTCGGCGGAGGGACCAAGCTGACCGTCCTA", "aa_seq": "VVFGGGTKLTVL", "boundary_motif": "TVL"}, {"gene_id": "hum_IGLJ3*01", "species": "human", "chain_type": "Lambda", "dna_seq": "GTGGTATTCGGCGGAGGGACCAAGCTGACCGTCCTA", "aa_seq": "VVFGGGTKLTVL", "boundary_motif": "TVL"}, {"gene_id": "hum_IGLJ3*02", "species": "human", "chain_type": "Lambda", "dna_seq": "TGGGTGTTCGGCGGAGGGACCAAGCTGACCGTCCTA", "aa_seq": "WVFGGGTKLTVL", "boundary_motif": "TVL"}, {"gene_id": "hum_IGLJ6*01", "species": "human", "chain_type": "Lambda", "dna_seq": "AATGTGTTCGGCAGTGGCACCAAGGTGACCGTCCTC", "aa_seq": "NVFGSGTKVTVL", "boundary_motif": "TVL"}, {"gene_id": "hum_IGLJ7*01", "species": "human", "chain_type": "Lambda", "dna_seq": "GCTGTGTTCGGAGGAGGCACCCAGCTGACCGTCCTC", "aa_seq": "AVFGGGTQLTVL", "boundary_motif": "TVL"}, {"gene_id": "hum_IGLJ7*02", "species": "human", "chain_type": "Lambda", "dna_seq": "GCTGTGTTCGGAGGAGGCACCCAGCTGACCGCCCTC", "aa_seq": "AVFGGGTQLTAL", "boundary_motif": ""}, {"gene_id": "hum_IGKJ1*01", "species": "human", "chain_type": "Kappa", "dna_seq": "TGGACGTTCGGCCAAGGGACCAAGGTGGAAATCAAA", "aa_seq": "WTFGQGTKVEIK", "boundary_motif": "VEIK"}, {"gene_id": "hum_IGKJ2*01", "species": "human", "chain_type": "Kappa", "dna_seq": "TACACTTTTGGCCAGGGGACCAAGCTGGAGATCAAA", "aa_seq": "YTFGQGTKLEIK", "boundary_motif": "LEIK"}, {"gene_id": "hum_IGKJ2*02", "species": "human", "chain_type": "Kappa", "dna_seq": "TACACTTTTGGCCAGGGGACCAAGCTGGAGATCAAA", "aa_seq": "YTFGQGTKLEIK", "boundary_motif": "LEIK"}, {"gene_id": "hum_IGKJ2*03", "species": "human", "chain_type": "Kappa", "dna_seq": "TACAGTTTTGGCCAGGGGACCAAGCTGGAGATCAAA", "aa_seq": "YSFGQGTKLEIK", "boundary_motif": "LEIK"}, {"gene_id": "hum_IGKJ2*04", "species": "human", "chain_type": "Kappa", "dna_seq": "TGCAGTTTTGGCCAGGGGACCAAGCTGGAGATCAAA", "aa_seq": "CSFGQGTKLEIK", "boundary_motif": "LEIK"}, {"gene_id": "hum_IGKJ3*01", "species": "human", "chain_type": "Kappa", "dna_seq": "TTCACTTTCGGCCCTGGGACCAAAGTGGATATCAAA", "aa_seq": "FTFGPGTKVDIK", "boundary_motif": "VDIK"}, {"gene_id": "hum_IGKJ4*01", "species": "human", "chain_type": "Kappa", "dna_seq": "CTCACTTTCGGCGGAGGGACCAAGGTGGAGATCAAA", "aa_seq": "LTFGGGTKVEIK", "boundary_motif": "VEIK"}, {"gene_id": "hum_IGKJ5*01", "species": "human", "chain_type": "Kappa", "dna_seq": "ATCACCTTCGGCCAAGGGACACGACTGGAGATTAAA", "aa_seq": "ITFGQGTRLEIK", "boundary_motif": "LEIK"}, {"gene_id": "mus_JH1", "species": "mouse", "chain_type": "Heavy", "dna_seq": "TACTGGTACTTCGATGTCTGGGGCGCAGGGACCACGGTCACCGTCTCCTCA", "aa_seq": "YWYFDVWGAGTTVTVSS", "boundary_motif": "TVSS"}, {"gene_id": "mus_JH1B6", "species": "mouse", "chain_type": "Heavy", "dna_seq": "", "aa_seq": "YWYFDVWGAGTTVTVSS", "boundary_motif": "TVSS"}, {"gene_id": "mus_JH2", "species": "mouse", "chain_type": "Heavy", "dna_seq": "TACTTTGACTACTGGGGCCAAGGCACCACTCTCACAGTCTCCTCA", "aa_seq": "YFDYWGQGTTLTVSS", "boundary_motif": "TVSS"}, {"gene_id": "mus_JH3", "species": "mouse", "chain_type": "Heavy", "dna_seq": "TGGTTTGCTTACTGGGGCCAAGGGACTCTGGTCACTGTCTCTGCA", "aa_seq": "WFAYWGQGTLVTVSA", "boundary_motif": "TVSA"}, {"gene_id": "mus_JH4", "species": "mouse", "chain_type": "Heavy", "dna_seq": "TACTATGCTATGGACTACTGGGGTCAAGGAACCTCAGTCACCGTCTCCTCA", "aa_seq": "YYAMDYWGQGTSVTVSS", "boundary_motif": "TVSS"}, {"gene_id": "mus_J00583", "species": "mouse", "chain_type": "Lambda", "dna_seq": "TTTATTTTCGGCAGTGGAACCAAGGTCACTGTCCTA", "aa_seq": "FIFGSGTKVTVL", "boundary_motif": "TVL"}, {"gene_id": "mus_J00593", "species": "mouse", "chain_type": "Lambda", "dna_seq": "TATGTCTTCGGCGGTGGAACCAAGGTCACTGTCCTA", "aa_seq": "YVFGGGTKVTVL", "boundary_motif": "TVL"}, {"gene_id": "mus_J00596", "species": "mouse", "chain_type": "Lambda", "dna_seq": "TGGGTGTTCGGAGGTGGAACCAGATTGACTGTCCTA", "aa_seq": "WVFGGGTRLTVL", "boundary_motif": "TVL"}, {"gene_id": "mus_V00813", "species": "mouse", "chain_type": "Lambda", "dna_seq": "TGGGTGTTCGGTGGAGGAACCAAACTGACTGTCCTA", "aa_seq": "WVFGGGTKLTVL", "boundary_motif": "TVL"}, {"gene_id": "mus_jk1", "species": "mouse", "chain_type": "Kappa", "dna_seq": "TGGACGTTCGGTGGAGGCACCAAGCTGGAAATCAAA", "aa_seq": "WTFGGGTKLEIK", "boundary_motif": "LEIK"}, {"gene_id": "mus_jk2", "species": "mouse", "chain_type": "Kappa", "dna_seq": "TACACGTTCGGAGGGGGGACCAAGCTGGAAATAAAA", "aa_seq": "YTFGGGTKLEIK", "boundary_motif": "LEIK"}, {"gene_id": "mus_jk3", "species": "mouse", "chain_type": "Kappa", "dna_seq": "ATCACATTCAGTGATGGGACCAGACTGGAAATAAAA", "aa_seq": "ITFSDGTRLEIK", "boundary_motif": "LEIK"}, {"gene_id": "mus_jk4", "species": "mouse", "chain_type": "Kappa", "dna_seq": "TTCACGTTCGGCTCGGGGACAAAGTTGGAAATAAAA", "aa_seq": "FTFGSGTKLEIK", "boundary_motif": "LEIK"}, {"gene_id": "mus_jk5", "species": "mouse", "chain_type": "Kappa", "dna_seq": "CTCACGTTCGGTGCTGGGACCAAGCTGGAGCTGAAA", "aa_seq": "LTFGAGTKLELK", "boundary_motif": ""}, {"gene_id": "ssc_IGLJ1", "species": "pig", "chain_type": "Lambda", "dna_seq": "TATGTCTTCGGAACTGGGACCAAGGTCACCGTCCTA", "aa_seq": "YVFGTGTKVTVL", "boundary_motif": "TVL"}, {"gene_id": "ssc_IGKJ1", "species": "pig", "chain_type": "Kappa", "dna_seq": "TGGACGTTCGGCCAAGGGACCAAGGTGGAAATCAAA", "aa_seq": "WTFGQGTKVEIK", "boundary_motif": "VEIK"}, {"gene_id": "ssc_IGHJ1", "species": "pig", "chain_type": "Heavy", "dna_seq": "TACTACTTTGACTACTGGGGCCAGGGAACCCTGGTCACCGTCTCCTCA", "aa_seq": "YYFDYWGQGTLVTVSS", "boundary_motif": "TVSS"}, {"gene_id": "ssc_IGHJ2", "species": "pig", "chain_type": "Heavy", "dna_seq": "TACTGGTACTTCGATCTCTGGGGCCGTGGCACCCTGGTCACTGTCTCCTCA", "aa_seq": "YWYFDLWGRGTLVTVSS", "boundary_motif": "TVSS"}, {"gene_id": "ssc_IGHJ3", "species": "pig", "chain_type": "Heavy", "dna_seq": "GCTGAATACTTCCAGCACTGGGGCCAGGGCACCCTGGTCACCGTCTCCTCA", "aa_seq": "AEYFQHWGQGTLVTVSS", "boundary_motif": "TVSS"}, {"gene_id": "ssc_IGHJ4", "species": "pig", "chain_type": "Heavy", "dna_seq": "TACTTTGACTACTGGGGCCAGGGAACCCTGGTCACCGTCTCCTCA", "aa_seq": "YFDYWGQGTLVTVSS", "boundary_motif": "TVSS"}, {"gene_id": "ocu_IGKJ1", "species": "rabbit", "chain_type": "Kappa", "dna_seq": "", "aa_seq": "FDFGGGTKLEIK", "boundary_motif": "LEIK"}, {"gene_id": "ocu_IGKJ2", "species": "rabbit", "chain_type": "Kappa", "dna_seq": "TACACATTCGGCGGAGGGACCAAGCTGGAGATCAAA", "aa_seq": "YTFGGGTKLEIK", "boundary_motif": "LEIK"}, {"gene_id": "ocu_IGLJ1", "species": "rabbit", "chain_type": "Lambda", "dna_seq": "TACTATGTCTTCGGCGGAGGGACCAAGCTGACCGTCCTA", "aa_seq": "YYVFGGGTKLTVL", "boundary_motif": "TVL"}, {"gene_id": "ocu_IGHJ1", "species": "rabbit", "chain_type": "Heavy", "dna_seq": "TACTACTTTGACTTGTGGGGCCCAGGCACCCTCGTCACCGTCTCCTCA", "aa_seq": "YYFDLWGPGTLVTVSS", "boundary_motif": "TVSS"}, {"gene_id": "ocu_IGHJ2", "species": "rabbit", "chain_type": "Heavy", "dna_seq": "TACTACTTTGACTTGTGGGGCCCAGGCACCCTCGTCACCGTCTCCTCA", "aa_seq": "YYFDLWGPGTLVTVSS", "boundary_motif": "TVSS"}, {"gene_id": "ocu_IGHJ4", "species": "rabbit", "chain_type": "Heavy", "dna_seq": "TACTACTACTACTACTTCGATCTCTGGGGCCCAGGCACCCTCGTCACCGTCTCCTCA", "aa_seq": "YYYYYFDLWGPGTLVTVSS", "boundary_motif": "TVSS"}, {"gene_id": "ocu_IGHJ6", "species": "rabbit", "chain_type": "Heavy", "dna_seq": "TACTATATGGATCTCTGGGGCCCAGGCACCCTCGTCACCGTCTCCTCA", "aa_seq": "YYMDLWGPGTLVTVSS", "boundary_motif": "TVSS"}, {"gene_id": "rno_IGKJ1", "species": "rat", "chain_type": "Kappa", "dna_seq": "TGGACGTTCGGTGGAGGCACCAAGCTGGAATTGAAA", "aa_seq": "WTFGGGTKLELK", "boundary_motif": ""}, {"gene_id": "rno_IGKJ2", "species": "rat", "chain_type": "Kappa", "dna_seq": "TACACGTTCGGAGGGGGGACCAAGCTGGAAATAAAA", "aa_seq": "YTFGGGTKLEIK", "boundary_motif": "LEIK"}, {"gene_id": "rno_IGKJ4", "species": "rat", "chain_type": "Kappa", "dna_seq": "TTCACGTTCGGCTCGGGGACAAAGTTGGAAATAAAA", "aa_seq": "FTFGSGTKLEIK", "boundary_motif": "LEIK"}, {"gene_id": "rno_IGHJ1", "species": "rat", "chain_type": "Heavy", "dna_seq": "TACTATTACTTCGATGTCTGGGGCGCAGGGACCACGGTCACCGTCTCCTCA", "aa_seq": "YYYFDVWGAGTTVTVSS", "boundary_motif": "TVSS"}, {"gene_id": "rno_IGHJ2", "species": "rat", "chain_type": "Heavy", "dna_seq": "TACTTTGACTACTGGGGCCAAGGAGTCATGGTCACAGTCTCCTCA", "aa_seq": "YFDYWGQGVMVTVSS", "boundary_motif": "TVSS"}, {"gene_id": "rno_IGHJ3", "species": "rat", "chain_type": "Heavy", "dna_seq": "TGGTTTGCTTACTGGGGCCAAGGGACTCTGGTCACTGTCTCTGCA", "aa_seq": "WFAYWGQGTLVTVSA", "boundary_motif": "TVSA"}, {"gene_id": "rno_IGHJ4", "species": "rat", "chain_type": "Heavy", "dna_seq": "TACTATGCTATGGACTACTGGGGTCAAGGAACCTCAGTCACCGTCTCCTCA", "aa_seq": "YYAMDYWGQGTSVTVSS", "boundary_motif": "TVSS"}, {"gene_id": "mmu_IGLJ1", "species": "rhesus", "chain_type": "Lambda", "dna_seq": "TATGTCTTCGGAACTGGGACCAAGGTCACCGTCCTA", "aa_seq": "YVFGTGTKVTVL", "boundary_motif": "TVL"}, {"gene_id": "mmu_IGKJ1", "species": "rhesus", "chain_type": "Kappa", "dna_seq": "TGGACGTTCGGCCAAGGGACCAAGGTGGAAATCAAA", "aa_seq": "WTFGQGTKVEIK", "boundary_motif": "VEIK"}, {"gene_id": "mmu_IGHJ1", "species": "rhesus", "chain_type": "Heavy", "dna_seq": "GCTGAATACTTCCAGCACTGGGGCCAGGGCACCCTGGTCACCGTCTCCTCA", "aa_seq": "AEYFQHWGQGTLVTVSS", "boundary_motif": "TVSS"}, {"gene_id": "mmu_IGHJ2", "species": "rhesus", "chain_type": "Heavy", "dna_seq": "TACTGGTACTTCGATCTCTGGGGCCGTGGCACCCTGGTCACTGTCTCCTCA", "aa_seq": "YWYFDLWGRGTLVTVSS", "boundary_motif": "TVSS"}, {"gene_id": "mmu_IGHJ3", "species": "rhesus", "chain_type": "Heavy", "dna_seq": "GATGCTTTTGATGTCTGGGGCCAAGGGACAATGGTCACCGTCTCTTCA", "aa_seq": "DAFDVWGQGTMVTVSS", "boundary_motif": "TVSS"}, {"gene_id": "mmu_IGHJ4", "species": "rhesus", "chain_type": "Heavy", "dna_seq": "TACTTTGACTACTGGGGCCAGGGAACCCTGGTCACCGTCTCCTCA", "aa_seq": "YFDYWGQGTLVTVSS", "boundary_motif": "TVSS"}, {"gene_id": "mmu_IGHJ5", "species": "rhesus", "chain_type": "Heavy", "dna_seq": "AACTGGTTCGACCCCTGGGGCCAGGGAACCCTGGTCACCGTCTCCTCA", "aa_seq": "NWFDPWGQGTLVTVSS", "boundary_motif": "TVSS"}, {"gene_id": "mmu_IGHJ6", "species": "rhesus", "chain_type": "Heavy", "dna_seq": "TACTACTACTACTACGGTATGGACGTCTGGGGCCAAGGGACCACGGTCACCGTCTCCTCA", "aa_seq": "YYYYYGMDVWGQGTTVTVSS", "boundary_motif": "TVSS"}, {"gene_id": "oar_IGLJ1", "species": "sheep", "chain_type": "Lambda", "dna_seq": "GTGGTATTCGGCGGAGGGACCAAGCTGACCGTCCTA", "aa_seq": "VVFGGGTKLTVL", "boundary_motif": "TVL"}, {"gene_id": "oar_IGHJ1", "species": "sheep", "chain_type": "Heavy", "dna_seq": "TACTACTTTGACTACTGGGGCCAGGGAACCCTGGTCACCGTCTCCTCA", "aa_seq": "YYFDYWGQGTLVTVSS", "boundary_motif": "TVSS"}, {"gene_id": "oar_IGHJ2", "species": "sheep", "chain_type": "Heavy", "dna_seq": "TACTGGTACTTCGATCTCTGGGGCCGTGGCACCCTGGTCACTGTCTCCTCA", "aa_seq": "YWYFDLWGRGTLVTVSS", "boundary_motif": "TVSS"}]};
+
+    // 2. Preset Sequences
+    const SAMPLES = {
+      trastuzumab: "EVQLVESGGGLVQPGGSLRLSCAASGFNIKDTYIHWVRQAPGKGLEWVARIYPTNGYTRYADSVKGRFTISADTSKNTAYLQMNSLRAEDTAVYYCSRWGGDGFYAMDYWGQGTLVTVSS",
+      pertuzumab: "DIQMTQSPSSLSASVGDRVTITCKASQDVSIGVAWYQQKPGKAPKLLIYSASYRYTGVPSRFSGSGSGTDFTLTISSLQPEDFATYYCQQYYIYPYTFGQGTKVEIK",
+      vhh: "QVQLVESGGALVQPGGSLRLSCAASGFPVNRYSMRWYRQAPGKEREWVAGMSSAGDRSSYEDSVKGRFTISRDDARNTVYLQMNSLKPEDTAVYYCNVNVGFEYWGQGTQVTVSS",
+      mouse_186: "QVQLQQPGAELVKPGASVKLSCKASGYTFTSYWMHWVKQRPGRGLEWIGRIDPNSGGTKYNEKFKSKATLTVDKPSSTAYMQLSSLTSEDSAVYYCARWDYDGDYWGQGTSVTVSS",
+      mouse_186_w33l: "QVQLQQPGAELVKPGASVKLSCKASGYTFTSYLMHWVKQRPGRGLEWIGRIDPNSGGTKYNEKFKSKATLTVDKPSSTAYMQLSSLTSEDSAVYYCARWDYDGDYWGQGTSVTVSS",
+      xenopus: "QVQLQESGPGLVKPSQTLSLTCTVSGFSLTSYGVSWVRQPPGKGLEWLGVIWSGGNTNYNADFRSRLTITKDTSKNQVSLKLSNVTARDTATYYCAKDVGWFDVWGAGTLVTVSS",
+      shark: "ARVDQTPQTITKETGESLTINCVLRDASFSSLGSTYWFRKNPGTTEEQLLIRSNSEDRYTVRNGYDKSVRISSLRREDTDTYYCRAMVLSGNDYWGQGTQVTVSS",
+      duck: "AVTLDESGGGLQTPGGRTLSLVCKASGFTFSSYDMGWVRQAPGKGLEWVSTISTGGGSTYYADSVKGRFTISRDSSKNTLYLQMNNLRAEDTATYYCAKAGSGWYAYWGQGTLVTVSS"
+    };
+
+    function loadSample(key) {
+      if (SAMPLES[key]) {
+        document.getElementById("seqTextarea").value = SAMPLES[key];
+        runUniversalAnalysisAndProjection();
+      }
+    }
+
+    // D3 Canvas Setup
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    const svg = d3.select("#canvas").attr("width", width).attr("height", height);
+    const g = svg.append("g");
+    const beaconG = g.append("g").attr("id", "beaconGroup");
+    const circlesG = g.append("g").attr("id", "circlesGroup");
+
+    var circles = null;
+
+    function resetMapView() {
+      svg.transition().duration(850).call(zoom.transform, d3.zoomIdentity.translate(width/2, height/2).scale(0.85));
+    }
+    d3.select("#resetZoom").on("click", resetMapView);
+
+    // Keyboard shortcut: 'f' or 'F' to reset view and center the map
+    window.addEventListener("keydown", (e) => {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+      if (e.key === 'f' || e.key === 'F') {
+        resetMapView();
+      }
+    });
+
+    const zoom = d3.zoom().scaleExtent([0.1, 80]).on("zoom", (e) => {
+      g.attr("transform", e.transform);
+      const k = e.transform.k;
+      // Dynamic circle radius scaling: preserve fine resolution in crowded clusters on deep zoom
+      const radiusFactor = Math.max(0.22, 1.0 / Math.pow(k, 0.32));
+      if (circles) {
+        circles.attr("r", d => {
+          let baseR = 3.5;
+          if (selectedFilters.size > 0) {
+            let isMatch = false;
+            if (currentMode === "hierarchical" || currentMode === "family") {
+              isMatch = selectedFilters.has(d.family) || selectedFilters.has(d.chain_group);
+            } else {
+              isMatch = selectedFilters.has(d[currentMode]);
+            }
+            baseR = isMatch ? 6.0 : 2.0;
+          }
+          return baseR * radiusFactor;
+        }).attr("stroke-width", Math.max(0.2, 0.5 * radiusFactor));
+      }
+    });
+    svg.call(zoom);
+    svg.call(zoom.transform, d3.zoomIdentity.translate(width/2, height/2).scale(0.85));
+
+    // Universal Inspector Panel State & Restoration
+    const inspectorPanel = document.getElementById("inspectorPanel");
+    const restoreInspectorBtn = document.getElementById("restoreInspectorBtn");
+    function setInspectorCollapsed(col) {
+      if (col) {
+        inspectorPanel.classList.add("collapsed");
+        restoreInspectorBtn.style.display = "inline-flex";
+      } else {
+        inspectorPanel.classList.remove("collapsed");
+        restoreInspectorBtn.style.display = "none";
+      }
+    }
+    document.getElementById("toggleInspectorBtn").onclick = () => {
+      const isCol = inspectorPanel.classList.contains("collapsed");
+      setInspectorCollapsed(!isCol);
+    };
+    document.getElementById("closeInspectorBtn").onclick = () => setInspectorCollapsed(true);
+    restoreInspectorBtn.onclick = () => setInspectorCollapsed(false);
+
+    // Top-Left Header Panel Minimize & Restore
+    const headerPanel = document.getElementById("header");
+    const restoreHeaderBtn = document.getElementById("restoreHeaderBtn");
+    document.getElementById("closeHeaderBtn").onclick = () => {
+      headerPanel.classList.add("collapsed");
+      restoreHeaderBtn.style.display = "inline-flex";
+    };
+    restoreHeaderBtn.onclick = () => {
+      headerPanel.classList.remove("collapsed");
+      restoreHeaderBtn.style.display = "none";
+    };
+
+    // Helper: Dynamic Positioning for Legend & Evo Bar
+    function updateEvoPosition() {
+      const legendCol = d3.select("#legend").classed("collapsed");
+      const leftPos = legendCol ? "135px" : "395px";
+      d3.select("#evoBar").style("left", leftPos);
+      d3.select("#restoreEvoBtn").style("left", leftPos);
+    }
+
+    // EvoBar Minimize & Restore
+    const evoBar = document.getElementById("evoBar");
+    const restoreEvoBtn = document.getElementById("restoreEvoBtn");
+    document.getElementById("closeEvoBtn").onclick = () => {
+      evoBar.classList.add("collapsed");
+      restoreEvoBtn.style.display = "inline-flex";
+      updateEvoPosition();
+    };
+    restoreEvoBtn.onclick = () => {
+      evoBar.classList.remove("collapsed");
+      restoreEvoBtn.style.display = "none";
+      updateEvoPosition();
+    };
+
+    // Legend Restore Button
+    const restoreLegendBtn = document.getElementById("restoreLegendBtn");
+    restoreLegendBtn.onclick = () => {
+      d3.select("#legend").classed("collapsed", false);
+      restoreLegendBtn.style.display = "none";
+      updateEvoPosition();
+    };
+
+    // Sequence Alignment Drawer State & Controls
+    const alignmentDrawer = document.getElementById("alignmentDrawer");
+    const restoreAlignmentBtn = document.getElementById("restoreAlignmentBtn");
+    let selectedGeneIds = new Set();
+    let displayedGenes = [];
+
+    function openAlignmentDrawer() {
+      alignmentDrawer.classList.remove("collapsed");
+      restoreAlignmentBtn.style.display = "none";
+    }
+
+    function closeAlignmentDrawer() {
+      alignmentDrawer.classList.add("collapsed");
+      if (displayedGenes && displayedGenes.length > 0) {
+        restoreAlignmentBtn.style.display = "inline-flex";
+      }
+    }
+
+    document.getElementById("closeAlignmentBtn").onclick = closeAlignmentDrawer;
+    restoreAlignmentBtn.onclick = openAlignmentDrawer;
+
+    document.getElementById("clearSelectionBtn").onclick = () => {
+      selectedGeneIds.clear();
+      updateCircleSelectionVisual();
+      renderAlignmentView();
+      closeAlignmentDrawer();
+    };
+
+    document.getElementById("copyAlignmentFastaBtn").onclick = () => {
+      if (!displayedGenes || displayedGenes.length === 0) return;
+      let fasta = "";
+      if (displayedGenes.length === 1) {
+        const g = displayedGenes[0];
+        const clean = (g.ungapped_seq || g.aa_seq).replace(/[\.\-]/g, "");
+        fasta = `>${g.gene_id} ${g.gene_name && g.gene_name !== g.gene_id ? g.gene_name + ' ' : ''}${g.species} ${g.chain_group || g.chain} ${g.family} mature_len=${clean.length}aa\n${clean}\n`;
+      } else {
+        displayedGenes.forEach(g => {
+          fasta += `>${g.gene_id} ${g.gene_name && g.gene_name !== g.gene_id ? g.gene_name + ' ' : ''}${g.species} ${g.chain_group || g.chain} ${g.family} imgt_aligned_104\n${g.aa_seq}\n`;
+        });
+      }
+      navigator.clipboard.writeText(fasta).then(() => {
+        const btn = document.getElementById("copyAlignmentFastaBtn");
+        const orig = btn.innerText;
+        btn.innerText = "✅ Copied!";
+        setTimeout(() => btn.innerText = orig, 1800);
+      });
+    };
+
+    function updateCircleSelectionVisual() {
+      if (!circles) return;
+      const hasSelections = selectedGeneIds.size > 0;
+      const hasFilters = selectedFilters.size > 0;
+
+      circles.each(function(d) {
+        const isSelected = selectedGeneIds.has(d.gene_id);
+        const isFiltered = (currentMode === "hierarchical" || currentMode === "family")
+          ? (selectedFilters.has(d.family) || selectedFilters.has(d.chain_group))
+          : selectedFilters.has(d[currentMode]);
+        const node = d3.select(this);
+
+        if (isSelected) {
+          node.raise()
+            .transition().duration(200)
+            .attr("r", 8.5)
+            .attr("stroke", "#38bdf8")
+            .attr("stroke-width", 2.8)
+            .attr("opacity", 1.0);
+        } else if (hasSelections) {
+          node.transition().duration(200)
+            .attr("r", isFiltered ? 5.0 : 2.5)
+            .attr("stroke", isFiltered ? "#ffffff" : "none")
+            .attr("stroke-width", isFiltered ? 1.2 : 0)
+            .attr("opacity", isFiltered ? 0.35 : 0.12);
+        } else if (hasFilters) {
+          node.transition().duration(200)
+            .attr("r", isFiltered ? 6.0 : 2.0)
+            .attr("stroke", isFiltered ? "#ffffff" : "none")
+            .attr("stroke-width", isFiltered ? 1.8 : 0)
+            .attr("opacity", isFiltered ? 1.0 : 0.04);
+        } else {
+          node.transition().duration(200)
+            .attr("r", 3.5)
+            .attr("stroke", "#0d1117")
+            .attr("stroke-width", 0.5)
+            .attr("opacity", 0.85);
+        }
+      });
+    }
+
+    function flyToGene(geneId) {
+      const target = globalData.find(d => d.gene_id === geneId);
+      if (!target) return;
+      const currentWidth = window.innerWidth || width;
+      const currentHeight = window.innerHeight || height;
+
+      // When alignment drawer is open, center in visible canvas area above drawer
+      const drawer = document.getElementById("alignmentDrawer");
+      let centerY = currentHeight / 2;
+      if (drawer && !drawer.classList.contains("collapsed")) {
+        const drawerRect = drawer.getBoundingClientRect();
+        if (drawerRect.top > 150) {
+          centerY = drawerRect.top / 2;
+        }
+      }
+
+      const scale = 5.5;
+      svg.transition()
+        .duration(850)
+        .ease(d3.easeCubicOut)
+        .call(
+          zoom.transform,
+          d3.zoomIdentity.translate(currentWidth / 2 - target.x * scale, centerY - target.y * scale).scale(scale)
+        );
+
+      // Highlight target circle on map with radiant prominence
+      circles.each(function(d) {
+        if (d.gene_id === geneId) {
+          d3.select(this)
+            .raise()
+            .transition().duration(250)
+            .attr("r", 12.0)
+            .attr("stroke", "#ffffff")
+            .attr("stroke-width", 3.5)
+            .attr("opacity", 1.0)
+            .transition().duration(400)
+            .attr("r", 8.5);
+        }
+      });
+
+      // Highlight row in alignment drawer if present
+      document.querySelectorAll(".align-row").forEach(r => {
+        if (r.dataset && r.dataset.geneId === geneId) {
+          r.classList.add("active-align-row");
+          if (typeof r.scrollIntoView === "function") {
+            r.scrollIntoView({ block: "nearest", behavior: "smooth" });
+          }
+        } else {
+          r.classList.remove("active-align-row");
+        }
+      });
+
+      // Radar beacon ring pulse
+      if (typeof beaconG !== 'undefined') {
+        beaconG.selectAll("*").remove();
+
+        const ring = beaconG.append("circle")
+          .attr("cx", target.x)
+          .attr("cy", target.y)
+          .attr("r", 6)
+          .attr("fill", "none")
+          .attr("stroke", "#38bdf8")
+          .attr("stroke-width", 3)
+          .attr("opacity", 1);
+
+        ring.transition()
+          .duration(1300)
+          .ease(d3.easeCubicOut)
+          .attr("r", 50)
+          .attr("opacity", 0)
+          .remove();
+
+        const core = beaconG.append("circle")
+          .attr("cx", target.x)
+          .attr("cy", target.y)
+          .attr("r", 3.5)
+          .attr("fill", "#ffffff")
+          .style("filter", "drop-shadow(0 0 8px #38bdf8)");
+
+        core.transition()
+          .duration(2000)
+          .attr("opacity", 0.7);
+      }
+    }
+    window.flyToGene = flyToGene;
+
+    function compareCoincidentCluster(geneId) {
+      const root = globalData.find(d => d.gene_id === geneId);
+      if (!root) return;
+      const coincident = globalData.filter(d => Math.abs(d.x - root.x) < 0.25 && Math.abs(d.y - root.y) < 0.25);
+      selectedGeneIds = new Set(coincident.map(d => d.gene_id));
+      updateCircleSelectionVisual();
+      renderAlignmentView(coincident);
+      openAlignmentDrawer();
+    }
+    window.compareCoincidentCluster = compareCoincidentCluster;
+
+    function formatAlignedSequenceHtml(seq) {
+      if (!seq || seq.length !== 104) {
+        return (seq || "").replace(/\./g, '<span class="seq-gap">.</span>');
+      }
+      const fr1 = seq.slice(0, 26);
+      const cdr1 = seq.slice(26, 38);
+      const fr2 = seq.slice(38, 55);
+      const cdr2 = seq.slice(55, 65);
+      const fr3 = seq.slice(65, 104);
+
+      function colorize(str, isCdr, cdrClass) {
+        let out = "";
+        for (let i = 0; i < str.length; i++) {
+          const ch = str[i];
+          if (ch === "." || ch === "-") {
+            out += '<span class="seq-gap">.</span>';
+          } else if (isCdr) {
+            out += `<span class="${cdrClass}">${ch}</span>`;
+          } else {
+            out += ch;
+          }
+        }
+        return out;
+      }
+
+      const fr1Html = `<span class="align-region-fr1">${colorize(fr1, false, '')}</span>`;
+      const cdr1Html = `<span class="align-region-cdr1">${colorize(cdr1, true, 'seq-cdr1')}</span>`;
+      const fr2Html = `<span class="align-region-fr2">${colorize(fr2, false, '')}</span>`;
+      const cdr2Html = `<span class="align-region-cdr2">${colorize(cdr2, true, 'seq-cdr2')}</span>`;
+      const fr3Html = `<span class="align-region-fr3">${colorize(fr3, false, '')}</span>`;
+
+      return `${fr1Html}${cdr1Html}${fr2Html}${cdr2Html}${fr3Html}`;
+    }
+
+    function renderAlignmentView(customGenes = null) {
+      let genes = [];
+      if (customGenes && customGenes.length > 0) {
+        genes = customGenes;
+      } else if (selectedGeneIds.size > 0) {
+        genes = globalData.filter(d => selectedGeneIds.has(d.gene_id));
+      } else if (selectedFilters.size > 0) {
+        genes = globalData.filter(d => (currentMode === "hierarchical" || currentMode === "family") ? (selectedFilters.has(d.family) || selectedFilters.has(d.chain_group)) : selectedFilters.has(d[currentMode]));
+      } else if (globalData && globalData.length > 0) {
+        genes = [globalData[0]];
+      }
+
+      displayedGenes = genes;
+      const count = genes.length;
+      document.getElementById("alignSelectionCount").innerText = `${count.toLocaleString()} of ${globalData.length.toLocaleString()} genes`;
+      document.getElementById("alignCountBadge").innerText = count;
+
+      const body = document.getElementById("alignmentBody");
+      const badge = document.getElementById("alignModeBadge");
+
+      if (count === 1) {
+        // SINGLE SEQUENCE DISPLAY MODE
+        badge.className = "align-mode-badge single";
+        badge.innerText = "Single Sequence";
+
+        const g = genes[0];
+        const cleanSeq = (g.ungapped_seq || g.aa_seq).replace(/[\.\-]/g, "");
+        const coincidentPeers = globalData.filter(item => Math.abs(item.x - g.x) < 0.25 && Math.abs(item.y - g.y) < 0.25);
+        const hasPeers = coincidentPeers.length > 1;
+
+        body.innerHTML = `
+          <div class="single-seq-card">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; border-bottom:1px solid #1e293b; padding-bottom:8px; flex-wrap:wrap; gap:8px;">
+              <div>
+                <span style="font-size:16px; font-weight:700; color:#58a6ff;">${g.gene_id}</span>
+                ${g.gene_name && g.gene_name !== g.gene_id ? `<span style="font-size:14px; color:#38bdf8; font-weight:700; margin-left:8px;">[${g.gene_name}]</span>` : ''}
+                <span style="font-size:12px; color:#94a3b8; margin-left:8px;">${g.species === 'dogfish' ? '🦈 Dogshark (Spiny Dogfish)' : (g.species === 'dog' ? '🐕 Dog (Canine)' : g.species.toUpperCase())}</span>
+                <span style="font-size:12px; color:#34d399; margin-left:8px; font-weight:600;">${g.family || '-'}</span>
+                <span style="font-size:12px; color:#e2e8f0; margin-left:8px;">${g.chain_group || (g.species + " " + g.chain)}</span>
+                <span style="font-size:11px; color:#64748b; margin-left:8px;">(${g.clan})</span>
+              </div>
+              <div style="display:flex; align-items:center; gap:10px;">
+                <span style="font-size:12px; color:#38bdf8; font-weight:600;">
+                  Mature Length: ${cleanSeq.length} AA
+                </span>
+                <button class="drawer-action-btn" data-action="fly-to-gene" data-gene-id="${g.gene_id}" onclick="flyToGene('${g.gene_id}')" title="Center camera on map">🎯 Center on Map</button>
+              </div>
+            </div>
+
+            <div style="font-size:11px; color:#94a3b8; margin-bottom:6px; display:flex; justify-content:space-between;">
+              <span>Continuous Mature Variable Domain Sequence:</span>
+              <span style="color:#64748b; font-size:10.5px;">IMGT Positions 1 → 104</span>
+            </div>
+            <div style="font-family:'Fira Code', monospace; font-size:13px; letter-spacing:1px; background:#060a12; padding:12px 14px; border-radius:6px; border:1px solid #1e293b; color:#f1f5f9; word-break:break-all; user-select:all; line-height:1.6;">
+              ${cleanSeq}
+            </div>
+
+            ${hasPeers ? `
+              <div style="margin-top:10px; background:rgba(245,158,11,0.08); border:1px solid rgba(245,158,11,0.3); border-radius:6px; padding:8px 12px; display:flex; justify-content:space-between; align-items:center;">
+                <span style="color:#f59e0b; font-size:11.5px; font-weight:600;">
+                  👥 Coincident Cluster: ${coincidentPeers.length} genes map to this coordinate (${g.gene_id}, ${coincidentPeers.map(p => p.gene_id).filter(id => id !== g.gene_id).slice(0, 3).join(', ')}${coincidentPeers.length > 4 ? '...' : ''})
+                </span>
+                <button class="drawer-action-btn" data-action="compare-cluster" data-gene-id="${g.gene_id}" style="border-color:#f59e0b; color:#f59e0b;" onclick="compareCoincidentCluster('${g.gene_id}')">
+                  🧬 Compare All ${coincidentPeers.length} Alleles (Preserve IMGT Gaps)
+                </button>
+              </div>
+            ` : ''}
+
+            <div style="margin-top:10px; font-size:11px; color:#64748b; display:flex; justify-content:space-between; align-items:center;">
+              <span>ℹ️ Single sequence display mode.</span>
+              <span>💡 Shift-click spots on the map or filter by family to display multiple sequences with IMGT gaps kept</span>
+            </div>
+          </div>
+        `;
+      } else {
+        // MULTIPLE SEQUENCE DISPLAY MODE: Keep alignment gaps (canonical 104 columns)
+        badge.className = "align-mode-badge multi";
+        badge.innerText = `${count} Sequences • IMGT Gaps Kept`;
+
+        let html = `
+          <div class="imgt-ruler-container">
+            <div class="ruler-region-row">
+              <span style="display:inline-block; width:270px; min-width:270px; color:#94a3b8;">Gene Identifier & Species</span>
+              <span class="align-region-fr1" style="color:#60a5fa;">FR1 (1-26)</span>
+              <span class="align-region-cdr1" style="color:#fbbf24; background:rgba(251,191,36,0.15); text-align:center; border-radius:3px;">CDR1 (27-38)</span>
+              <span class="align-region-fr2" style="color:#60a5fa;">FR2 (39-55)</span>
+              <span class="align-region-cdr2" style="color:#34d399; background:rgba(52,211,153,0.15); text-align:center; border-radius:3px;">CDR2 (56-65)</span>
+              <span class="align-region-fr3" style="color:#60a5fa;">FR3 (66-104)</span>
+            </div>
+            <div class="ruler-ticks-row">
+              <span style="display:inline-block; width:270px; min-width:270px; color:#64748b;">IMGT Unique Coordinates</span>
+              <span class="align-region-fr1">1......:....23(C)..26</span>
+              <span class="align-region-cdr1" style="text-align:center;">27........38</span>
+              <span class="align-region-fr2">39..41(W).....55</span>
+              <span class="align-region-cdr2" style="text-align:center;">56......65</span>
+              <span class="align-region-fr3">66.....:.....:....:........104(C)</span>
+            </div>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:2px;">
+        `;
+
+        const maxRender = Math.min(genes.length, 250);
+        for (let i = 0; i < maxRender; i++) {
+          const g = genes[i];
+          const isRowSelected = selectedGeneIds.has(g.gene_id);
+          const spIcon = g.species === 'dogfish' ? '🦈' : (g.species === 'dog' ? '🐕' : (g.species === 'mouse' ? '🐁' : (g.species === 'human' ? '👤' : (g.species === 'alpaca' ? '🦙' : '🧬'))));
+          const seq = g.aa_seq || ('.'.repeat(104));
+          html += `
+            <div class="align-row ${isRowSelected ? 'selected-align-row' : ''}" data-gene-id="${g.gene_id}" onclick="flyToGene('${g.gene_id}')" title="Click to center camera on ${g.gene_id}">
+              <span class="align-gene-tag">
+                ${spIcon} <strong style="color:#58a6ff;">${g.gene_name && g.gene_name !== g.gene_id ? `${g.gene_name} <span style="color:#94a3b8; font-size:11px; font-weight:normal;">(${g.gene_id})</span>` : g.gene_id}</strong> <span style="color:#64748b; font-size:10.5px; font-weight:normal;">(${g.family || g.species})</span>
+              </span>
+              <span class="align-seq-chars">
+                ${formatAlignedSequenceHtml(seq)}
+              </span>
+            </div>
+          `;
+        }
+
+        if (genes.length > maxRender) {
+          html += `<div style="font-size:11px; color:#94a3b8; padding:8px; text-align:center;">... and ${genes.length - maxRender} more sequences (Click "Copy FASTA" to export all ${genes.length})</div>`;
+        }
+
+        html += `
+          </div>
+          <div style="margin-top:10px; font-size:11px; color:#64748b; padding-top:6px; border-top:1px solid #1e293b; display:flex; justify-content:space-between; align-items:center;">
+            <span>ℹ️ Multiple sequence display mode: IMGT alignment gaps preserved (exact 104 columns).</span>
+            <span>Click any row to fly to gene on map • Click "Copy FASTA" to export full alignment</span>
+          </div>
+        `;
+
+        body.innerHTML = html;
+
+        // Attach event delegation for alignment rows and action buttons
+        if (!body._hasDelegatedClickListener) {
+          body._hasDelegatedClickListener = true;
+          body.addEventListener("click", (e) => {
+            const row = e.target.closest(".align-row");
+            if (row && row.dataset && row.dataset.geneId) {
+              const clickedGeneId = row.dataset.geneId;
+              const isMulti = e.shiftKey || e.ctrlKey || e.metaKey;
+
+              if (isMulti) {
+                // If adding with shift, ensure displayed genes are part of selectedGeneIds
+                if (selectedGeneIds.size === 0 && displayedGenes && displayedGenes.length > 0) {
+                  selectedGeneIds = new Set(displayedGenes.map(g => g.gene_id));
+                }
+                if (selectedGeneIds.has(clickedGeneId)) {
+                  selectedGeneIds.delete(clickedGeneId);
+                  row.classList.remove("selected-align-row");
+                  row.classList.remove("active-align-row");
+                } else {
+                  selectedGeneIds.add(clickedGeneId);
+                  row.classList.add("selected-align-row");
+                  row.classList.add("active-align-row");
+                }
+                updateCircleSelectionVisual();
+                const selCountElem = document.getElementById("alignSelectionCount");
+                if (selCountElem) selCountElem.innerText = `${selectedGeneIds.size.toLocaleString()} of ${globalData.length.toLocaleString()} genes`;
+                const selBadge = document.getElementById("alignCountBadge");
+                if (selBadge) selBadge.innerText = selectedGeneIds.size;
+              } else {
+                document.querySelectorAll(".align-row").forEach(r => r.classList.remove("active-align-row"));
+                row.classList.add("active-align-row");
+              }
+
+              flyToGene(clickedGeneId);
+              return;
+            }
+            const flyBtn = e.target.closest("[data-action='fly-to-gene']");
+            if (flyBtn && flyBtn.dataset && flyBtn.dataset.geneId) {
+              flyToGene(flyBtn.dataset.geneId);
+              return;
+            }
+            const clusterBtn = e.target.closest("[data-action='compare-cluster']");
+            if (clusterBtn && clusterBtn.dataset && clusterBtn.dataset.geneId) {
+              compareCoincidentCluster(clusterBtn.dataset.geneId);
+              return;
+            }
+          });
+        }
+      }
+    }
+
+    document.getElementById("clearBtn").onclick = () => {
+      document.getElementById("seqTextarea").value = "";
+      document.getElementById("analysisHUD").style.display = "none";
+      beaconG.selectAll("*").remove();
+    };
+
+    const tooltip = d3.select("#tooltip");
+    const banner = d3.select("#selectionBanner");
+
+    const clanColors = {
+      "Clan III (Universal Ancestral)": "#58a6ff",
+      "Clan I (Expanded Tetrapod)": "#3fb950",
+      "Clan II (Divergent Framework)": "#d29922",
+      "Clan III (Camelid VHH)": "#f0883e",
+      "Light Chain (Kappa - IGK)": "#bc8cff",
+      "Light Chain (Lambda - IGL)": "#f778ba",
+      "Light Chain (Sigma - Ancient Amphibian)": "#2ea043",
+      "Light Chain (Rho - Ancient Amphibian)": "#1f6feb",
+      "Cartilaginous Fish (VNAR Single-Domain)": "#ff7b72"
+    };
+
+    const chainColors = {
+      "Heavy": "#58a6ff",
+      "Heavy (VHH Single-Domain)": "#f0883e",
+      "Light (Kappa - IGK)": "#bc8cff",
+      "Light (Lambda - IGL)": "#f778ba",
+      "Light (Sigma - Ancient Amphibian)": "#2ea043",
+      "Light (Rho - Ancient Amphibian)": "#1f6feb",
+      "VNAR Single-Domain (Shark)": "#ff7b72"
+    };
+
+    // Dedicated Curated Palette for Renate Dildrop Murine & IMGT Families
+    const dildropFamilyColors = {
+      "Mouse VH1 (J558)": "#38bdf8",     // Vibrant Cyan
+      "Mouse VH2 (Q52)": "#f59e0b",      // Amber
+      "Mouse VH3 (36-60)": "#fbbf24",    // Gold
+      "Mouse VH4 (X24)": "#34d399",      // Emerald
+      "Mouse VH5 (7183)": "#a855f7",     // Purple
+      "Mouse VH6 (J606)": "#ec4899",     // Pink
+      "Mouse VH7 (S107)": "#06b6d4",     // Deep Teal
+      "Mouse VH8 (3609)": "#60a5fa",     // Sky Blue
+      "Mouse VH9 (VGAM3.8)": "#4ade80", // Light Green
+      "Mouse VH10 (1210.7)": "#f43f5e",  // Rose
+      "Mouse VH11 (V10)": "#e879f9",     // Fuchsia
+      "Mouse VH12 (CH27/PtC)": "#14b8a6", // Teal
+      "Mouse VH13 (3609N)": "#84cc16",    // Lime
+      "Mouse VH14 (SM7)": "#f97316",      // Coral/Orange
+      "Human IGHV1": "#3b82f6",
+      "Human IGHV2": "#d97706",
+      "Human IGHV3": "#0284c7",
+      "Human IGHV4": "#b45309",
+      "Human IGHV5": "#10b981",
+      "Human IGHV6": "#8b5cf6",
+      "Human IGHV7": "#059669",
+      "Dogshark Heavy": "#0ea5e9",
+      "Dogshark Light": "#38bdf8",
+      "Dogshark VNAR": "#f43f5e",
+      "Dog VH (Clan III)": "#3b82f6",
+      "Dog VH (Clan I)": "#10b981",
+      "Camelid VHH": "#f0883e",
+      "Shark VNAR": "#ff7b72",
+      "Ancient Amphibian V-Sigma": "#2ea043",
+      "Ancient Amphibian V-Rho": "#1f6feb",
+      "Mouse IGLV1": "#f472b6",
+      "Mouse IGLV2": "#db2777",
+      "Mouse IGLV3": "#fda4af"
+    };
+
+    const ordinalPalette = d3.scaleOrdinal(d3.schemeTableau10);
+    let selectedFilters = new Set();
+    let currentMode = "family";
+    let globalData = [];
+
+    // Translation Table
+    const CODON_TABLE_JS = {
+      'ATA':'I', 'ATC':'I', 'ATT':'I', 'ATG':'M', 'ACA':'T', 'ACC':'T', 'ACG':'T', 'ACT':'T',
+      'AAC':'N', 'AAT':'N', 'AAA':'K', 'AAG':'K', 'AGC':'S', 'AGT':'S', 'AGA':'R', 'AGG':'R',
+      'CTA':'L', 'CTC':'L', 'CTG':'L', 'CTT':'L', 'CCA':'P', 'CCC':'P', 'CCG':'P', 'CCT':'P',
+      'CAC':'H', 'CAT':'H', 'CAA':'Q', 'CAG':'Q', 'CGA':'R', 'CGC':'R', 'CGG':'R', 'CGT':'R',
+      'GTA':'V', 'GTC':'V', 'GTG':'V', 'GTT':'V', 'GCA':'A', 'GCC':'A', 'GCG':'A', 'GCT':'A',
+      'GAC':'D', 'GAT':'D', 'GAA':'E', 'GAG':'E', 'GGA':'G', 'GGC':'G', 'GGG':'G', 'GGT':'G',
+      'TCA':'S', 'TCC':'S', 'TCG':'S', 'TCT':'S', 'TTC':'F', 'TTT':'F', 'TTA':'L', 'TTG':'L',
+      'TAC':'Y', 'TAT':'Y', 'TAA':'*', 'TAG':'*', 'TGC':'C', 'TGT':'C', 'TGA':'*', 'TGG':'W',
+    };
+
+    function translateDnaJs(dna) {
+      dna = dna.toUpperCase().replace(/U/g, 'T').replace(/[^ACGT]/g, '');
+      let aa = '';
+      for (let i = 0; i < dna.length - 2; i += 3) {
+        aa += CODON_TABLE_JS[dna.slice(i, i+3)] || 'X';
+      }
+      return aa;
+    }
+
+    // Load Universe Data
+    d3.json("vgene_pacmap_data.json").then(data => {
+      globalData = data;
+
+      // Update KPI
+      const sps = Array.from(new Set(data.map(d => d.species)));
+      const fams = Array.from(new Set(data.map(d => d.family || d.clan)));
+      document.getElementById("kpiGenes").innerText = data.length.toLocaleString();
+      document.getElementById("kpiSpecies").innerText = sps.length.toLocaleString();
+      document.getElementById("kpiFamilies").innerText = fams.length.toLocaleString();
+
+      function getColor(d, mode) {
+        if (mode === "hierarchical" || mode === "family") return dildropFamilyColors[d.family] || ordinalPalette(d.family);
+        if (mode === "clan") return clanColors[d.clan] || "#8b949e";
+        if (mode === "species") return ordinalPalette(d.species);
+        if (mode === "chain") return chainColors[d.chain] || "#8b949e";
+        return "#8b949e";
+      }
+
+      // Multi-Select Filter Evaluator
+      function updateHighlights() {
+        const count = selectedFilters.size;
+        document.getElementById("legendSelectedCount").innerText = `${count} selected`;
+
+        if (count === 0) {
+          banner.style("display", "none");
+          d3.selectAll(".legend-item, .legend-child-item").classed("checked-item", false);
+          d3.selectAll(".legend-cb, .legend-child-cb, .legend-group-cb").property("checked", false).property("indeterminate", false);
+          circles.transition().duration(250)
+            .attr("opacity", 0.85)
+            .attr("r", 3.5)
+            .attr("stroke", "#0d1117")
+            .attr("stroke-width", 0.5);
+        } else {
+          // Update child and item classes
+          d3.selectAll(".legend-child-item, .legend-item").classed("checked-item", function() {
+            const key = d3.select(this).attr("data-key");
+            return selectedFilters.has(key);
+          });
+          d3.selectAll(".legend-child-cb, .legend-cb").property("checked", function() {
+            const key = d3.select(this).attr("data-key");
+            return selectedFilters.has(key);
+          });
+
+          // Update parent group checkboxes (checked, unchecked, or indeterminate)
+          d3.selectAll(".legend-group").each(function() {
+            const grpElem = d3.select(this);
+            const parentCb = grpElem.select(".legend-group-cb").node();
+            if (!parentCb) return;
+            const childCbs = grpElem.selectAll(".legend-child-cb").nodes();
+            const checkedCount = childCbs.filter(c => c.checked).length;
+            if (checkedCount === 0) {
+              parentCb.checked = false;
+              parentCb.indeterminate = false;
+            } else if (checkedCount === childCbs.length) {
+              parentCb.checked = true;
+              parentCb.indeterminate = false;
+            } else {
+              parentCb.checked = false;
+              parentCb.indeterminate = true;
+            }
+          });
+
+          let matchCount = 0;
+          circles.each(function(d) {
+            let isMatch = false;
+            if (currentMode === "hierarchical" || currentMode === "family") {
+              isMatch = selectedFilters.has(d.family) || selectedFilters.has(d.chain_group);
+            } else {
+              isMatch = selectedFilters.has(d[currentMode]);
+            }
+            if (isMatch) matchCount++;
+
+            const node = d3.select(this);
+            if (isMatch) {
+              node.raise()
+                .transition().duration(250)
+                .attr("opacity", 1.0)
+                .attr("r", 6.0)
+                .attr("stroke", "#ffffff")
+                .attr("stroke-width", 1.8);
+            } else {
+              node.transition().duration(250)
+                .attr("opacity", 0.04)
+                .attr("r", 2.0)
+                .attr("stroke", "none");
+            }
+          });
+
+          const labelList = Array.from(selectedFilters).slice(0, 4).join(", ") + (selectedFilters.size > 4 ? ` (+${selectedFilters.size - 4} more)` : "");
+          banner.style("display", "block")
+            .html(`
+              <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:6px;">
+                <div>✨ <strong>Comparison [${labelList}]:</strong> <strong>${matchCount.toLocaleString()}</strong> of ${data.length.toLocaleString()} genes (${((matchCount/data.length)*100).toFixed(1)}%)</div>
+                <button id="btnViewBannerAlign" class="drawer-action-btn" style="background:#1e3a5f; color:#38bdf8; border-color:#38bdf8;">🧬 View Sequence Alignment (${matchCount})</button>
+              </div>
+            `);
+          d3.select("#btnViewBannerAlign").on("click", () => {
+            const matched = globalData.filter(d => (currentMode === "hierarchical" || currentMode === "family") ? (selectedFilters.has(d.family) || selectedFilters.has(d.chain_group)) : selectedFilters.has(d[currentMode]));
+            selectedGeneIds = new Set(matched.map(m => m.gene_id));
+            updateCircleSelectionVisual();
+            renderAlignmentView(matched);
+            openAlignmentDrawer();
+          });
+        }
+      }
+
+      function updateLegend(mode) {
+        currentMode = mode;
+        const modeTitle = mode === "hierarchical" ? "SPECIES & CHAIN → V-GENE FAMILY" : (mode === "family" ? "V-GENE FAMILY" : mode.toUpperCase());
+        document.getElementById("legendTitleText").innerText = `Legend: ${modeTitle}`;
+
+        const legList = d3.select("#legendContent");
+        legList.selectAll("*").remove();
+
+        if (mode === "hierarchical") {
+          // Build 2-level hierarchical tree
+          const hierarchy = {};
+          data.forEach(d => {
+            const grp = d.chain_group || (d.species.charAt(0).toUpperCase() + d.species.slice(1) + " " + d.chain);
+            const fam = d.family;
+            if (!hierarchy[grp]) hierarchy[grp] = { count: 0, families: {}, species: d.species, chain: d.chain };
+            hierarchy[grp].count++;
+            hierarchy[grp].families[fam] = (hierarchy[grp].families[fam] || 0) + 1;
+          });
+
+          // Sort groups: Mouse and Human first, then by count descending
+          const sortedGroups = Object.keys(hierarchy).sort((a, b) => {
+            const aMus = a.includes("Mouse") ? 100000 : 0;
+            const bMus = b.includes("Mouse") ? 100000 : 0;
+            const aHum = a.includes("Human") ? 50000 : 0;
+            const bHum = b.includes("Human") ? 50000 : 0;
+            return (bMus + bHum + hierarchy[b].count) - (aMus + aHum + hierarchy[a].count);
+          });
+
+          sortedGroups.forEach(grp => {
+            const gData = hierarchy[grp];
+            const grpElem = legList.append("div").attr("class", "legend-group");
+
+            // Header
+            const header = grpElem.append("div").attr("class", "legend-group-header");
+            
+            const arrow = header.append("span")
+              .attr("class", "legend-arrow")
+              .text("▼");
+
+            const grpCb = header.append("input")
+              .attr("type", "checkbox")
+              .attr("class", "legend-group-cb")
+              .attr("data-group", grp);
+
+            // Emoji for species
+            let emoji = "🧬";
+            const lowGrp = grp.toLowerCase();
+            if (lowGrp.includes("mouse")) emoji = "🐭";
+            else if (lowGrp.includes("human")) emoji = "👤";
+            else if (lowGrp.includes("alpaca") || lowGrp.includes("camel") || lowGrp.includes("llama")) emoji = "🦙";
+            else if (lowGrp.includes("shark") || lowGrp.includes("dogfish") || lowGrp.includes("dogshark")) emoji = "🦈";
+            else if (lowGrp.includes("dog")) emoji = "🐕";
+            else if (lowGrp.includes("cat")) emoji = "🐈";
+            else if (lowGrp.includes("xenopus") || lowGrp.includes("axolotl")) emoji = "🐸";
+            else if (lowGrp.includes("rabbit")) emoji = "🐇";
+            else if (lowGrp.includes("pig")) emoji = "🐖";
+            else if (lowGrp.includes("horse")) emoji = "🐎";
+            else if (lowGrp.includes("chicken") || lowGrp.includes("duck") || lowGrp.includes("zebrafinch")) emoji = "🦆";
+            else if (lowGrp.includes("zebrafish") || lowGrp.includes("salmon") || lowGrp.includes("trout") || lowGrp.includes("cod") || lowGrp.includes("gar")) emoji = "🐟";
+            else if (lowGrp.includes("cow") || lowGrp.includes("bovine") || lowGrp.includes("sheep") || lowGrp.includes("goat") || lowGrp.includes("buffalo")) emoji = "🐄";
+            else if (lowGrp.includes("bat")) emoji = "🦇";
+            else if (lowGrp.includes("elephant")) emoji = "🐘";
+            else if (lowGrp.includes("marmoset") || lowGrp.includes("baboon") || lowGrp.includes("rhesus") || lowGrp.includes("cynomolgus")) emoji = "🐒";
+            else if (lowGrp.includes("gorilla") || lowGrp.includes("chimpanzee")) emoji = "🦍";
+
+            header.append("span")
+              .attr("class", "legend-group-title")
+              .html(`${emoji} ${grp}`);
+
+            const famCount = Object.keys(gData.families).length;
+            header.append("span")
+              .attr("class", "legend-group-badge")
+              .text(`${gData.count} genes • ${famCount} fam`);
+
+            // Children list
+            const children = grpElem.append("div").attr("class", "legend-children");
+            
+            // Toggle collapse
+            header.on("click", function(event) {
+              if (event.target.classList.contains("legend-group-cb")) return;
+              const isCol = children.classed("collapsed");
+              children.classed("collapsed", !isCol);
+              arrow.classed("collapsed", !isCol).text(!isCol ? "▶" : "▼");
+            });
+
+            // Parent checkbox toggle
+            grpCb.on("change", function(event) {
+              event.stopPropagation();
+              const isChecked = this.checked;
+              Object.keys(gData.families).forEach(fam => {
+                if (isChecked) selectedFilters.add(fam);
+                else selectedFilters.delete(fam);
+              });
+              updateHighlights();
+            });
+
+            // Populate child families
+            const sortedFams = Object.keys(gData.families).sort((a, b) => gData.families[b] - gData.families[a]);
+            sortedFams.forEach(fam => {
+              const fCount = gData.families[fam];
+              const fColor = dildropFamilyColors[fam] || ordinalPalette(fam);
+              const isChecked = selectedFilters.has(fam);
+
+              const childRow = children.append("label")
+                .attr("class", "legend-child-item" + (isChecked ? " checked-item" : ""))
+                .attr("data-key", fam);
+
+              childRow.append("input")
+                .attr("type", "checkbox")
+                .attr("class", "legend-child-cb")
+                .attr("data-key", fam)
+                .attr("data-group", grp)
+                .property("checked", isChecked)
+                .on("change", function(event) {
+                  event.stopPropagation();
+                  if (this.checked) selectedFilters.add(fam);
+                  else selectedFilters.delete(fam);
+                  updateHighlights();
+                });
+
+              childRow.append("div")
+                .attr("class", "legend-color")
+                .style("background", fColor);
+
+              childRow.append("span")
+                .attr("class", "legend-label")
+                .attr("title", fam)
+                .text(fam);
+
+              childRow.append("span")
+                .attr("class", "legend-count")
+                .text(`(${fCount})`);
+            });
+          });
+        } else {
+          // Flat mode
+          const countMap = {};
+          data.forEach(d => {
+            const k = d[mode];
+            countMap[k] = (countMap[k] || 0) + 1;
+          });
+
+          const sortedKeys = Object.keys(countMap).sort((a, b) => countMap[b] - countMap[a]);
+
+          sortedKeys.forEach(k => {
+            const count = countMap[k];
+            let color = "#8b949e";
+            if (mode === "clan") color = clanColors[k] || ordinalPalette(k);
+            else if (mode === "family") color = dildropFamilyColors[k] || ordinalPalette(k);
+            else if (mode === "species") color = ordinalPalette(k);
+            else if (mode === "chain") color = chainColors[k] || ordinalPalette(k);
+
+            const isChecked = selectedFilters.has(k);
+
+            const row = legList.append("label")
+              .attr("class", "legend-item" + (isChecked ? " checked-item" : ""))
+              .attr("data-key", k);
+
+            row.append("input")
+              .attr("type", "checkbox")
+              .attr("class", "legend-cb")
+              .attr("data-key", k)
+              .property("checked", isChecked)
+              .on("change", function(event) {
+                event.stopPropagation();
+                if (this.checked) selectedFilters.add(k);
+                else selectedFilters.delete(k);
+                updateHighlights();
+              });
+
+            row.append("div")
+              .attr("class", "legend-color")
+              .style("background", color);
+
+            row.append("span")
+              .attr("class", "legend-label")
+              .attr("title", k)
+              .text(k);
+
+            row.append("span")
+              .attr("class", "legend-count")
+              .text(`(${count.toLocaleString()})`);
+          });
+        }
+
+        updateHighlights();
+      }
+
+      // Build Legend Skeleton
+      d3.select("#legend").html(`
+        <div class="legend-header">
+          <div class="legend-title">
+            <span id="legendTitleText">Legend (HIERARCHICAL)</span>
+            <div style="display:flex; align-items:center; gap:6px;">
+              <span id="legendSelectedCount" class="legend-badge">0 selected</span>
+              <button class="panel-minimize-btn" id="closeLegendBtn" title="Minimize Legend">✕</button>
+            </div>
+          </div>
+          <div class="legend-btn-row">
+            <button id="selectAllBtn" class="legend-btn">Select All</button>
+            <button id="deselectAllBtn" class="legend-btn">Deselect All</button>
+            <button id="expandAllBtn" class="legend-btn">Expand All</button>
+            <button id="collapseAllBtn" class="legend-btn">Collapse All</button>
+          </div>
+        </div>
+        <div class="legend-instruction">☑️ Select entire chains (e.g. Mouse/Human Heavy & Light) or individual families to compare directly!</div>
+        <div id="legendContent" style="max-height: 380px; overflow-y: auto;"></div>
+      `);
+
+      d3.select("#closeLegendBtn").on("click", () => {
+        d3.select("#legend").classed("collapsed", true);
+        document.getElementById("restoreLegendBtn").style.display = "inline-flex";
+        updateEvoPosition();
+      });
+
+      d3.select("#selectAllBtn").on("click", () => {
+        if (currentMode === "hierarchical") {
+          data.forEach(d => selectedFilters.add(d.family));
+        } else {
+          data.forEach(d => selectedFilters.add(d[currentMode]));
+        }
+        updateHighlights();
+      });
+
+      d3.select("#deselectAllBtn").on("click", () => {
+        selectedFilters.clear();
+        updateHighlights();
+      });
+
+      d3.select("#expandAllBtn").on("click", () => {
+        d3.selectAll(".legend-children").classed("collapsed", false);
+        d3.selectAll(".legend-arrow").classed("collapsed", false).text("▼");
+      });
+
+      d3.select("#collapseAllBtn").on("click", () => {
+        d3.selectAll(".legend-children").classed("collapsed", true);
+        d3.selectAll(".legend-arrow").classed("collapsed", true).text("▶");
+      });
+
+      circles = circlesG.selectAll("circle")
+        .data(data)
+        .enter()
+        .append("circle")
+        .attr("cx", d => d.x)
+        .attr("cy", d => d.y)
+        .attr("r", 3.5)
+        .attr("fill", d => getColor(d, "hierarchical"))
+        .attr("opacity", 0.85)
+        .attr("stroke", "#0d1117")
+        .attr("stroke-width", 0.5)
+        .attr("id", (d, i) => "vnode_" + i)
+        .on("mouseover", (event, d) => {
+          d3.select(event.currentTarget).attr("r", 8.5).attr("stroke", "#fff").attr("stroke-width", 2.5).raise();
+          const singleSeq = (d.ungapped_seq || d.aa_seq).replace(/[\.\-]/g, "");
+          tooltip.style("display", "block")
+            .html(`
+              <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:4px; gap:8px;">
+                <strong style="color:#58a6ff; font-size:14px;">${d.gene_id}</strong>
+                ${d.gene_name && d.gene_name !== d.gene_id ? `<span style="color:#38bdf8; font-weight:700; font-size:13px;">${d.gene_name}</span>` : ''}
+              </div>
+              <div style="margin-bottom:4px;"><strong>V-Gene Name:</strong> <span style="color:#38bdf8; font-weight:bold;">${d.gene_name || d.gene_id}</span></div>
+              <strong>Species:</strong> ${d.species === 'dogfish' ? '🦈 Dogshark (Spiny Dogfish)' : (d.species === 'dog' ? '🐕 Dog (Canine)' : d.species.toUpperCase())}<br>
+              <strong>Chain Group:</strong> <span style="color:#e2e8f0; font-weight:600;">${d.chain_group || (d.species + " " + d.chain)}</span><br>
+              <strong>V-Gene Family:</strong> <span style="color:#34d399; font-weight:bold;">${d.family || '-'}</span><br>
+              <strong>Clan:</strong> ${d.clan}<br>
+              ${d.coincident_count && d.coincident_count > 1 ? `<div style="color:#f59e0b; font-size:11px; font-weight:600; margin-top:4px;">👥 Coincident Alleles: ${d.coincident_count} genes at this coordinate (click to compare)</div>` : ''}
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-top:6px; font-size:11px; color:#94a3b8;">
+                <span>Mature Sequence:</span>
+                <span style="color:#38bdf8; font-weight:600;">${singleSeq.length} aa</span>
+              </div>
+              <div style="font-family:monospace; margin-top:3px; background:#060a12; padding:6px; border-radius:4px; font-size:11px; word-break:break-all; border:1px solid #1e293b;">
+                ${singleSeq}
+              </div>
+              <div style="font-size:10px; color:#64748b; margin-top:4px;">💡 Click to view • Shift-click to select multiple for IMGT alignment</div>
+            `);
+        })
+        .on("mousemove", (event) => {
+          tooltip.style("left", (event.pageX + 15) + "px").style("top", (event.pageY - 15) + "px");
+        })
+        .on("mouseout", (event, d) => {
+          const isSelected = selectedGeneIds.has(d.gene_id);
+          const isFiltered = (currentMode === "hierarchical" || currentMode === "family")
+            ? (selectedFilters.has(d.family) || selectedFilters.has(d.chain_group))
+            : selectedFilters.has(d[currentMode]);
+          const node = d3.select(event.currentTarget);
+
+          if (isSelected) {
+            node.attr("r", 8.5)
+              .attr("stroke", "#38bdf8")
+              .attr("stroke-width", 2.8)
+              .attr("opacity", 1.0);
+          } else if (selectedGeneIds.size > 0) {
+            node.attr("r", isFiltered ? 5.0 : 2.5)
+              .attr("stroke", isFiltered ? "#ffffff" : "none")
+              .attr("stroke-width", isFiltered ? 1.2 : 0)
+              .attr("opacity", isFiltered ? 0.35 : 0.12);
+          } else if (selectedFilters.size > 0) {
+            node.attr("r", isFiltered ? 6.0 : 2.0)
+              .attr("stroke", isFiltered ? "#ffffff" : "none")
+              .attr("stroke-width", isFiltered ? 1.8 : 0)
+              .attr("opacity", isFiltered ? 1.0 : 0.04);
+          } else {
+            node.attr("r", 3.5)
+              .attr("stroke", "#0d1117")
+              .attr("stroke-width", 0.5)
+              .attr("opacity", 0.85);
+          }
+          tooltip.style("display", "none");
+        })
+        .on("click", (event, d) => {
+          event.stopPropagation();
+          const isMulti = event.shiftKey || event.ctrlKey || event.metaKey;
+
+          // If adding with shift while the table already displays sequences,
+          // preserve those displayed sequences in selectedGeneIds so they are not wiped
+          if (isMulti && selectedGeneIds.size === 0 && displayedGenes && displayedGenes.length > 0) {
+            selectedGeneIds = new Set(displayedGenes.map(g => g.gene_id));
+          }
+
+          if (isMulti) {
+            if (selectedGeneIds.has(d.gene_id)) {
+              selectedGeneIds.delete(d.gene_id);
+            } else {
+              selectedGeneIds.add(d.gene_id);
+              // Fly camera and beacon to newly added gene
+              flyToGene(d.gene_id);
+            }
+          } else {
+            selectedGeneIds.clear();
+            selectedGeneIds.add(d.gene_id);
+            flyToGene(d.gene_id);
+          }
+          updateCircleSelectionVisual();
+          renderAlignmentView();
+          openAlignmentDrawer();
+
+          // Highlight the newly added or focused row in the alignment table
+          document.querySelectorAll(".align-row").forEach(r => {
+            if (r.dataset && r.dataset.geneId === d.gene_id) {
+              r.classList.add("active-align-row");
+              if (typeof r.scrollIntoView === "function") {
+                r.scrollIntoView({ block: "nearest", behavior: "smooth" });
+              }
+            } else if (!isMulti) {
+              r.classList.remove("active-align-row");
+            }
+          });
+        });
+
+      currentMode = "hierarchical";
+      updateLegend("hierarchical");
+
+      d3.select("#colorSelect").on("change", function() {
+        const mode = this.value;
+        currentMode = mode;
+        selectedFilters.clear();
+        selectedGeneIds.clear();
+        updateCircleSelectionVisual();
+        banner.style("display", "none");
+        circles.transition().duration(500)
+          .attr("fill", d => getColor(d, mode))
+          .attr("opacity", 0.85)
+          .attr("r", 3.5)
+          .attr("stroke", "#0d1117")
+          .attr("stroke-width", 0.5);
+        updateLegend(mode);
+      });
+
+      // Direct Gene Search
+      d3.select("#geneSearch").on("input", function() {
+        const q = this.value.trim().toLowerCase();
+        if (!q) {
+          updateHighlights();
+        } else {
+          let matchCount = 0;
+          circles.each(function(d) {
+            const match = d.gene_id.toLowerCase().includes(q) || (d.gene_name && d.gene_name.toLowerCase().includes(q)) || d.species.toLowerCase().includes(q) || (d.family && d.family.toLowerCase().includes(q)) || d.clan.toLowerCase().includes(q);
+            if (match) matchCount++;
+            d3.select(this)
+              .attr("opacity", match ? 1.0 : 0.05)
+              .attr("r", match ? 7.5 : 2.0)
+              .attr("stroke", match ? "#fff" : "none")
+              .attr("stroke-width", match ? 2 : 0);
+          });
+          banner.style("display", "block").html(`
+            <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:6px;">
+              <div>🔍 Found <strong>${matchCount.toLocaleString()}</strong> matching genes for "<strong>${q}</strong>"</div>
+              <button id="btnViewSearchAlign" class="drawer-action-btn" style="background:#1e3a5f; color:#38bdf8; border-color:#38bdf8;">🧬 View Sequence Alignment (${matchCount})</button>
+            </div>
+          `);
+          d3.select("#btnViewSearchAlign").on("click", () => {
+            const matched = globalData.filter(d => (
+              d.gene_id.toLowerCase().includes(q) ||
+              (d.gene_name && d.gene_name.toLowerCase().includes(q)) ||
+              d.species.toLowerCase().includes(q) ||
+              (d.family && d.family.toLowerCase().includes(q)) ||
+              d.clan.toLowerCase().includes(q)
+            ));
+            selectedGeneIds = new Set(matched.map(m => m.gene_id));
+            updateCircleSelectionVisual();
+            renderAlignmentView(matched);
+            openAlignmentDrawer();
+          });
+        }
+      });
+
+      // =========================================================================
+      // Evolutionary Timeline & Emergence Movie Controller
+      // =========================================================================
+      const SPECIES_EVO_MYA = {
+        // Chondrichthyes (Ordovician / Silurian ~465 Mya)
+        "shark": 465, "dogfish": 465, "dogshark": 465, "elephantshark": 465,
+        // Osteichthyes & Sarcopterygii (Devonian ~430-415 Mya)
+        "gar": 430, "catfish": 430, "cod": 430, "salmon": 430, "trout": 430, "zebrafish": 430, "coelacanth": 415,
+        // Amphibia (Carboniferous ~352 Mya)
+        "xenopus": 352, "axolotl": 350,
+        // Sauropsida - Reptilia & Aves (Pennsylvanian ~319 Mya divergence from synapsid stem)
+        "chicken": 319, "duck": 319, "zebrafinch": 319, "turtle": 319, "alligator": 319, "anole": 319,
+        // Mammalia - Monotremata (Jurassic ~180 Mya)
+        "platypus": 180,
+        // Mammalia - Metatheria / Marsupialia (Jurassic ~160 Mya)
+        "opossum": 160, "tasmaniandevil": 160,
+        // Eutheria - Afrotheria (Early Cretaceous ~105 Mya)
+        "elephant": 105,
+        // Boreoeutheria - Laurasiatheria (Late Cretaceous ~85-82 Mya)
+        "hedgehog": 85, "bat": 85, "cat": 85, "dog": 85, "ferret": 85, "horse": 82,
+        // Cetartiodactyla & Camelidae (Early Paleogene ~66-55 Mya)
+        "alpaca": 66, "camel": 66, "llama": 66,
+        "pig": 65, "cow": 62, "sheep": 62, "goat": 62, "buffalo": 62, "dolphin": 55, "orca": 55,
+        // Euarchontoglires - Glires: Rodentia & Lagomorpha (Stem divergence ~82-75 Mya)
+        "rabbit": 82, "guineapig": 75, "nakedmolerat": 75, "mouse": 75, "rat": 75, "hamster": 75,
+        // Euarchontoglires - Primates (Eocene/Oligocene ~43-29 Mya)
+        "marmoset": 43, "baboon": 29, "cynomolgus": 29, "rhesus": 29,
+        // Hominoidea & Hominidae (Miocene ~20-6.5 Mya)
+        "gibbon": 20, "orangutan": 15, "gorilla": 9, "chimpanzee": 6.5,
+        // Modern Homo sapiens
+        "human": 0
+      };
+
+      function getEpochDescription(mya) {
+        if (mya >= 450) {
+          return {
+            badge: "🦈 Chondrichthyes Origin",
+            name: "Ordovician / Silurian (~465 Mya)",
+            desc: "Origin of Adaptive Immunity & RAG Recombination: Cartilaginous Fish (Nurse Shark VNAR, Dogshark / Spiny Dogfish, Elephant Shark)"
+          };
+        } else if (mya >= 380) {
+          return {
+            badge: "🐟 Osteichthyes Radiation",
+            name: "Devonian (~430–415 Mya)",
+            desc: "Bony Fish (Osteichthyes) Radiation: Teleostei IgM, IgD, and mucosal IgZ/IgT lineages (Zebrafish, Salmon, Trout, Cod, Coelacanth)"
+          };
+        } else if (mya >= 330) {
+          return {
+            badge: "🐸 Amphibian Lineage",
+            name: "Carboniferous (~352 Mya)",
+            desc: "Tetrapod Water-to-Land Transition: Amphibia IgY, ancient Light-Rho & Light-Sigma (Xenopus, Axolotl)"
+          };
+        } else if (mya >= 200) {
+          return {
+            badge: "🦆 Sauropsida / Aves",
+            name: "Permian / Triassic (~319 Mya)",
+            desc: "Amniote Sauropsid Diversification: Avian & Reptilian IgY & combinatorial gene conversion dominance (Chicken, Duck, Turtle, Anole)"
+          };
+        } else if (mya >= 140) {
+          return {
+            badge: "🦔 Early Mammalia",
+            name: "Jurassic (~180–160 Mya)",
+            desc: "Mammalian Dawn: Monotremes (Platypus) & Marsupials (Opossum, Tasmanian Devil) emerging with true IgG/IgA isotypes"
+          };
+        } else if (mya >= 80) {
+          return {
+            badge: "🐎 Placental Radiation",
+            name: "Cretaceous (~105–82 Mya)",
+            desc: "Placental Mammalian Radiation: Afrotheria (Elephant), Carnivora (Dog, Cat, Ferret), Perissodactyla (Horse), Lagomorpha (Rabbit)"
+          };
+        } else if (mya >= 50) {
+          return {
+            badge: "🦙 Camelid & Ungulate Radiation",
+            name: "Late Cretaceous / Paleogene (~75–55 Mya)",
+            desc: "Rodentia Expansion (Mouse, Rat) & Artiodactyla Divergence (Cow, Pig, Sheep), Camelidae VHH Nanobodies (Alpaca, Camel)"
+          };
+        } else if (mya >= 25) {
+          return {
+            badge: "🐒 Simian Primates",
+            name: "Eocene / Oligocene (~43–29 Mya)",
+            desc: "Simian Radiation: New World Monkeys (Marmoset) & Old World Cercopithecidae (Baboon, Cynomolgus, Rhesus)"
+          };
+        } else if (mya >= 5) {
+          return {
+            badge: "🦍 Hominoidea & Great Apes",
+            name: "Miocene (~20–6.5 Mya)",
+            desc: "Great Ape Specialization: Lesser Apes (Gibbon) and Hominidae (Gorilla, Chimpanzee)"
+          };
+        } else {
+          return {
+            badge: "👤 Modern Vertebrates & Humans",
+            name: "Pleistocene to Present (0 Mya)",
+            desc: "Complete Modern Vertebrate Universe: All 55 species & Homo sapiens Class I functional antibody repertoire"
+          };
+        }
+      }
+
+      let evoTimer = null;
+      let isEvoPlaying = false;
+
+      function applyEvolutionFilter(myaThreshold) {
+        const epoch = getEpochDescription(myaThreshold);
+        document.getElementById("evoCurrentAgeTag").innerText = myaThreshold === 0 ? "Present (0 Mya)" : `~${myaThreshold} Mya`;
+        document.getElementById("evoEpochBadge").innerText = epoch.badge;
+        document.getElementById("evoEpochDesc").innerText = `${epoch.name}: ${epoch.desc}`;
+
+        let visibleCount = 0;
+        circles.each(function(d) {
+          const spMya = SPECIES_EVO_MYA[d.species] !== undefined ? SPECIES_EVO_MYA[d.species] : 50;
+          const isVisible = spMya >= myaThreshold;
+          const node = d3.select(this);
+          if (isVisible) {
+            visibleCount++;
+            node.attr("display", "inline").attr("opacity", 0.85);
+          } else {
+            node.attr("display", "none").attr("opacity", 0);
+          }
+        });
+        document.getElementById("evoCountBadge").innerText = `${visibleCount.toLocaleString()} / ${data.length.toLocaleString()} genes`;
+      }
+
+      const evoSlider = document.getElementById("evoSlider");
+      evoSlider.addEventListener("input", function() {
+        const sliderVal = parseInt(this.value, 10);
+        const mya = 500 - sliderVal;
+        applyEvolutionFilter(mya);
+      });
+
+      function playEvolutionMovie() {
+        if (isEvoPlaying) {
+          clearInterval(evoTimer);
+          isEvoPlaying = false;
+          document.getElementById("evoPlayBtn").innerText = "▶ Play Movie";
+          return;
+        }
+        isEvoPlaying = true;
+        document.getElementById("evoPlayBtn").innerText = "❚❚ Pause";
+
+        if (parseInt(evoSlider.value, 10) >= 500) {
+          evoSlider.value = 0;
+        }
+
+        evoTimer = setInterval(() => {
+          let val = parseInt(evoSlider.value, 10) + 5;
+          if (val > 500) {
+            val = 500;
+            clearInterval(evoTimer);
+            isEvoPlaying = false;
+            document.getElementById("evoPlayBtn").innerText = "▶ Replay Movie";
+          }
+          evoSlider.value = val;
+          applyEvolutionFilter(500 - val);
+        }, 140);
+      }
+
+      document.getElementById("evoPlayBtn").addEventListener("click", playEvolutionMovie);
+      document.getElementById("evoResetBtn").addEventListener("click", () => {
+        if (isEvoPlaying) {
+          clearInterval(evoTimer);
+          isEvoPlaying = false;
+          document.getElementById("evoPlayBtn").innerText = "▶ Play Movie";
+        }
+        evoSlider.value = 500;
+        applyEvolutionFilter(0);
+      });
+
+      // Initialize counter
+      document.getElementById("evoCountBadge").innerText = `${data.length.toLocaleString()} genes`;
+    });
+
+    // =========================================================================
+    // Universal Sequence Matching Engine & Live Manifold Projection
+    // =========================================================================
+    document.getElementById("analyzeBtn").onclick = runUniversalAnalysisAndProjection;
+
+    function runUniversalAnalysisAndProjection() {
+      const raw = document.getElementById("seqTextarea").value.trim();
+      if (!raw) return;
+      if (!globalData || globalData.length === 0) return;
+
+      // Clean & Detect DNA vs AA
+      const clean = raw.replace(/[^A-Za-z]/g, '').toUpperCase();
+      if (clean.length < 20) {
+        alert("Please enter a valid antibody sequence of at least 20 residues.");
+        return;
+      }
+
+      const isDna = !clean.split('').some(c => ['E','F','I','L','P','Q','V','W','Y'].includes(c));
+      let aaQuery = clean;
+      if (isDna) {
+        let bestFrameAa = '';
+        let bestScore = -1;
+        for (let fr = 0; fr < 3; fr++) {
+          const trans = translateDnaJs(clean.slice(fr));
+          const score = (trans.includes('C') ? 10 : 0) + (trans.includes('WVR') || trans.includes('WVK') || trans.includes('WYQ') || trans.includes('WFR') ? 20 : 0) - (trans.split('*').length * 15);
+          if (score > bestScore) {
+            bestScore = score;
+            bestFrameAa = trans;
+          }
+        }
+        aaQuery = bestFrameAa;
+      }
+
+      // Find Landmark 2nd Cysteine (Cys104) and Cys23
+      let cys23 = -1;
+      let cys104 = -1;
+      for (let i = 15; i < Math.min(35, aaQuery.length); i++) {
+        if (aaQuery[i] === 'C') { cys23 = i; break; }
+      }
+      for (let i = Math.min(aaQuery.length - 1, 125); i >= Math.max(65, cys23 + 45); i--) {
+        if (aaQuery[i] === 'C') { cys104 = i; break; }
+      }
+      if (cys104 === -1) {
+        cys104 = aaQuery.lastIndexOf('C');
+      }
+
+      const matureQuery = (cys104 !== -1 && cys104 >= 60) ? aaQuery.slice(0, cys104 + 1) : aaQuery.slice(0, 95);
+
+      // Fast Zero-Shift Comparison against all V-genes in globalData
+      let bestV = null;
+      let bestIdentity = -1;
+      let bestMatches = 0;
+      let bestShm = 999;
+
+      for (let i = 0; i < globalData.length; i++) {
+        const v = globalData[i];
+        const gSeq = (v.ungapped_seq || v.aa_seq).replace(/[\.\-]/g, "");
+        const compLen = Math.min(matureQuery.length, gSeq.length);
+        let matches = 0;
+        for (let j = 0; j < compLen; j++) {
+          if (matureQuery[j] === gSeq[j]) matches++;
+        }
+        const idPct = (matches / compLen) * 100.0;
+        if (idPct > bestIdentity) {
+          bestIdentity = idPct;
+          bestV = v;
+          bestMatches = matches;
+          bestShm = compLen - matches;
+        }
+      }
+
+      if (!bestV) return;
+
+      const detectedSpecies = bestV.species;
+      const detectedChain = bestV.chain;
+      const isHeavy = detectedChain.includes("Heavy");
+
+      // Extract CDR3: from residue after Cys104 up to J-segment start
+      let cdr3 = "";
+      let jSubseq = "";
+      if (cys104 !== -1 && cys104 + 1 < aaQuery.length) {
+        const rem = aaQuery.slice(cys104 + 1);
+        let jSplit = -1;
+        for (let m of ["WGQG", "WGRG", "WGAG", "WGHG", "FGQG", "FGAG", "FGKG", "TVSS", "TVSA", "TVL", "VEIK", "LEIK"]) {
+          const idx = rem.indexOf(m);
+          if (idx !== -1 && (jSplit === -1 || idx < jSplit)) {
+            jSplit = idx;
+          }
+        }
+        if (jSplit !== -1 && jSplit > 0) {
+          cdr3 = rem.slice(0, jSplit);
+          jSubseq = rem.slice(jSplit);
+        } else {
+          cdr3 = rem.slice(0, Math.min(15, rem.length));
+          jSubseq = rem.slice(cdr3.length);
+        }
+      }
+
+      // Match D-Segment (6 reading frames, direct & inverted)
+      let matchedD = null;
+      let maxDLen = 0;
+      if (isHeavy && cdr3.length >= 3 && DJ_DATABASE.d_genes) {
+        for (let d of DJ_DATABASE.d_genes) {
+          const frames = [
+            [d.aa_rf1, false, "RF1"],
+            [d.aa_rf2, false, "RF2"],
+            [d.aa_rf3, false, "RF3"],
+            [d.aa_inv_rf1, true, "Inv-RF1"],
+            [d.aa_inv_rf2, true, "Inv-RF2"],
+            [d.aa_inv_rf3, true, "Inv-RF3"]
+          ];
+          for (let [rfSeq, isInv, rfName] of frames) {
+            const cleanRf = (rfSeq || "").replace(/[^A-Z]/g, '');
+            if (cleanRf.length < 3) continue;
+            for (let k = Math.min(cleanRf.length, cdr3.length); k >= 3; k--) {
+              for (let off = 0; off <= cleanRf.length - k; off++) {
+                const sub = cleanRf.slice(off, off + k);
+                if (cdr3.includes(sub) && k > maxDLen) {
+                  maxDLen = k;
+                  matchedD = {
+                    gene_id: d.gene_id,
+                    matched_sub: sub,
+                    is_inverted: isInv,
+                    rf_name: rfName,
+                    display: isInv ? `🔄 ${d.gene_id} (${rfName})` : `${d.gene_id} (${rfName})`
+                  };
+                }
+              }
+            }
+          }
+        }
+      }
+
+      // Match J-Segment & Verify Boundary Motif
+      let matchedJ = null;
+      let boundaryResult = "";
+      if (DJ_DATABASE.j_genes) {
+        let maxJScore = -1;
+        const normTail = jSubseq || aaQuery.slice(Math.max(0, aaQuery.length - 20));
+        for (let j of DJ_DATABASE.j_genes) {
+          const jSeq = j.aa_seq || "";
+          let score = 0;
+          for (let k = 0; k < Math.min(normTail.length, jSeq.length); k++) {
+            if (normTail[normTail.length - 1 - k] === jSeq[jSeq.length - 1 - k]) score++;
+          }
+          if (score > maxJScore) {
+            maxJScore = score;
+            matchedJ = j;
+          }
+        }
+        if (matchedJ) {
+          const b = matchedJ.boundary_motif || "TVSS";
+          if (aaQuery.endsWith(b)) {
+            boundaryResult = `✅ Validated ${b} (0 Constant Bleed)`;
+          } else if (aaQuery.includes(b)) {
+            boundaryResult = `⚠️ Contains ${b} with Trailing Constant`;
+          } else {
+            boundaryResult = `ℹ️ Expected ${b}`;
+          }
+        }
+      }
+
+      // Populate HUD
+      document.getElementById("analysisHUD").style.display = "block";
+      document.getElementById("hudCoordBadge").innerText = `(x: ${bestV.x}, y: ${bestV.y})`;
+      const spDisplay = detectedSpecies === 'dogfish' ? '🦈 DOGSHARK' : (detectedSpecies === 'dog' ? '🐕 DOG (CANINE)' : `🧬 ${detectedSpecies.toUpperCase()}`);
+      document.getElementById("hudSpeciesBadge").innerText = spDisplay;
+      document.getElementById("hudChainBadge").innerText = detectedChain;
+      document.getElementById("hudFamilyBadge").innerText = bestV.family || "-";
+      document.getElementById("hudClanBadge").innerText = bestV.clan;
+
+      const shmBadge = document.getElementById("hudShmBadge");
+      if (bestShm === 0) {
+        shmBadge.className = "badge badge-low";
+        shmBadge.innerText = "🌟 UNMUTATED GERMLINE";
+      } else if (bestShm <= 5) {
+        shmBadge.className = "badge badge-low";
+        shmBadge.innerText = `✅ LOW SHM (${bestShm} mut)`;
+      } else if (bestShm <= 15) {
+        shmBadge.className = "badge badge-mod";
+        shmBadge.innerText = `🟡 MODERATE SHM (${bestShm} mut)`;
+      } else {
+        shmBadge.className = "badge badge-high";
+        shmBadge.innerText = `🔥 HIGH SHM (${bestShm} mut)`;
+      }
+
+      document.getElementById("hudVGene").innerText = bestV.gene_id;
+      document.getElementById("hudVIdent").innerText = `${bestIdentity.toFixed(1)}% identity (${bestMatches} aa match)`;
+
+      if (isHeavy) {
+        if (matchedD) {
+          document.getElementById("hudDGene").innerHTML = matchedD.display;
+          document.getElementById("hudDFrame").innerText = `Subseq: "${matchedD.matched_sub}" (${matchedD.is_inverted ? 'Inverted Rearrangement' : 'Direct'});`
+        } else {
+          document.getElementById("hudDGene").innerText = "IGHD (Undetermined)";
+          document.getElementById("hudDFrame").innerText = "No >=3aa D-match in CDR3";
+        }
+      } else {
+        document.getElementById("hudDGene").innerText = "N/A (Light Chain)";
+        document.getElementById("hudDFrame").innerText = "D-segments absent in Light Loci";
+      }
+
+      document.getElementById("hudJGene").innerText = matchedJ ? matchedJ.gene_id : "IGHJ";
+      document.getElementById("hudJBoundary").innerText = boundaryResult || "TVSS";
+
+      document.getElementById("hudCdr3").innerText = cdr3 || "-";
+      document.getElementById("hudCdr3Len").innerText = cdr3 ? `${cdr3.length} AA` : "Length: 0";
+
+      // Domain Architecture Ribbon
+      const fr1 = aaQuery.slice(0, Math.max(0, cys23));
+      const cdr1 = aaQuery.slice(cys23, Math.min(cys23 + 12, aaQuery.length));
+      const fr2 = aaQuery.slice(cys23 + 12, Math.min(cys23 + 28, aaQuery.length));
+      const cdr2 = aaQuery.slice(cys23 + 28, Math.min(cys23 + 38, aaQuery.length));
+      const fr3 = aaQuery.slice(cys23 + 38, cys104 + 1);
+      const cdr3Span = cdr3;
+      const fr4 = jSubseq;
+
+      document.getElementById("hudRibbon").innerHTML = `
+        <span class="rf-fr" title="FR1 (1-25)">${fr1}</span><span class="rf-cdr1" title="CDR1">${cdr1}</span><span class="rf-fr" title="FR2">${fr2}</span><span class="rf-cdr2" title="CDR2">${cdr2}</span><span class="rf-fr" title="FR3">${fr3}</span><span class="rf-cdr3" title="CDR3 (Hypervariable Junction)">${cdr3Span}</span><span class="rf-fr" title="FR4 / J-segment">${fr4}</span>
+      `;
+
+      // =======================================================================
+      // LIVE MANIFOLD PROJECTION & CAMERA FLIGHT
+      // =======================================================================
+      const targetX = bestV.x;
+      const targetY = bestV.y;
+      const scale = 5.5;
+
+      svg.transition()
+        .duration(1200)
+        .ease(d3.easeCubicOut)
+        .call(
+          zoom.transform,
+          d3.zoomIdentity.translate(width / 2 - targetX * scale, height / 2 - targetY * scale).scale(scale)
+        );
+
+      beaconG.selectAll("*").remove();
+
+      beaconG.append("circle")
+        .attr("cx", targetX)
+        .attr("cy", targetY)
+        .attr("class", "sonar-beacon");
+
+      beaconG.append("circle")
+        .attr("cx", targetX)
+        .attr("cy", targetY)
+        .attr("r", 5.5)
+        .attr("class", "sonar-beacon-inner");
+
+      circles.each(function(d) {
+        if (d.gene_id === bestV.gene_id && d.species === bestV.species) {
+          d3.select(this)
+            .raise()
+            .transition().duration(400)
+            .attr("r", 10.0)
+            .attr("stroke", "#ffffff")
+            .attr("stroke-width", 3.0)
+            .attr("opacity", 1.0);
+        }
+      });
+
+      banner.style("display", "block")
+        .html(`🎯 <strong>Live Projection:</strong> Query centered on <strong>${bestV.gene_id}</strong> (${bestV.species.toUpperCase()} • ${bestV.family || bestV.chain}) with <strong>${bestIdentity.toFixed(1)}%</strong> identity.`);
+    }
+  </script>
+</body>
+</html>

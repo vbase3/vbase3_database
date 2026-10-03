@@ -1,0 +1,91 @@
+ID   J00255; SV 1; linear; gDNA; STD; HUM; 709 BP.
+XX
+AC   J00255;
+XX
+DT   15-MAY-1995 (Rel. 199520-1, arrived in LIGM-DB)
+DT   17-JAN-2013 (Rel. 201303-4, Last updated, Version 20)
+XX
+DE   Homo sapiens pseudo-lambda Ig (IGL@) pseudogene, complete sequence.
+XX
+KW   antigen receptor; Immunoglobulin superfamily (IgSF); immunoglobulin (IG);
+KW   IG-Light; IG-Light-Lambda-IGL; constant; joining; processed; pseudogene;
+KW   IMGT reference sequence; regular; gDNA; germline; undefined; J-C-sequence.
+XX
+OS   Homo sapiens (human)
+OC   cellular organisms; Eukaryota; Opisthokonta; Metazoa; Eumetazoa; Bilateria;
+OC   Deuterostomia; Chordata; Craniata; Vertebrata; Gnathostomata; Teleostomi;
+OC   Euteleostomi; Sarcopterygii; Dipnotetrapodomorpha; Tetrapoda; Amniota;
+OC   Mammalia; Theria; Eutheria; Boreoeutheria; Euarchontoglires; Primates;
+OC   Haplorrhini; Simiiformes; Catarrhini; Hominoidea; Hominidae; Homininae;
+OC   Homo; Homo sapiens.
+XX
+RN   [1]
+RP   1-709
+RX   PUBMED; 10477601.
+RA   Zhu X., Boonthum A., Zhai S.K., Knight K.L.;
+RT   "B lymphocyte selection and age-related changes in VH gene usage in mutant
+RT   Alicia rabbits";
+RL   J. Immunol. 163(6):3313-3320(1999).
+XX
+DR   ENA; J00255.
+DR   GDB; 11521339.
+DR   GDB; 128432.
+XX
+CC   IMGT/LIGM-DB annotation level: by annotators
+CC   
+CC   Original source text: Human spleen genomic DNA.
+CC   This pseudogene occurs on a chromosome different from the normal
+CC   lambda genes, which are on chromosome 22. The authors [1] believe
+CC   that this pseudogene might be a result of processing by an RNA
+CC   intermediate, because the intervening sequences are spliced out and
+CC   the 3' end contains a poly-A-like sequence. [1] also sequenced the
+CC   homologous active C-lambda gene Ke- Oz+ (C3).
+XX
+FH   Key                 Location/Qualifiers
+FH   
+FT   J-C-SEQUENCE        1..709
+FT                       /db_xref="taxon:9606"
+FT                       /IMGT_map="18"
+FT                       /mol_type="genomic DNA"
+FT                       /note="processed gene, pseudo lambda Ig"
+FT                       /organism="Homo sapiens"
+FT   5'UTR               1..164
+FT                       /note="V-J intervening DNA (3' end +/- 1 bp)"
+FT   J-C-REGION          165..709
+FT                       /codon_start=2
+FT   J-NONAMER           137..145
+FT   J-SPACER            146..157
+FT   J-HEPTAMER          158..164
+FT   J-REGION            165..201
+FT                       /codon_start=2
+FT                       /translation="HMFGSKTQPTVL"
+FT                       /IMGT_allele="IGLJ-C/OR18*02"
+FT                       /IMGT_gene="IGLJ-C/OR18"
+FT                       /pseudo
+FT   J-PHE               172..174
+FT   C-REGION            202..366
+FT                       /IMGT_allele="IGLJ-C/OR18*02"
+FT                       /IMGT_gene="IGLJ-C/OR18"
+FT                       /pseudo
+FT   STOP-CODON          289..291
+FT   STOP-CODON          313..315
+FT   STOP-CODON          367..369
+FT   3'UTR               367..709
+FT   POLYA_SIGNAL        618..623
+FT   POLYA_SITE          649..681
+FT                       /note="poly(A) tail like sequence"
+XX
+SQ   Sequence 709 BP; 186 A; 215 C; 156 G; 152 T; 0 other;
+     tctccttaga agaggatgtg aatgctcatt ctctctcctg ctgccatgtg aagaaggaca        60
+     tgtttgtttc cccttccacc atgattgttt ctcgctgcag ccagctcctg gactggcccc       120
+     aggttctggc cctaagggtt tcgatccaag catcattcac tgtcgcacat gtttggcagc       180
+     aagacccagc ccactgtctt aggtaagccc aaggcccccg tttggtcact ctgttcccgc       240
+     cctcctctga ggagttccaa gctaacaagg ccaccctagt gtgtctcatg aatgacttct       300
+     accttggcac cgtgacagtg ccctgaaggc agacggcatc atcatcaccc aggacgtgga       360
+     gaccactaag cctcccaaac agagcaagaa acaggccagc agctacctga gcctgatgcc       420
+     gtgaacagtg gagatcccgc agcagctaca actgctgggc catgcataaa aggagcaccc       480
+     tggagaagac aatggcccat acagaatgtt cttaggtccc tggccctcac cccacccatg       540
+     gaggccttga tctggaggat cctaggggag gtgtctctcc tcccatccca agctatccag       600
+     cccttctccc tgtacccaat aaaccctcaa caagtatcct cattgtcaaa cagaaaaaca       660
+     aaaacaaaac aaaaaaaaga agatgtgaat attagtgaag accactggc                   709
+//

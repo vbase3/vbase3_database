@@ -1,0 +1,139 @@
+ID   M12887; SV 1; linear; gDNA; STD; HUM; 2042 BP.
+XX
+AC   M12887;
+XX
+DT   15-MAY-1995 (Rel. 199520-1, arrived in LIGM-DB)
+DT   22-JAN-2020 (Rel. 202004-3, Last updated, Version 16)
+XX
+DE   Human T-cell receptor germline beta-chain gene C-region C-beta-1, partial
+DE   cds.
+XX
+KW   antigen receptor; Immunoglobulin superfamily (IgSF); T cell receptor (TR);
+KW   TR-Beta-TRB; constant; TR-Beta-1-TRBC1; IMGT reference sequence; regular;
+KW   gDNA; undefined; functional; C-gene.
+XX
+OS   Homo sapiens (human)
+OC   cellular organisms; Eukaryota; Opisthokonta; Metazoa; Eumetazoa; Bilateria;
+OC   Deuterostomia; Chordata; Craniata; Vertebrata; Gnathostomata; Teleostomi;
+OC   Euteleostomi; Sarcopterygii; Dipnotetrapodomorpha; Tetrapoda; Amniota;
+OC   Mammalia; Theria; Eutheria; Boreoeutheria; Euarchontoglires; Primates;
+OC   Haplorrhini; Simiiformes; Catarrhini; Hominoidea; Hominidae; Homininae;
+OC   Homo; Homo sapiens.
+XX
+RN   [1]
+RP   1-2042
+RX   PUBMED; 3860845.
+RA   Tunnacliffe A., Kefford R., Milstein C., Forster A., Rabbitts T.H.;
+RT   "Sequence and evolution of the human T-cell antigen receptor beta-chain
+RT   genes";
+RL   Proc. Natl. Acad. Sci. U.S.A. 82(15):5068-5072(1985).
+XX
+DR   ENA; M12887.
+DR   GDB; 9954029.
+XX
+CC   IMGT/LIGM-DB annotation level: by annotators
+XX
+FH   Key                 Location/Qualifiers
+FH   
+FT   C-GENE              1..2042
+FT                       /chromosome="7q34"
+FT                       /db_xref="GDB:120405"
+FT                       /db_xref="GOA:P01850"
+FT                       /db_xref="HGNC:12156"
+FT                       /db_xref="PDB:1FYT"
+FT                       /db_xref="PDB:1KGC"
+FT                       /db_xref="PDB:1KTK"
+FT                       /db_xref="PDB:1MI50"
+FT                       /db_xref="PDB:1OGA"
+FT                       /db_xref="PDB:1YMM"
+FT                       /db_xref="PDB:1ZGL"
+FT                       /db_xref="PDB:2AK4"
+FT                       /db_xref="PDB:2BNQ"
+FT                       /db_xref="PDB:2BNR"
+FT                       /db_xref="PDB:2BNU"
+FT                       /db_xref="taxon:9606"
+FT                       /db_xref="UniProtKB/Swiss-Prot:P01850"
+FT                       /functional
+FT                       /IMGT_allele="TRBC1*01"
+FT                       /IMGT_gene="TRBC1"
+FT                       /mol_type="genomic DNA"
+FT                       /note="G00-120-405"
+FT                       /organism="Homo sapiens"
+FT                       /protein_id="AAA60661.1"
+FT   J-C-INTRON          1..212
+FT   5'UTR               1..212
+FT   ACCEPTOR-SPLICE     210..214
+FT   C-GENE-UNIT         213..1660
+FT                       /functional
+FT                       /IMGT_allele="TRBC1*01"
+FT                       /IMGT_gene="TRBC1"
+FT   EX1                 213..599
+FT                       /codon_start=3
+FT                       /translation="DLNKVFPPEVAVFEPSEAEISHTQKATLVCLATGFFPDHVE
+FT                       LSWWVNGKEVHSGVSTDPQPLKEQPALNDSRYCLSSRLRVSATFWQNPRNHFRCQ
+FT                       VQFYGLSENDEWTQDRAKPVTQIVSAEAWGRA"
+FT                       /splice-expected-nt="g"
+FT                       /splice-expectedcodon="gag [E]"
+FT                       /splicing-frame="sf1"
+FT   DONOR-SPLICE        599..601
+FT   ACCEPTOR-SPLICE     1039..1043
+FT   EX2                 1041..1058
+FT                       /codon_start=3
+FT                       /translation="CGFTS"
+FT                       /splice-expected-nt="g"
+FT                       /splice-expectedcodon="gac [D]"
+FT                       /splicing-frame="sf1"
+FT   DONOR-SPLICE        1058..1060
+FT   ACCEPTOR-SPLICE     1208..1212
+FT   EX3                 1211..1317
+FT                       /codon_start=3
+FT                       /translation="SYQQGVLSATILYEILLGKATLYAVLVSALVLMAM"
+FT                       /splice-expected-nt="g"
+FT                       /splice-expectedcodon="gtg [V]"
+FT                       /splicing-frame="sf1"
+FT   DONOR-SPLICE        1317..1319
+FT   ACCEPTOR-SPLICE     1637..1641
+FT   EX4                 1640..1657
+FT                       /translation="VKRKDF"
+FT                       /splicing-frame="sf0"
+FT   STOP-CODON          1658..1660
+FT   3'UTR               1658..2042
+FT   POLYA_SIGNAL        1862..1867
+XX
+SQ   Sequence 2042 BP; 502 A; 560 C; 538 G; 442 T; 0 other;
+     tgcatcctag ggacagcata gaaaggaggg gcaaagtgga gagagagcaa cagacactgg        60
+     gatggtgacc ccaaaacaat gagggcctag aatgacatag ttgtgcttca ttacggccca       120
+     ttcccagggc tctctctcac acacacagag cccctaccag aaccagacag ctctcagagc       180
+     aaccctggct ccaacccctc ttccctttcc agaggacctg aacaaggtgt tcccacccga       240
+     ggtcgctgtg tttgagccat cagaagcaga gatctcccac acccaaaagg ccacactggt       300
+     gtgcctggcc acaggcttct tccccgacca cgtggagctg agctggtggg tgaatgggaa       360
+     ggaggtgcac agtggggtca gcacggaccc gcagcccctc aaggagcagc ccgccctcaa       420
+     tgactccaga tactgcctga gcagccgcct gagggtctcg gccaccttct ggcagaaccc       480
+     ccgcaaccac ttccgctgtc aagtccagtt ctacgggctc tcggagaatg acgagtggac       540
+     ccaggatagg gccaaacccg tcacccagat cgtcagcgcc gaggcctggg gtagagcagg       600
+     tgagtggggc ctggggagat gcctggagga gattaggtga gaccagctac cagggaaaat       660
+     ggaaagatcc aggtagcaga caagactaga tccaaaaaga aaggaaccag cgcacaccat       720
+     gaaggagaat tgggcacctg tggttcattc ttctcccaga ttctcagccc aacagagcca       780
+     agcagctggg tcccctttct atgtggcctg tgtaactctc atctgggtgg tgccccccat       840
+     ccccctcagt gctgccacat gccatggatt gcaaggacaa tgtggctgac atctgcatgg       900
+     cagaagaaag gaggtgctgg gctgtcagag gaagctggtc tgggcctggg agtctgtgcc       960
+     aactgcaaat ctgactttac ttttaattgc ctatgaaaat aaggtctctc atttattttc      1020
+     ctctccctgc tttctttcag actgtggctt tacctcgggt aagtaagccc ttccttttcc      1080
+     tctccctctc tcatggttct tgacctagaa ccaaggcatg aagaactcac agacactgga      1140
+     gggtggaggg tgggagagac cagagctacc tgtgcacagg tacccacctg tccttcctcc      1200
+     gtgccaacag tgtcctacca gcaaggggtc ctgtctgcca ccatcctcta tgagatcctg      1260
+     ctagggaagg ccaccctgta tgctgtgctg gtcagcgccc ttgtgttgat ggccatggta      1320
+     agcaggaggg caggatgggg ccagcaggct ggaggtgaca cactgacacc aagcacccag      1380
+     aagtatagag tccctgccag gattggagct gggcagtagg gagggaagag atttcattca      1440
+     ggtgcctcag aagataactt gcacctctgt aggatcacag tggaagggtc atgctgggaa      1500
+     ggagaagctg gagtcaccag aaaacccaat ggatgttgtg atgagcctta ctatttgtgt      1560
+     ggtcaatggg ccctactact ttctctcaat cctcacaact cctggctctt aataaccccc      1620
+     aaaactttct cttctgcagg tcaagagaaa ggatttctga aggcagccct ggaagtggag      1680
+     ttaggagctt ctaacccgtc atggtttcaa tacacattct tcttttgcca gcgcttctga      1740
+     agagctgctc tcacctctct gcatcccaat agatatcccc ctatgtgcat gcacacctgc      1800
+     acactcacgg ctgaaatctc cctaacccag ggggacctta gcatgcctaa gtgactaaac      1860
+     caataaaaat gttctggtct ggcctgactc tgacttgtga atgtctggat agctccttgg      1920
+     ctgtctctga actccctgtg actctcccca ttcagtcagg atagaaacaa gaggtattca      1980
+     aggaaaatgc agactcttca cgtaagaggg atgaggggcc caccttgaga tcaatagcag      2040
+     aa                                                                     2042
+//

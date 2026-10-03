@@ -1,0 +1,111 @@
+ID   V00804; SV 1; linear; gDNA; STD; MUS; 664 BP.
+XX
+AC   V00804; J00566;
+XX
+DT   15-MAY-1995 (Rel. 199520-1, arrived in LIGM-DB)
+DT   03-MAY-2022 (Rel. 202218-2, Last updated, Version 14)
+XX
+DE   Murine kappa-immunoglobulin gene fragment including signal peptide and
+DE   variable region.
+XX
+KW   antigen receptor; Immunoglobulin superfamily (IgSF); immunoglobulin (IG);
+KW   IG-Light; IG-Light-Kappa-IGK; variable; promoter; regular; gDNA; germline;
+KW   functional; V-gene.
+XX
+OS   Mus musculus (house mouse)
+OC   Sarcopterygii; Dipnotetrapodomorpha; Tetrapoda; Amniota; Mammalia; Theria;
+OC   Eutheria; Boreoeutheria; Euarchontoglires; Glires; Rodentia; Myomorpha;
+OC   Muroidea; Muridae; Murinae; Mus; Mus; Mus musculus.
+XX
+RN   [1]
+RC   Contact ncbi-contacts@bcm.tmc.edu for more information.
+RP   1-664
+RA   Rat Genome Sequencing Consortium;
+RT   ;
+RL   Submitted (11-JUL-2003) to the INSDC.
+RL   Human Genome Sequencing Center, Department of Molecular and Human Genetics,
+RL   Baylor College of Medicine, One Baylor Plaza, Houston, TX 77030, USA
+XX
+DR   EMBL-ALIGN; ALIGN_000434.
+DR   ENA; V00804.
+DR   EPD; EP11154; MM_IGKM.
+XX
+CC   IMGT/LIGM-DB annotation level: by annotators
+CC   
+CC   Replaces the the earlier entry <MMIG20>
+XX
+FH   Key                 Location/Qualifiers
+FH   
+FT   V-GENE              1..664
+FT                       /db_xref="taxon:10090"
+FT                       /functional
+FT                       /IMGT_allele="IGKV9-120*01"
+FT                       /IMGT_gene="IGKV9-120"
+FT                       /mol_type="genomic DNA"
+FT                       /organism="Mus musculus"
+FT   5'UTR               1..119
+FT   OCTAMER             29..36
+FT   TATA_BOX            68..73
+FT   L-PART1             120..174
+FT                       /translation="MDMRAPAQIFGFLLLLFQ"
+FT   INIT-CODON          120..122
+FT   DONOR-SPLICE        174..176
+FT   V-INTRON            175..302
+FT   ACCEPTOR-SPLICE     300..304
+FT   V-EXON              303..598
+FT                       /codon_start=3
+FT                       /translation="TRCDIQMTQSPSSLSASLGERVSLTCRASQDIGSSLNWLQQ
+FT                       EPDGTIKRLIYATSSLDSGVPKRFSGSRSGSDYSLTISSLESEDFVDYYCLQYAS
+FT                       SP"
+FT   L-PART2             303..313
+FT                       /codon_start=3
+FT                       /translation="TRC"
+FT   V-REGION            314..598
+FT                       /translation="DIQMTQSPSSLSASLGERVSLTCRASQDIGSSLNWLQQEPD
+FT                       GTIKRLIYATSSLDSGVPKRFSGSRSGSDYSLTISSLESEDFVDYYCLQYASSP"
+FT                       /CDR_length="[6.3.7]"
+FT                       /FR_length="[26.17.36.G]"
+FT                       /IMGT_allele="IGKV9-120*01"
+FT                       /IMGT_gene="IGKV9-120"
+FT   FR1-IMGT            314..391
+FT                       /translation="DIQMTQSPSSLSASLGERVSLTCRAS"
+FT                       /AA_IMGT="AA 1 to 26"
+FT   1st-CYS             380..382
+FT   CDR1-IMGT           392..409
+FT                       /translation="QDIGSS"
+FT                       /AA_IMGT="AA 27 to 38, AA 30, 31, 32, 33, 34 and 35 
+FT                       are missing"
+FT   FR2-IMGT            410..460
+FT                       /translation="LNWLQQEPDGTIKRLIY"
+FT                       /AA_IMGT="AA 39 to 55"
+FT   CONSERVED-TRP       416..418
+FT   CDR2-IMGT           461..469
+FT                       /translation="ATS"
+FT                       /AA_IMGT="AA 56 to 65, AA 58, 59, 60, 61, 62, 63 and 
+FT                       64 are missing"
+FT   FR3-IMGT            470..577
+FT                       /translation="SLDSGVPKRFSGSRSGSDYSLTISSLESEDFVDYYC"
+FT                       /AA_IMGT="AA 66 to 104, AA 73, 81 and 82 are missing"
+FT   2nd-CYS             575..577
+FT   CDR3-IMGT           578..600
+FT                       /translation="LQYASSP"
+FT                       /AA_IMGT="AA 105 to 111"
+FT   3'UTR               601..664
+FT   V-HEPTAMER          601..607
+FT   V-SPACER            608..619
+FT   V-NONAMER           620..628
+XX
+SQ   Sequence 664 BP; 168 A; 153 C; 139 G; 204 T; 0 other;
+     cgtgaccaat cctaactgct tcttaataat ttgcataccc tcactgcatc gccttgggga        60
+     cttctttata taacagtcaa acatatcctg tgccattgtc attgcagtca ggactcagca       120
+     tggacatgag ggctcctgca cagatttttg gcttcttgtt gctcttgttt caaggttaaa       180
+     atgaaactaa aattgggaat tttccactgt ttccaactgt ggttagtgtt gactggcatt       240
+     tgggggatgt cctcttttat catgcttatc tatgtggata ttcattatgt ctccactcct       300
+     aggtaccaga tgtgacatcc agatgaccca gtctccatcc tccttatctg cctctctggg       360
+     agaaagagtc agtctcactt gtcgggcaag tcaggacatt ggtagtagct taaactggct       420
+     tcagcaggaa ccagatggaa ctattaaacg cctgatctac gccacatcca gtttagattc       480
+     tggtgtgccc aaaaggttca gtggcagtag gtctgggtca gattattctc tcaccatcag       540
+     cagccttgag tctgaagatt ttgtagacta ttactgtcta caatatgcta gttctcctcc       600
+     cacagtgata caaatcataa cataaacccc atgaaagtag aaatgagagg ctgggctgct       660
+     ctga                                                                    664
+//

@@ -1,0 +1,85 @@
+LOCUS       DOGIHCCA                1928 bp    DNA     linear   MAM 26-JUL-2016
+DEFINITION  Canis familiaris IgE heavy chain constant region gene, partial cds.
+ACCESSION   L36872
+VERSION     L36872.1
+KEYWORDS    .
+SOURCE      Canis lupus familiaris (dog)
+  ORGANISM  Canis lupus familiaris
+            Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi;
+            Mammalia; Eutheria; Laurasiatheria; Carnivora; Caniformia; Canidae;
+            Canis.
+REFERENCE   1  (bases 1 to 1928)
+  AUTHORS   Patel,M., Selinger,D., Mark,G.E., Hickey,G.J. and Hollis,G.F.
+  TITLE     Sequence of the dog immunoglobulin alpha and epsilon constant
+            region genes
+  JOURNAL   Immunogenetics 41 (5), 282-286 (1995)
+   PUBMED   7721349
+FEATURES             Location/Qualifiers
+     source          1..1928
+                     /organism="Canis lupus familiaris"
+                     /mol_type="genomic DNA"
+                     /db_xref="taxon:9615"
+     CDS             join(<91..387,584..907,1000..1320,1395..1735)
+                     /codon_start=3
+                     /product="IgE heavy chain constant region"
+                     /protein_id="AAA56797.1"
+                     /translation="TSQDLSVFPLASCCKDNIASTSVTLGCLVTGYLPMSTTVTWDTG
+                     SLNKNVTTFPTTFHETYGLHSIVSQVTASGKWAKQRFTCSVAHAESTAINKTFSACAL
+                     NFIPPTVKLFHSSCNPVGDTHTTIQLLCLISGYVPGDMEVIWLVDGQKATNIFPYTAP
+                     GTKEGNVTSTHSELNITQGEWVSQKTYTCQVTYQGFTFKDEARKCSESDPRGVTSYLS
+                     PPSPLDLYVHKAPKITCLVVDLATMEGMNLTWYRESKEPVNPGPLNKKDHFNGTITVT
+                     STLPVNTNDWIEGETYYCRVTHPHLPKDIVRSIAKAPGKRAPPDVYLFLPPEEEQGTK
+                     DRVTLTCLIQNFFPADISVQWLRNDSPIQTDQYTTTGPHKVSGSRPAFFIFSRLEVSR
+                     VDWEQKNKFTCQVVHEALSGSRILQKWVSKTPGK"
+     exon            91..387
+                     /number=1
+     intron          388..583
+                     /number=1
+     exon            584..907
+                     /number=2
+     intron          908..999
+                     /number=2
+     exon            1000..1320
+                     /number=3
+     intron          1321..1394
+                     /number=4
+     exon            1395..>1735
+                     /number=4
+     regulatory      1822..1827
+                     /regulatory_class="polyA_signal_sequence"
+ORIGIN      
+        1 cagagcagat acccaggtca acagcgggcc tggcatatga tggggtgaca gtccccaagg
+       61 caggcactga cactggccct gtccccacag ccaccagcca ggacctgtct gtgttcccct
+      121 tggcctcctg ctgtaaagac aacatcgcca gtacctctgt tacactgggc tgtctggtca
+      181 ccggctatct ccccatgtcg acaactgtga cctgggacac ggggtctcta aataagaatg
+      241 tcacgacctt ccccaccacc ttccacgaga cctacggcct ccacagcatc gtcagccagg
+      301 tgaccgcctc gggcaagtgg gccaaacaga ggttcacctg cagcgtggct cacgctgagt
+      361 ccaccgccat caacaagacc ttcagtggta agccagggtt gggctggccc acatgacact
+      421 ggagggagaa gggacaggct gggcgggagt ggtaggagag gggtggtggg cgggcccgaa
+      481 tgccgccatg gctggtaacg cccagcacat gtggggctgg ggctgacaca tgagtcccgt
+      541 gggctcagag acaccactgc cacatggctg cctctacttc tagcatgtgc cttaaacttc
+      601 attccgccta ccgtgaagct cttccactcc tcctgcaacc ccgtcggtga tacccacacc
+      661 accatccagc tcctgtgcct catctctggc tacgtcccag gtgacatgga ggtcatctgg
+      721 ctggtggatg ggcaaaaggc tacaaacata ttcccataca ctgcacccgg cacaaaggag
+      781 ggcaacgtga cctctaccca cagcgagctc aacatcaccc agggcgagtg ggtatcccaa
+      841 aaaacctaca cctgccaggt cacctatcaa ggctttacct ttaaagatga ggctcgcaag
+      901 tgctcaggta tggcccccct gtcccccaga aacccagatg cgcgaggctc agagatgagg
+      961 gccaaggcac gccctcatgc agcctctcac acactgcaga gtccgacccc cgaggcgtga
+     1021 cgagctacct gagcccaccc agcccccttg acctgtatgt ccacaaggcg cccaagatca
+     1081 cctgcctggt agtggacctg gccaccatgg aaggcatgaa cctgacctgg taccgggaga
+     1141 gcaaagaacc cgtgaacccg ggccctttga acaagaagga tcacttcaat gggacgatca
+     1201 cagtcacgtc taccctgcca gtgaacacca atgactggat cgagggcgag acctactatt
+     1261 gcagggtgac ccacccgcac ctgcccaagg acatcgtgcg ctccattgcc aaggcccctg
+     1321 gtgagccacg ggcccagggg aggtgggcgg gcctcctgag ccggagcctg ggctgacccc
+     1381 acacctatcc acaggcaagc gtgccccccc ggatgtgtac ttgttcctgc caccggagga
+     1441 ggagcagggg accaaggaca gagtcaccct cacgtgcctg atccagaact tcttccccgc
+     1501 ggacatttca gtgcaatggc tgcgaaacga cagccccatc cagacagacc agtacaccac
+     1561 cacggggccc cacaaggtct cgggctccag gcctgccttc ttcatcttca gccgcctgga
+     1621 ggttagccgg gtggactggg agcagaaaaa caaattcacc tgccaagtgg tgcatgaggc
+     1681 gctgtccggc tctaggatcc tccagaaatg ggtgtccaaa acccccggta aatgatgccc
+     1741 accctcctcc cgccgccacc ccccagggct ccacctgctg ggagggaggg gggctggcaa
+     1801 gaccctccat ctgtccttgt caataaacac tccagtgtct gcttggagcc ctgggcacac
+     1861 ccatttcttg ggggtgggca gggttgcaga gcagggatgt cttggcacag aagggtcccc
+     1921 cagggtgt
+//
+

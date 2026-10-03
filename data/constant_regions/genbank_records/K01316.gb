@@ -1,0 +1,204 @@
+ID   K01316; SV 1; linear; gDNA; STD; HUM; 2028 BP.
+XX
+AC   K01316;
+XX
+DT   15-MAY-1995 (Rel. 199520-1, arrived in LIGM-DB)
+DT   21-FEB-2023 (Rel. 202308-2, Last updated, Version 15)
+XX
+DE   Human Ig germline H-chain G-E-A region B: gamma-4 constant region, 3' end.
+XX
+KW   antigen receptor; Immunoglobulin superfamily (IgSF); immunoglobulin (IG);
+KW   IG-Heavy; IG-Heavy-Gamma; constant; IG-Heavy-Gamma-4-IGHG4; regular; gDNA;
+KW   undefined; functional; C-gene.
+XX
+OS   Homo sapiens (human)
+OC   cellular organisms; Eukaryota; Opisthokonta; Metazoa; Eumetazoa; Bilateria;
+OC   Deuterostomia; Chordata; Craniata; Vertebrata; Gnathostomata; Teleostomi;
+OC   Euteleostomi; Sarcopterygii; Dipnotetrapodomorpha; Tetrapoda; Amniota;
+OC   Mammalia; Theria; Eutheria; Boreoeutheria; Euarchontoglires; Primates;
+OC   Haplorrhini; Simiiformes; Catarrhini; Hominoidea; Hominidae; Homininae;
+OC   Homo; Homo sapiens.
+XX
+RN   [1]
+RP   1-2028
+RA   Chung Y., Yim S., Choi E., Kim J., Han J.;
+RT   "Method of manufacturing Ig-fusion proteins by concatamerization,TNFR/Fc
+RT   fusion proteins manufactured by the method, DNA codingthe protions, vectors
+RT   including the DNA, and cells transformed bythe vectorTOR";
+RL   Unpublished.
+XX
+RN   [2]
+RP   475-1069
+RX   DOI; 10.1016/0092-8674(82)90183-0.
+RX   PUBMED; 6811139.
+RA   Takahashi N., Ueda S., Obata M., Nikaido T., Nakai S., Honjo T.;
+RT   "Structure of human immunoglobulin gamma genes: implications for evolution
+RT   of a gene family";
+RL   Cell 29(2):671-679(1982).
+XX
+RN   [2]
+RP   1180-1331
+RX   DOI; 10.1016/0092-8674(82)90183-0.
+RX   PUBMED; 6811139.
+RA   Takahashi N., Ueda S., Obata M., Nikaido T., Nakai S., Honjo T.;
+RT   "Structure of human immunoglobulin gamma genes: implications for evolution
+RT   of a gene family";
+RL   Cell 29(2):671-679(1982).
+XX
+RN   [2]
+RP   1432-1655
+RX   DOI; 10.1016/0092-8674(82)90183-0.
+RX   PUBMED; 6811139.
+RA   Takahashi N., Ueda S., Obata M., Nikaido T., Nakai S., Honjo T.;
+RT   "Structure of human immunoglobulin gamma genes: implications for evolution
+RT   of a gene family";
+RL   Cell 29(2):671-679(1982).
+XX
+RN   [3]
+RP   894-1106
+RX   PUBMED; 6329676.
+RA   Krawinkel U., Rabbitts T.H.;
+RT   "Comparison of the hinge-coding segments in human immunoglobulin gamma
+RT   heavy chain genes and the linkage of the gamma 2 and gamma 4 subclass
+RT   genes";
+RL   EMBO J. 1(4):403-407(1982).
+XX
+RN   [4]
+RP   1-2028
+RX   DOI; 10.1073/pnas.79.6.1984.
+RX   PUBMED; 6804948.
+RA   Ellison J., Hood L.;
+RT   "Linkage and sequence homology of two human immunoglobulin gamma heavy
+RT   chain constant region genes";
+RL   Proc. Natl. Acad. Sci. U.S.A. 79(6):1984-1988(1982).
+XX
+DR   ENA; K01316.
+XX
+CC   IMGT/LIGM-DB annotation level: by annotators
+CC   
+CC   [1] reports that the human C-gamma-4 gene is equally homologous to
+CC   the mouse gamma-1, gamma-2a, and gamma-2b genes (about 75%). [3]
+CC   also reports partial sequences for human gamma-2, gamma-3, and a
+CC   gamma pseudogene. [2] presents the gamma-1, gamma-2, gamma-3, and
+CC   pseudo-gamma hinge regions.
+CC   This entry is part of a multigene region (region B), which includes
+CC   the gamma-2, gamma-4, epsilon-1, and alpha-2 genes. See segment 1
+CC   for more comments.
+CC   Complete source information:
+CC   Human fetal liver DNA, library of T. Maniatis [3] and Lawn et al
+CC   [1],[2]; clones 24B [1], lambda-HG4.1 [3], and Ig-gamma-4-2 [2].
+XX
+FH   Key                 Location/Qualifiers
+FH   
+FT   C-GENE              1..>2028
+FT                       /partial
+FT                       /db_xref="taxon:9606"
+FT                       /functional
+FT                       /IMGT_allele="IGHG4*01"
+FT                       /IMGT_gene="IGHG4"
+FT                       /IMGT_map="14q32.33"
+FT                       /mol_type="genomic DNA"
+FT                       /organism="Homo sapiens"
+FT   INTRON              1..215
+FT   ACCEPTOR-SPLICE     213..217
+FT   C-GENE-UNIT         216..>2028
+FT                       /partial
+FT                       /db_xref="GDB:119340"
+FT                       /db_xref="GOA:P01861"
+FT                       /db_xref="HGNC:5528"
+FT                       /db_xref="InterPro:IPR003006"
+FT                       /db_xref="InterPro:IPR003597"
+FT                       /db_xref="InterPro:IPR007110"
+FT                       /db_xref="InterPro:IPR013783"
+FT                       /db_xref="PDB:1ADQ"
+FT                       /db_xref="PDB:2FL5"
+FT                       /db_xref="UniProtKB/Swiss-Prot:P01861"
+FT                       /note="NCBI gi:184759"
+FT                       /protein_id="AAB59394.1"
+FT   CH1                 216..509
+FT                       /codon_start=3
+FT                       /translation="STKGPSVFPLAPCSRSTSESTAALGCLVKDYFPEPVTVSWN
+FT                       SGALTSGVHTFPAVLQSSGLYSLSSVVTVPSSSLGTKTYTCNVDHKPSNTKVDKR
+FT                       V"
+FT   DONOR-SPLICE        509..511
+FT   INTRON              510..899
+FT   ACCEPTOR-SPLICE     897..901
+FT   H                   900..935
+FT                       /codon_start=3
+FT                       /translation="SKYGPPCPSCP"
+FT                       /splice-expected-nt="g"
+FT                       /splice-expectedcodon="gag [E]"
+FT                       /splicing-frame="sf1"
+FT   DONOR-SPLICE        935..937
+FT   INTRON              936..1053
+FT   ACCEPTOR-SPLICE     1051..1055
+FT   CH2                 1054..1383
+FT                       /codon_start=3
+FT                       /translation="PEFLGGPSVFLFPPKPKDTLMISRTPEVTCVVVDVSQEDPE
+FT                       VQFNWYVDGVEVHNAKTKPREEQFNSTYRVVSVLTVLHQDWLNGKEYKCKVSNKG
+FT                       LPSSIEKTISKAK"
+FT                       /splice-expected-nt="g"
+FT                       /splice-expectedcodon="gca [A]"
+FT                       /splicing-frame="sf1"
+FT   DONOR-SPLICE        1383..1385
+FT   INTRON              1384..1480
+FT   ACCEPTOR-SPLICE     1478..1482
+FT   CH3-CHS             1481..1800
+FT                       /codon_start=3
+FT                       /translation="QPREPQVYTLPPSQEEMTKNQVSLTCLVKGFYPSDIAVEWE
+FT                       SNGQPENNYKTTPPVLDSDGSFFLYSRLTVDKSRWQEGNVFSCSVMHEALHNHYT
+FT                       QKSLSLSLGK"
+FT                       /splice-expected-nt="g"
+FT                       /splice-expectedcodon="ggg [G]"
+FT                       /splicing-frame="sf1"
+FT   CH3                 1481..1794
+FT                       /codon_start=3
+FT                       /translation="QPREPQVYTLPPSQEEMTKNQVSLTCLVKGFYPSDIAVEWE
+FT                       SNGQPENNYKTTPPVLDSDGSFFLYSRLTVDKSRWQEGNVFSCSVMHEALHNHYT
+FT                       QKSLSLSL"
+FT   CHS                 1795..1800
+FT                       /translation="GK"
+FT   INT-DONOR-SPLICE    1795..1797
+FT                       /IMGT_note="For complete translation nucleotide G at 
+FT                       position 1795 has been included in CH-S"
+FT   INTRON              1801..>2028
+FT                       /partial
+FT   STOP-CODON          1801..1803
+FT   POLYA_SIGNAL        1904..1909
+XX
+SQ   Sequence 2028 BP; 421 A; 709 C; 567 G; 331 T; 0 other;
+     agctttctgg ggcaggccgg gcctgacttt ggctgggggc agggaggggg ctaaggtgac        60
+     gcaggtggcg ccagccaggt gcacacccaa tgcccatgag cccagacact ggaccctgca       120
+     tggaccatcg cggatagaca agaaccgagg ggcctctgcg ccctgggccc agctctgtcc       180
+     cacaccgcgg tcacatggca ccacctctct tgcagcttcc accaagggcc catccgtctt       240
+     ccccctggcg ccctgctcca ggagcacctc cgagagcaca gccgccctgg gctgcctggt       300
+     caaggactac ttccccgaac cggtgacggt gtcgtggaac tcaggcgccc tgaccagcgg       360
+     cgtgcacacc ttcccggctg tcctacagtc ctcaggactc tactccctca gcagcgtggt       420
+     gaccgtgccc tccagcagct tgggcacgaa gacctacacc tgcaacgtag atcacaagcc       480
+     cagcaacacc aaggtggaca agagagttgg tgagaggcca gcacagggag ggagggtgtc       540
+     tgctggaagc caggctcagc cctcctgcct ggacgcaccc cggctgtgca gccccagccc       600
+     agggcagcaa ggcatgcccc atctgtctcc tcacccggag gcctctgacc accccactca       660
+     tgctcaggga gagggtcttc tggatttttc caccaggctc ccggcaccac aggctggatg       720
+     cccctacccc aggccctgcg catacagggc aggtgctgcg ctcagacctg ccaagagcca       780
+     tatccgggag gaccctgccc ctgacctaag cccaccccaa aggccaaact ctccactccc       840
+     tcagctcaga caccttctct cctcccagat ctgagtaact cccaatcttc tctctgcaga       900
+     gtccaaatat ggtcccccat gcccatcatg cccaggtaag ccaacccagg cctcgccctc       960
+     cagctcaagg cgggacaggt gccctagagt agcctgcatc cagggacagg ccccagccgg      1020
+     gtgctgacgc atccacctcc atctcttcct cagcacctga gttcctgggg ggaccatcag      1080
+     tcttcctgtt ccccccaaaa cccaaggaca ctctcatgat ctcccggacc cctgaggtca      1140
+     cgtgcgtggt ggtggacgtg agccaggaag accccgaggt ccagttcaac tggtacgtgg      1200
+     atggcgtgga ggtgcataat gccaagacaa agccgcggga ggagcagttc aacagcacgt      1260
+     accgtgtggt cagcgtcctc accgtcctgc accaggactg gctgaacggc aaggagtaca      1320
+     agtgcaaggt ctccaacaaa ggcctcccgt cctccatcga gaaaaccatc tccaaagcca      1380
+     aaggtgggac ccacggggtg cgagggccac acggacagag gccagctcgg cccaccctct      1440
+     gccctgggag tgaccgctgt gccaacctct gtccctacag ggcagccccg agagccacag      1500
+     gtgtacaccc tgcccccatc ccaggaggag atgaccaaga accaggtcag cctgacctgc      1560
+     ctggtcaaag gcttctaccc cagcgacatc gccgtggagt gggagagcaa tgggcagccg      1620
+     gagaacaact acaagaccac gcctcccgtg ctggactccg acggctcctt cttcctctac      1680
+     agcaggctaa ccgtggacaa gagcaggtgg caggagggga atgtcttctc atgctccgtg      1740
+     atgcatgagg ctctgcacaa ccactacaca cagaagagcc tctccctgtc tctgggtaaa      1800
+     tgagtgccag ggccggcaag cccccgctcc ccgggctctc ggggtcgcgc gaggatgctt      1860
+     ggcacgtacc ccgtctacat acttcccagg cacccagcat ggaaataaag cacccaccac      1920
+     tgccctgggc ccctgtgaga ctgtgatggt tctttccacg ggtcaggccg agtctgaggc      1980
+     ctgagtgaca tgagggaggc agagcgggtc ccactgtccc cacactgg                   2028
+//

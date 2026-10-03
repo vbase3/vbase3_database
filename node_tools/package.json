@@ -1,0 +1,29 @@
+{
+  "name": "vbase3-node-tools",
+  "version": "1.0.0",
+  "description": "VBASE3 Comparative Immunogenomics WebAssembly CLI and Model Context Protocol (MCP) Server",
+  "type": "module",
+  "main": "vbase3_mcp_server.mjs",
+  "bin": {
+    "vbase3-mcp": "./vbase3_mcp_server.mjs",
+    "vbase3-cli": "./vbase3_wasm_cli.mjs"
+  },
+  "scripts": {
+    "start": "node vbase3_mcp_server.mjs",
+    "cli": "node vbase3_wasm_cli.mjs",
+    "mcp": "node vbase3_mcp_server.mjs",
+    "test": "node test_node_tools.mjs"
+  },
+  "keywords": [
+    "immunogenomics",
+    "antibody",
+    "t-cell-receptor",
+    "webassembly",
+    "mcp",
+    "model-context-protocol",
+    "vbase3",
+    "synthetic-biology"
+  ],
+  "author": "VBASE3 Consortium",
+  "license": "CC-BY-4.0"
+}

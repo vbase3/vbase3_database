@@ -1,0 +1,358 @@
+{
+  "species": "human",
+  "chain": "lambda",
+  "total_sequences": 6482356,
+  "v_j_matrix": {
+    "IGLV7-46": {
+      "IGLJ1": 21189,
+      "IGLJ2": 29572,
+      "IGLJ3": 44502,
+      "IGLJ6": 29,
+      "IGLJ7": 1637
+    },
+    "IGLV2-23": {
+      "IGLJ1": 228968,
+      "IGLJ2": 125061,
+      "IGLJ3": 112145,
+      "IGLJ7": 4850,
+      "IGLJ6": 1045
+    },
+    "IGLV1-44": {
+      "IGLJ1": 189603,
+      "IGLJ3": 189500,
+      "IGLJ2": 158910,
+      "IGLJ6": 350,
+      "IGLJ7": 11817
+    },
+    "IGLV1-51": {
+      "IGLJ1": 308684,
+      "IGLJ3": 55823,
+      "IGLJ2": 85271,
+      "IGLJ6": 270,
+      "IGLJ7": 3077
+    },
+    "IGLV2-14": {
+      "IGLJ1": 1150367,
+      "IGLJ2": 517163,
+      "IGLJ3": 339508,
+      "IGLJ6": 3989,
+      "IGLJ7": 13987
+    },
+    "IGLV1-40": {
+      "IGLJ1": 313751,
+      "IGLJ3": 194531,
+      "IGLJ2": 205396,
+      "IGLJ7": 7576,
+      "IGLJ6": 949
+    },
+    "IGLV2-8": {
+      "IGLJ1": 353392,
+      "IGLJ2": 191878,
+      "IGLJ3": 96697,
+      "IGLJ7": 4453,
+      "IGLJ6": 898
+    },
+    "IGLV2-11": {
+      "IGLJ1": 225240,
+      "IGLJ3": 94044,
+      "IGLJ2": 107448,
+      "IGLJ7": 3386,
+      "IGLJ6": 523
+    },
+    "IGLV1-47": {
+      "IGLJ1": 84980,
+      "IGLJ2": 113702,
+      "IGLJ3": 131353,
+      "IGLJ6": 246,
+      "IGLJ7": 6034
+    },
+    "IGLV2-18": {
+      "IGLJ1": 38646,
+      "IGLJ3": 7428,
+      "IGLJ2": 7577,
+      "IGLJ7": 219,
+      "IGLJ6": 37
+    },
+    "IGLV3-21": {
+      "IGLJ1": 73329,
+      "IGLJ2": 74040,
+      "IGLJ3": 40224,
+      "IGLJ7": 1787,
+      "IGLJ6": 91
+    },
+    "IGLV1-36": {
+      "IGLJ2": 9749,
+      "IGLJ1": 7880,
+      "IGLJ3": 11675,
+      "IGLJ6": 42,
+      "IGLJ7": 435
+    },
+    "IGLV5-45": {
+      "IGLJ3": 2942,
+      "IGLJ1": 883,
+      "IGLJ2": 912,
+      "IGLJ7": 84
+    },
+    "IGLV4-69": {
+      "IGLJ1": 6985,
+      "IGLJ2": 40367,
+      "IGLJ3": 42995,
+      "IGLJ7": 1930,
+      "IGLJ6": 43
+    },
+    "IGLV3-25": {
+      "IGLJ1": 7769,
+      "IGLJ2": 8016,
+      "IGLJ3": 6732,
+      "IGLJ6": 19,
+      "IGLJ7": 592
+    },
+    "IGLV7-43": {
+      "IGLJ2": 21181,
+      "IGLJ1": 14692,
+      "IGLJ3": 34361,
+      "IGLJ7": 703,
+      "IGLJ6": 90
+    },
+    "IGLV6-57": {
+      "IGLJ1": 7359,
+      "IGLJ3": 40422,
+      "IGLJ2": 52604,
+      "IGLJ7": 1197,
+      "IGLJ6": 146
+    },
+    "IGLV9-49": {
+      "IGLJ1": 4128,
+      "IGLJ2": 3990,
+      "IGLJ3": 6084,
+      "IGLJ6": 32,
+      "IGLJ7": 158
+    },
+    "IGLV8-61": {
+      "IGLJ1": 10430,
+      "IGLJ3": 29353,
+      "IGLJ2": 18753,
+      "IGLJ7": 1548,
+      "IGLJ6": 55
+    },
+    "IGLV3-1": {
+      "IGLJ1": 11541,
+      "IGLJ2": 22450,
+      "IGLJ3": 8784,
+      "IGLJ6": 11,
+      "IGLJ7": 207
+    },
+    "IGLV4-60": {
+      "IGLJ1": 3573,
+      "IGLJ2": 7705,
+      "IGLJ3": 14628,
+      "IGLJ7": 283,
+      "IGLJ6": 2
+    },
+    "IGLV3-12": {
+      "IGLJ1": 804,
+      "IGLJ3": 1461,
+      "IGLJ2": 381,
+      "IGLJ6": 32,
+      "IGLJ7": 14
+    },
+    "IGLV3-10": {
+      "IGLJ1": 989,
+      "IGLJ3": 2234,
+      "IGLJ2": 1455,
+      "IGLJ7": 33,
+      "IGLJ6": 9
+    },
+    "IGLV3-9": {
+      "IGLJ1": 1855,
+      "IGLJ2": 3179,
+      "IGLJ3": 1561,
+      "IGLJ6": 2,
+      "IGKJ3": 1,
+      "IGLJ7": 75
+    },
+    "IGLV3-27": {
+      "IGLJ1": 800,
+      "IGLJ2": 2318,
+      "IGLJ3": 2087,
+      "IGLJ7": 57,
+      "IGLJ6": 1
+    },
+    "IGLV3-22": {
+      "IGLJ1": 215,
+      "IGLJ3": 132,
+      "IGLJ2": 45
+    },
+    "IGLV3-16": {
+      "IGLJ1": 175,
+      "IGLJ3": 606,
+      "IGLJ2": 157,
+      "IGLJ7": 11,
+      "IGLJ6": 23
+    },
+    "IGLV5-39": {
+      "IGLJ3": 1007,
+      "IGLJ2": 223,
+      "IGLJ1": 38,
+      "IGLJ7": 12
+    },
+    "IGLV5-52": {
+      "IGLJ1": 136,
+      "IGLJ3": 1402,
+      "IGLJ2": 361,
+      "IGLJ6": 41,
+      "IGLJ7": 30
+    },
+    "IGLV5-37": {
+      "IGLJ1": 372,
+      "IGLJ2": 1483,
+      "IGLJ3": 612,
+      "IGLJ7": 19,
+      "IGLJ6": 1
+    },
+    "IGLV4-3": {
+      "IGLJ3": 33,
+      "IGLJ1": 99,
+      "IGLJ2": 57,
+      "IGLJ7": 1
+    },
+    "IGLV1-41": {
+      "IGLJ1": 4
+    },
+    "IGLV10-54": {
+      "IGLJ3": 3965,
+      "IGLJ2": 703,
+      "IGLJ1": 681,
+      "IGLJ6": 217,
+      "IGLJ7": 1
+    },
+    "IGLV3-19": {
+      "IGLJ3": 2601,
+      "IGLJ1": 1612,
+      "IGLJ2": 2228,
+      "IGLJ7": 13
+    }
+  },
+  "top_cdr3_clones": [
+    {
+      "cdr3": "CGTWDSSLSAGNVF",
+      "count": 74470
+    },
+    {
+      "cdr3": "CSSYTSSSTLVF",
+      "count": 42563
+    },
+    {
+      "cdr3": "CQSYDSSLSGYVF",
+      "count": 32136
+    },
+    {
+      "cdr3": "CSSYTSSSTYVF",
+      "count": 32017
+    },
+    {
+      "cdr3": "CGSWDSSLSAYVF",
+      "count": 27961
+    },
+    {
+      "cdr3": "CAAWDDSLNGYVF",
+      "count": 26158
+    },
+    {
+      "cdr3": "CSSYAGSSNVF",
+      "count": 25609
+    },
+    {
+      "cdr3": "CAAWDDSLNGPVF",
+      "count": 22076
+    },
+    {
+      "cdr3": "CAAWDDSLNGWVF",
+      "count": 22032
+    },
+    {
+      "cdr3": "CFSFTTTSTHVF",
+      "count": 19767
+    },
+    {
+      "cdr3": "CAAWDDSLNGVVF",
+      "count": 19434
+    },
+    {
+      "cdr3": "CKSYAGSNTYVF",
+      "count": 19125
+    },
+    {
+      "cdr3": "CCSYAGSYTYVF",
+      "count": 17787
+    },
+    {
+      "cdr3": "CSSYTSSSTLYVF",
+      "count": 17253
+    },
+    {
+      "cdr3": "CQSYDSSLSGSVF",
+      "count": 17011
+    },
+    {
+      "cdr3": "CSSYTSSSTRVF",
+      "count": 15940
+    },
+    {
+      "cdr3": "CQSYDSTLSARYVF",
+      "count": 15934
+    },
+    {
+      "cdr3": "CSSYAGSNNLVF",
+      "count": 15867
+    },
+    {
+      "cdr3": "CSSYTNINTRACVF",
+      "count": 15715
+    },
+    {
+      "cdr3": "CAAWDDSLSGVVF",
+      "count": 15611
+    },
+    {
+      "cdr3": "CSSYAGSNNFVF",
+      "count": 15135
+    },
+    {
+      "cdr3": "CCSYAGSSTYVF",
+      "count": 14745
+    },
+    {
+      "cdr3": "CSSYTSSSTWVF",
+      "count": 14373
+    },
+    {
+      "cdr3": "CSSYTSSSTVVF",
+      "count": 14371
+    },
+    {
+      "cdr3": "CSSYAGSNNYVF",
+      "count": 13591
+    },
+    {
+      "cdr3": "CAAWDDSLSGWVF",
+      "count": 13546
+    },
+    {
+      "cdr3": "CQAYDYSLTASVF",
+      "count": 11643
+    },
+    {
+      "cdr3": "CQSYDSSLSGWVF",
+      "count": 11607
+    },
+    {
+      "cdr3": "CAAWDDSLNGRVF",
+      "count": 11399
+    },
+    {
+      "cdr3": "CAAWDDSLSGPVF",
+      "count": 11183
+    }
+  ]
+}

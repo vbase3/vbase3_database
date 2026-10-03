@@ -1,0 +1,87 @@
+ID   J00253; SV 1; linear; gDNA; STD; HUM; 391 BP.
+XX
+AC   J00253;
+XX
+DT   15-MAY-1995 (Rel. 199520-1, arrived in LIGM-DB)
+DT   10-OCT-2019 (Rel. 201941-4, Last updated, Version 13)
+XX
+DE   Homo sapiens immunoglobulin lambda light chain C2 region (IGLC2) gene,
+DE   partial cds.
+XX
+KW   antigen receptor; Immunoglobulin superfamily (IgSF); immunoglobulin (IG);
+KW   IG-Light; IG-Light-Lambda-IGL; constant; IMGT reference sequence; regular;
+KW   gDNA; undefined; functional; C-gene.
+XX
+OS   Homo sapiens (human)
+OC   cellular organisms; Eukaryota; Opisthokonta; Metazoa; Eumetazoa; Bilateria;
+OC   Deuterostomia; Chordata; Craniata; Vertebrata; Gnathostomata; Teleostomi;
+OC   Euteleostomi; Sarcopterygii; Dipnotetrapodomorpha; Tetrapoda; Amniota;
+OC   Mammalia; Theria; Eutheria; Boreoeutheria; Euarchontoglires; Primates;
+OC   Haplorrhini; Simiiformes; Catarrhini; Hominoidea; Hominidae; Homininae;
+OC   Homo; Homo sapiens.
+XX
+RN   [1]
+RP   1-391
+RA   Casterman C., Hamers R.;
+RT   "IMMUNOGLOBULINS DEVOID OF LIGHT CHAINS. Immunoglobulins devoid of light
+RT   chains.";
+RL   Patent number WO9404678-A/93, 03-MAR-1994.
+RL   CASTERMAN CECILE (BE).
+XX
+DR   ENA; J00253.
+DR   GDB; 181565.
+XX
+CC   IMGT/LIGM-DB annotation level: by annotators
+CC   
+CC   There are 6 Ig lambda C-regions evenly spaced over a stretch of 50
+CC   kb, in the order Mcg, Ke- Oz-, Ke- Oz+, 4, 5, 6. There are at least
+CC   three other C-lambda genes elsewhere in the genome. There is an
+CC   unstable region of DNA in area of genes 2 and 3.
+XX
+FH   Key                 Location/Qualifiers
+FH   
+FT   C-GENE              1..391
+FT                       /chromosome="22"
+FT                       /db_xref="taxon:9606"
+FT                       /dev_stage="fetus"
+FT                       /functional
+FT                       /IMGT_allele="IGLC2*01"
+FT                       /IMGT_gene="IGLC2"
+FT                       /IMGT_map="22q11.2"
+FT                       /mol_type="genomic DNA"
+FT                       /organism="Homo sapiens"
+FT                       /tissue_lib="lambda of T. Maniatis"
+FT                       /tissue_type="liver"
+FT   J-C-INTRON          1..29
+FT   ACCEPTOR-SPLICE     27..31
+FT   C-REGION            30..346
+FT                       /codon_start=3
+FT                       /translation="QPKAAPSVTLFPPSSEELQANKATLVCLISDFYPGAVTVAW
+FT                       KADSSPVKAGVETTTPSKQSNNKYAASSYLSLTPEQWKSHRSYSCQVTHEGSTVE
+FT                       KTVAPTECS"
+FT                       /db_xref="GDB:120690"
+FT                       /db_xref="GDB:120691"
+FT                       /db_xref="GOA:P01842"
+FT                       /db_xref="HGNC:5855"
+FT                       /db_xref="HGNC:5856"
+FT                       /db_xref="HGNC:5857"
+FT                       /db_xref="InterPro:IPR003006"
+FT                       /db_xref="InterPro:IPR003597"
+FT                       /db_xref="InterPro:IPR007110"
+FT                       /db_xref="InterPro:IPR013783"
+FT                       /db_xref="PDB:1AQK"
+FT                       /db_xref="PDB:1JVK"
+FT                       /db_xref="PDB:1LIL"
+FT                       /protein_id="AAA59107.1"
+FT   STOP-CODON          347..349
+FT   3'UTR               350..391
+XX
+SQ   Sequence 391 BP; 97 A; 134 C; 101 G; 59 T; 0 other;
+     gagccccctg cccctcatcc accccgcagg tcagcccaag gctgccccct cggtcactct        60
+     gttcccgccc tcctctgagg agcttcaagc caacaaggcc acactggtgt gtctcataag       120
+     tgacttctac ccgggagccg tgacagtggc ttggaaagca gatagcagcc ccgtcaaggc       180
+     gggagtggag accaccacac cctccaaaca aagcaacaac aagtacgcgg ccagcagcta       240
+     tctgagcctg acgcctgagc agtggaagtc ccacagaagc tacagctgcc aggtcacgca       300
+     tgaagggagc accgtggaga agacagtggc ccctacagaa tgttcatagg ttctcaaccc       360
+     tcacccccac cacgggagac tagagctgca g                                      391
+//

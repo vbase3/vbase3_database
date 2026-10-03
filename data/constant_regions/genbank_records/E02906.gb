@@ -1,0 +1,64 @@
+ID   E02906; SV 1; linear; unassigned DNA; PAT; MAM; 330 BP.
+XX
+AC   E02906;
+XX
+DT   28-SEP-2000 (Rel. 200039-4, arrived in LIGM-DB)
+DT   06-OCT-2012 (Rel. 201240-6, Last updated, Version 4)
+XX
+DE   DNA encoding constant region of immunoglobulin kappa chain.
+XX
+KW   antigen receptor; Immunoglobulin superfamily (IgSF); immunoglobulin (IG);
+KW   chimeric; IG-Light; IG-Light-Kappa-IGK; constant; patent; unassigned DNA;
+KW   undefined.
+XX
+OS   Canis lupus familiaris (dog)
+OC   Gnathostomata; Teleostomi; Euteleostomi; Sarcopterygii;
+OC   Dipnotetrapodomorpha; Tetrapoda; Amniota; Mammalia; Theria; Eutheria;
+OC   Boreoeutheria; Laurasiatheria; Carnivora; Caniformia; Canidae; Canis;
+OC   Canis lupus; Canis lupus familiaris.
+XX
+RN   [1]
+RP   1-330
+RA   ;
+RT   "ANTIBODIES DIRECTED AGAINST CD3";
+RL   Patent number WO9206193-A/18, 16-APR-1992.
+XX
+DR   ENA; E02906.
+XX
+CC   IMGT/LIGM-DB annotation level: keyword level
+CC   
+CC   OS   (dog)
+CC   PN   JP 1991123489-A/1
+CC   PD   27-MAY-1991
+CC   PF   30-SEP-1989 JP 1989255425
+CC   PI   MAEDA HIROAKI, EDA YASUYUKI, KURUMI KAZUHIKO, TOKIYOSHI YUKIO
+CC   PC   C12N15/13,A61K39/395,A61K39/395,C07K13/00,C07K15/12,C12N15/62,
+CC   PC   C12P21/08,
+CC   PC   G01N33/531,G01N33/577;
+CC   CC   strandedness: Double;
+CC   CC   topology: Linear;
+CC   CC   hypothetical: No;
+CC   CC   anti-sense: No;
+CC   CC   *source: tissue_type=liver;
+CC   CC   *source: clone=pSV2-EPLDC kappa;
+CC   FH   Key             Location/Qualifiers
+CC   FH
+CC   FT   misc_feature    1..327
+CC   FT                   /note="constant region of immunoglobulin kappa
+CC   FT                   chain"
+XX
+FH   Key             Location/Qualifiers (from EMBL)
+FH   
+FT   source          1..330
+FT                   /organism="Canis lupus familiaris"
+FT                   /mol_type="unassigned DNA"
+FT                   /db_xref="taxon:9615"
+XX
+SQ   Sequence 330 BP; 95 A; 89 C; 76 G; 70 T; 0 other;
+     aatgatgccc agccagccgt ctatttgttc caaccatctc cagaccagtt acacacagga        60
+     agtgcctctg ttgtgtgttt gctgaatagc ttctacccca aagacatcaa tgtcaagtgg       120
+     aaagtggatg gtgtcatcca agacacaggc atccaggaaa gtgtcacaga gcaggacaag       180
+     gacagtacct acagcctcag cagcaccctg acgatgtcca gtactgagta cctaagtcat       240
+     gagttgtact cctgtgagat cactcacaag agcctgccct ccaccctcat caagagcttc       300
+     caaaggagcg agtgtcagag agtggactaa                                        330
+//

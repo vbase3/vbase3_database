@@ -1,0 +1,187 @@
+ID   BC017861; SV 1; linear; cDNA; HTC; HUM; 1510 BP.
+XX
+AC   BC017861;
+XX
+DT   22-DEC-2008 (Rel. 200852-1, arrived in LIGM-DB)
+DT   16-JAN-2013 (Rel. 201303-3, Last updated, Version 4)
+XX
+DE   Homo sapiens TCR gamma alternate reading frame protein, mRNA (cDNA clone
+DE   IMAGE:4687960), with apparent retained intron.
+XX
+KW   antigen receptor; Immunoglobulin superfamily (IgSF); T cell receptor (TR);
+KW   TR-Gamma-TRG; constant; variable; joining; regular; cDNA; undefined;
+KW   rearranged; unproductive.
+XX
+OS   Homo sapiens (human)
+OC   cellular organisms; Eukaryota; Opisthokonta; Metazoa; Eumetazoa; Bilateria;
+OC   Deuterostomia; Chordata; Craniata; Vertebrata; Gnathostomata; Teleostomi;
+OC   Euteleostomi; Sarcopterygii; Dipnotetrapodomorpha; Tetrapoda; Amniota;
+OC   Mammalia; Theria; Eutheria; Boreoeutheria; Euarchontoglires; Primates;
+OC   Haplorrhini; Simiiformes; Catarrhini; Hominoidea; Hominidae; Homininae;
+OC   Homo; Homo sapiens.
+XX
+RN   [1]
+RP   1-1510
+RG   Rat Genome Sequencing Consortium
+RA   ;
+RT   ;
+RL   Submitted (26-NOV-2002) to the INSDC.
+RL   Human Genome Sequencing Center, Department of Molecular and Human Genetics,
+RL   Baylor College of Medicine, One Baylor Plaza, Houston, TX 77030, USA
+XX
+RN   [2]
+RC   Contact ncbi-contacts@bcm.tmc.edu for more information.
+RP   1-1510
+RA   Rat Genome Sequencing Consortium;
+RT   ;
+RL   Submitted (11-JUL-2003) to the INSDC.
+RL   Human Genome Sequencing Center, Department of Molecular and Human Genetics,
+RL   Baylor College of Medicine, One Baylor Plaza, Houston, TX 77030, USA
+XX
+DR   ENA; BC017861.
+DR   H-InvDB; HIT000089438.
+DR   ImaGenes; IMAGp958I171501Q.
+DR   ImaGenes; IRALp962K1936Q.
+XX
+CC   IMGT/LIGM-DB annotation level: by annotators
+CC   
+CC   Contact: MGC help desk
+CC   Email: cgapbs-r@mail.nih.gov
+CC   Tissue Procurement: CLONTECH
+CC   cDNA Library Preparation: CLONTECH Laboratories, Inc.
+CC   cDNA Library Arrayed by: The I.M.A.G.E. Consortium (LLNL)
+CC   DNA Sequencing by: Sequencing Group at the Stanford Human Genome
+CC   Center, Stanford University School of Medicine, Stanford, CA  94305
+CC   Web site:       http://www-shgc.stanford.edu
+CC   Contact:  (Dickson, Mark) mcd@paxil.stanford.edu
+CC   Dickson, M., Schmutz, J., Grimwood, J., Rodriquez, A., and Myers,
+CC   R. M.
+CC   Clone distribution: MGC clone distribution information can be found
+CC   through the I.M.A.G.E. Consortium/LLNL at: http://image.llnl.gov
+CC   Series: IRAL Plate: 36 Row: k Column: 19
+CC   This clone has the following problem: retained intron.
+XX
+FH   Key                 Location/Qualifiers
+FH   
+FT   L-V-J-C-SEQUENCE    1..1510
+FT                       /clone="IMAGE:4687960"
+FT                       /clone_lib="NIH_MGC_77"
+FT                       /db_xref="taxon:9606"
+FT                       /IMGT_note="unproductive VJC region rearrangement, 
+FT                       frame shift in the JUNCTION"
+FT                       /lab_host="DH10B"
+FT                       /mol_type="mRNA"
+FT                       /note="Vector: pDNR-LIB"
+FT                       /organism="Homo sapiens"
+FT                       /tissue_type="Lung"
+FT   5'UTR               1..37
+FT   L-V-J-C-REGION      38..1032
+FT   L-V-J-REGION        38..465
+FT   L-V-REGION          38..391
+FT                       /translation="MLLALALLLAFLPPASQKSSNLEGRTKSVTRPTGSSAVITC
+FT                       DLPVENAVYTHWYLHQEGKAPQRLLYYDSYNSRVVLESGISREKYHTYASTGKSL
+FT                       KFILENLIERDSGVYYCATWDR"
+FT   L-REGION            38..91
+FT                       /translation="MLLALALLLAFLPPASQK"
+FT   INIT-CODON          38..40
+FT   V-J-C-REGION        92..1032
+FT   V-J-REGION          92..465
+FT                       /IMGT_note="unproductive VJC region rearrangement, 
+FT                       frameshift V-J-REGION"
+FT   V-REGION            92..391
+FT                       /translation="SSNLEGRTKSVTRPTGSSAVITCDLPVENAVYTHWYLHQEG
+FT                       KAPQRLLYYDSYNSRVVLESGISREKYHTYASTGKSLKFILENLIERDSGVYYCA
+FT                       TWDR"
+FT                       /CDR_length="[6.8.X]"
+FT                       /IMGT_allele="TRGV8*01"
+FT                       /IMGT_gene="TRGV8"
+FT   FR1-IMGT            92..169
+FT                       /translation="SSNLEGRTKSVTRPTGSSAVITCDLP"
+FT                       /AA_IMGT="AA 1 to 26"
+FT   1st-CYS             158..160
+FT   CDR1-IMGT           170..187
+FT                       /translation="VENAVY"
+FT                       /AA_IMGT="AA 27 to 38, AA 30, 31, 32, 33, 34 and 35 
+FT                       are missing"
+FT   FR2-IMGT            188..238
+FT                       /translation="THWYLHQEGKAPQRLLY"
+FT                       /AA_IMGT="AA 39 to 55"
+FT   CONSERVED-TRP       194..196
+FT   CDR2-IMGT           239..262
+FT                       /translation="YDSYNSRV"
+FT                       /AA_IMGT="AA 56 to 65, AA 60 and 61 are missing"
+FT   FR3-IMGT            263..376
+FT                       /translation="VLESGISREKYHTYASTGKSLKFILENLIERDSGVYYC"
+FT                       /AA_IMGT="AA 66 to 104, AA 82 is missing"
+FT   2nd-CYS             374..376
+FT   CDR3-IMGT           377..429
+FT                       /translation="ATWDRWGKGILVVIGSR"
+FT   JUNCTION            374..432
+FT                       /translation="CATWDRWGKGILVVIGSRR"
+FT                       /out_of_frame
+FT   FR4-IMGT            430..465
+FT                       /translation="FAKGTRLIVTSP"
+FT   N-REGION            392..409
+FT                       /translation="WGKGIL"
+FT   J-REGION            410..465
+FT                       /codon_start=3
+FT                       /translation="SDWIKTFAKGTRLIVTSP"
+FT                       /IMGT_allele="TRGJP2*01"
+FT                       /IMGT_gene="TRGJP2"
+FT   J-PHE               430..432
+FT   C-REGION            466..1032
+FT                       /translation="DKQLDADVSPKPTIFLPSIAETKLQKAGTYLCLLEKFFPDI
+FT                       IKIHWQEKKSNTILGSQEGNTMKTNDTYMKFSWLTVPEESLDKEHRCIVRHENNK
+FT                       NGIDQEIIFPPIKTDVTTVDPKYNYSKDANDVITMDPKDNWSKDANDTLLLQLTN
+FT                       TSAYYMYLLLLLKSVVYFAIITCCLLGRTAFCCNGEKS"
+FT                       /IMGT_allele="TRGC2*02"
+FT                       /IMGT_gene="TRGC2"
+FT   EX1                 466..795
+FT                       /translation="DKQLDADVSPKPTIFLPSIAETKLQKAGTYLCLLEKFFPDI
+FT                       IKIHWQEKKSNTILGSQEGNTMKTNDTYMKFSWLTVPEESLDKEHRCIVRHENNK
+FT                       NGIDQEIIFPPIKT"
+FT   CONNECTING-REGION   796..939
+FT                       /translation="DVTTVDPKYNYSKDANDVITMDPKDNWSKDANDTLLLQLTN
+FT                       TSAYYMY"
+FT   EX2R                796..843
+FT                       /translation="DVTTVDPKYNYSKDAN"
+FT   EX2                 844..891
+FT                       /translation="DVITMDPKDNWSKDAN"
+FT   EX3                 892..1032
+FT                       /translation="DTLLLQLTNTSAYYMYLLLLLKSVVYFAIITCCLLGRTAFC
+FT                       CNGEKS"
+FT   TRANSMEMBRANE-REGION940..1011
+FT                       /translation="LLLLLKSVVYFAIITCCLLGRTAF"
+FT   CYTOPLASMIC-REGION  1012..1032
+FT                       /translation="CCNGEKS"
+FT   STOP-CODON          1033..1035
+FT   3'UTR               1033..1510
+XX
+SQ   Sequence 1510 BP; 459 A; 341 C; 308 G; 402 T; 0 other;
+     tctggtccct tacttccaag accccagaga ggaaggcatg ctgttggctc tagctctgct        60
+     tctagctttc ctgcctcctg ccagtcagaa atcttccaac ttggaaggga gaacaaagtc       120
+     agtcaccagg ccaactgggt catcagctgt aatcacttgt gatcttcctg tagaaaatgc       180
+     cgtctacacc cactggtacc tacaccagga ggggaaggcc ccacagcgtc ttctgtacta       240
+     tgactcctac aactccaggg ttgtgttgga atcaggaatc agtcgagaaa agtatcatac       300
+     ttatgcaagc acagggaaga gccttaaatt tatactggaa aatctaattg aacgtgactc       360
+     tggggtctat tactgtgcca cctgggatag gtggggtaag ggtatattgg tagtgattgg       420
+     atcaagacgt ttgcaaaagg gactaggctc atagtaactt cgcctgataa acaacttgat       480
+     gcagatgttt cccccaagcc cactattttt cttccttcga ttgctgaaac aaaactccag       540
+     aaggctggaa catacctttg tcttcttgag aaatttttcc cagatattat taagatacat       600
+     tggcaagaaa agaagagcaa cacgattctg ggatcccagg aggggaacac catgaagact       660
+     aacgacacat acatgaaatt tagctggtta acggtgccag aagagtcact ggacaaagaa       720
+     cacagatgta tcgtcagaca tgagaataat aaaaacggaa ttgatcaaga aattatcttt       780
+     cctccaataa agacagatgt caccacagtg gatcccaaat acaattattc aaaggatgca       840
+     aatgatgtca tcacaatgga tcccaaagac aattggtcaa aagatgcaaa tgatacacta       900
+     ctgctgcagc tcacaaacac ctctgcatat tacatgtacc tcctcctgct cctcaagagt       960
+     gtggtctatt ttgccatcat cacctgctgt ctgcttggaa gaacggcttt ctgctgcaat      1020
+     ggagagaaat cataacagac ggtggcacaa ggaggccatc ttttcctcat cggttattgt      1080
+     ccctagaagc gtcttctgag gatctagtcg ggctttcttt ctgggtttgg gccatttcag      1140
+     ttctcatgtg tgtactattc tatcattatt gtataatggt tttcaaacca gtgggcacac      1200
+     agagaacctc actctgtaat aacaatgagg aatagccatg gcgatctcca gcaccaatct      1260
+     ctccatgttt tccacagctc ctccagccaa cccaaatagc gcctgctata gtgtagacag      1320
+     cctgcggctt ctagccttgt ccctctctta gtgttcttta atcagataac tgcctggaag      1380
+     cctttcattt tacacgccct gaagcagtct tctttgctag ttgaattatg tggtgtgttt      1440
+     ttccgtaata agcaaaataa atttaaaaaa aatgaaaagt caaaaaaaaa aaaaaaaaaa      1500
+     aaaaaaaaaa                                                             1510
+//

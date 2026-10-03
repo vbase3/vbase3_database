@@ -1,0 +1,388 @@
+{
+  "species": "human",
+  "chain": "kappa",
+  "total_sequences": 4743682,
+  "v_j_matrix": {
+    "IGKV3-20": {
+      "IGKJ4": 146127,
+      "IGKJ2": 208829,
+      "IGKJ1": 358445,
+      "IGKJ3": 93183,
+      "IGKJ5": 66859
+    },
+    "IGKV1-39": {
+      "IGKJ1": 184516,
+      "IGKJ2": 118050,
+      "IGKJ4": 96630,
+      "IGKJ5": 39043,
+      "IGKJ3": 53117
+    },
+    "IGKV1-5": {
+      "IGKJ1": 371428,
+      "IGKJ5": 19632,
+      "IGKJ4": 89168,
+      "IGKJ2": 139751,
+      "IGKJ3": 31870,
+      "IGLJ3": 1
+    },
+    "IGKV3-11": {
+      "IGKJ3": 61581,
+      "IGKJ5": 72898,
+      "IGKJ1": 96669,
+      "IGKJ4": 170974,
+      "IGKJ2": 69316
+    },
+    "IGKV2-40": {
+      "IGKJ4": 3267,
+      "IGKJ3": 992,
+      "IGKJ5": 1587,
+      "IGKJ1": 2289,
+      "IGKJ2": 4260
+    },
+    "IGKV1-13": {
+      "IGKJ4": 18888,
+      "IGKJ5": 14754,
+      "IGKJ3": 6934,
+      "IGKJ1": 3831,
+      "IGKJ2": 6150
+    },
+    "IGKV3-15": {
+      "IGKJ2": 124346,
+      "IGKJ1": 211239,
+      "IGKJ4": 132404,
+      "IGKJ5": 44506,
+      "IGKJ3": 37226
+    },
+    "IGKV1-33": {
+      "IGKJ2": 32888,
+      "IGKJ4": 59255,
+      "IGKJ3": 35468,
+      "IGKJ1": 12063,
+      "IGKJ5": 22956
+    },
+    "IGKV2-28": {
+      "IGKJ1": 76890,
+      "IGKJ2": 51607,
+      "IGKJ3": 26153,
+      "IGKJ4": 55211,
+      "IGKJ5": 25983
+    },
+    "IGKV1-9": {
+      "IGKJ5": 26958,
+      "IGKJ1": 19087,
+      "IGKJ4": 51376,
+      "IGKJ3": 23818,
+      "IGKJ2": 14718
+    },
+    "IGKV2-30": {
+      "IGKJ1": 43565,
+      "IGKJ3": 7497,
+      "IGKJ5": 10412,
+      "IGKJ4": 15416,
+      "IGKJ2": 32158
+    },
+    "IGKV3D-15": {
+      "IGKJ4": 19423,
+      "IGKJ1": 10809,
+      "IGKJ5": 4833,
+      "IGKJ2": 4728,
+      "IGKJ3": 2161
+    },
+    "IGKV1-27": {
+      "IGKJ3": 34742,
+      "IGKJ1": 48585,
+      "IGKJ4": 44020,
+      "IGKJ5": 6559,
+      "IGKJ2": 7439
+    },
+    "IGKV3D-20": {
+      "IGKJ4": 12189,
+      "IGKJ1": 8157,
+      "IGKJ5": 5336,
+      "IGKJ2": 3280,
+      "IGKJ3": 2456
+    },
+    "IGKV4-1": {
+      "IGKJ1": 104362,
+      "IGKJ5": 18902,
+      "IGKJ4": 78622,
+      "IGKJ3": 27546,
+      "IGKJ2": 84967
+    },
+    "IGKV2D-29": {
+      "IGKJ5": 4945,
+      "IGKJ2": 5304,
+      "IGKJ1": 8591,
+      "IGKJ4": 7825,
+      "IGKJ3": 2392
+    },
+    "IGKV1-12": {
+      "IGKJ1": 20298,
+      "IGKJ5": 12433,
+      "IGKJ4": 52510,
+      "IGKJ3": 12356,
+      "IGKJ2": 11485
+    },
+    "IGKV1-6": {
+      "IGKJ1": 36912,
+      "IGKJ4": 13197,
+      "IGKJ2": 8864,
+      "IGKJ3": 2760,
+      "IGKJ5": 1411
+    },
+    "IGKV1D-12": {
+      "IGKJ2": 1304,
+      "IGKJ4": 8487,
+      "IGKJ5": 3662,
+      "IGKJ3": 2360,
+      "IGKJ1": 1231
+    },
+    "IGKV1-8": {
+      "IGKJ1": 18179,
+      "IGKJ4": 9042,
+      "IGKJ5": 2720,
+      "IGKJ3": 5331,
+      "IGKJ2": 7018
+    },
+    "IGKV1-17": {
+      "IGKJ1": 40334,
+      "IGKJ4": 19584,
+      "IGKJ5": 4079,
+      "IGKJ2": 12838,
+      "IGKJ3": 4993
+    },
+    "IGKV1D-16": {
+      "IGKJ5": 986,
+      "IGKJ4": 2686,
+      "IGKJ1": 1173,
+      "IGKJ2": 429,
+      "IGKJ3": 273
+    },
+    "IGKV2-24": {
+      "IGKJ1": 25080,
+      "IGKJ4": 4743,
+      "IGKJ5": 2447,
+      "IGKJ2": 16931,
+      "IGKJ3": 1736
+    },
+    "IGKV1D-13": {
+      "IGKJ4": 5039,
+      "IGKJ5": 2260,
+      "IGKJ3": 2028,
+      "IGKJ1": 840,
+      "IGKJ2": 1198
+    },
+    "IGKV1D-8": {
+      "IGKJ4": 1733,
+      "IGKJ1": 5068,
+      "IGKJ2": 1643,
+      "IGKJ5": 469,
+      "IGKJ3": 672
+    },
+    "IGKV2D-30": {
+      "IGKJ4": 690,
+      "IGKJ1": 1487,
+      "IGKJ5": 326,
+      "IGKJ2": 959,
+      "IGKJ3": 267
+    },
+    "IGKV1-16": {
+      "IGKJ4": 14273,
+      "IGKJ2": 4587,
+      "IGKJ1": 6340,
+      "IGKJ5": 5258,
+      "IGKJ3": 3051
+    },
+    "IGKV1D-43": {
+      "IGKJ4": 294,
+      "IGKJ5": 154,
+      "IGKJ1": 70,
+      "IGKJ2": 145,
+      "IGKJ3": 185
+    },
+    "IGKV3D-7": {
+      "IGKJ4": 1765,
+      "IGKJ5": 451,
+      "IGKJ1": 2177,
+      "IGKJ2": 873,
+      "IGKJ3": 716
+    },
+    "IGKV3D-11": {
+      "IGKJ1": 755,
+      "IGKJ5": 787,
+      "IGKJ4": 1321,
+      "IGKJ2": 572,
+      "IGKJ3": 527
+    },
+    "IGKV2D-26": {
+      "IGKJ5": 95,
+      "IGKJ4": 133,
+      "IGKJ1": 39,
+      "IGKJ3": 89,
+      "IGKJ2": 59
+    },
+    "IGKV2-29": {
+      "IGKJ1": 455,
+      "IGKJ5": 108,
+      "IGKJ3": 66,
+      "IGKJ4": 231,
+      "IGKJ2": 216
+    },
+    "IGKV1D-17": {
+      "IGKJ1": 17,
+      "IGKJ4": 57,
+      "IGKJ5": 34,
+      "IGKJ3": 31,
+      "IGKJ2": 23
+    },
+    "IGKV1-NL1": {
+      "IGKJ2": 10,
+      "IGKJ1": 92,
+      "IGKJ4": 75,
+      "IGKJ3": 8,
+      "IGKJ5": 15
+    },
+    "IGKV5-2": {
+      "IGKJ4": 55,
+      "IGKJ2": 116,
+      "IGKJ3": 8,
+      "IGKJ1": 185,
+      "IGKJ5": 5
+    },
+    "IGKV6-21": {
+      "IGKJ2": 32,
+      "IGKJ4": 33,
+      "IGKJ3": 31,
+      "IGKJ5": 6,
+      "IGKJ1": 56
+    },
+    "IGKV6D-21": {
+      "IGKJ4": 15,
+      "IGKJ2": 12,
+      "IGKJ1": 6,
+      "IGKJ3": 5
+    }
+  },
+  "top_cdr3_clones": [
+    {
+      "cdr3": "CQQYGSSPRTF",
+      "count": 25998
+    },
+    {
+      "cdr3": "CQQRSNWPLTF",
+      "count": 21756
+    },
+    {
+      "cdr3": "CQQYGSSPLTF",
+      "count": 21531
+    },
+    {
+      "cdr3": "CQQYNNWPRTF",
+      "count": 19125
+    },
+    {
+      "cdr3": "CQQSYSTPRTF",
+      "count": 18316
+    },
+    {
+      "cdr3": "CQQYGSSPWTF",
+      "count": 18200
+    },
+    {
+      "cdr3": "CQQYNNWPLTF",
+      "count": 16638
+    },
+    {
+      "cdr3": "CQKYNSAPLTF",
+      "count": 16523
+    },
+    {
+      "cdr3": "CQQYNNWPPWTF",
+      "count": 16473
+    },
+    {
+      "cdr3": "CQQYNSYPWTF",
+      "count": 15271
+    },
+    {
+      "cdr3": "CQQSYSTPLTF",
+      "count": 15123
+    },
+    {
+      "cdr3": "CQHYNSYSEAF",
+      "count": 14972
+    },
+    {
+      "cdr3": "CQQANSFPLTF",
+      "count": 13139
+    },
+    {
+      "cdr3": "CQQYYSTPLTF",
+      "count": 13110
+    },
+    {
+      "cdr3": "CMQALQTPLTF",
+      "count": 12465
+    },
+    {
+      "cdr3": "CQQYGSSPYTF",
+      "count": 12275
+    },
+    {
+      "cdr3": "CQQSYSTPYTF",
+      "count": 11565
+    },
+    {
+      "cdr3": "CQQYNNWPPLTF",
+      "count": 11139
+    },
+    {
+      "cdr3": "CQQYNSYWTF",
+      "count": 10782
+    },
+    {
+      "cdr3": "CQQYNSYSWTF",
+      "count": 10641
+    },
+    {
+      "cdr3": "CQQYGSSGTF",
+      "count": 10621
+    },
+    {
+      "cdr3": "CQQYDNLPLTF",
+      "count": 10351
+    },
+    {
+      "cdr3": "CQQYNSYPLTF",
+      "count": 9645
+    },
+    {
+      "cdr3": "CQQLNSYPLTF",
+      "count": 9277
+    },
+    {
+      "cdr3": "CQQSYSTPWTF",
+      "count": 8864
+    },
+    {
+      "cdr3": "CQQYNSYPYTF",
+      "count": 8763
+    },
+    {
+      "cdr3": "CQQYNNWPPYTF",
+      "count": 8534
+    },
+    {
+      "cdr3": "CQQRSNWPRTF",
+      "count": 8373
+    },
+    {
+      "cdr3": "CQQSYSTPPTF",
+      "count": 8218
+    },
+    {
+      "cdr3": "CMQALQTPRTF",
+      "count": 7950
+    }
+  ]
+}

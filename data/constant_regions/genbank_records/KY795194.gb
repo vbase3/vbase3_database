@@ -1,0 +1,57 @@
+LOCUS       KY795194                 594 bp    mRNA    linear   MAM 16-OCT-2017
+DEFINITION  Felis catus clone cat 1-IGLV-1 Ig lambda variable mRNA, partial
+            cds.
+ACCESSION   KY795194
+VERSION     KY795194.1
+KEYWORDS    .
+SOURCE      Felis catus (domestic cat)
+  ORGANISM  Felis catus
+            Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi;
+            Mammalia; Eutheria; Laurasiatheria; Carnivora; Feliformia; Felidae;
+            Felinae; Felis.
+REFERENCE   1  (bases 1 to 594)
+  AUTHORS   Lu,Z., Tallmadge,R.L., Callaway,H.M., Felippe,M.J.B. and
+            Parker,J.S.L.
+  TITLE     Sequence analysis of feline immunoglobulin mRNAs and the
+            development of a felinized monoclonal antibody specific to feline
+            panleukopenia virus
+  JOURNAL   Sci Rep 7 (1), 12713 (2017)
+   PUBMED   28983085
+REFERENCE   2  (bases 1 to 594)
+  AUTHORS   Lu,Z., Tallmadge,R.L., Callaway,H.M., Felippe,J.B. and
+            Parker,J.S.L.
+  TITLE     Direct Submission
+  JOURNAL   Submitted (17-MAR-2017) Baker Institute for Animal Health and
+            Equine Immunology Laboratory, Department of Clinical Sciences,
+            College of Veterinary Medicine, Cornell University, Ithaca, NY
+            14853, USA
+COMMENT     ##Assembly-Data-START##
+            Sequencing Technology :: Sanger dideoxy sequencing
+            ##Assembly-Data-END##
+FEATURES             Location/Qualifiers
+     source          1..594
+                     /organism="Felis catus"
+                     /mol_type="mRNA"
+                     /db_xref="taxon:9685"
+                     /clone="cat 1-IGLV-1"
+     CDS             36..>594
+                     /codon_start=1
+                     /product="Ig lambda variable"
+                     /protein_id="ATI97491.1"
+                     /translation="MAWSPLLLTLLAHCTGSWAQSGLTQPSSVSGALGQRVTISCTGV
+                     GSYVDWYQQIPGMAPKTIIYYDSDLPSGVPDRFSGSKSGSTATLTITGLQAEDEADYY
+                     CSSWDSSGSAYIFGGGTRLTVLGQPKSAPSVTLFPPSSEELSANKATLVCLISDFYPS
+                     GLTVAWKADGTPVTQGVETTKPSKQS"
+ORIGIN      
+        1 ggcaacagaa ggcaggatct gtgctgacct ccgccatggc ctggtcccct ctcctcctca
+       61 ccctcctcgc tcactgcaca gggtcgtggg ctcagtcggg actgactcaa ccatcctcag
+      121 tgtctggggc cctgggccag agggtcacta tctcctgcac tggagttggt agttacgtgg
+      181 actggtacca acaaatccca ggaatggccc ccaaaaccat catctattat gatagcgacc
+      241 taccctcagg ggtccctgat cgattctccg gctccaagtc tggcagcaca gccaccctga
+      301 ccatcactgg gctccaggcc gaagacgagg ctgattatta ctgctcatcg tgggacagca
+      361 gtggcagtgc ttatattttc ggcggaggga cccgtctgac cgtcctcggt cagcctaagt
+      421 cggccccctc agtcacgctc ttcccgccct ccagtgagga gctcagtgcc aacaaggcca
+      481 ccctggtgtg tctcatcagt gacttctacc ccagcggttt gacggtggcc tggaaggcag
+      541 acggcacccc cgtcacccag ggcgtggaga ccaccaagcc ctccaaacag agca
+//
+

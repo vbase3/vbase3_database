@@ -1,0 +1,289 @@
+ID   J00451; SV 1; linear; gDNA; STD; MUS; 8504 BP.
+XX
+AC   J00451;
+XX
+DT   15-MAY-1995 (Rel. 199520-1, arrived in LIGM-DB)
+DT   12-FEB-2014 (Rel. 201407-3, Last updated, Version 24)
+XX
+DE   Mouse germline IgG-3 chain gene, D-J-C region, and switch region.
+XX
+KW   antigen receptor; Immunoglobulin superfamily (IgSF); immunoglobulin (IG);
+KW   IG-Heavy; IG-Heavy-Gamma; constant; IG-Heavy-Gamma-3-IGHG3; switch;
+KW   regular; gDNA; undefined; functional; C-gene.
+XX
+OS   Mus musculus (house mouse)
+OC   Sarcopterygii; Dipnotetrapodomorpha; Tetrapoda; Amniota; Mammalia; Theria;
+OC   Eutheria; Boreoeutheria; Euarchontoglires; Glires; Rodentia; Myomorpha;
+OC   Muroidea; Muridae; Murinae; Mus; Mus; Mus musculus.
+XX
+RN   [1]
+RC   Contact ncbi-contacts@bcm.tmc.edu for more information.
+RP   1-840
+RA   Rat Genome Sequencing Consortium;
+RT   ;
+RL   Submitted (11-JUL-2003) to the INSDC.
+RL   Human Genome Sequencing Center, Department of Molecular and Human Genetics,
+RL   Baylor College of Medicine, One Baylor Plaza, Houston, TX 77030, USA
+XX
+RN   [2]
+RP   790-8504
+RX   PUBMED; 6092053.
+RA   Wels J.A., Word C.J., Rimm D., Der-Balan G.P., Martinez H.M., Tucker P.W.,
+RA   Blattner F.R.;
+RT   "Structural analysis of the murine IgG3 constant region gene";
+RL   EMBO J. 3(9):2041-2046(1984).
+XX
+DR   EMBL-JOIN; J00471.
+DR   ENA; J00451.
+DR   GOA; P22436.
+DR   UniProtKB/Swiss-Prot; P22436; GC3_MOUSE.
+XX
+CC   IMGT/LIGM-DB annotation level: by annotators
+CC   
+CC   The S-gamma-3 region is composed of approximately 49 bp repeat
+CC   units and shows greater homology with the S-mu region than any of
+CC   the other S-gamma regions.
+CC   [2] notes a potential poly-adenylation signal (7760-7765) just
+CC   upstream of the approximate end of the membrane-bound form mRNA.
+XX
+FH   Key                 Location/Qualifiers
+FH   
+FT   C-GENE              1..8504
+FT                       /cell_line="J606; 2PK-3; IGE-53-569"
+FT                       /db_xref="taxon:10090"
+FT                       /dev_stage="newborn; embryo"
+FT                       /functional
+FT                       /IMGT_allele="IGHG3*01"
+FT                       /IMGT_gene="IGHG3"
+FT                       /IMGT_map="12F2 (58.0 cM)"
+FT                       /mol_type="genomic DNA"
+FT                       /organism="Mus musculus"
+FT                       /strain="BALB/c"
+FT                       /sub_species="domesticus"
+FT                       /tissue_lib="EcoRI"
+FT                       /tissue_type="myeloma; liver; B-cell lymphoma; 
+FT                       hybridoma"
+FT   5'UTR               1..2796
+FT   SWITCH              1..2793
+FT   ACCEPTOR-SPLICE     2794..2798
+FT   C-GENE-UNIT         2797..6570
+FT                       /db_xref="GOA:P03987"
+FT                       /db_xref="InterPro:IPR003006"
+FT                       /db_xref="InterPro:IPR003597"
+FT                       /db_xref="InterPro:IPR007110"
+FT                       /db_xref="InterPro:IPR013783"
+FT                       /db_xref="UniProtKB/Swiss-Prot:P03987"
+FT                       /protein_id="AAB59655.1"
+FT   CH1                 2797..3087
+FT                       /codon_start=3
+FT                       /translation="TTTAPSVYPLVPGCSDTSGSSVTLGCLVKGYFPEPVTVKWN
+FT                       YGALSSGVRTVSSVLQSGFYSLSSLVTVPSSTWPSQTVICNVAHPASKTELIKRI
+FT                       "
+FT   DONOR-SPLICE        3087..3089
+FT   ACCEPTOR-SPLICE     3450..3454
+FT   H                   3453..3500
+FT                       /codon_start=3
+FT                       /translation="PRIPKPSTPPGSSCP"
+FT                       /splice-expected-nt="g"
+FT                       /splice-expectedcodon="gag [E]"
+FT                       /splicing-frame="sf1"
+FT   DONOR-SPLICE        3500..3502
+FT   ACCEPTOR-SPLICE     3597..3601
+FT   CH2                 3600..3929
+FT                       /codon_start=3
+FT                       /translation="GNILGGPSVFIFPPKPKDALMISLTPKVTCVVVDVSEDDPD
+FT                       VHVSWFVDNKEVHTAWTQPREAQYNSTFRVVSALPIQHQDWMRGKEFKCKVNNKA
+FT                       LPAPIERTISKPK"
+FT                       /splice-expected-nt="g"
+FT                       /splice-expectedcodon="cct [P]"
+FT                       /splicing-frame="sf1"
+FT   DONOR-SPLICE        3929..3931
+FT   ACCEPTOR-SPLICE     4039..4043
+FT   CH3-CHS             4042..4361
+FT                       /codon_start=3
+FT                       /translation="RAQTPQVYTIPPPREQMSKKKVSLTCLVTNFFSEAISVEWE
+FT                       RNGELEQDYKNTPPILDSDGTYFLYSKLTVDTDSWLQGEIFTCSVVHEALHNHHT
+FT                       QKNLSRSPGK"
+FT                       /splice-expected-nt="g"
+FT                       /splice-expectedcodon="gga [G]"
+FT                       /splicing-frame="sf1"
+FT   CH3                 4042..4355
+FT                       /codon_start=3
+FT                       /translation="RAQTPQVYTIPPPREQMSKKKVSLTCLVTNFFSEAISVEWE
+FT                       RNGELEQDYKNTPPILDSDGTYFLYSKLTVDTDSWLQGEIFTCSVVHEALHNHHT
+FT                       QKNLSRSP"
+FT   CHS                 4356..4361
+FT                       /translation="GK"
+FT                       /IMGT_note="For complete translation nucleotide G at 
+FT                       position 4356 has been included in CH-S"
+FT   INT-DONOR-SPLICE    4356..4358
+FT   STOP-CODON          4362..4364
+FT   POLYA_SIGNAL        4433..4438
+FT   ACCEPTOR-SPLICE     5806..5810
+FT   M1                  5809..5939
+FT                       /codon_start=3
+FT                       /translation="LELNETCAEAQDGELDGLWTTITIFISLFLLSVCYSASVTL
+FT                       FK"
+FT                       /splice-expected-nt="g"
+FT                       /splice-expectedcodon="gag [E]"
+FT                       /splicing-frame="sf1"
+FT   CONNECTING-REGION   5809..5861
+FT                       /codon_start=3
+FT                       /translation="LELNETCAEAQDGELDG"
+FT   TM-PART1            5862..5939
+FT                       /translation="LWTTITIFISLFLLSVCYSASVTLFK"
+FT   DONOR-SPLICE        5939..5941
+FT   INTRON              5940..6486
+FT   ACCEPTOR-SPLICE     6484..6488
+FT   M2                  6487..6567
+FT                       /translation="VKWIFSSVVQVKQTAIPDYRNMIGQGA"
+FT   TM-PART2            6487..6489
+FT   CYTOPLASMIC-REGION  6490..6567
+FT                       /translation="KWIFSSVVQVKQTAIPDYRNMIGQGA"
+FT   3'UTR               6568..8504
+FT   STOP-CODON          6568..6570
+XX
+SQ   Sequence 8504 BP; 2311 A; 2141 C; 2233 G; 1819 T; 0 other;
+     gaattcgggg taggttggag tatgggaacc aggctggaca gctctgggga agctggggta        60
+     gatggggttg tggggaccag gctgggaaac tcttggggaa gtggggttgt ggggaccagg       120
+     ctgggcagct ctcaggtgaa ctggggtagg ttaggagtat aggagcaggc tgggcagctc       180
+     tggagggagc taggataagt gaggatgtgg ggaccaagct gggagctctg ggggagctgg       240
+     ggtaggttga agtatgggga ctaacctggg cagctctggg tcagctgaac cagtgggagc       300
+     gcagggacca gactgggcag ccgggggagc agggtaggtg gaagcacagg atattaagct       360
+     gagcagctac aggtgagctg gggtaggagg gagtgtgggg acaggccggg cagctccagg       420
+     gagccgggga ggcggagccg tgggaacagg ccgggcagcc ccagggagct ggggtgggtg       480
+     gggttgtgag gaccaggcgg gcagccatag ggagctgggg taagtgggaa tatggagacc       540
+     ggccgggagc cgaggtaggt gggaacatgg gtattaagct gagcagccat aggtgagctg       600
+     gggcgtagga gggagtatga ggactaggtt gggcagctac aggtgagctg ggttggatgg       660
+     aaatgtgaat aaccgcctga aggccacagg ggagctgggc taatcagatc acagggccag       720
+     gttatcagct cctgggtcag ggtaggaggt aattcctgag cagaggaacc aagtaggtag       780
+     gtaggacaga agtagatagg acagatggag cagttacaga ggaaaaggtt tgtagaagct       840
+     tgaatgtcca ggctgagtat ctacatggtg actggaaaag gtgggcgttt ggggaggggg       900
+     accagatcaa gctaagggtt ctggggcaga taggagtgtg gaaaagtgga ctgggttatc       960
+     acaagggaac taggacaggt ggttgtgggg gaagccagtg tgagtgacca cagtgtactg      1020
+     aggcaggctg gagtgctagg gtaccaggtc aagcacagga actcagtagg tctagccagg      1080
+     gcaactagga acactctgac aggaaagggt acatgaacca gcctgagacc tttgaagacc      1140
+     tgagatggct caggcagcag tggcaagtga ggatgtggga atccagtgag gtgagagaac      1200
+     tggagacagc tccagggaaa ctagtcgtct cacctccctg ctgcaggcct ctcctgtagc      1260
+     cactctgcac ctcatatctg tacatgccta ttagcaagaa gatagtaaga gctgggttca      1320
+     gatataagac tgtgtgcaag aactagatgg ggtactgggt aggaatgatg aagaaagaga      1380
+     aagggaaagt gctcagggcc tgtctaaccc acaggcaaga gagaatcagt aatgagagac      1440
+     aaggaaggcc ttggctgagc agagcaggga aagtccctga ggctaacact ctcaaaagga      1500
+     ccatatagac agcagttctc agtcgggggc ccatcttggt tcctggagat ggaggggaac      1560
+     ttaccatagg aaggtcaaac ttgttacagc cgttatgtat acagagttgg atgcacagag      1620
+     ggaaggaaga aggaggcaca tcagggtctg agcagtggaa gccagcagct gtggttcgaa      1680
+     gaaggatgac cctgaagctg agaggagacc tgggttggag aaaagacagc ctgacagcca      1740
+     gttttctcat gaatggcagc atatcctaaa ctcaagggct catggcttct agaaagaaat      1800
+     ggggaactca ttggaatctg gagacactgg cacctgtgac ataggagaag gcaggggtga      1860
+     gtgtggggtt cagggtaaga gaagaggcag tagtggagct agagctgaga tcatttggtt      1920
+     cccattagaa aaataccctg cagaggacaa gaagcacaga gacatccagg gaagtcaggc      1980
+     caggccaggg atgcccatgc caggaaggtt catgacagac ttactgggtg tgaacctcag      2040
+     gaggaagtca aggaggaaga ttcaaggagg gctgaggtca agctggagcc cagagcccag      2100
+     atttaggaat caaagtagca ggcaggctga ggaagtgtcc cgtggacact gtgtcagtgc      2160
+     agaatctagc agtggtattt gttcaccctc tgtagccaag agccaactca gatggcttag      2220
+     cctgtatgat cagggtcatg gacatgagtt tgtgaagagc tcgtggggcc tgagactagg      2280
+     ggccgcctat taattaaaaa caggtcacag agagagggag agagagagag agaaagagag      2340
+     agagagagaa agagagagag agagagagag agagagagag agagagagag agagagagag      2400
+     agagaggaat caaaggacag caggaaccaa catgccagga gctagagaag gaaatgaagg      2460
+     ctccattgag gggaaacatg aatgatgtct acagcttcaa gcacaggtgc aagagactat      2520
+     agaacagtac atacaaacca gctttctgaa aatatgttca ggatagagct gggctcagaa      2580
+     attctactga tcaaacctag ctgctaattc tggggtggag ggggtgtaag gtgaggcaat      2640
+     tggaaccatc aaggttgcta tatgatgccc tgacctaggt gatatatcct acatgctctt      2700
+     tgcagaaccc tggcatcctt gtaggaccaa ggctgaactc ctccaggtgc ctggatccag      2760
+     ctgtctgata acctcactca tcctcctatc ttgcagctac aacaacagcc ccatctgtct      2820
+     atcccttggt ccctggctgc agtgacacat ctggatcctc ggtgacactg ggatgccttg      2880
+     tcaaaggcta cttccctgag ccggtaactg taaaatggaa ctatggagcc ctgtccagcg      2940
+     gtgtgcgcac agtctcatct gtcctgcagt ctgggttcta ttccctcagc agcttggtga      3000
+     ctgtaccctc cagcacctgg cccagccaga ctgtcatctg caacgtagcc cacccagcca      3060
+     gcaagactga gttgatcaag agaatcggtg agagggtaac taagggaaat aaaatttaac      3120
+     caggaggtca agttggggtc aacctcttat ataaaacaac caaactgaac agaccttggc      3180
+     agagaggcaa tgccaatcag ggcagttggg ttcctttgtg tctacctcct agaagcctct      3240
+     tttcatgttc ctcatattca gaaagtagtg ctctggaatg gtcaccagta tttcacatca      3300
+     tggacaaaca gaagtagaca tgggtctcaa cctgtcaatg atcatatcca ggaacacctt      3360
+     gacctaagcc aacactagga ccatctttct tctccctggt ttggtgcctt ctctcctcta      3420
+     aaccccatta atgcccagtc ttttctctgc agagcctaga atacccaagc ccagtacccc      3480
+     cccaggttct tcatgcccac gtaagtcatt taagtctcta gtcccagaac atgattgtcc      3540
+     caaaagccac atgttggagg atggtacagt tgctaaccca tcctatctct ccccaccagc      3600
+     tggtaacatc ttgggtggac catccgtctt catcttcccc ccaaagccca aggatgcact      3660
+     catgatctcc ctaaccccca aggttacgtg tgtggtggtg gatgtgagcg aggatgaccc      3720
+     agatgtccat gtcagctggt ttgtggacaa caaagaagta cacacagcct ggacacagcc      3780
+     ccgtgaagct cagtacaaca gtaccttccg agtggtcagt gccctcccca tccagcacca      3840
+     ggactggatg aggggcaagg agttcaaatg caaggtcaac aacaaagccc tcccagcccc      3900
+     catcgagaga accatctcaa aacccaaagg tgagagctgc agcctgactg catgggggct      3960
+     gggatgggca taagaataaa ggtctgtgtg gacagccttc tgcttcagcc acgacctctg      4020
+     tgtatgcttc taaccccaca ggaagagccc agacacctca agtatacacc atacccccac      4080
+     ctcgtgaaca aatgtccaag aagaaggtta gtctgacctg cctggtcacc aacttcttct      4140
+     ctgaagccat cagtgtggag tgggaaagga acggagaact ggagcaggat tacaagaaca      4200
+     ctccacccat cctggactca gatgggacct acttcctcta cagcaagctc actgtggata      4260
+     cagacagttg gttgcaagga gaaattttta cctgctccgt ggtgcatgag gctctccata      4320
+     accaccacac acagaagaac ctgtctcgct cccctggtaa atgagaacag cacctagcca      4380
+     ttcctcgggt cttacaagac actgatacca gctctaactg gtgaacccta taaataaagc      4440
+     acccagagat gggaccttgt gagattatct tggttcttta catggcacat agttcatgat      4500
+     acacctcagc cacaggctgt ggggtctggc cagggttcaa ggtgtaagtt aacatccaag      4560
+     aaagaacaag gtcttatact gccagaccca gggcatgcaa gtggacctgc ccttgccaga      4620
+     gatcatccct ctctgcatag caagtttgac ccaaggggcc ctcttcatac tcttccccac      4680
+     aaccagcaac tgttctgtga tgagtctgga gatagaaata tcgccctaga aaatatccaa      4740
+     agaaaggaac acagaaagtg tatcccacct caacacgaac cccaccttca tttgtctgtc      4800
+     cttccctcta ccgtgactcc cctaccttga cctaggaggt ctctgtatgt attacataga      4860
+     caggcaggaa gactcataca tgaagcctgt tcatctccac cacaccccca gcgataggga      4920
+     tagggatgag tactcctaag agactacctc ccatatgaca ttcactcaca cctaagttcc      4980
+     aagacactga gagacttatg accctagctg cccccaagga agtaactaat caaataccta      5040
+     catagatgct gagaccagaa ctattagaac cagcctgcta agcatcactc aacccacatg      5100
+     gtacctccaa gcctacatac atccactgat acctcaccta ggcagcatga atagcaacca      5160
+     aacccatctt agtgtcggga tatccctaga cactacctaa atgtacacat ttggaccagt      5220
+     gaagatgaaa tagctctcat gggtacctaa ctgttttccc ctaacacaca caagtacctt      5280
+     cagacccatt ctgtccctct atgcctaagc ccctattttc atcccttaca gttaacactc      5340
+     tcccatagct gtataacatg actcacttcc caatgtggac cttctaggaa gcccaggtat      5400
+     catcaaacgc aggccctact ctcactctgt ccctctgtac tcagtcacca gggaacaagc      5460
+     agtaggtcag gcaggctgca gagctattac ctacagggct tccaagcctt gaatcagcca      5520
+     agccagaccc agtactgagg gatagggtag acaaaaaggg ctcctgcata gcccaggcca      5580
+     gcatcaggtc cagtgtatct ggctgtaccc agggacaaaa cggcagcacg ttggggagct      5640
+     gaggtttctg gttcacagag aacataaagg agagatggcc ccagggaggg tctgctgacc      5700
+     cagtcaggct gcagctttct cctgggcctc catgcagcct cctgccacac agggaatggc      5760
+     cctagctcta ccttgttggg acaaacactg actttcctct ctgttcagag ctggaactga      5820
+     atgagacctg tgctgaggcc caggatgggg agctggacgg gctctggacg accatcacca      5880
+     tcttcatcag cctcttcctg ctcagcgtgt gctacagcgc ctctgtcacc ctcttcaagg      5940
+     tcatccctat ttcctccacc atcctcacaa tatctacact atactcaagc tgtctccata      6000
+     gtgattcatg ctatccctac ctgtcccata ctgtctcaat gtctttccca tgtcatcata      6060
+     tgtcatcttc cacatagtca tccactgtac ttacaccacc ctctccctgt ccctctgttc      6120
+     tatactgtgc ccacattgtc catgctgtcc ctaatttgtc ttgacactcc cgcaagttgt      6180
+     cacccaccct atccatgcac cgtctccaat atgatctgca cactgttcct attgccggtc      6240
+     cccactctat tcacacctgg tcctcaccaa atccctacac tgtccctaca atgccccttg      6300
+     ctatagctac acaccgtctc aaaactctac tcacaccttg ccttacaatg tcactgtctt      6360
+     atcctcactc tagatatatg acatcccaag attgggagct gccctggctt agtgtataat      6420
+     gaggcaggga tgacctgtga agggactcag gtcaggcaca taacatctca cttttgcatc      6480
+     tcacaggtga agtggatctt ctcctcagtg gtgcaggtga agcagacggc catccctgac      6540
+     tacaggaaca tgattggaca aggtgcctag cctgtctctt cagaaggtgc cagagcttgc      6600
+     tagccctcta ggaccaagtc catgctgctg agctgccaga cacacgggtt acactgcctt      6660
+     ctcatctcag catcctttga tcttatggct ctgactctgc tacccaggtc ccttccacat      6720
+     ttggagcagc atgtggaaag caggctttgc cccagaccat agccaacagg acccaagcac      6780
+     cactaccaca gccaaaacag tggatagggt caaaactgct gtgtttcttc tacatggtgt      6840
+     ctagccctca gccaggcact ctcccaagat gggctgcatc acctgcatcc atttagatgc      6900
+     agatgagcct tagagccagc cctgtctata cagtcctctg aaaaacgtgc ttctctgaga      6960
+     gaagaggaag tttccatgtg tctctaaggc tgagaaggcc tcaaagggaa ctctttggga      7020
+     aggactgcca aaggtgactc taatggcctt cacccaacca gtgccctgcc gtgttttttc      7080
+     acttcttgga atgtaagatg gggctacttg tgaagacctc ttttcctgcc atccatgcaa      7140
+     catgatgaaa tctcagatgc aagatcccat cagacactgc tgatcccaca gcttgaagac      7200
+     cagggcactg ttacctcagt ggatgaccta gagagacact cagagggcct gagcttcata      7260
+     gcctctgttg ggccctagca ggtacaggag ccactgagca aaggctgggc aacccagaaa      7320
+     agcccgtagg agaagagcag accccggtca gtcccaaagg tggtccagga gcaacatggg      7380
+     gagagagaga aaggatgctt aaaaagccag gcaggaatgg gcctttcctg cagcctggca      7440
+     tccggactgg gccactgaca gcagagaata ccagttagag tagatatcca gagagagagc      7500
+     ccaggcctgg ggcactgagg ctgactgact gctggcattg gagaggcact gtggctgttt      7560
+     ctccatttca tatcaaggca aatgcaggcc agagtcccca gaaaagacaa aggagaaatc      7620
+     caggaagaaa agttgggtgc ccggctctta ggggactcta agagatgttc actgacttga      7680
+     agcttagctt tgccagcttt ttctttaaat tttctggaac ccagctatgt ctctaatgtc      7740
+     cctcttcatc ttttttaata ataaaacatc cttcaacatt gtaaaacaca ctgtgttctt      7800
+     cctctgtaga ccaaccccca ctctccttgt acaaaactca cacacacaca catgcacaca      7860
+     catgcatgca cacatgcaca ctcacacaca cgtacatgca tgcacacaag cacattcaca      7920
+     cacacatatg cacacacatg catgcacaca cacactcaca cacaaataca tgcatcacac      7980
+     acccacaccc acacatatac catgctaaca ttcccaaagc accactcacc cagcattctg      8040
+     ctctcagtct caagtcccct ccaactatca tcccataatg aggcagggat ggtctgtgag      8100
+     tgggaatcac tctggatttc aggccatggt gaccacgagg gagaggcagt caggaagcag      8160
+     aagatagcta acatccatgt gagaggaaca gatgctatga ctcaagagtg gattatagcc      8220
+     tgatgacttg cagtagggca gatagcccgg ggaacgtggc ctccacttgc actggtacag      8280
+     ggcgaaagcc tttctaaggc agatcagggg actagggaaa gaaagatgga gctcagacat      8340
+     gtcagggtgc tctgctctca ctgccttccc aaggtggagt tttgcagcag gaacatccta      8400
+     caacacgggt tcaactgtta gaaactgttt gggtctacat aggccctggc agaggattgt      8460
+     gttggagact tggggctgga ctagtcaaaa gactcatgca gctg                       8504
+//

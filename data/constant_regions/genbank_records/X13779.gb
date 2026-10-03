@@ -1,0 +1,109 @@
+ID   X13779; SV 1; linear; cDNA; STD; VRT; 1433 BP.
+XX
+AC   X13779;
+XX
+DT   25-MAR-1996 (Rel. 199613-1, arrived in LIGM-DB)
+DT   31-JAN-2013 (Rel. 201305-4, Last updated, Version 6)
+XX
+DE   X. laevis mRNA for immunoglobulin heavy chain constant region isotype
+XX
+KW   antigen receptor; Immunoglobulin superfamily (IgSF); immunoglobulin (IG);
+KW   IG-Light; IG-Heavy-Upsilon; constant; joining; regular; cDNA; undefined;
+KW   rearranged; productive.
+XX
+OS   Xenopus laevis (African clawed frog)
+OC   Chordata; Craniata; Vertebrata; Gnathostomata; Teleostomi; Euteleostomi;
+OC   Sarcopterygii; Dipnotetrapodomorpha; Tetrapoda; Amphibia; Batrachia; Anura;
+OC   Pipoidea; Pipidae; Xenopodinae; Xenopus; Xenopus; Xenopus laevis.
+XX
+RN   [1]
+RP   1-1433
+RA   Arakawa T., Carninci P., Fukuda S., Hashizume W., Hayashida K., Hori F.,
+RA   Iida J., Imamura K., Imotani K., Itoh M., Kanagawa S., Kawai J., Kojima M.,
+RA   Konno H., Murata M., Nakamura M., Ninomiya N., Nishiyori H., Nomura K.,
+RA   Ohno M., Sakazume N., Sano H., Sasaki D., Shibata K., Shiraki T.,
+RA   Tagami M., Tagami Y., Waki K., Watahiki A., Muramatsu M., Hayashizaki Y.;
+RT   ;
+RL   Submitted (14-APR-2004) to the INSDC.
+RL   Contact:Yoshihide Hayashizaki The Institute of Physical and Chemical
+RL   Research (RIKEN), Omics Science Center, RIKEN Yokohama Institute; 1-7-22
+RL   Suehiro-cho, Tsurumi-ku, Yokohama, Kanagawa 230-0045, Japan URL
+RL   :http://www.osc.riken.jp/
+XX
+RN   [2]
+RP   1-1433
+RA   Scinicariello F., Attanasio R.;
+RT   ;
+RL   Submitted (11-JUN-2001) to the INSDC.
+RL   Department of Biology, Georgia State University, PO Box 4010, Atlanta, GA
+RL   30302, USA
+XX
+DR   ENA; X13779.
+XX
+CC   IMGT/LIGM-DB annotation level: by annotators
+CC   
+CC   The sequence overlaps with that reported by Schwager et. al.
+CC   in EMBO J. 7:2409-2415(1988).
+CC   Data kindly reviewed (21-Mar-1989) by Haire R.
+XX
+FH   Key                 Location/Qualifiers
+FH   
+FT   J-C-REGION          <1..1311
+FT                       /partial
+FT                       /translation="VTASAPSVFPLIPCCDNVDFNDSVTMGCLVTGYMADPLDIQ
+FT                       WNDGSITTGIKTMRPVLSDVDGLYTLSSQLTILASEWKNSTYKCKVVHNYTNTKQ
+FT                       EKSLKVLPCMAPHVQLFLQSPCMSDAISRAQHENINATLDLLCIINNFYHGQIKV
+FT                       KWLVNGKQDVSAEASVPTPSKTEDGTYSSSSQLRILKGMWNKGTQYSCIVTHTSS
+FT                       NTTTIANISQCTEQCHDNLQVYPLTPTFHDLYFSRNAKVTCLVSSMKTIENFDIS
+FT                       WEREKAGNLEFVTEDPVLHDNGTYSVASILSVCAEDWESGDKFSCTVRSQDLPSP
+FT                       VKKTIFKQNEGTPKAPDVYLLPPSAQELIQQEMVTLTCFVTGFNPKEIFIQWMQG
+FT                       GVSISEDKFINTVPMKSDGEQTYFIYSKLAIPAAKWNQGDVFTCVVGHEALPLYI
+FT                       TQQSIDKSSGK"
+FT                       /clone_lib="lambda gt11"
+FT                       /note="PID:g64828"
+FT                       /organism="Xenopus laevis"
+FT                       /putative_limit="3' side"
+FT                       /tissue_type="spleen"
+FT   J-REGION            <1..9
+FT                       /partial
+FT                       /translation="VTA"
+FT                       /putative_limit="3' side"
+FT   C-REGION            <10..1311
+FT                       /partial
+FT                       /translation="SAPSVFPLIPCCDNVDFNDSVTMGCLVTGYMADPLDIQWND
+FT                       GSITTGIKTMRPVLSDVDGLYTLSSQLTILASEWKNSTYKCKVVHNYTNTKQEKS
+FT                       LKVLPCMAPHVQLFLQSPCMSDAISRAQHENINATLDLLCIINNFYHGQIKVKWL
+FT                       VNGKQDVSAEASVPTPSKTEDGTYSSSSQLRILKGMWNKGTQYSCIVTHTSSNTT
+FT                       TIANISQCTEQCHDNLQVYPLTPTFHDLYFSRNAKVTCLVSSMKTIENFDISWER
+FT                       EKAGNLEFVTEDPVLHDNGTYSVASILSVCAEDWESGDKFSCTVRSQDLPSPVKK
+FT                       TIFKQNEGTPKAPDVYLLPPSAQELIQQEMVTLTCFVTGFNPKEIFIQWMQGGVS
+FT                       ISEDKFINTVPMKSDGEQTYFIYSKLAIPAAKWNQGDVFTCVVGHEALPLYITQQ
+FT                       SIDKSSGK"
+FT                       /putative_limit="5' and 3' side"
+XX
+SQ   Sequence 1433 BP; 440 A; 318 C; 295 G; 380 T; 0 other;
+     gttacagcat cggcaccctc agtctttcct cttattccct gctgcgacaa tgttgatttc        60
+     aatgactcag tgacaatggg ctgcttagtg actggctaca tggcagatcc attagacatt       120
+     caatggaatg atggtagcat tacaactggt atcaagacaa tgagacctgt gctcagcgat       180
+     gttgatggac tttacaccct cagcagccag cttactatct tagcctcaga atggaagaac       240
+     agtacataca aatgcaaagt agtacacaat tataccaaca caaagcagga gaagtcttta       300
+     aaagtgttac cctgtatggc gcctcatgtc cagctatttc tgcagtcacc atgcatgagc       360
+     gatgcgattt ccagagcaca gcatgaaaac attaatgcta cactggatct tctgtgtata       420
+     attaataact tctaccacgg acaaatcaaa gttaagtggc tggtaaatgg aaagcaagat       480
+     gtaagtgcag aagcatcagt gccaacccct tcaaagacag aggatggtac ctacagttcc       540
+     agcagccaac tgcgtattct caaagggatg tggaacaagg gcacccagta ctcctgtatt       600
+     gtcacgcata cttcctctaa cacaactacc atagcaaata tcagccagtg caccgaacag       660
+     tgccatgaca acctacaagt gtatcctctc acacctacat ttcatgacct ctacttcagt       720
+     cggaatgcga aggttacctg cttggtgagc agcatgaaaa ccatagaaaa ctttgacatc       780
+     tcttgggaaa gagaaaaagc aggaaatcta gagtttgtca ctgaggatcc tgtactccat       840
+     gacaatggga cctatagtgt tgccagtatc ctgagtgttt gtgctgagga ctgggaaagt       900
+     ggggacaagt tctcatgcac tgtaagaagc caagatttgc catcaccggt taagaaaaca       960
+     atctttaagc agaatgaagg aactccaaaa gctccagatg tctatttact tccaccatcc      1020
+     gctcaagaac taatccagca agagatggtt acacttacct gttttgtcac tggctttaac      1080
+     cccaaggaga tcttcataca atggatgcaa ggaggtgtta gcattagcga agacaaattc      1140
+     attaatactg ttcctatgaa gagtgatggc gagcaaacat actttatata tagcaagctg      1200
+     gccatcccag cagccaaatg gaatcaagga gatgtattca cctgtgttgt tggacatgaa      1260
+     gctctacccc tgtacatcac acagcaaagc attgataaat caagcggtaa atcaagtctt      1320
+     gtcaatgtta accttgtcat gtcttaaaca gatacttgtt attaatctct ccagatttct      1380
+     gattgtttta aggaaagttg tcccatgttg tgtttgttgt cttgtttcat gta             1433
+//

@@ -1,0 +1,186 @@
+>IGHD1-1*01|species:human|chain:Heavy
+GGTACAACTGGAACGAC
+>IGHD1-7*01|species:human|chain:Heavy
+GGTATAACTGGAACTAC
+>IGHD1-14*01|species:human|chain:Heavy
+GGTATAACCGGAACCAC
+>IGHD1-20*01|species:human|chain:Heavy
+GGTATAACTGGAACGAC
+>IGHD1-26*01|species:human|chain:Heavy
+GGTATAGTGGGAGCTACTAC
+>IGHD2-2*01|species:human|chain:Heavy
+AGGATATTGTAGTAGTACCAGCTGCTATGCC
+>IGHD2-2*02|species:human|chain:Heavy
+AGGATATTGTAGTAGTACCAGCTGCTATACC
+>IGHD2-8*01|species:human|chain:Heavy
+AGGATATTGTACTAATGGTGTATGCTATACC
+>IGHD2-8*02|species:human|chain:Heavy
+AGGATATTGTACTGGTGGTGTATGCTATACC
+>IGHD2-15*01|species:human|chain:Heavy
+AGGATATTGTAGTGGTGGTAGCTGCTACTCC
+>IGHD2-21*01|species:human|chain:Heavy
+AGCATATTGTGGTGGTGATTGCTATTCC
+>IGHD2-21*02|species:human|chain:Heavy
+AGCATATTGTGGTGGTGACTGCTATTCC
+>IGHD3-3*01|species:human|chain:Heavy
+GTATTACGATTTTTGGAGTGGTTATTATACC
+>IGHD3-9*01|species:human|chain:Heavy
+GTATTACGATATTTTGACTGGTTATTATAAC
+>IGHD3-10*01|species:human|chain:Heavy
+GTATTACTATGGTTCGGGGAGTTATTATAAC
+>IGHD3-10*02|species:human|chain:Heavy
+GTATTACTATGGTTCCGGGAGTTATTATAAC
+>IGHD3-16*01|species:human|chain:Heavy
+GTATTATGATTACGTTTGGGGGAGTTATGCTTATACC
+>IGHD3-16*02|species:human|chain:Heavy
+GTATTATGATTACGTTGGGGGGAGTTATGCTTATACC
+>IGHD3-22*01|species:human|chain:Heavy
+GTATTACTATGATAGTAGTGGTTATTACTAC
+>IGHD4-4*01|species:human|chain:Heavy
+TGACTACAGTAACTAC
+>IGHD4-11*01|species:human|chain:Heavy
+TGACTACAGTAACTAC
+>IGHD4-17*01|species:human|chain:Heavy
+TGACTACGGTGACTAC
+>IGHD4-23*01|species:human|chain:Heavy
+TGACTACGGTGGTAACTAC
+>IGHD5-5*01|species:human|chain:Heavy
+GTGGATACAGCTATGGTTAC
+>IGHD5-12*01|species:human|chain:Heavy
+GTGGATATAGTGGCTACGATTAC
+>IGHD5-18*01|species:human|chain:Heavy
+GTGGATACAGCTATGGTTAC
+>IGHD5-24*01|species:human|chain:Heavy
+GTAGAGATGGCTACAATTAC
+>IGHD6-6*01|species:human|chain:Heavy
+GAGTATAGCAGCTCGTCC
+>IGHD6-13*01|species:human|chain:Heavy
+GGGTATAGCAGCAGCTGGTACTAC
+>IGHD6-19*01|species:human|chain:Heavy
+GGGTATAGCAGTGGCTGGTAC
+>IGHD6-25*01|species:human|chain:Heavy
+GGGTATAGCAGTGGCTGGTAC
+>IGHD7-27*01|species:human|chain:Heavy
+CTAACTGGGGA
+>mus_DFL16.1|species:mouse|chain:Heavy
+TTTATTACTACGGTAGTAGCTAC
+>mus_DFL16.2|species:mouse|chain:Heavy
+TTCATTACTACGGCTAC
+>mus_DFL16.3|species:mouse|chain:Heavy
+TATATAACTAAAGTGGTAGCTCA
+>mus_DQ52a.1|species:mouse|chain:Heavy
+CTAACTGGGAC
+>mus_DQ52a.2|species:mouse|chain:Heavy
+CAACTGGGAC
+>mus_DSP2.1|species:mouse|chain:Heavy
+CTACTATGGTAACTAC
+>mus_DSP2.2|species:mouse|chain:Heavy
+CTACTATGGTTACGAC
+>mus_DSP2.3|species:mouse|chain:Heavy
+CCTACTATAGTAACTAC
+>mus_DSP2.4|species:mouse|chain:Heavy
+TCTACTATGATTACGAC
+>mus_DSP2.5|species:mouse|chain:Heavy
+TCTATGATGGTTACTAC
+>mus_DSP2.6|species:mouse|chain:Heavy
+GTAGTACTACGGTAGTAGCTAC
+>mus_DSP2.7|species:mouse|chain:Heavy
+ATTACTACGGTAGTAGCTAC
+>mus_DSP2.8|species:mouse|chain:Heavy
+CTACTATAGTAACTAC
+>mus_DSP2.9|species:mouse|chain:Heavy
+CTACTATGATTACGAC
+>Xen-IGHD1-01|species:Xenopus laevis (Chr8.L)|chain:Heavy
+ATTACTATGGTG
+>Xen-IGHD1-02|species:Xenopus laevis (Chr8.S)|chain:Heavy
+ATTACTACTGTG
+>Xen-IGHD1-03|species:Xenopus tropicalis|chain:Heavy
+ACTATGGTG
+>Xen-IGHD2-01|species:Xenopus laevis (Chr8.L)|chain:Heavy
+GATCGGGGGTTTGAC
+>Xen-IGHD2-02|species:Xenopus laevis (Chr8.S)|chain:Heavy
+GATCGGGGCTTTGAC
+>Xen-IGHD2-03|species:Xenopus tropicalis|chain:Heavy
+GATAGGGGTTTTGAC
+>Xen-IGHD3-01|species:Xenopus laevis (Chr8.L)|chain:Heavy
+TACTATGATTAC
+>Xen-IGHD3-02|species:Xenopus laevis (Chr8.S)|chain:Heavy
+TACTATGATTACTAC
+>Xen-IGHD3-03|species:Xenopus tropicalis|chain:Heavy
+TACTATGATTACTAC
+>Xen-IGHD4-01|species:Xenopus laevis (Chr8.L)|chain:Heavy
+GTTACTATGGTG
+>Xen-IGHD4-02|species:Xenopus laevis (Chr8.S)|chain:Heavy
+GTTACTACTGTG
+>Xen-IGHD4-03|species:Xenopus tropicalis|chain:Heavy
+GTTACTACT
+>Xen-IGHD5-01|species:Xenopus laevis (Chr8.L)|chain:Heavy
+ATTGTAGTAGTTACT
+>Xen-IGHD5-02|species:Xenopus laevis (Chr8.S)|chain:Heavy
+ATTGTAGTAGTT
+>Xen-IGHD6-01|species:Xenopus laevis (Chr8.L)|chain:Heavy
+TACTACGGTAGT
+>Xen-IGHD6-02|species:Xenopus laevis (Chr8.S)|chain:Heavy
+TACTACGGTAGCTAC
+>Xen-IGHD7-01|species:Xenopus laevis (Chr8.L)|chain:Heavy
+GGGGACTACGTT
+>Xen-IGHD7-02|species:Xenopus laevis (Chr8.S)|chain:Heavy
+GGGGACTACTAT
+>Xen-IGHD8-01|species:Xenopus tropicalis|chain:Heavy
+TACTATGGTGTT
+>Xen-IGHD9-01|species:Xenopus tropicalis|chain:Heavy
+TATGATTACTAC
+>can_IGHD1-01|species:dog|chain:Heavy
+GTTATTATGGTACTAGCTAC
+>can_IGHD2-01|species:dog|chain:Heavy
+GTATTACTATGATGGTAGTAGTTACTAC
+>can_IGHD3-01|species:dog|chain:Heavy
+GTAGTATTACTACGGTAGTAGCTAC
+>can_IGHD4-01|species:dog|chain:Heavy
+TGACTACGGTGACTAC
+>can_IGHD5-01|species:dog|chain:Heavy
+CTAACTGGGGA
+>vic_IGHD1-01|species:alpaca|chain:Heavy
+GTATTACTATGGTGGTAGCTAC
+>vic_IGHD2-01|species:alpaca|chain:Heavy
+GTAGTACTATGGTGGTAGTAGCTACTAC
+>vic_IGHD3-01|species:alpaca|chain:Heavy
+TTACTATGGTGGTAGCTACTACTAC
+>vic_IGHD4-01|species:alpaca|chain:Heavy
+CTAACTGGGGA
+>bos_IGHD1-01|species:cow|chain:Heavy
+GTATTACTATGGTGGTAGCTAC
+>bos_IGHD2-01|species:cow|chain:Heavy
+TTACTATGGTGGTAGTTGCTACTAC
+>bos_IGHD3-01|species:cow|chain:Heavy
+TTACTACTGTGGTAGTTGCTACTAC
+>rab_DH1-01|species:rabbit|chain:Heavy
+GCATATACTAGTAGTAGTGGTTATTATATAC
+>rab_DH2-02|species:rabbit|chain:Heavy
+TAGCTACGATGACTATGGTGATTAC
+>rab_DH3-03|species:rabbit|chain:Heavy
+CCTATGGGGTCCTGGTTCCCATGGCTATGGGGTT
+>rab_DH3-04|species:rabbit|chain:Heavy
+CCTATGGGGTCCTGGTTCCCATGGCTATGGGGTT
+>rab_DH3-05|species:rabbit|chain:Heavy
+CCTATGGGGTCCTTGTTCCCATGGCTATGCAGTC
+>rab_DH4-06|species:rabbit|chain:Heavy
+GTTACTATAGTAGTGGCTGGGGTG
+>rab_DH4-07|species:rabbit|chain:Heavy
+GTTATGCTGGTAGTAGCTGGGATG
+>rab_DH5-08|species:rabbit|chain:Heavy
+ATTTGGTGAAGGGCCGACCCACCATGTAGCTATGGTAGTTAC
+>rab_DH6-09|species:rabbit|chain:Heavy
+GTTACTATAGTTATGGTTATGCTTATGCTACC
+>rab_DH7-10|species:rabbit|chain:Heavy
+GTTATCCTGGTTATAGTACTGGTACC
+>rab_DH8-11|species:rabbit|chain:Heavy
+GTTATGCTGGTAGTAGTTATTATACC
+>gga_IGHD1*01|species:chicken|chain:Heavy
+GGTAGTGGTTACTGTGGTAGTGGTGCTTAT
+>gga_IGHD2*01|species:chicken|chain:Heavy
+GGTAGTGCTTGTTGTGGTCCTTAT
+>gga_IGHD3*01|species:chicken|chain:Heavy
+GGTACTTCTGGTGCCTGCACCTTTTTCTATCCTTCCTGCCCTTAT
+>gga_IGHD4*01|species:chicken|chain:Heavy
+GGTCGTAGTGCTTACAGTTGTGGTGCTTAT

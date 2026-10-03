@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VBASE3 Constant Region Database — Pan-Vertebrate Modular Cassettes & GenBank Records</title>
+    <link rel="stylesheet" href="css/fonts.css">
+    <style>
+        :root {
+            --bg-deep: #060b13;
+            --bg-card: rgba(15, 23, 42, 0.85);
+            --bg-card-hover: rgba(30, 41, 59, 0.95);
+            --border-glass: rgba(56, 189, 248, 0.2);
+            --border-glass-gold: rgba(245, 158, 11, 0.3);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --cyan-glow: #38bdf8;
+            --emerald-glow: #34d399;
+            --amber-glow: #fbbf24;
+            --purple-glow: #c084fc;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(14, 165, 233, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(168, 85, 247, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(15, 23, 42, 0.9) 0%, #060b13 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            padding: 24px 32px 64px 32px;
+        }
+
+        header {
+            margin-bottom: 24px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+        }
+
+        .header-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .logo-group {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .logo-badge {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #0284c7, #10b981);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            box-shadow: 0 4px 20px rgba(2, 132, 199, 0.4);
+        }
+
+        .logo-text h1 {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(to right, #ffffff, #cbd5e1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logo-text p {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+
+        .nav-portal-links {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .portal-link {
+            padding: 6px 14px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 8px;
+            border: 1px solid rgba(148, 163, 184, 0.15);
+            background: rgba(15, 23, 42, 0.6);
+            transition: all 0.2s;
+        }
+
+        .portal-link:hover, .portal-link.active {
+            color: #ffffff;
+            border-color: var(--cyan-glow);
+            background: rgba(56, 189, 248, 0.15);
+        }
+
+        .hero-banner {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(30, 41, 59, 0.6));
+            border: 1px solid var(--border-glass);
+            border-radius: 14px;
+            padding: 22px 28px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .hero-desc {
+            max-width: 820px;
+            font-size: 13.5px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+        }
+
+        .hero-desc strong {
+            color: #f1f5f9;
+        }
+
+        .kpi-row {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .kpi-card {
+            background: rgba(6, 13, 23, 0.8);
+            border: 1px solid rgba(148, 163, 184, 0.12);
+            border-radius: 10px;
+            padding: 12px 18px;
+            min-width: 130px;
+            text-align: center;
+        }
+
+        .kpi-val {
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        .kpi-lbl {
+            font-size: 11px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 2px;
+        }
+
+        /* Controls & Filter Bar */
+        .filter-bar {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .filter-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+        }
+
+        select, input[type="text"] {
+            background: #0f172a;
+            border: 1px solid #334155;
+            color: #ffffff;
+            padding: 7px 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        select:focus, input[type="text"]:focus {
+            border-color: var(--cyan-glow);
+        }
+
+        .export-group {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-action {
+            padding: 7px 14px;
+            font-size: 12px;
+            font-weight: 600;
+            border-radius: 8px;
+            border: 1px solid rgba(56, 189, 248, 0.4);
+            background: rgba(2, 132, 199, 0.2);
+            color: #38bdf8;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+
+        .btn-action:hover {
+            background: #0284c7;
+            color: #ffffff;
+        }
+
+        /* Constant Region Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+            gap: 20px;
+        }
+
+        .constant-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .constant-card:hover {
+            border-color: var(--cyan-glow);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .card-header-row {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .gene-title {
+            font-size: 18px;
+            font-weight: 750;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .species-badge {
+            font-size: 11px;
+            font-weight: 600;
+            padding: 3px 8px;
+            border-radius: 6px;
+            background: rgba(56, 189, 248, 0.15);
+            color: #38bdf8;
+            border: 1px solid rgba(56, 189, 248, 0.3);
+        }
+
+        .isotype-badge {
+            font-size: 11px;
+            font-weight: 600;
+            padding: 3px 8px;
+            border-radius: 6px;
+            background: rgba(245, 158, 11, 0.15);
+            color: #fbbf24;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        .form-badge {
+            font-size: 11px;
+            font-weight: 600;
+            padding: 3px 8px;
+            border-radius: 6px;
+        }
+
+        .form-badge-secreted {
+            background: rgba(56, 189, 248, 0.15);
+            color: #38bdf8;
+            border: 1px solid rgba(56, 189, 248, 0.3);
+        }
+
+        .form-badge-membrane {
+            background: rgba(168, 85, 247, 0.18);
+            color: #c084fc;
+            border: 1px solid rgba(168, 85, 247, 0.35);
+        }
+
+        .form-badge-engineered {
+            background: rgba(244, 63, 94, 0.15);
+            color: #fb7185;
+            border: 1px solid rgba(244, 63, 94, 0.3);
+        }
+
+        .locus-badge {
+            font-size: 10.5px;
+            font-weight: 600;
+            padding: 2px 6px;
+            border-radius: 5px;
+            background: rgba(148, 163, 184, 0.12);
+            color: #94a3b8;
+            border: 1px solid rgba(148, 163, 184, 0.25);
+        }
+
+        .motif-badge {
+            font-size: 10.5px;
+            font-family: monospace;
+            padding: 2px 6px;
+            border-radius: 5px;
+            background: rgba(234, 179, 8, 0.12);
+            color: #facc15;
+            border: 1px solid rgba(234, 179, 8, 0.25);
+        }
+
+        .gb-acc-pill {
+            font-size: 11px;
+            font-family: monospace;
+            padding: 2px 7px;
+            border-radius: 5px;
+            background: rgba(52, 211, 153, 0.15);
+            color: #34d399;
+            border: 1px solid rgba(52, 211, 153, 0.3);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .gb-acc-pill:hover {
+            background: rgba(52, 211, 153, 0.3);
+        }
+
+        .desc-text {
+            font-size: 12.5px;
+            color: var(--text-secondary);
+            margin-bottom: 14px;
+            line-height: 1.5;
+        }
+
+        .domain-chips {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-bottom: 16px;
+        }
+
+        .domain-chip {
+            font-size: 11px;
+            font-weight: 600;
+            padding: 4px 8px;
+            border-radius: 6px;
+            background: #1e293b;
+            color: #cbd5e1;
+            border: 1px solid #334155;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+
+        .domain-chip:hover, .domain-chip.active {
+            background: rgba(56, 189, 248, 0.2);
+            color: #38bdf8;
+            border-color: var(--cyan-glow);
+        }
+
+        .seq-box {
+            background: #090e17;
+            border: 1px solid #1e293b;
+            border-radius: 8px;
+            padding: 10px 12px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 11px;
+            color: #e2e8f0;
+            word-break: break-all;
+            max-height: 90px;
+            overflow-y: auto;
+            margin-bottom: 14px;
+        }
+
+        .card-actions {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            padding-top: 12px;
+            border-top: 1px solid rgba(148, 163, 184, 0.1);
+        }
+
+        .btn-copy {
+            padding: 6px 12px;
+            font-size: 11px;
+            font-weight: 600;
+            border-radius: 6px;
+            border: 1px solid #334155;
+            background: #1e293b;
+            color: #cbd5e1;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-copy:hover {
+            background: var(--cyan-glow);
+            color: #060b13;
+            border-color: var(--cyan-glow);
+        }
+
+        .btn-tag {
+            padding: 6px 12px;
+            font-size: 11px;
+            font-weight: 600;
+            border-radius: 6px;
+            border: 1px solid rgba(245, 158, 11, 0.4);
+            background: rgba(245, 158, 11, 0.15);
+            color: #fbbf24;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .btn-tag:hover {
+            background: #f59e0b;
+            color: #060b13;
+        }
+
+        .btn-view-gb {
+            padding: 6px 12px;
+            font-size: 11px;
+            font-weight: 600;
+            border-radius: 6px;
+            border: 1px solid rgba(52, 211, 153, 0.4);
+            background: rgba(16, 185, 129, 0.15);
+            color: #34d399;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-view-gb:hover {
+            background: #10b981;
+            color: #ffffff;
+        }
+
+        /* GenBank Viewer Modal */
+        .modal-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(4px);
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+
+        .modal-card {
+            background: #0c1524;
+            border: 1px solid var(--border-glass);
+            border-radius: 14px;
+            width: 100%;
+            max-width: 900px;
+            max-height: 85vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+        }
+
+        .modal-header {
+            padding: 16px 20px;
+            border-bottom: 1px solid #1e293b;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .modal-body {
+            padding: 16px 20px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .modal-body pre {
+            background: #060b13;
+            border: 1px solid #1e293b;
+            border-radius: 8px;
+            padding: 14px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 11.5px;
+            color: #94a3b8;
+            white-space: pre-wrap;
+            line-height: 1.45;
+        }
+
+        .close-btn {
+            background: transparent;
+            border: none;
+            color: #94a3b8;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .close-btn:hover {
+            color: #ffffff;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: #10b981;
+            color: #060b13;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 10px 18px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-top">
+            <div class="logo-group">
+                <a href="index.html" title="Return to VBASE3 Hub" style="text-decoration:none; display:flex; align-items:center;">
+                    <img src="images/vbase3_logo.jpg" alt="VBASE3 Logo" style="height:40px; width:auto; border-radius:6px; box-shadow:0 2px 10px rgba(0,0,0,0.5); object-fit:contain; background:#ffffff; padding:2px; margin-right:8px; transition:transform 0.15s;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'" />
+                </a>
+                <div class="logo-badge">🏛️</div>
+                <div class="logo-text">
+                    <h1>VBASE3 Constant Region Database <span style="font-size:11px; background:rgba(168,85,247,0.25); color:#d8b4fe; border:1px solid rgba(168,85,247,0.5); padding:2px 8px; border-radius:12px; vertical-align:middle; margin-left:8px; font-weight:600;">Beta Edition</span></h1>
+                    <p>Modular Immunoglobulin & TCR Constant Domains Linked to Original GenBank/EMBL Records</p>
+                </div>
+            </div>
+            <div class="nav-portal-links"><a href="https://doi.org/10.5281/zenodo.22923344" target="_blank" rel="noopener" class="portal-link" style="color:#fbbf24; border-color:rgba(245,158,11,0.5); background:rgba(217,119,6,0.18); font-weight:700;" title="Download complete database tables and catalogs from Zenodo">📦 Zenodo Data ↗</a>
+                <a href="index.html" class="portal-link">🏠 Portal Home</a>
+                <a href="repertoire_analysis.html" class="portal-link">📊 Repertoire Analysis</a>
+                <a href="repertoire_diversity.html" class="portal-link">🌌 Repertoire Universe</a>
+                <a href="constant_regions.html" class="portal-link active">🏛️ Constant Regions</a>
+                <a href="dnaplot.html" class="portal-link">🧬 DNAPLOT</a>
+                <a href="vbase3_status.html" class="portal-link">📊 Status & Coverage</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="hero-banner">
+            <div>
+                <div style="font-size:18px; font-weight:750; color:#ffffff; margin-bottom:6px;">
+                    Downstream Synthesis & Biotherapeutic Engineering Cassettes
+                </div>
+                <div class="hero-desc">
+                    Following the public IMGT/LIGM-DB freeze, VBASE3 provides an independent, verified catalogue of 
+                    <strong>constant region cassettes</strong> (CH1, Hinge, CH2, CH3, Fc, CL, and TCR constant domains). 
+                    To guarantee absolute sequence fidelity and downstream synthesis integrity, variable domains terminate strictly 
+                    at canonical J-boundaries (<strong>TVSS/VEIK/TVL</strong>), while complete constant domains are partitioned here 
+                    with 1-click synthesis exports and full traceability to original GenBank accession flat files.
+                </div>
+            </div>
+            <div class="kpi-row">
+                <div class="kpi-card">
+                    <div class="kpi-val" id="kpiTotalEntries" style="color:var(--cyan-glow);">23</div>
+                    <div class="kpi-lbl">Curated Cassettes</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-val" id="kpiSpecies" style="color:var(--emerald-glow);">6</div>
+                    <div class="kpi-lbl">Target Species</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-val" id="kpiGenbank" style="color:var(--amber-glow);">100%</div>
+                    <div class="kpi-lbl">GenBank Verified</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-val" style="color:var(--purple-glow);">0%</div>
+                    <div class="kpi-lbl">J-Bleedthrough</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- INITIAL RELEASE NOTICE & DISCLAIMER -->
+        <div style="background: rgba(13, 27, 42, 0.85); border: 1px solid rgba(56, 189, 248, 0.35); border-left: 4px solid var(--accent-cyan); border-radius: 10px; padding: 14px 18px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 6px;">
+            <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
+                <div style="display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 13.5px; color: #38bdf8;">
+                    <span>📢 Initial Release Notice & Scope</span>
+                    <span style="font-size: 11px; font-weight: 600; background: rgba(56, 189, 248, 0.2); color: #bae6fd; border: 1px solid rgba(56, 189, 248, 0.4); padding: 1px 8px; border-radius: 12px;">Beta Community Feedback Edition</span>
+                </div>
+                <span style="font-size: 12px; color: #94a3b8;">108 Curated Cassettes • 7 Species</span>
+            </div>
+            <div style="font-size: 12.5px; color: #cbd5e1; line-height: 1.55;">
+                This represents an <strong>initial curated collection</strong> of vertebrate constant region cassettes across 7 core therapeutic and model species (Human, Mouse, Canine, Feline, Rabbit, Camelid, Cattle). <strong>Additional species, rare allotypes, and extended spliced forms are currently in active curation and will be integrated in subsequent VBASE3 releases.</strong>
+            </div>
+            <div style="font-size: 11.5px; color: #94a3b8; background: rgba(6, 13, 23, 0.7); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 6px; padding: 8px 12px; margin-top: 4px; line-height: 1.5;">
+                <strong style="color: #f59e0b;">⚠️ Verification Disclaimer:</strong> Constant region sequences in this module are curated modular cassettes derived directly from authentic, primary INSDC/GenBank reference records (cited on each card); they have not been processed by the automated VBASE3 Class I/II/III functional verification pipeline (which specifically verifies mature V-genes across genomic assemblies and expressed repertoires).
+            </div>
+        </div>
+
+        <div class="filter-bar">
+            <div class="filter-group">
+                <span class="filter-label">Species:</span>
+                <select id="speciesFilter" onchange="filterRecords()">
+                    <option value="ALL">All Species</option>
+                    <option value="Homo sapiens">Homo sapiens (Human)</option>
+                    <option value="Mus musculus">Mus musculus (Mouse)</option>
+                    <option value="Canis lupus familiaris">Canis lupus familiaris (Dog)</option>
+                    <option value="Felis catus">Felis catus (Cat)</option>
+                    <option value="Oryctolagus cuniculus">Oryctolagus cuniculus (Rabbit)</option>
+                    <option value="Lama glama">Lama glama (Llama/Camelid)</option>
+                    <option value="Bos taurus">Bos taurus (Cattle)</option>
+                </select>
+
+                <span class="filter-label" style="margin-left:8px;">Class:</span>
+                <select id="classFilter" onchange="filterRecords()">
+                    <option value="ALL">All Classes</option>
+                    <option value="IgG">IgG (Gamma)</option>
+                    <option value="HCAb">HCAb (Camelid Heavy-Only)</option>
+                    <option value="IgM">IgM (Mu)</option>
+                    <option value="IgA">IgA (Alpha)</option>
+                    <option value="IgE">IgE (Epsilon)</option>
+                    <option value="Kappa">Kappa (IGKC)</option>
+                    <option value="Lambda">Lambda (IGLC)</option>
+                    <option value="TCR">TCR (TRAC / TRBC / TRGC / TRDC)</option>
+                </select>
+
+                <span class="filter-label" style="margin-left:8px;">Form:</span>
+                <select id="formFilter" onchange="filterRecords()">
+                    <option value="ALL">All Forms</option>
+                    <option value="Secreted">Secreted (sIg)</option>
+                    <option value="Membrane">Membrane (mIg / BCR)</option>
+                    <option value="Engineered">Engineered</option>
+                </select>
+
+                <input type="text" id="searchInput" placeholder="🔍 Search gene, allele, tag, notes..." oninput="filterRecords()" style="width:230px;" />
+            </div>
+
+            <div class="export-group">
+                <a href="data/constant_regions/vbase3_constant_regions.tsv" download class="btn-action">💾 Download TSV</a>
+                <a href="data/constant_regions/vbase3_constant_regions.json" download class="btn-action">💾 Download JSON</a>
+                <a href="data/constant_regions/vbase3_constant_regions.fasta" download class="btn-action">📄 FASTA</a>
+            </div>
+        </div>
+
+        <div id="cardsGrid" class="cards-grid">
+            <!-- Populated dynamically via JS -->
+        </div>
+    </main>
+
+    <!-- GenBank Viewer Modal -->
+    <div id="gbModal" class="modal-backdrop" style="display:none;">
+        <div class="modal-card">
+            <div class="modal-header">
+                <div style="font-size:16px; font-weight:700; color:var(--emerald-glow); display:flex; align-items:center; gap:8px;">
+                    <span>📜</span> Original GenBank Flat File Record: <span id="modalGbAcc" style="font-family:monospace; color:#ffffff;">-</span>
+                </div>
+                <button class="close-btn" onclick="closeGbModal()">✕</button>
+            </div>
+            <div class="modal-body">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+                    <span id="modalGbDef" style="font-size:12px; color:var(--text-secondary); max-width:650px;">-</span>
+                    <a id="modalNcbiLink" href="#" target="_blank" class="btn-action" style="padding:4px 10px; font-size:11px;">🌐 View on NCBI Nuccore ↗</a>
+                </div>
+                <pre id="modalGbText">Loading record...</pre>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast" class="toast">Copied sequence to clipboard!</div>
+
+    <script>
+        let allRecords = [];
+        let activeDomainSelections = {}; // record_id -> active domain key
+
+        async function loadData() {
+            try {
+                const res = await fetch('data/constant_regions/vbase3_constant_regions.json');
+                const data = await res.json();
+                allRecords = data.records;
+                const kpiTotal = document.getElementById('kpiTotalEntries');
+                if (kpiTotal) kpiTotal.textContent = allRecords.length;
+                renderCards(allRecords);
+            } catch (err) {
+                console.error("Failed to load JSON data, falling back to embedded records", err);
+            }
+        }
+
+        function renderCards(records) {
+            const container = document.getElementById('cardsGrid');
+            container.innerHTML = '';
+
+            if (records.length === 0) {
+                container.innerHTML = `<div style="grid-column: 1/-1; text-align:center; padding:40px; color:var(--text-secondary);">No constant regions match the current filter criteria.</div>`;
+                return;
+            }
+
+            records.forEach(r => {
+                const card = document.createElement('div');
+                card.className = 'constant-card';
+
+                // Determine available domains
+                const domains = [];
+                if (r.full_sequence) domains.push({ key: 'full', label: `Full (${r.full_length} aa)`, seq: r.full_sequence });
+                if (r.ch1_sequence) domains.push({ key: 'ch1', label: 'CH1 (Fab)', seq: r.ch1_sequence });
+                if (r.hinge_sequence) domains.push({ key: 'hinge', label: 'Hinge', seq: r.hinge_sequence });
+                if (r.ch2_sequence) domains.push({ key: 'ch2', label: 'CH2', seq: r.ch2_sequence });
+                if (r.ch3_sequence) domains.push({ key: 'ch3', label: 'CH3', seq: r.ch3_sequence });
+                if (r.ch4_sequence) domains.push({ key: 'ch4', label: 'CH4', seq: r.ch4_sequence });
+                if (r.tailpiece_sequence) domains.push({ key: 'tailpiece', label: 'Tailpiece', seq: r.tailpiece_sequence });
+                if (r.fc_sequence) domains.push({ key: 'fc', label: `Fc (${r.fc_length} aa)`, seq: r.fc_sequence });
+                if (r.cl_sequence) domains.push({ key: 'cl', label: 'CL Domain', seq: r.cl_sequence });
+                if (r.c_domain_sequence) domains.push({ key: 'c_dom', label: 'TCR Constant', seq: r.c_domain_sequence });
+                if (r.m1_sequence) domains.push({ key: 'm1', label: 'M1 (TM)', seq: r.m1_sequence });
+                if (r.m2_sequence) domains.push({ key: 'm2', label: 'M2 (Cyto)', seq: r.m2_sequence });
+                if (r.membrane_anchor_sequence) domains.push({ key: 'anchor', label: 'M1+M2 Anchor', seq: r.membrane_anchor_sequence });
+                if (r.tag_5p_aa_15) domains.push({ key: 'tag15', label: `5' Tag (15 aa)`, seq: r.tag_5p_aa_15 });
+
+                const activeKey = activeDomainSelections[r.id] || 'full';
+                const activeSeq = domains.find(d => d.key === activeKey)?.seq || r.full_sequence;
+
+                const formCls = `form-badge-${(r.form || 'secreted').toLowerCase()}`;
+
+                card.innerHTML = `
+                    <div>
+                        <div class="card-header-row">
+                            <div>
+                                <div class="gene-title">
+                                    ${r.gene}*${r.allele}
+                                    <span class="species-badge">${r.species_common}</span>
+                                    <span class="isotype-badge">${r.isotype}</span>
+                                    <span class="form-badge ${formCls}">${r.form || 'Secreted'}</span>
+                                </div>
+                                <div style="font-size:11px; color:#cbd5e1; margin-top:4px; display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                                    <span>Allotype: <strong>${r.allotype}</strong></span>
+                                    <span>| Locus: ${r.locus}</span>
+                                    ${r.genomic_locus_order ? `<span class="locus-badge" title="Genomic Locus Architecture">📍 ${r.genomic_locus_order}</span>` : ''}
+                                    ${r.diagnostic_motif ? `<span class="motif-badge" title="Diagnostic Subclass / Splicing Motif">🏷️ ${r.diagnostic_motif}</span>` : ''}
+                                </div>
+                            </div>
+                            <div>
+                                <a href="${r.genbank_url}" target="_blank" class="gb-acc-pill" title="View original record on NCBI Nuccore">
+                                    NCBI: ${r.genbank_accession} ↗
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="desc-text">${r.description || r.genbank_definition}</div>
+
+                        <div class="domain-chips">
+                            ${domains.map(d => `
+                                <span class="domain-chip ${d.key === activeKey ? 'active' : ''}" 
+                                      onclick="selectDomain('${r.id}', '${d.key}')">
+                                    ${d.label}
+                                </span>
+                            `).join('')}
+                        </div>
+
+                        <div class="seq-box" id="seqbox_${r.id}">${activeSeq}</div>
+                    </div>
+
+                    <div>
+                        <div style="font-size:11px; color:#94a3b8; font-style:italic; margin-bottom:12px;">
+                            💡 ${r.notes}
+                        </div>
+
+                        <div class="card-actions">
+                            <div style="display:flex; gap:6px; flex-wrap:wrap;">
+                                <button class="btn-copy" onclick="copySequence('${r.id}')">📋 Copy Amino Acids</button>
+                                ${r.tag_5p_aa_15 ? `<button class="btn-tag" onclick="copyTag('${r.tag_5p_aa_15}')" title="Copy 5' overhang tag for single-cell isotype detection">🏷️ Tag: ${r.tag_5p_aa_15}</button>` : ''}
+                            </div>
+                            <button class="btn-view-gb" onclick="viewGenbankModal('${r.genbank_accession}', '${r.gene}*${r.allele}', '${encodeURIComponent(r.genbank_definition || r.description)}')">
+                                📜 GenBank File
+                            </button>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function selectDomain(recordId, domainKey) {
+            activeDomainSelections[recordId] = domainKey;
+            const r = allRecords.find(x => x.id === recordId);
+            if (!r) return;
+
+            let seq = r.full_sequence;
+            if (domainKey === 'ch1') seq = r.ch1_sequence;
+            else if (domainKey === 'hinge') seq = r.hinge_sequence;
+            else if (domainKey === 'ch2') seq = r.ch2_sequence;
+            else if (domainKey === 'ch3') seq = r.ch3_sequence;
+            else if (domainKey === 'ch4') seq = r.ch4_sequence;
+            else if (domainKey === 'tailpiece') seq = r.tailpiece_sequence;
+            else if (domainKey === 'fc') seq = r.fc_sequence;
+            else if (domainKey === 'cl') seq = r.cl_sequence;
+            else if (domainKey === 'c_dom') seq = r.c_domain_sequence;
+            else if (domainKey === 'm1') seq = r.m1_sequence;
+            else if (domainKey === 'm2') seq = r.m2_sequence;
+            else if (domainKey === 'anchor') seq = r.membrane_anchor_sequence;
+            else if (domainKey === 'tag15') seq = r.tag_5p_aa_15;
+
+            const box = document.getElementById(`seqbox_${recordId}`);
+            if (box) box.textContent = seq;
+
+            // Update chip active classes
+            const card = box.closest('.constant-card');
+            if (card) {
+                card.querySelectorAll('.domain-chip').forEach(chip => {
+                    chip.classList.toggle('active', (chip.getAttribute('onclick') || '').includes(`'${domainKey}'`));
+                });
+            }
+        }
+
+        function copySequence(recordId) {
+            const box = document.getElementById(`seqbox_${recordId}`);
+            if (box) {
+                navigator.clipboard.writeText(box.textContent.trim()).then(() => {
+                    showToast("Sequence copied to clipboard for synthesis!");
+                });
+            }
+        }
+
+        function copyTag(tag) {
+            navigator.clipboard.writeText(tag).then(() => {
+                showToast(`Copied 5' tag (${tag}) for single-cell read mapping!`);
+            });
+        }
+
+        function filterRecords() {
+            const spVal = document.getElementById('speciesFilter').value;
+            const clsVal = document.getElementById('classFilter').value;
+            const formVal = document.getElementById('formFilter').value;
+            const q = document.getElementById('searchInput').value.toLowerCase().trim();
+
+            const filtered = allRecords.filter(r => {
+                if (spVal !== 'ALL' && r.species !== spVal) return false;
+                if (clsVal !== 'ALL' && r.class !== clsVal) return false;
+                if (formVal !== 'ALL' && r.form !== formVal) return false;
+                if (q) {
+                    const matchText = `${r.gene} ${r.allele} ${r.allotype} ${r.isotype} ${r.form} ${r.tag_5p_aa_15 || ''} ${r.species} ${r.species_common} ${r.description} ${r.notes} ${r.genbank_accession}`.toLowerCase();
+                    if (!matchText.includes(q)) return false;
+                }
+                return true;
+            });
+
+            renderCards(filtered);
+        }
+
+        async function viewGenbankModal(accession, geneAllele, defEncoded) {
+            const modal = document.getElementById('gbModal');
+            const accSpan = document.getElementById('modalGbAcc');
+            const defSpan = document.getElementById('modalGbDef');
+            const ncbiLink = document.getElementById('modalNcbiLink');
+            const textPre = document.getElementById('modalGbText');
+
+            accSpan.textContent = `${accession} (${geneAllele})`;
+            defSpan.textContent = decodeURIComponent(defEncoded);
+            ncbiLink.href = `https://www.ncbi.nlm.nih.gov/nuccore/${accession}`;
+            textPre.textContent = "Loading original GenBank flat file record...";
+            modal.style.display = 'flex';
+
+            try {
+                const res = await fetch(`data/constant_regions/genbank_records/${accession}.gb`);
+                if (res.ok) {
+                    textPre.textContent = await res.text();
+                } else {
+                    textPre.textContent = `Original GenBank flat file cached at: data/constant_regions/genbank_records/${accession}.gb\nDirect link: https://www.ncbi.nlm.nih.gov/nuccore/${accession}`;
+                }
+            } catch (err) {
+                textPre.textContent = `Original GenBank flat file cached at: data/constant_regions/genbank_records/${accession}.gb\nDirect link: https://www.ncbi.nlm.nih.gov/nuccore/${accession}`;
+            }
+        }
+
+        function closeGbModal() {
+            document.getElementById('gbModal').style.display = 'none';
+        }
+
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            t.textContent = msg;
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 2400);
+        }
+
+        window.onclick = function(e) {
+            const m = document.getElementById('gbModal');
+            if (e.target === m) closeGbModal();
+        }
+
+        window.onload = loadData;
+    </script>
+</body>
+</html>

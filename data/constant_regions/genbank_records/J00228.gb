@@ -1,0 +1,233 @@
+ID   J00228; SV 1; linear; gDNA; STD; HUM; 2009 BP.
+XX
+AC   J00228;
+XX
+DT   15-MAY-1995 (Rel. 199520-1, arrived in LIGM-DB)
+DT   11-FEB-2014 (Rel. 201407-2, Last updated, Version 19)
+XX
+DE   Homo sapiens immunoglobulin gamma-1 heavy chain constant region (IGHG1)
+DE   gene, partial cds.
+XX
+KW   antigen receptor; Immunoglobulin superfamily (IgSF); immunoglobulin (IG);
+KW   IG-Heavy; IG-Heavy-Gamma; constant; IG-Heavy-Gamma-1-IGHG1;
+KW   IMGT reference sequence; regular; gDNA; germline; undefined; functional;
+KW   C-gene.
+XX
+OS   Homo sapiens (human)
+OC   cellular organisms; Eukaryota; Opisthokonta; Metazoa; Eumetazoa; Bilateria;
+OC   Deuterostomia; Chordata; Craniata; Vertebrata; Gnathostomata; Teleostomi;
+OC   Euteleostomi; Sarcopterygii; Dipnotetrapodomorpha; Tetrapoda; Amniota;
+OC   Mammalia; Theria; Eutheria; Boreoeutheria; Euarchontoglires; Primates;
+OC   Haplorrhini; Simiiformes; Catarrhini; Hominoidea; Hominidae; Homininae;
+OC   Homo; Homo sapiens.
+XX
+RN   [1]
+RC   NIH-MGC Project
+RP   1-2009
+RA   Moore S., Alexander L., Brownstein M., Guan L., Lobo S., Meng Y.,
+RA   Tanaguchi M., Wang Z., Yu J., Prange C., Schreiber K., Shenmen C.,
+RA   Wagner L., Bala M., Barbazuk S., Barber S., Babakaiff R., Beland J.,
+RA   Chun E., Del Rio L., Gibson S., Hanson R., Kirkpatrick R., Liu J.,
+RA   Matsuo C., Mayo M., Santos R.R., Stott J., Tsai M., Wong D., Siddiqui A.,
+RA   Holt R., Jones S.J., Marra M.A.;
+RT   ;
+RL   Submitted (07-JUN-2007) to the INSDC.
+RL   BC Cancer Agency, Canada's Michael Smith Genome Sciences Centre, Suite 100,
+RL   570 West 7th Avenue, Vancouver, British Columbia V5Z 4S6, Canada
+XX
+DR   ENA; J00228.
+XX
+CC   IMGT/LIGM-DB annotation level: by annotators
+CC   
+CC   This sequence is part of a multigene region containing the
+CC   immunoglobulin heavy chain gamma-3, gamma-1, pseudo-epsilon, and
+CC   alpha-1 genes.
+XX
+FH   Key                 Location/Qualifiers
+FH   
+FT   C-GENE              1..>2009
+FT                       /partial
+FT                       /chromosome="14"
+FT                       /db_xref="taxon:9606"
+FT                       /functional
+FT                       /IMGT_allele="IGHG1*01"
+FT                       /IMGT_clone="cosmid Ig13; Ig-gamma3-122"
+FT                       /IMGT_gene="IGHG1"
+FT                       /IMGT_map="14q32.33"
+FT                       /mol_type="genomic DNA"
+FT                       /organism="Homo sapiens"
+FT                       /tissue_type="placenta; liver"
+FT   5'UTR               1..209
+FT   ACCEPTOR-SPLICE     207..211
+FT   C-GENE-UNIT         210..>2009
+FT                       /partial
+FT                       /db_xref="GDB:12008:120085"
+FT                       /db_xref="GOA:P0185:P01857"
+FT                       /db_xref="HGNC:5525"
+FT                       /db_xref="InterPro:IPR003006"
+FT                       /db_xref="InterPro:IPR003597"
+FT                       /db_xref="InterPro:IPR007110"
+FT                       /db_xref="InterPro:IPR013783"
+FT                       /db_xref="PDB:1AJ7"
+FT                       /db_xref="PDB:1AQK"
+FT                       /db_xref="PDB:1BEY"
+FT                       /db_xref="PDB:1D5B"
+FT                       /db_xref="PDB:1D5I"
+FT                       /db_xref="PDB:1D6V"
+FT                       /db_xref="PDB:1DFB"
+FT                       /db_xref="PDB:1DN2"
+FT                       /db_xref="PDB:1E4K"
+FT                       /db_xref="PDB:1FC1"
+FT                       /db_xref="PDB:1FC2"
+FT                       /db_xref="PDB:1FCC"
+FT                       /db_xref="PDB:1GAF"
+FT                       /db_xref="PDB:1H3T"
+FT                       /db_xref="PDB:1H3U"
+FT                       /db_xref="PDB:1H3V"
+FT                       /db_xref="PDB:1H3W"
+FT                       /db_xref="PDB:1H3Y"
+FT                       /db_xref="PDB:1HKL"
+FT                       /db_xref="PDB:1HZH"
+FT                       /db_xref="PDB:1I7Z"
+FT                       /db_xref="PDB:1L6X"
+FT                       /db_xref="PDB:1OP3"
+FT                       /db_xref="PDB:1OQO"
+FT                       /db_xref="PDB:1OQX"
+FT                       /db_xref="PDB:1T83"
+FT                       /db_xref="PDB:1T89"
+FT                       /db_xref="PDB:1VGE"
+FT                       /db_xref="PDB:2DTQ"
+FT                       /db_xref="PDB:2DTS"
+FT                       /db_xref="PDB:2GJ7"
+FT                       /db_xref="PDB:2I5Y"
+FT                       /db_xref="PDB:2IWG"
+FT                       /db_xref="PDB:2J6E"
+FT                       /db_xref="PDB:2JB5"
+FT                       /db_xref="PDB:2JB6"
+FT                       /db_xref="PDB:2O5X"
+FT                       /db_xref="PDB:2O5Y"
+FT                       /db_xref="PDB:2O5Z"
+FT                       /db_xref="PDB:2OSL"
+FT                       /db_xref="PDB:2QAD"
+FT                       /db_xref="PDB:2QL1"
+FT                       /db_xref="PDB:2QQK"
+FT                       /db_xref="PDB:2QQL"
+FT                       /db_xref="PDB:2QQN"
+FT                       /db_xref="PDB:2QR0"
+FT                       /db_xref="PDB:2R56"
+FT                       /db_xref="PDB:2RCS"
+FT                       /db_xref="PDB:2VXQ"
+FT                       /db_xref="PDB:3B2U"
+FT                       /db_xref="PDB:3B2V"
+FT                       /db_xref="PDB:3BDY"
+FT                       /db_xref="PDB:3BE1"
+FT                       /db_xref="PDB:3BKY"
+FT                       /db_xref="PDB:3BN9"
+FT                       /db_xref="PDB:3BQU"
+FT                       /db_xref="PDB:3C08"
+FT                       /db_xref="PDB:3C09"
+FT                       /db_xref="PDB:3C2S"
+FT                       /db_xref="PDB:3CFJ"
+FT                       /db_xref="PDB:3CFK"
+FT                       /db_xref="PDB:3CSY"
+FT                       /db_xref="PDB:3D0L"
+FT                       /db_xref="PDB:3D0V"
+FT                       /db_xref="PDB:3D6G"
+FT                       /db_xref="PDB:3D85"
+FT                       /db_xref="PDB:3DJ9"
+FT                       /db_xref="PDB:3DNK"
+FT                       /db_xref="PDB:3DO3"
+FT                       /db_xref="PDB:3DRO"
+FT                       /db_xref="PDB:3DRQ"
+FT                       /db_xref="PDB:3DVG"
+FT                       /db_xref="PDB:3DVN"
+FT                       /db_xref="PDB:3EYF"
+FT                       /db_xref="PDB:3EYO"
+FT                       /db_xref="PDB:3EYQ"
+FT                       /protein_id="AAC82527.1"
+FT   CH1                 210..503
+FT                       /codon_start=3
+FT                       /translation="STKGPSVFPLAPSSKSTSGGTAALGCLVKDYFPEPVTVSWN
+FT                       SGALTSGVHTFPAVLQSSGLYSLSSVVTVPSSSLGTQTYICNVNHKPSNTKVDKK
+FT                       V"
+FT   DONOR-SPLICE        503..505
+FT   INTRON              504..891
+FT   ACCEPTOR-SPLICE     889..893
+FT   H                   892..936
+FT                       /codon_start=3
+FT                       /translation="PKSCDKTHTCPPCP"
+FT                       /splice-expected-nt="g"
+FT                       /splice-expectedcodon="gag [E]"
+FT                       /splicing-frame="sf1"
+FT   DONOR-SPLICE        936..938
+FT   INTRON              937..1054
+FT   ACCEPTOR-SPLICE     1052..1056
+FT   CH2                 1055..1384
+FT                       /codon_start=3
+FT                       /translation="PELLGGPSVFLFPPKPKDTLMISRTPEVTCVVVDVSHEDPE
+FT                       VKFNWYVDGVEVHNAKTKPREEQYNSTYRVVSVLTVLHQDWLNGKEYKCKVSNKA
+FT                       LPAPIEKTISKAK"
+FT                       /splice-expected-nt="g"
+FT                       /splice-expectedcodon="gca [A]"
+FT                       /splicing-frame="sf1"
+FT   DONOR-SPLICE        1384..1386
+FT   INTRON              1385..1480
+FT   ACCEPTOR-SPLICE     1478..1482
+FT   CH3-CHS             1481..1800
+FT                       /codon_start=3
+FT                       /translation="QPREPQVYTLPPSRDELTKNQVSLTCLVKGFYPSDIAVEWE
+FT                       SNGQPENNYKTTPPVLDSDGSFFLYSKLTVDKSRWQQGNVFSCSVMHEALHNHYT
+FT                       QKSLSLSPGK"
+FT                       /splice-expected-nt="g"
+FT                       /splice-expectedcodon="ggg [G]"
+FT                       /splicing-frame="sf1"
+FT   CH3                 1481..1794
+FT                       /codon_start=3
+FT                       /translation="QPREPQVYTLPPSRDELTKNQVSLTCLVKGFYPSDIAVEWE
+FT                       SNGQPENNYKTTPPVLDSDGSFFLYSKLTVDKSRWQQGNVFSCSVMHEALHNHYT
+FT                       QKSLSLSP"
+FT   CHS                 1795..1800
+FT                       /translation="GK"
+FT                       /IMGT_note="For complete translation nucleotide G at 
+FT                       position 1795 has been included in CH-S"
+FT   INT-DONOR-SPLICE    1795..1797
+FT   INTRON              1801..>2009
+FT                       /partial
+FT   STOP-CODON          1801..1803
+XX
+SQ   Sequence 2009 BP; 418 A; 698 C; 566 G; 327 T; 0 other;
+     agctttctgg ggcaggccag gcctgacctt ggctttgggg cagggagggg gctaaggtga        60
+     ggcaggtggc gccagcaggt gcacacccaa tgcccatgag cccagacact ggacgctgaa       120
+     cctcgcggac agttaagaac ccaggggcct ctgcgcctgg gcccagctct gtcccacacc       180
+     gcggtcacat ggcaccacct ctcttgcagc ctccaccaag ggcccatcgg tcttccccct       240
+     ggcaccctcc tccaagagca cctctggggg cacagcggcc ctgggctgcc tggtcaagga       300
+     ctacttcccc gaaccggtga cggtgtcgtg gaactcaggc gccctgacca gcggcgtgca       360
+     caccttcccg gctgtcctac agtcctcagg actctactcc ctcagcagcg tggtgaccgt       420
+     gccctccagc agcttgggca cccagaccta catctgcaac gtgaatcaca agcccagcaa       480
+     caccaaggtg gacaagaaag ttggtgagag gccagcacag ggagggaggg tgtctgctgg       540
+     aagcaggctc agcgctcctg cctggacgca tcccggctat gcagccccag tccagggcag       600
+     caaggcaggc cccgtctgcc tcttcacccg gagcctctgc ccgccccact catgctcagg       660
+     gagagggtct tctggctttt tcccaggctc tgggcaggca caggctaggt gcccctaacc       720
+     caggccctgc acacaaaggg gcaggtgctg ggctcagacc tgccaagagc catatccggg       780
+     aggaccctgc ccctgaccta agcccacccc aaaggccaaa ctctccactc cctcagctcg       840
+     gacaccttct ctcctcccag attccagtaa ctcccaatct tctctctgca gagcccaaat       900
+     cttgtgacaa aactcacaca tgcccaccgt gcccaggtaa gccagcccag gcctcgccct       960
+     ccagctcaag gcgggacagg tgccctagag tagcctgcat ccagggacag gccccagccg      1020
+     ggtgctgaca cgtccacctc catctcttcc tcagcacctg aactcctggg gggaccgtca      1080
+     gtcttcctct tccccccaaa acccaaggac accctcatga tctcccggac ccctgaggtc      1140
+     acatgcgtgg tggtggacgt gagccacgaa gaccctgagg tcaagttcaa ctggtacgtg      1200
+     gacggcgtgg aggtgcataa tgccaagaca aagccgcggg aggagcagta caacagcacg      1260
+     taccgggtgg tcagcgtcct caccgtcctg caccaggact ggctgaatgg caaggagtac      1320
+     aagtgcaagg tctccaacaa agccctccca gcccccatcg agaaaaccat ctccaaagcc      1380
+     aaaggtggga cccgtggggt gcgagggcca catggacaga ggccggctcg gcccaccctc      1440
+     tgccctgaga gtgaccgctg taccaacctc tgtcctacag ggcagccccg agaaccacag      1500
+     gtgtacaccc tgcccccatc ccgggatgag ctgaccaaga accaggtcag cctgacctgc      1560
+     ctggtcaaag gcttctatcc cagcgacatc gccgtggagt gggagagcaa tgggcagccg      1620
+     gagaacaact acaagaccac gcctcccgtg ctggactccg acggctcctt cttcctctac      1680
+     agcaagctca ccgtggacaa gagcaggtgg cagcagggga acgtcttctc atgctccgtg      1740
+     atgcatgagg ctctgcacaa ccactacacg cagaagagcc tctccctgtc tccgggtaaa      1800
+     tgagtgcgac ggccggcaag ccccgctccc cgggctctcg cggtcgcacg aggatgcttg      1860
+     gcacgtaccc cctgtacata cttcccgggc gcccagcatg gaaataaagc acccagcgct      1920
+     gccctgggcc cctgcgagac tgtgatggtt ctttccacgg gtcaggccga gtctgaggcc      1980
+     tgagtggcat gagggaggca gagcgggtc                                        2009
+//

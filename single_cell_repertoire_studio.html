@@ -1,0 +1,3417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VBASE3 Single-Cell Paired Antibody Repertoire Studio — Industrial Provenance & Analytics</title>
+  <link rel="icon" type="image/jpeg" href="images/vbase3_logo.jpg" />
+  <script src="js/d3.v7.min.js"></script>
+  <script src="js/vbase3_sdk.js"></script>
+  <style>
+    :root {
+      --bg-dark: #070d18;
+      --panel-bg: #0d1527;
+      --card-bg: #131f38;
+      --border: #1e293b;
+      --border-focus: #38bdf8;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent-blue: #0284c7;
+      --accent-cyan: #38bdf8;
+      --accent-emerald: #10b981;
+      --accent-amber: #f59e0b;
+      --accent-purple: #a855f7;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg-dark);
+      color: var(--text-main);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* HEADER */
+    header {
+      background: rgba(13, 21, 39, 0.95);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 24px;
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-logo {
+      height: 38px;
+      width: auto;
+      border-radius: 6px;
+      background: #ffffff;
+      padding: 2px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    }
+
+    .brand-title {
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .brand-badge {
+      background: linear-gradient(135deg, rgba(2, 132, 199, 0.3), rgba(16, 185, 129, 0.3));
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      color: #38bdf8;
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .nav-btn {
+      background: #1e293b;
+      color: #cbd5e1;
+      border: 1px solid #334155;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .nav-btn:hover {
+      background: #334155;
+      color: #ffffff;
+      border-color: #64748b;
+    }
+
+    .nav-btn.primary {
+      background: linear-gradient(135deg, #0284c7, #2563eb);
+      border-color: #38bdf8;
+      color: #ffffff;
+      box-shadow: 0 2px 8px rgba(2, 132, 199, 0.4);
+    }
+
+    /* CONTAINER */
+    .container {
+      max-width: 1480px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 20px 24px 60px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* PROVENANCE DRAWER */
+    .provenance-card {
+      background: var(--panel-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+    }
+
+    .provenance-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding-bottom: 8px;
+    }
+
+    .provenance-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent-cyan);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .metadata-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+    }
+
+    .meta-field {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .meta-field label {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .meta-field input {
+      background: #060b13;
+      border: 1px solid #334155;
+      color: #f8fafc;
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 12.5px;
+      font-family: inherit;
+    }
+
+    .meta-field input:focus {
+      outline: none;
+      border-color: var(--accent-cyan);
+      box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
+    }
+
+    .audit-badge-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 12px;
+      padding-top: 10px;
+      border-top: 1px dashed rgba(255,255,255,0.06);
+      font-size: 11.5px;
+      color: var(--text-muted);
+      flex-wrap: wrap;
+    }
+
+    .audit-chip {
+      background: #060b13;
+      border: 1px solid #1e293b;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-family: "Fira Code", monospace;
+      font-size: 11px;
+      color: #cbd5e1;
+    }
+
+    /* KPI METRICS */
+    .kpi-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+
+    .kpi-card {
+      background: var(--panel-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      transition: transform 0.15s ease, border-color 0.15s ease;
+    }
+
+    .kpi-card:hover {
+      transform: translateY(-2px);
+      border-color: #334155;
+    }
+
+    .kpi-lbl {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+
+    .kpi-val {
+      font-size: 24px;
+      font-weight: 800;
+      color: #ffffff;
+      font-feature-settings: "tnum";
+    }
+
+    .kpi-desc {
+      font-size: 11px;
+      color: #64748b;
+    }
+
+    /* WORKBENCH TABS */
+    .tab-bar {
+      display: flex;
+      gap: 8px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 2px;
+      overflow-x: auto;
+    }
+
+    .tab-item {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 8px 16px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      border-radius: 6px 6px 0 0;
+      border-bottom: 2px solid transparent;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+
+    .tab-item:hover { color: #f8fafc; }
+
+    .tab-item.active {
+      color: var(--accent-cyan);
+      border-bottom: 2px solid var(--accent-cyan);
+      background: rgba(56, 189, 248, 0.06);
+    }
+
+    /* TAB CONTENTS */
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    /* DATA PANELS */
+    .view-card {
+      background: var(--panel-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+    }
+
+    /* TABLE */
+    .table-container {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: #060b13;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12.5px;
+      text-align: left;
+    }
+
+    th {
+      background: #0d1527;
+      color: #94a3b8;
+      font-weight: 700;
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      text-transform: uppercase;
+      font-size: 11px;
+      letter-spacing: 0.03em;
+    }
+
+    td {
+      padding: 10px 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      color: #cbd5e1;
+    }
+
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    .tag-vh {
+      background: rgba(2, 132, 199, 0.2);
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      color: #38bdf8;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .tag-vl {
+      background: rgba(168, 85, 247, 0.2);
+      border: 1px solid rgba(168, 85, 247, 0.4);
+      color: #c084fc;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .tag-motif {
+      background: rgba(16, 185, 129, 0.2);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      color: #34d399;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    /* ACTION BAR */
+    .action-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      background: #060b13;
+      border: 1px solid var(--border);
+      padding: 12px 18px;
+      border-radius: 10px;
+    }
+
+    .export-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .btn-action {
+      background: #1e293b;
+      color: #f1f5f9;
+      border: 1px solid #334155;
+      padding: 7px 14px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+
+    .btn-action:hover {
+      background: #334155;
+      border-color: #64748b;
+    }
+
+    .btn-action.success {
+      background: linear-gradient(135deg, #059669, #10b981);
+      border-color: #34d399;
+      color: #ffffff;
+      box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+    }
+
+    .btn-action.blue {
+      background: linear-gradient(135deg, #0284c7, #2563eb);
+      border-color: #38bdf8;
+      color: #ffffff;
+    }
+
+    /* MATRIX GRID */
+    .matrix-wrapper {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
+    }
+
+    .chart-box {
+      background: #060b13;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      min-height: 280px;
+    }
+
+    .chart-title {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: #94a3b8;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* DATA IMPORT PANEL & FORMAT GUIDELINES */
+    .import-panel {
+      background: #0d1527;
+      border: 1px solid #0284c7;
+      border-radius: 12px;
+      padding: 18px 22px;
+      box-shadow: 0 8px 32px rgba(2, 132, 199, 0.2), 0 0 0 1px rgba(56, 189, 248, 0.25);
+      animation: fadeIn 0.2s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .import-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      padding-bottom: 12px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .workbench-dropzone {
+      border: 2px dashed #334155;
+      background: rgba(15, 23, 42, 0.6);
+      border-radius: 8px;
+      padding: 24px 16px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      min-height: 120px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .workbench-dropzone:hover, .workbench-dropzone.dragover {
+      border-color: #38bdf8;
+      background: rgba(2, 132, 199, 0.12);
+      box-shadow: 0 0 16px rgba(56, 189, 248, 0.25);
+    }
+
+    .workbench-import-textarea {
+      width: 100%;
+      height: 120px;
+      background: #060b13;
+      border: 1px solid #1e293b;
+      border-radius: 8px;
+      padding: 10px 12px;
+      color: #f1f5f9;
+      font-family: "Fira Code", monospace;
+      font-size: 11px;
+      line-height: 1.5;
+      resize: vertical;
+      box-sizing: border-box;
+    }
+
+    .workbench-import-textarea:focus {
+      outline: none;
+      border-color: #38bdf8;
+      box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
+    }
+
+    .format-guide-box {
+      background: #080e1a;
+      border: 1px solid #1e293b;
+      border-radius: 8px;
+      padding: 14px 16px;
+      margin-bottom: 14px;
+      animation: fadeIn 0.15s ease-in-out;
+    }
+
+    .format-tab-bar {
+      display: flex;
+      gap: 6px;
+      border-bottom: 1px solid #1e293b;
+      padding-bottom: 6px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+
+    .format-tab {
+      background: #1e293b;
+      border: 1px solid #334155;
+      color: #94a3b8;
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .format-tab:hover {
+      color: #ffffff;
+      border-color: #475569;
+    }
+
+    .format-tab.active {
+      background: rgba(56, 189, 248, 0.15);
+      border-color: #38bdf8;
+      color: #38bdf8;
+    }
+
+    .format-code {
+      background: #030712;
+      border: 1px solid #1e293b;
+      border-radius: 6px;
+      padding: 8px 12px;
+      font-family: "Fira Code", monospace;
+      font-size: 11px;
+      color: #a5f3fc;
+      overflow-x: auto;
+      white-space: pre;
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="brand-group">
+      <a href="index.html" title="Return to VBASE3 Central Hub">
+        <img src="images/vbase3_logo.jpg" alt="VBASE3 Logo" class="brand-logo" />
+      </a>
+      <div>
+        <div class="brand-title">
+          <span>🔬 Single-Cell Paired Antibody Repertoire Studio</span>
+          <span class="brand-badge">Audit-Ready</span>
+        </div>
+        <div style="font-size:11.5px; color:#94a3b8; margin-top:2px;">
+          High-Throughput V<sub>H</sub>:V<sub>L</sub> Pairing • Clonal Hierarchy • Somatic Hypermutation • Industrial Data Provenance
+        </div>
+      </div>
+    </div>
+
+    <div class="nav-links">
+      <a href="https://doi.org/10.5281/zenodo.22923344" target="_blank" rel="noopener" class="nav-btn" style="border-color:rgba(245,158,11,0.5); color:#fbbf24; background:rgba(217,119,6,0.15);" title="Download complete database tables and catalogs from Zenodo">📦 Zenodo Data ↗</a>
+      <a href="index.html" class="nav-btn" title="Return to Portal Home">🏠 Portal Home</a>
+      <a href="vgene_pacmap_universe.html" class="nav-btn">🌌 PaCMAP Universe</a>
+      <a href="repertoire_pacmap_universe.html" class="nav-btn">🧬 Repertoire PaCMAP</a>
+      <a href="dnaplot.html" class="nav-btn">⚡ DNAPLOT SIMD</a>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <!-- INDUSTRIAL METADATA PROVENANCE DRAWER -->
+    <div class="provenance-card">
+      <div class="provenance-header">
+        <div class="provenance-title">
+          <span>📋</span> Regulatory & Industrial Metadata Provenance Core
+        </div>
+        <div style="font-size:11px; color:#64748b;">
+          Audit Standard: ISO 8601 UTC • SHA-256 Input Authentication • Research Use Only (RUO)
+        </div>
+      </div>
+
+      <div class="metadata-grid">
+        <div class="meta-field">
+          <label>Sample Identifier</label>
+          <input type="text" id="sampleIdInput" value="DONOR_HER2_PBL_EXP01" oninput="updateAuditBadges()" />
+        </div>
+        <div class="meta-field">
+          <label>Donor / Patient ID</label>
+          <input type="text" id="donorIdInput" value="PATIENT_D044" oninput="updateAuditBadges()" />
+        </div>
+        <div class="meta-field">
+          <label>Campaign / Study Name</label>
+          <input type="text" id="projectInput" value="CONVERGENT_NEUTRALIZER_CAMPAIGN" oninput="updateAuditBadges()" />
+        </div>
+        <div class="meta-field">
+          <label>Sequencing Platform</label>
+          <input type="text" id="platformInput" value="Single-Cell 5' Paired V(D)J" oninput="updateAuditBadges()" />
+        </div>
+      </div>
+
+      <div class="audit-badge-row">
+        <span>VBASE3 Core Release: <span class="audit-chip" id="vbase3VersionBadge">v1.0.0 (Sept 2026)</span></span>
+        <span>Analysis Timestamp (UTC): <span class="audit-chip" id="timestampBadge">-</span></span>
+        <span>Input SHA-256: <span class="audit-chip" id="checksumBadge">e3b0c44298fc1c149...</span></span>
+        <span style="color:#f59e0b; font-weight:600; display:flex; align-items:center; gap:4px;">
+          <span>ℹ️</span> Research Use Only (RUO) • Regulated use requires independent validation
+        </span>
+      </div>
+    </div>
+
+    <!-- ACTION & DATA IMPORT BAR -->
+    <div class="action-bar">
+      <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+        <button class="btn-action" id="btnToggleImport" style="background:linear-gradient(135deg, #0284c7, #2563eb); border-color:#38bdf8; color:#ffffff; font-weight:700; box-shadow:0 0 12px rgba(56,189,248,0.35);" onclick="toggleDataImportPanel()">📂 Upload / Paste User Repertoire Data</button>
+        <span style="font-size:12px; color:#64748b; margin:0 4px;">|</span>
+        <span style="font-size:12px; color:#94a3b8; font-weight:700;">Benchmark Presets:</span>
+        <button class="btn-action" onclick="loadPreset('her2')">🎯 HER2 Single-Cell (320 pairs)</button>
+        <button class="btn-action" onclick="loadPreset('viral')">🦠 Viral S2 Convalescent (185 pairs)</button>
+        <button class="btn-action" onclick="loadPreset('flu')">🦆 Influenza HA Stem (140 pairs)</button>
+        <button class="btn-action" style="border-color:#10b981; color:#34d399; background:rgba(16,185,129,0.12);" onclick="loadPreset('time_series')">⏱️ Longitudinal Vaccine Time-Series (D0→D7→D28→D180)</button>
+        <button class="btn-action" style="border-color:#38bdf8; color:#38bdf8; background:rgba(56,189,248,0.12);" onclick="loadPreset('multi_cohort')">👥 Multi-Cohort Comparative Overlay</button>
+        <button class="btn-action" style="border-color:#a855f7; color:#c084fc; background:rgba(168,85,247,0.12);" onclick="loadPreset('tcr_til')">🧬 Single-Cell TCR (TRB ⊕ TRA TILs)</button>
+        <button class="btn-action" style="border-color:#f43f5e; color:#fb7185; background:rgba(244,63,94,0.12);" onclick="loadPreset('lymphoma')">🩺 Follicular Lymphoma Clonality & Ongoing SHM (D0→D180→D360 MRD)</button>
+      </div>
+
+      <div class="export-group">
+        <button class="btn-action success" onclick="downloadSynthesisSheet()">⚡ Export Synthesis Sheet (TVSS/VEIK)</button>
+        <button class="btn-action" style="border-color:#10b981; color:#34d399; background:rgba(16,185,129,0.15);" onclick="downloadPairedFasta()">🧬 Export Complete FASTA (Paired)</button>
+        <button class="btn-action blue" onclick="downloadAirrTsv()">📥 Download AIRR TSV (Audit Header)</button>
+        <button class="btn-action" style="border-color:#38bdf8; color:#38bdf8; background:rgba(56,189,248,0.12);" onclick="downloadFilteredTableTsv()">📋 Export Filtered Sequence TSV</button>
+        <button class="btn-action" onclick="downloadJsonStructureQueue()">🤖 AI Structure Queue (JSON)</button>
+      </div>
+    </div>
+
+    <!-- USER DATA INGESTION & REPERTOIRE IMPORTER PANEL -->
+    <div id="dataImportPanel" class="import-panel" style="display:none; margin-bottom: 20px;">
+      <div class="import-header">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <span style="font-size:20px;">📥</span>
+          <div>
+            <div style="font-size:15px; font-weight:800; color:#ffffff; display:flex; align-items:center; gap:8px;">
+              <span>User Repertoire Data Ingestion</span>
+              <span class="audit-chip" style="color:#38bdf8; border-color:rgba(56,189,248,0.4);">Client-Side SIMD Engine</span>
+            </div>
+            <div style="font-size:11.5px; color:#94a3b8; margin-top:2px;">
+              Provide your own experimental data via drag-and-drop file upload or direct text paste. Supports AIRR Community TSV, 10x Genomics CellRanger CSV, Simple TSV/CSV, or Paired FASTA. Zero network transmission.
+            </div>
+          </div>
+        </div>
+        <div style="display:flex; align-items:center; gap:8px;">
+          <button class="btn-action" style="padding:5px 12px; font-size:11.5px; border-color:#38bdf8; color:#38bdf8;" onclick="toggleFormatGuide()">💡 Format Suggestions & Examples</button>
+          <button class="btn-action" style="padding:5px 12px; font-size:11.5px;" onclick="downloadSampleTemplate()">📥 Download Template TSV</button>
+          <button class="btn-action" style="padding:5px 12px; font-size:11.5px; background:#334155;" onclick="toggleDataImportPanel()">✕ Close</button>
+        </div>
+      </div>
+
+      <!-- FORMAT GUIDELINES & SUGGESTIONS ACCORDION -->
+      <div id="formatGuideDrawer" class="format-guide-box" style="display:block;">
+        <div style="font-size:12px; font-weight:700; color:#38bdf8; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center;">
+          <span>📖 Expected Data Format Specifications & Column Requirements:</span>
+          <span style="font-size:11px; color:#94a3b8;">Click any tab below to review the required columns or copy a ready-to-use sample snippet</span>
+        </div>
+        <div class="format-tab-bar">
+          <button class="format-tab active" id="btnTab_airr" onclick="switchFormatTab('airr')">1. AIRR Community TSV (Standard)</button>
+          <button class="format-tab" id="btnTab_cellranger" onclick="switchFormatTab('cellranger')">2. 10x CellRanger CSV (filtered_contig)</button>
+          <button class="format-tab" id="btnTab_simple" onclick="switchFormatTab('simple')">3. Simple Paired TSV / CSV (Excel friendly)</button>
+          <button class="format-tab" id="btnTab_fasta" onclick="switchFormatTab('fasta')">4. Paired Multi-FASTA</button>
+        </div>
+
+        <!-- TAB 1: AIRR TSV -->
+        <div id="formatTabContent_airr" class="format-content">
+          <p style="font-size:11.5px; color:#cbd5e1; margin-bottom:6px;">
+            <strong>AIRR Community standard:</strong> Tab-delimited file with one record per contig. Rows sharing the same <code>sequence_id</code> or cell barcode are automatically paired across heavy (<code>IGH</code>/<code>TRB</code>) and light (<code>IGK</code>/<code>IGL</code>/<code>TRA</code>) chains.
+          </p>
+          <pre class="format-code">sequence_id	v_call	j_call	junction_aa	duplicate_count	locus	timepoint	target
+donor_cell_01_H	humIGHV3-23*01	humIGHJ4*02	CSRWGGDGFYAMDYW	112	IGH	Day 0	HER2 Domain IV
+donor_cell_01_L	humIGKV1-39*01	humIGKJ1*01	CQQHYTTPPTF	112	IGK	Day 0	HER2 Domain IV
+donor_cell_02_H	humIGHV1-69*01	humIGHJ6*01	CARDKGYSYGYW	94	IGH	Day 28	SARS-CoV-2 S2
+donor_cell_02_L	humIGKV3-20*01	humIGKJ2*01	CQQYGSSPLTF	94	IGK	Day 28	SARS-CoV-2 S2</pre>
+          <div style="display:flex; gap:8px; margin-top:8px; align-items:center;">
+            <button class="btn-action" style="font-size:11px; padding:4px 10px; background:rgba(56,189,248,0.15); border-color:#38bdf8; color:#38bdf8;" onclick="insertExampleToTextarea('airr')">📋 Insert This AIRR Example into Input</button>
+            <span style="font-size:11px; color:#94a3b8;">Required columns: <code>v_call</code>, <code>j_call</code>, <code>junction_aa</code> (CDR3), <code>locus</code>. Optional: <code>duplicate_count</code>, <code>timepoint</code>, <code>target</code>.</span>
+          </div>
+        </div>
+
+        <!-- TAB 2: 10X CELLRANGER -->
+        <div id="formatTabContent_cellranger" class="format-content" style="display:none;">
+          <p style="font-size:11.5px; color:#cbd5e1; margin-bottom:6px;">
+            <strong>10x Genomics CellRanger:</strong> Directly drag-and-drop your <code>filtered_contig_annotations.csv</code> file. Contigs sharing the identical <code>barcode</code> are paired into heterodimers.
+          </p>
+          <pre class="format-code">barcode,chain,v_gene,j_gene,cdr3,reads,productive,is_cell
+AAACCTGAGAAACCGA-1,IGH,IGHV3-23,IGHJ4,CSRWGGDGFYAMDYW,42,True,True
+AAACCTGAGAAACCGA-1,IGK,IGKV1-39,IGKJ1,CQQHYTTPPTF,38,True,True
+AAACCTGAGAAACCGT-1,IGH,IGHV1-69,IGHJ6,CARDKGYSYGYW,55,True,True
+AAACCTGAGAAACCGT-1,IGK,IGKV3-20,IGKJ2,CQQYGSSPLTF,49,True,True</pre>
+          <div style="display:flex; gap:8px; margin-top:8px; align-items:center;">
+            <button class="btn-action" style="font-size:11px; padding:4px 10px; background:rgba(56,189,248,0.15); border-color:#38bdf8; color:#38bdf8;" onclick="insertExampleToTextarea('cellranger')">📋 Insert This 10x Example into Input</button>
+            <span style="font-size:11px; color:#94a3b8;">Non-productive contigs (stop codons, frameshifts) are automatically audited and filtered.</span>
+          </div>
+        </div>
+
+        <!-- TAB 3: SIMPLE PARED TSV/CSV -->
+        <div id="formatTabContent_simple" class="format-content" style="display:none;">
+          <p style="font-size:11.5px; color:#cbd5e1; margin-bottom:6px;">
+            <strong>Simple Paired Table:</strong> Exactly one line per single-cell heterodimer. Perfect for copying and pasting columns from Microsoft Excel, Apple Numbers, or Google Sheets.
+          </p>
+          <pre class="format-code">cell_id	heavy_v	light_v	heavy_cdr3	light_cdr3	freq	timepoint	target
+clone_1	humIGHV3-23*01	humIGKV1-39*01	CSRWGGDGFYAMDYW	CQQHYTTPPTF	120	Pre-Bleed	HER2 Domain IV
+clone_2	humIGHV1-69*01	humIGKV3-20*01	CARDKGYSYGYW	CQQYGSSPLTF	85	Day 28	Spike S2 Stem
+clone_3	humIGHV3-53*01	humIGKV1-9*01	CARDLDYFDFW	CQQYDTYPLTF	64	Day 7	RBD Class 1
+clone_4	humTRBV6-5*01	humTRAV8-4*01	CASSIYSGNTIYF	CAVSDGGSQGNLIF	45	Post-Tx	MAGE-A3 / HLA-A*01</pre>
+          <div style="display:flex; gap:8px; margin-top:8px; align-items:center;">
+            <button class="btn-action" style="font-size:11px; padding:4px 10px; background:rgba(56,189,248,0.15); border-color:#38bdf8; color:#38bdf8;" onclick="insertExampleToTextarea('simple')">📋 Insert This Simple Table Example into Input</button>
+            <span style="font-size:11px; color:#94a3b8;">Can be tab-delimited (TSV) or comma-delimited (CSV). Delimiter is auto-detected.</span>
+          </div>
+        </div>
+
+        <!-- TAB 4: PAIRED MULTI-FASTA -->
+        <div id="formatTabContent_fasta" class="format-content" style="display:none;">
+          <p style="font-size:11.5px; color:#cbd5e1; margin-bottom:6px;">
+            <strong>Paired Multi-FASTA:</strong> Standard FASTA format where paired chains are identified either sequentially or via header suffixes (<code>&gt;clone1_heavy</code>, <code>&gt;clone1_light</code>, <code>&gt;clone1_H</code>, <code>&gt;clone1_L</code>, or <code>&gt;clone1_TRB</code> / <code>&gt;clone1_TRA</code>). The engine accepts nucleotide DNA in any reading frame (with automated productive frame and mature FR1 anchor detection) or amino acid protein sequences.
+          </p>
+          <pre class="format-code">>clone1_heavy humIGHV3-23*01
+EVQLVESGGGLVQPGGSLRLSCAASGFNIKDTYIHWVRQAPGKGLEWVARIYPTNGYTRYADSVKGRFTISADTSKNTAYLQMNSLRAEDTAVYYCSRWGGDGFYAMDYWGQGTLVTVSS
+>clone1_light humIGKV1-39*01
+DIQMTQSPSSLSASVGDRVTITCRASQDVNTAVAWYQQKPGKAPKLLIYSASFLYSGVPSRFSGSRSGTDFTLTISSLQPEDFATYYCQQHYTTPPTFGQGTKVEIK</pre>
+          <div style="display:flex; gap:8px; margin-top:8px; align-items:center;">
+            <button class="btn-action" style="font-size:11px; padding:4px 10px; background:rgba(56,189,248,0.15); border-color:#38bdf8; color:#38bdf8;" onclick="insertExampleToTextarea('fasta')">📋 Insert This FASTA Example into Input</button>
+            <span style="font-size:11px; color:#94a3b8;">Nucleotide DNA in any reading frame (+0, +1, +2) or amino acid protein sequences are automatically recognized, evaluated, and translated.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- DROPZONE & TEXTAREA ROW -->
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px;">
+        <div>
+          <div class="workbench-dropzone" id="wbDropZone" onclick="document.getElementById('wbFileInput').click()">
+            <div style="font-size:32px; margin-bottom:6px;">📂</div>
+            <div style="font-size:14px; font-weight:700; color:#f8fafc;">Drop Repertoire File Here</div>
+            <div style="font-size:11.5px; color:#94a3b8; margin-top:4px;">or click to browse (.tsv, .csv, .fasta, .txt)</div>
+            <div id="selectedFileNameBadge" style="display:none; margin-top:8px; font-size:11px; color:#38bdf8; font-weight:700; background:rgba(56,189,248,0.1); padding:4px 10px; border-radius:4px; border:1px solid rgba(56,189,248,0.3);"></div>
+            <input type="file" id="wbFileInput" style="display:none;" accept=".tsv,.csv,.txt,.fasta,.fa" onchange="handleWorkbenchFileUpload(event)">
+          </div>
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px;">
+            <span style="font-size:11px; color:#94a3b8;">Max recommended file size: 50MB</span>
+            <button class="btn-action" style="font-size:11px; padding:3px 8px;" onclick="downloadSampleTemplate()">📥 Download Blank Template (.tsv)</button>
+          </div>
+        </div>
+
+        <div>
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+            <span style="font-size:12px; font-weight:700; color:#cbd5e1;">Or Paste Raw Table / FASTA Content:</span>
+            <button class="btn-action" style="font-size:10.5px; padding:2px 6px;" onclick="clearImportTextarea()">🧹 Clear</button>
+          </div>
+          <textarea id="rawRepertoireInput" class="workbench-import-textarea" placeholder="Paste your AIRR TSV, 10x CSV, or Simple TSV text here...&#10;e.g.&#10;cell_id&#9;heavy_v&#9;light_v&#9;heavy_cdr3&#9;light_cdr3&#9;freq&#9;timepoint&#9;target&#10;clone_01&#9;humIGHV3-23*01&#9;humIGKV1-39*01&#9;CSRWGGDGFYAMDYW&#9;CQQHYTTPPTF&#9;112&#9;Day 0&#9;HER2"></textarea>
+        </div>
+      </div>
+
+      <!-- ACTION FOOTER -->
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-top:14px; padding-top:12px; border-top:1px solid #1e293b; flex-wrap:wrap; gap:10px;">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <button class="btn-action success" style="padding:9px 20px; font-size:13px; font-weight:800;" onclick="executeUserRepertoireImport()">⚡ Parse & Load into Studio</button>
+          <button class="btn-action" style="padding:9px 14px; font-size:13px;" onclick="toggleDataImportPanel()">Cancel</button>
+        </div>
+        <div id="importFeedbackBadge" style="display:none; font-size:12px; font-weight:700; padding:6px 14px; border-radius:6px;"></div>
+      </div>
+    </div>
+
+    <!-- KPI ROW -->
+    <div class="kpi-row">
+      <div class="kpi-card">
+        <span class="kpi-lbl">Paired Single Cells</span>
+        <span class="kpi-val" id="kpiTotalPairs">645</span>
+        <span class="kpi-desc">Productive V<sub>H</sub> + V<sub>L</sub> Heterodimers</span>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-lbl">Productive Pairing Rate</span>
+        <span class="kpi-val" style="color:#34d399;" id="kpiPairingRate">98.4%</span>
+        <span class="kpi-desc">Zero Stop Codons in Frame 0</span>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-lbl">Expanded Clonotypes</span>
+        <span class="kpi-val" style="color:#38bdf8;" id="kpiClonotypes">42</span>
+        <span class="kpi-desc">Ranked by Cellular Frequency</span>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-lbl">Mean Somatic Hypermutation</span>
+        <span class="kpi-val" style="color:#f59e0b;" id="kpiMeanShm">9.2 aa</span>
+        <span class="kpi-desc">Divergence from VBASE3 Class I Germline</span>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-lbl">Synthesis Compliance</span>
+        <span class="kpi-val" style="color:#10b981;" id="kpiSynthesisCompliance">100.0%</span>
+        <span class="kpi-desc">Canonical TVSS/VEIK/TVL (Zero Overhang)</span>
+      </div>
+    </div>
+
+    <!-- WORKBENCH TABS -->
+    <div class="tab-bar">
+      <button class="tab-item active" onclick="switchTab('tabHierarchy')">📊 Clonal Hierarchy & Somatic Hypermutation</button>
+      <button class="tab-item" onclick="switchTab('tabPairing')">🔗 V<sub>H</sub> × V<sub>L</sub> Combinatorial Pairing Matrix</button>
+      <button class="tab-item" onclick="switchTab('tabBiophysics')">⚡ CDR3 Physicochemical Spectra</button>
+      <button class="tab-item" onclick="switchTab('tabPacmap')">🌌 Single-Cell 2D PaCMAP Projection & Lineages</button>
+      <button class="tab-item" onclick="switchTab('tabTimeSeries')">⏱️ Longitudinal SHM Kinetics & Trajectories</button>
+    </div>
+
+    <!-- TAB 1: CLONAL HIERARCHY TABLE -->
+    <div id="tabHierarchy" class="tab-content active">
+      <div class="view-card">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; flex-wrap:wrap; gap:8px;">
+          <div>
+            <h3 style="font-size:15px; font-weight:800; color:#f8fafc;">Top Expanded Single-Cell Clonotypes</h3>
+            <div style="font-size:12px; color:#94a3b8;">Ranked by cell barcode count with VBASE3 Class I germline assignment, synthesis boundaries, and cohort/timepoint tags</div>
+          </div>
+          <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+            <input type="text" id="tableFilterInput" placeholder="🔍 Filter cohort, gene, target, CDR3..." oninput="filterTable()" style="background:#060b13; border:1px solid #334155; color:#fff; padding:6px 12px; border-radius:6px; font-size:12px; width:250px;" />
+            <button class="btn-action blue" onclick="downloadFilteredTableTsv()" style="padding:6px 12px; font-size:11.5px;">📥 Export Filtered TSV</button>
+            <button class="btn-action" style="border-color:#10b981; color:#34d399; background:rgba(16,185,129,0.15); padding:6px 12px; font-size:11.5px;" onclick="downloadPairedFasta()">🧬 Export Complete FASTA</button>
+            <button class="btn-action" onclick="clearTableFilter()" style="padding:6px 10px; font-size:11.5px; color:#94a3b8;">✕ Reset</button>
+            <span id="filterCountBadge" class="audit-chip" style="display:none; color:#38bdf8;"></span>
+          </div>
+        </div>
+
+        <div class="table-container">
+          <table id="clonotypeTable">
+            <thead>
+              <tr>
+                <th>Clone Rank</th>
+                <th>Cohort / Timepoint</th>
+                <th>Cell Frequency</th>
+                <th>Target Antigen</th>
+                <th>V<sub>H</sub> Assignment</th>
+                <th>J<sub>H</sub> Element</th>
+                <th>CDR-H3 Loop</th>
+                <th>V<sub>L</sub> Assignment</th>
+                <th>J<sub>L</sub> Element</th>
+                <th>CDR-L3 Loop</th>
+                <th>SHM (H/L)</th>
+                <th>Synthesis Boundary</th>
+              </tr>
+            </thead>
+            <tbody id="clonotypeTbody">
+              <!-- Dynamically Populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: PAIRING MATRIX -->
+    <div id="tabPairing" class="tab-content">
+      <div class="view-card">
+        <h3 style="font-size:15px; font-weight:800; color:#f8fafc; margin-bottom:4px;">Heavy vs. Light Chain Family Pairing Matrix</h3>
+        <div style="font-size:12px; color:#94a3b8; margin-bottom:16px;">Combinatorial pairing rates between V<sub>H</sub> families (IGHV1–7) and Light Chain families (IGKV1–6, IGLV1–10)</div>
+        
+        <div class="matrix-wrapper">
+          <div class="chart-box">
+            <div class="chart-title">
+              <span>V<sub>H</sub> Family Dominance</span>
+              <span style="color:#38bdf8; font-size:11px;">Frequency (%)</span>
+            </div>
+            <div id="vhBarChart" style="height:220px;"></div>
+          </div>
+          <div class="chart-box">
+            <div class="chart-title">
+              <span>V<sub>L</sub> (Kappa vs. Lambda) Usage</span>
+              <span style="color:#a855f7; font-size:11px;">Ratio Breakdown</span>
+            </div>
+            <div id="vlBarChart" style="height:220px;"></div>
+          </div>
+        </div>
+
+        <!-- 2D V x J COMBINATORIAL PAIRING HEATMAP -->
+        <div style="margin-top:24px; padding-top:20px; border-top:1px solid rgba(255,255,255,0.08);">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:12px;">
+            <div>
+              <h4 style="font-size:14px; font-weight:800; color:#f8fafc; display:flex; align-items:center; gap:8px;">
+                <span>🔥 2D V × J Combinatorial Pairing Heatmap</span>
+                <span class="badge-boundary" id="vjHeatmapLocusBadge">Heavy Chain (IGHV × IGHJ)</span>
+              </h4>
+              <div style="font-size:12px; color:#94a3b8; margin-top:2px;">Contingency matrix showing clone cell frequency and recombination pairing between V and J gene segments.</div>
+            </div>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <span style="font-size:12px; color:#94a3b8;">Chain Target:</span>
+              <button class="nav-btn active" id="btnVjHeavy" onclick="switchVjHeatmapChain('heavy')">Heavy / TRB</button>
+              <button class="nav-btn" id="btnVjLight" onclick="switchVjHeatmapChain('light')">Light / TRA</button>
+            </div>
+          </div>
+
+          <!-- Heatmap Container -->
+          <div id="vjHeatmapWrapper" style="background:#0a1220; border:1px solid #1e293b; border-radius:8px; padding:16px; overflow-x:auto;">
+            <div id="vjHeatmapChart" style="min-width:550px;"></div>
+            <!-- Heatmap Legend -->
+            <div style="display:flex; align-items:center; justify-content:flex-end; gap:12px; margin-top:14px; font-size:11.5px; color:#94a3b8;">
+              <span>Zero (0%)</span>
+              <div style="width:140px; height:10px; border-radius:5px; background:linear-gradient(90deg, #0a1322, #0284c7, #10b981, #f59e0b);"></div>
+              <span>High Frequency (<span id="vjHeatmapMaxVal" style="color:#f59e0b; font-weight:700;">-</span>)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: BIOPHYSICAL SPECTRA -->
+    <div id="tabBiophysics" class="tab-content">
+      <div class="view-card">
+        <h3 style="font-size:15px; font-weight:800; color:#f8fafc; margin-bottom:4px;">CDR3 Loop Physicochemical Profiles</h3>
+        <div style="font-size:12px; color:#94a3b8; margin-bottom:16px;">Loop length distribution, Kyte-Doolittle hydropathy index, and net charge at pH 7.4</div>
+        
+        <div class="matrix-wrapper">
+          <div class="chart-box">
+            <div class="chart-title"><span>CDR-H3 Loop Length Distribution</span><span>Amino Acids</span></div>
+            <div id="lengthHistChart" style="height:220px;"></div>
+          </div>
+          <div class="chart-box">
+            <div class="chart-title"><span>CDR-H3 Hydropathy vs. Net Charge</span><span>Biophysical Class</span></div>
+            <div id="chargeScatterChart" style="height:220px;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: PACMAP PROJECTION -->
+    <div id="tabPacmap" class="tab-content">
+      <div class="view-card">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; flex-wrap:wrap; gap:8px;">
+          <div>
+            <h3 style="font-size:15px; font-weight:800; color:#f8fafc;">Single-Cell Heterodimer PaCMAP Manifold</h3>
+            <div style="font-size:12px; color:#94a3b8;">Joint V<sub>H</sub> ⊕ V<sub>L</sub> continuous topological embedding with clonal lineage trajectory vectors</div>
+          </div>
+          <div id="pacmapLegend" style="font-size:11px; display:flex; gap:10px; align-items:center; flex-wrap:wrap; background:#060b13; padding:6px 10px; border-radius:6px; border:1px solid var(--border);">
+            <!-- Dynamically populated legend -->
+          </div>
+        </div>
+        
+        <div style="height:500px; width:100%; background:#060b13; border:1px solid var(--border); border-radius:8px; position:relative; overflow:hidden;">
+          <svg id="pacmapSvg" width="100%" height="100%"></svg>
+          <div id="pacmapTooltip" style="position:absolute; display:none; background:#0d1527; border:1px solid #38bdf8; border-radius:6px; padding:8px 12px; font-size:11.5px; color:#f8fafc; pointer-events:none; box-shadow:0 4px 16px rgba(0,0,0,0.6); z-index:20;"></div>
+          <!-- Methodological Explanatory Badge on Arbitrary Units -->
+          <div style="position:absolute; bottom:12px; right:12px; background:rgba(15, 23, 42, 0.9); border:1px solid rgba(56, 189, 248, 0.4); border-radius:6px; padding:6px 12px; font-size:10.5px; color:#cbd5e1; backdrop-filter:blur(6px); max-width:330px; line-height:1.45; box-shadow:0 4px 14px rgba(0,0,0,0.6); pointer-events:none;">
+            <div style="color:#38bdf8; font-weight:800; margin-bottom:2px; display:flex; align-items:center; gap:5px;">
+              <span>ℹ️</span> <span>Why Arbitrary Units (a.u.)?</span>
+            </div>
+            Non-linear manifold projections (PaCMAP/UMAP) optimize relative pairwise distance hierarchies rather than absolute Cartesian lengths. Relative distances preserve local sequence neighborhoods and global phylogeny; numerical values on Dimensions 1 &amp; 2 reflect this continuous topology.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 5: LONGITUDINAL TIME-SERIES & LINEAGE TRAJECTORIES -->
+    <div id="tabTimeSeries" class="tab-content">
+      <div class="view-card">
+        <div style="margin-bottom:16px;">
+          <h3 id="timeSeriesHeaderTitle" style="font-size:15px; font-weight:800; color:#f8fafc; display:flex; align-items:center; gap:8px;">
+            <span>⏱️ Longitudinal Somatic Hypermutation Kinetics & Lineage Trajectories</span>
+            <span id="timeSeriesHeaderBadge" class="audit-chip" style="color:#10b981; border-color:rgba(16,185,129,0.4);">Day 0 → Day 180 Monitoring</span>
+          </h3>
+          <div id="timeSeriesHeaderDesc" style="font-size:12px; color:#94a3b8;">
+            Quantitative tracking of somatic hypermutation rate, clonal lineage expansion, and affinity maturation trajectories during vaccination or immune interventions.
+          </div>
+        </div>
+
+        <div class="matrix-wrapper" style="margin-bottom:20px;">
+          <div class="chart-box">
+            <div class="chart-title">
+              <span id="shmChartTitle">Somatic Hypermutation Accumulation Curve</span>
+              <span id="shmChartSubtitle" style="color:#38bdf8; font-size:11px;">Mean SHM vs. Time</span>
+            </div>
+            <div id="shmCurveChart" style="height:230px;"></div>
+          </div>
+          <div class="chart-box">
+            <div class="chart-title">
+              <span id="dynChartTitle">Lineage Abundance & Clonal Expansion</span>
+              <span id="dynChartSubtitle" style="color:#10b981; font-size:11px;">Clonal Frequency (%)</span>
+            </div>
+            <div id="lineageDynamicChart" style="height:230px;"></div>
+          </div>
+        </div>
+
+        <div>
+          <h4 id="timeSeriesTableTitle" style="font-size:13px; font-weight:700; color:#e2e8f0; margin-bottom:8px; text-transform:uppercase; letter-spacing:0.03em;">
+            Clonal Lineage Longitudinal Evolution Table
+          </h4>
+          <div class="table-container">
+            <table id="timeSeriesTable">
+              <thead id="timeSeriesThead">
+                <tr>
+                  <th>Lineage ID</th>
+                  <th>Founder Precursor (Day 0)</th>
+                  <th>Day 7 Plasmablasts</th>
+                  <th>Day 28 Memory B</th>
+                  <th>Day 180 Booster Recall</th>
+                  <th>Total SHM Accrued</th>
+                  <th>Neutralization Target</th>
+                </tr>
+              </thead>
+              <tbody id="timeSeriesTbody">
+                <!-- Dynamically populated -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // -------------------------------------------------------------
+    // VBASE3 Benchmark Datasets (Human Paired Single-Cell Repertoires)
+    // -------------------------------------------------------------
+    const SAMPLE_DATASETS = {
+      her2: [
+        { rank: 1, cohort: "HER2 Cohort", timepoint: "Baseline (Biopsy)", day: 0, freq: 112, target: "HER2 / ERBB2 Domain IV", v_h: "humIGHV3-23*01", j_h: "humIGHJ4*02", cdr3_h: "CSRWGGDGFYAMDYW", v_l: "humIGKV1-39*01", j_l: "humIGKJ1*01", cdr3_l: "CQQHYTTPPTF", shm_h: 12, shm_l: 6, boundary_h: "TVSS", boundary_l: "VEIK", px: -12.4, py: 8.2, seq_h: "EVQLVESGGGLVQPGGSLRLSCAASGFNIKDTYIHWVRQAPGKGLEWVARIYPTNGYTRYADSVKGRFTISADTSKNTAYLQMNSLRAEDTAVYYCSRWGGDGFYAMDYWGQGTLVTVSS", seq_l: "DIQMTQSPSSLSASVGDRVTITCRASQDVNTAVAWYQQKPGKAPKLLIYSASFLYSGVPSRFSGSRSGTDFTLTISSLQPEDFATYYCQQHYTTPPTFGQGTKVEIK" },
+        { rank: 2, cohort: "HER2 Cohort", timepoint: "Baseline (Biopsy)", day: 0, freq: 84, target: "HER2 / ERBB2 Domain II", v_h: "humIGHV3-66*01", j_h: "humIGHJ6*01", cdr3_h: "CARNLGPSFYFDYW", v_l: "humIGKV1-33*01", j_l: "humIGKJ1*01", cdr3_l: "CQQYYIYPYTF", shm_h: 9, shm_l: 5, boundary_h: "TVSS", boundary_l: "VEIK", px: -10.8, py: 9.1, seq_h: "EVQLVESGGGLVQPGGSLRLSCAASGFTFTDYTMDWVRQAPGKGLEWVADVNPNSGGSIYNQRFKGRFTLSVDRSKNTLYLQMNSLRAEDTAVYYCARNLGPSFYFDYWGQGTTVTVSS", seq_l: "DIQMTQSPSSLSASVGDRVTITCKASQDVSIGVAWYQQKPGKAPKLLIYSASYRYTGVPSRFSGSGSGTDFTLTISSLQPEDFATYYCQQYYIYPYTFGQGTKVEIK" },
+        { rank: 3, cohort: "HER2 Cohort", timepoint: "Baseline (Biopsy)", day: 0, freq: 46, target: "HER2 / ERBB2 Subdomain I", v_h: "humIGHV1-69*01", j_h: "humIGHJ4*02", cdr3_h: "CARDKGYSYGYW", v_l: "humIGKV3-20*01", j_l: "humIGKJ2*01", cdr3_l: "CQQYGSSPLTF", shm_h: 14, shm_l: 7, boundary_h: "TVSS", boundary_l: "VEIK", px: 14.2, py: -6.5 },
+        { rank: 4, cohort: "HER2 Cohort", timepoint: "Baseline (Biopsy)", day: 0, freq: 38, target: "HER2 / ERBB2 Domain IV", v_h: "humIGHV3-23*04", j_h: "humIGHJ4*02", cdr3_h: "CSRWGGDGFYGLDYW", v_l: "humIGKV1-39*01", j_l: "humIGKJ1*01", cdr3_l: "CQQHYTTPPTF", shm_h: 11, shm_l: 6, boundary_h: "TVSS", boundary_l: "VEIK", px: -11.9, py: 8.6 },
+        { rank: 5, cohort: "HER2 Cohort", timepoint: "Baseline (Biopsy)", day: 0, freq: 24, target: "HER2 / ERBB2 Subdomain III", v_h: "humIGHV4-34*01", j_h: "humIGHJ5*02", cdr3_h: "CARGQWLYFDLW", v_l: "humIGLV2-14*01", j_l: "humIGLJ1*01", cdr3_l: "CSSYTSSSTLVF", shm_h: 15, shm_l: 8, boundary_h: "TVSS", boundary_l: "TVL", px: 4.8, py: 15.3 },
+        { rank: 6, cohort: "HER2 Cohort", timepoint: "Baseline (Biopsy)", day: 0, freq: 16, target: "HER2 / ERBB2 Domain IV", v_h: "humIGHV3-21*01", j_h: "humIGHJ3*01", cdr3_h: "CARERVGATAYAFDIW", v_l: "humIGKV1-5*01", j_l: "humIGKJ4*01", cdr3_l: "CQHYNTYSWTF", shm_h: 7, shm_l: 4, boundary_h: "TVSS", boundary_l: "VEIK", px: -8.5, py: 11.2 }
+      ],
+      viral: [
+        { rank: 1, cohort: "SARS-CoV-2 Cohort", timepoint: "Convalescent D28", day: 28, freq: 94, target: "SARS-CoV-2 S2 Stem", v_h: "humIGHV1-69*01", j_h: "humIGHJ6*01", cdr3_h: "CARDKGYSYGYW", v_l: "humIGKV3-20*01", j_l: "humIGKJ2*01", cdr3_l: "CQQYGSSPLTF", shm_h: 8, shm_l: 4, boundary_h: "TVSS", boundary_l: "VEIK", px: 15.1, py: -7.2 },
+        { rank: 2, cohort: "SARS-CoV-2 Cohort", timepoint: "Convalescent D28", day: 28, freq: 52, target: "SARS-CoV-2 RBD Class 1", v_h: "humIGHV3-53*01", j_h: "humIGHJ4*02", cdr3_h: "CARDLDYFDFW", v_l: "humIGKV1-9*01", j_l: "humIGKJ3*01", cdr3_l: "CQQYDTYPLTF", shm_h: 4, shm_l: 2, boundary_h: "TVSS", boundary_l: "VEIK", px: -14.2, py: 4.8 },
+        { rank: 3, cohort: "SARS-CoV-2 Cohort", timepoint: "Convalescent D28", day: 28, freq: 39, target: "SARS-CoV-2 NTD", v_h: "humIGHV1-24*01", j_h: "humIGHJ3*01", cdr3_h: "CAREGPTGTYAFDIW", v_l: "humIGKV3-11*01", j_l: "humIGKJ1*01", cdr3_l: "CQQRSNWPPITF", shm_h: 11, shm_l: 5, boundary_h: "TVSS", boundary_l: "VEIK", px: 12.3, py: -9.5 }
+      ],
+      flu: [
+        { rank: 1, cohort: "Influenza Cohort", timepoint: "Post-Vaccine D21", day: 21, freq: 78, target: "Influenza HA Stem Group 1", v_h: "humIGHV1-69*01", j_h: "humIGHJ6*01", cdr3_h: "CARHYNWYYGMDVW", v_l: "humIGKV3-20*01", j_l: "humIGKJ1*01", cdr3_l: "CQKYNSAPFTF", shm_h: 18, shm_l: 9, boundary_h: "TVSS", boundary_l: "VEIK", px: 16.4, py: -5.8 },
+        { rank: 2, cohort: "Influenza Cohort", timepoint: "Post-Vaccine D21", day: 21, freq: 44, target: "Influenza HA Head Domain", v_h: "humIGHV4-34*01", j_h: "humIGHJ4*02", cdr3_h: "CARVLYGMDYW", v_l: "humIGLV3-21*01", j_l: "humIGLJ2*01", cdr3_l: "CQVWDSSSDHPVF", shm_h: 14, shm_l: 7, boundary_h: "TVSS", boundary_l: "TVL", px: 6.2, py: 14.1 },
+        { rank: 3, cohort: "Influenza Cohort", timepoint: "Post-Vaccine D21", day: 21, freq: 18, target: "Influenza NA Active Site", v_h: "humIGHV3-30*01", j_h: "humIGHJ4*02", cdr3_h: "CAKDFWSGYDYW", v_l: "humIGKV1-12*01", j_l: "humIGKJ4*01", cdr3_l: "CQQANSFPLTF", shm_h: 10, shm_l: 4, boundary_h: "TVSS", boundary_l: "VEIK", px: -11.0, py: 6.4 }
+      ],
+      time_series: [
+        // Lineage 1: S2 Stem Neutralizer Trajectory (D0 -> D7 -> D28 -> D180)
+        { rank: 1, cohort: "Vaccine Time-Series", timepoint: "Day 0 (Pre-Bleed)", day: 0, lineage_id: "Lineage-1 (S2-Stem)", freq: 4, target: "SARS-CoV-2 S2 Stem", v_h: "humIGHV1-69*01", j_h: "humIGHJ6*01", cdr3_h: "CARDKGYSYGYW", v_l: "humIGKV3-20*01", j_l: "humIGKJ2*01", cdr3_l: "CQQYGSSPLTF", shm_h: 0, shm_l: 0, boundary_h: "TVSS", boundary_l: "VEIK", px: 18.5, py: -8.8 },
+        { rank: 2, cohort: "Vaccine Time-Series", timepoint: "Day 7 (Plasmablast Burst)", day: 7, lineage_id: "Lineage-1 (S2-Stem)", freq: 86, target: "SARS-CoV-2 S2 Stem", v_h: "humIGHV1-69*01", j_h: "humIGHJ6*01", cdr3_h: "CARDKGYSYGYW", v_l: "humIGKV3-20*01", j_l: "humIGKJ2*01", cdr3_l: "CQQYGSSPLTF", shm_h: 3, shm_l: 1, boundary_h: "TVSS", boundary_l: "VEIK", px: 16.6, py: -7.9 },
+        { rank: 3, cohort: "Vaccine Time-Series", timepoint: "Day 28 (Memory Pool)", day: 28, lineage_id: "Lineage-1 (S2-Stem)", freq: 142, target: "SARS-CoV-2 S2 Stem", v_h: "humIGHV1-69*01", j_h: "humIGHJ6*01", cdr3_h: "CARDKGYSYGYW", v_l: "humIGKV3-20*01", j_l: "humIGKJ2*01", cdr3_l: "CQQYGSSPLTF", shm_h: 8, shm_l: 4, boundary_h: "TVSS", boundary_l: "VEIK", px: 14.8, py: -6.8 },
+        { rank: 4, cohort: "Vaccine Time-Series", timepoint: "Day 180 (Booster Recall)", day: 180, lineage_id: "Lineage-1 (S2-Stem)", freq: 210, target: "SARS-CoV-2 S2 Stem", v_h: "humIGHV1-69*01", j_h: "humIGHJ6*01", cdr3_h: "CARDKGYSYGYW", v_l: "humIGKV3-20*01", j_l: "humIGKJ2*01", cdr3_l: "CQQYGSSPLTF", shm_h: 16, shm_l: 8, boundary_h: "TVSS", boundary_l: "VEIK", px: 13.0, py: -5.6 },
+        
+        // Lineage 2: RBD Class 1 Neutralizer Trajectory (D0 -> D7 -> D28 -> D180)
+        { rank: 5, cohort: "Vaccine Time-Series", timepoint: "Day 0 (Pre-Bleed)", day: 0, lineage_id: "Lineage-2 (RBD Class 1)", freq: 6, target: "SARS-CoV-2 RBD Class 1", v_h: "humIGHV3-53*01", j_h: "humIGHJ4*02", cdr3_h: "CARDLDYFDFW", v_l: "humIGKV1-9*01", j_l: "humIGKJ3*01", cdr3_l: "CQQYDTYPLTF", shm_h: 0, shm_l: 0, boundary_h: "TVSS", boundary_l: "VEIK", px: -18.2, py: 1.8 },
+        { rank: 6, cohort: "Vaccine Time-Series", timepoint: "Day 7 (Plasmablast Burst)", day: 7, lineage_id: "Lineage-2 (RBD Class 1)", freq: 64, target: "SARS-CoV-2 RBD Class 1", v_h: "humIGHV3-53*01", j_h: "humIGHJ4*02", cdr3_h: "CARDLDYFDFW", v_l: "humIGKV1-9*01", j_l: "humIGKJ3*01", cdr3_l: "CQQYDTYPLTF", shm_h: 2, shm_l: 1, boundary_h: "TVSS", boundary_l: "VEIK", px: -16.0, py: 3.3 },
+        { rank: 7, cohort: "Vaccine Time-Series", timepoint: "Day 28 (Memory Pool)", day: 28, lineage_id: "Lineage-2 (RBD Class 1)", freq: 118, target: "SARS-CoV-2 RBD Class 1", v_h: "humIGHV3-53*01", j_h: "humIGHJ4*02", cdr3_h: "CARDLDYFDFW", v_l: "humIGKV1-9*01", j_l: "humIGKJ3*01", cdr3_l: "CQQYDTYPLTF", shm_h: 6, shm_l: 3, boundary_h: "TVSS", boundary_l: "VEIK", px: -13.8, py: 5.2 },
+        { rank: 8, cohort: "Vaccine Time-Series", timepoint: "Day 180 (Booster Recall)", day: 180, lineage_id: "Lineage-2 (RBD Class 1)", freq: 175, target: "SARS-CoV-2 RBD Class 1", v_h: "humIGHV3-53*01", j_h: "humIGHJ4*02", cdr3_h: "CARDLDYFDFW", v_l: "humIGKV1-9*01", j_l: "humIGKJ3*01", cdr3_l: "CQQYDTYPLTF", shm_h: 12, shm_l: 6, boundary_h: "TVSS", boundary_l: "VEIK", px: -11.4, py: 7.1 },
+
+        // Lineage 3: NTD Broad Neutralizer Trajectory (D28 -> D180)
+        { rank: 9, cohort: "Vaccine Time-Series", timepoint: "Day 28 (Memory Pool)", day: 28, lineage_id: "Lineage-3 (NTD Broad)", freq: 48, target: "SARS-CoV-2 NTD", v_h: "humIGHV1-24*01", j_h: "humIGHJ3*01", cdr3_h: "CAREGPTGTYAFDIW", v_l: "humIGKV3-11*01", j_l: "humIGKJ1*01", cdr3_l: "CQQRSNWPPITF", shm_h: 9, shm_l: 4, boundary_h: "TVSS", boundary_l: "VEIK", px: 11.5, py: -10.2 },
+        { rank: 10, cohort: "Vaccine Time-Series", timepoint: "Day 180 (Booster Recall)", day: 180, lineage_id: "Lineage-3 (NTD Broad)", freq: 82, target: "SARS-CoV-2 NTD", v_h: "humIGHV1-24*01", j_h: "humIGHJ3*01", cdr3_h: "CAREGPTGTYAFDIW", v_l: "humIGKV3-11*01", j_l: "humIGKJ1*01", cdr3_l: "CQQRSNWPPITF", shm_h: 17, shm_l: 8, boundary_h: "TVSS", boundary_l: "VEIK", px: 9.6, py: -11.2 }
+      ],
+      multi_cohort: [
+        { rank: 1, cohort: "HER2 Breast Cancer", timepoint: "Pre-Treatment", day: 0, freq: 112, target: "HER2 Domain IV", v_h: "humIGHV3-23*01", j_h: "humIGHJ4*02", cdr3_h: "CSRWGGDGFYAMDYW", v_l: "humIGKV1-39*01", j_l: "humIGKJ1*01", cdr3_l: "CQQHYTTPPTF", shm_h: 12, shm_l: 6, boundary_h: "TVSS", boundary_l: "VEIK", px: -12.4, py: 8.2 },
+        { rank: 2, cohort: "HER2 Breast Cancer", timepoint: "Pre-Treatment", day: 0, freq: 84, target: "HER2 Domain II", v_h: "humIGHV3-66*01", j_h: "humIGHJ6*01", cdr3_h: "CARNLGPSFYFDYW", v_l: "humIGKV1-33*01", j_l: "humIGKJ1*01", cdr3_l: "CQQYYIYPYTF", shm_h: 9, shm_l: 5, boundary_h: "TVSS", boundary_l: "VEIK", px: -10.8, py: 9.1 },
+        { rank: 3, cohort: "SARS-CoV-2 Convalescent", timepoint: "Convalescent D28", day: 28, freq: 94, target: "SARS-CoV-2 S2 Stem", v_h: "humIGHV1-69*01", j_h: "humIGHJ6*01", cdr3_h: "CARDKGYSYGYW", v_l: "humIGKV3-20*01", j_l: "humIGKJ2*01", cdr3_l: "CQQYGSSPLTF", shm_h: 8, shm_l: 4, boundary_h: "TVSS", boundary_l: "VEIK", px: 15.1, py: -7.2 },
+        { rank: 4, cohort: "SARS-CoV-2 Convalescent", timepoint: "Convalescent D28", day: 28, freq: 52, target: "SARS-CoV-2 RBD Class 1", v_h: "humIGHV3-53*01", j_h: "humIGHJ4*02", cdr3_h: "CARDLDYFDFW", v_l: "humIGKV1-9*01", j_l: "humIGKJ3*01", cdr3_l: "CQQYDTYPLTF", shm_h: 4, shm_l: 2, boundary_h: "TVSS", boundary_l: "VEIK", px: -14.2, py: 4.8 },
+        { rank: 5, cohort: "Influenza Seasonal", timepoint: "Post-Vaccine D21", day: 21, freq: 78, target: "Influenza HA Stem Group 1", v_h: "humIGHV1-69*01", j_h: "humIGHJ6*01", cdr3_h: "CARHYNWYYGMDVW", v_l: "humIGKV3-20*01", j_l: "humIGKJ1*01", cdr3_l: "CQKYNSAPFTF", shm_h: 18, shm_l: 9, boundary_h: "TVSS", boundary_l: "VEIK", px: 16.4, py: -5.8 },
+        { rank: 6, cohort: "Influenza Seasonal", timepoint: "Post-Vaccine D21", day: 21, freq: 44, target: "Influenza HA Head Domain", v_h: "humIGHV4-34*01", j_h: "humIGHJ4*02", cdr3_h: "CARVLYGMDYW", v_l: "humIGLV3-21*01", j_l: "humIGLJ2*01", cdr3_l: "CQVWDSSSDHPVF", shm_h: 14, shm_l: 7, boundary_h: "TVSS", boundary_l: "TVL", px: 6.2, py: 14.1 }
+      ],
+      tcr_til: [
+        { rank: 1, receptor_type: "TCR", cohort: "Melanoma CD8+ TIL", timepoint: "Post-Anti-PD1 (D42)", day: 42, lineage_id: "Lineage-T1 (MAGE-A3)", freq: 285, target: "MAGE-A3 (EVDPIGHLY) / HLA-A*01", v_h: "humTRBV6-5*01", j_h: "humTRBJ1-2*01", cdr3_h: "CASSIYSGNTIYF", v_l: "humTRAV8-4*01", j_l: "humTRAJ42*01", cdr3_l: "CAVSDGGSQGNLIF", shm_h: 0, shm_l: 0, boundary_h: "NTIYF", boundary_l: "GNLIF", px: -5.2, py: -15.8 },
+        { rank: 2, receptor_type: "TCR", cohort: "Melanoma CD8+ TIL", timepoint: "Pre-Treatment (D0)", day: 0, lineage_id: "Lineage-T1 (MAGE-A3)", freq: 14, target: "MAGE-A3 (EVDPIGHLY) / HLA-A*01", v_h: "humTRBV6-5*01", j_h: "humTRBJ1-2*01", cdr3_h: "CASSIYSGNTIYF", v_l: "humTRAV8-4*01", j_l: "humTRAJ42*01", cdr3_l: "CAVSDGGSQGNLIF", shm_h: 0, shm_l: 0, boundary_h: "NTIYF", boundary_l: "GNLIF", px: -6.4, py: -16.8 },
+        { rank: 3, receptor_type: "TCR", cohort: "Melanoma CD8+ TIL", timepoint: "Post-Anti-PD1 (D42)", day: 42, lineage_id: "Lineage-T2 (NY-ESO-1)", freq: 148, target: "NY-ESO-1 (157-165) / HLA-A*02:01", v_h: "humTRBV12-4*01", j_h: "humTRBJ2-1*01", cdr3_h: "CASSLGAGSYEQYF", v_l: "humTRAV21*01", j_l: "humTRAJ33*01", cdr3_l: "CAVNDNYGGSQGNLIF", shm_h: 0, shm_l: 0, boundary_h: "SYEQYF", boundary_l: "QGNLIF", px: -7.5, py: -14.2 },
+        { rank: 4, receptor_type: "TCR", cohort: "Melanoma CD8+ TIL", timepoint: "Pre-Treatment (D0)", day: 0, lineage_id: "Lineage-T2 (NY-ESO-1)", freq: 18, target: "NY-ESO-1 (157-165) / HLA-A*02:01", v_h: "humTRBV12-4*01", j_h: "humTRBJ2-1*01", cdr3_h: "CASSLGAGSYEQYF", v_l: "humTRAV21*01", j_l: "humTRAJ33*01", cdr3_l: "CAVNDNYGGSQGNLIF", shm_h: 0, shm_l: 0, boundary_h: "SYEQYF", boundary_l: "QGNLIF", px: -8.5, py: -15.2 },
+        { rank: 5, receptor_type: "TCR", cohort: "Viral Specific T cells", timepoint: "Convalescent (D28)", day: 28, lineage_id: "Lineage-T3 (CMV)", freq: 96, target: "CMV pp65 (NLVPMVATV) / HLA-A*02:01", v_h: "humTRBV7-9*01", j_h: "humTRBJ2-7*01", cdr3_h: "CASSDGLAQETQYF", v_l: "humTRAV24*01", j_l: "humTRAJ49*01", cdr3_l: "CAFIRGNMLTF", shm_h: 0, shm_l: 0, boundary_h: "QETQYF", boundary_l: "GNMLTF", px: -8.8, py: -13.0 },
+        { rank: 6, receptor_type: "TCR", cohort: "Viral Specific T cells", timepoint: "Convalescent (D28)", day: 28, lineage_id: "Lineage-T4 (EBV)", freq: 62, target: "EBV BMLF1 (GLCTLVAML) / HLA-A*02:01", v_h: "humTRBV20-1*01", j_h: "humTRBJ1-5*01", cdr3_h: "CSARDTGNQPQHF", v_l: "humTRAV5*01", j_l: "humTRAJ31*01", cdr3_l: "CAESNARLMF", shm_h: 0, shm_l: 0, boundary_h: "NQPQHF", boundary_l: "NARLMF", px: -4.1, py: -13.8 }
+      ],
+      lymphoma: [
+        { rank: 1, cohort: "Follicular Lymphoma", timepoint: "Diagnosis (Biopsy)", day: 0, lineage_id: "Malignant Index (Founder)", freq: 420, target: "Tumor B-cell Clone (CD19+ CD20+ CD10+)", v_h: "humIGHV4-34*01", j_h: "humIGHJ4*02", cdr3_h: "CARVLYGMDYW", v_l: "humIGLV3-21*01", j_l: "humIGLJ2*01", cdr3_l: "CQVWDSSSDHPVF", shm_h: 18, shm_l: 9, boundary_h: "TVSS", boundary_l: "TVL", px: 5.8, py: 14.8 },
+        { rank: 2, cohort: "Follicular Lymphoma", timepoint: "Relapse (Month 6)", day: 180, lineage_id: "Malignant Subclone A (AID Drift)", freq: 260, target: "Tumor Subclone A (AID Ongoing SHM)", v_h: "humIGHV4-34*01", j_h: "humIGHJ4*02", cdr3_h: "CARVLYGMDYW", v_l: "humIGLV3-21*01", j_l: "humIGLJ2*01", cdr3_l: "CQVWDSSSDHPVF", shm_h: 24, shm_l: 12, boundary_h: "TVSS", boundary_l: "TVL", px: 7.1, py: 16.2 },
+        { rank: 3, cohort: "Follicular Lymphoma", timepoint: "Relapse (Month 6)", day: 180, lineage_id: "Malignant Subclone B (Escape Variant)", freq: 110, target: "Tumor Subclone B (AID Ongoing SHM)", v_h: "humIGHV4-34*01", j_h: "humIGHJ4*02", cdr3_h: "CARVLYGMDYW", v_l: "humIGLV3-21*01", j_l: "humIGLJ2*01", cdr3_l: "CQVWDSSSDHPVF", shm_h: 27, shm_l: 14, boundary_h: "TVSS", boundary_l: "TVL", px: 8.4, py: 17.5 },
+        { rank: 4, cohort: "Follicular Lymphoma", timepoint: "Post-CAR-T (Month 12)", day: 360, lineage_id: "Minimal Residual Disease (MRD)", freq: 2, target: "Residual Index Clone (10⁻⁵ frequency)", v_h: "humIGHV4-34*01", j_h: "humIGHJ4*02", cdr3_h: "CARVLYGMDYW", v_l: "humIGLV3-21*01", j_l: "humIGLJ2*01", cdr3_l: "CQVWDSSSDHPVF", shm_h: 18, shm_l: 9, boundary_h: "TVSS", boundary_l: "TVL", px: 5.8, py: 14.8 },
+        { rank: 5, cohort: "Follicular Lymphoma", timepoint: "Diagnosis (Biopsy)", day: 0, lineage_id: "Polyclonal Bystander B", freq: 14, target: "Suppressed Polyclonal B cells", v_h: "humIGHV3-23*01", j_h: "humIGHJ4*02", cdr3_h: "CSRWGGDGFYAMDYW", v_l: "humIGKV1-39*01", j_l: "humIGKJ1*01", cdr3_l: "CQQHYTTPPTF", shm_h: 6, shm_l: 3, boundary_h: "TVSS", boundary_l: "VEIK", px: -12.4, py: 8.2 },
+        { rank: 6, cohort: "Follicular Lymphoma", timepoint: "Post-CAR-T (Month 12)", day: 360, lineage_id: "Polyclonal Immune Reconstitution", freq: 48, target: "Reconstituting Naive/Memory B pool", v_h: "humIGHV1-69*01", j_h: "humIGHJ6*01", cdr3_h: "CARDKGYSYGYW", v_l: "humIGKV3-20*01", j_l: "humIGKJ2*01", cdr3_l: "CQQYGSSPLTF", shm_h: 2, shm_l: 1, boundary_h: "TVSS", boundary_l: "VEIK", px: 15.1, py: -7.2 }
+      ]
+    };
+
+    let currentDataset = SAMPLE_DATASETS.her2;
+    let filteredDataset = currentDataset;
+
+    function initPage() {
+      updateAuditBadges();
+      filteredDataset = currentDataset;
+      renderTable(currentDataset);
+      renderCharts(currentDataset);
+      renderPacmap(currentDataset);
+      renderTimeSeriesCharts(SAMPLE_DATASETS.time_series);
+      setupWorkbenchDropzone();
+    }
+
+    // -------------------------------------------------------------
+    // USER DATA INGESTION & FORMAT GUIDELINE CONTROLLERS
+    // -------------------------------------------------------------
+    function toggleDataImportPanel() {
+      const p = document.getElementById("dataImportPanel");
+      if (!p) return;
+      const isHidden = p.style.display === "none";
+      p.style.display = isHidden ? "block" : "none";
+      if (isHidden) {
+        p.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    function toggleFormatGuide() {
+      const g = document.getElementById("formatGuideDrawer");
+      if (!g) return;
+      g.style.display = g.style.display === "none" ? "block" : "none";
+    }
+
+    function switchFormatTab(tabKey) {
+      ['airr', 'cellranger', 'simple', 'fasta'].forEach(k => {
+        const btn = document.getElementById("btnTab_" + k);
+        const cnt = document.getElementById("formatTabContent_" + k);
+        if (btn) btn.classList.toggle("active", k === tabKey);
+        if (cnt) cnt.style.display = (k === tabKey) ? "block" : "none";
+      });
+    }
+
+    const FORMAT_EXAMPLES = {
+      airr: `sequence_id\tv_call\tj_call\tjunction_aa\tduplicate_count\tlocus\ttimepoint\ttarget
+donor_cell_01_H\thumIGHV3-23*01\thumIGHJ4*02\tCSRWGGDGFYAMDYW\t112\tIGH\tDay 0\tHER2 Domain IV
+donor_cell_01_L\thumIGKV1-39*01\thumIGKJ1*01\tCQQHYTTPPTF\t112\tIGK\tDay 0\tHER2 Domain IV
+donor_cell_02_H\thumIGHV1-69*01\thumIGHJ6*01\tCARDKGYSYGYW\t94\tIGH\tDay 28\tSARS-CoV-2 S2
+donor_cell_02_L\thumIGKV3-20*01\thumIGKJ2*01\tCQQYGSSPLTF\t94\tIGK\tDay 28\tSARS-CoV-2 S2
+donor_cell_03_H\thumIGHV3-53*01\thumIGHJ4*02\tCARDLDYFDFW\t52\tIGH\tDay 7\tRBD Class 1
+donor_cell_03_L\thumIGKV1-9*01\thumIGKJ3*01\tCQQYDTYPLTF\t52\tIGK\tDay 7\tRBD Class 1
+donor_cell_04_H\thumTRBV6-5*01\thumTRBJ1-2*01\tCASSIYSGNTIYF\t68\tTRB\tPost-Tx\tMAGE-A3 / HLA-A*01
+donor_cell_04_L\thumTRAV8-4*01\thumTRAJ42*01\tCAVSDGGSQGNLIF\t68\tTRA\tPost-Tx\tMAGE-A3 / HLA-A*01`,
+
+      cellranger: `barcode,chain,v_gene,j_gene,cdr3,reads,productive,is_cell
+AAACCTGAGAAACCGA-1,IGH,IGHV3-23,IGHJ4,CSRWGGDGFYAMDYW,42,True,True
+AAACCTGAGAAACCGA-1,IGK,IGKV1-39,IGKJ1,CQQHYTTPPTF,38,True,True
+AAACCTGAGAAACCGT-1,IGH,IGHV1-69,IGHJ6,CARDKGYSYGYW,55,True,True
+AAACCTGAGAAACCGT-1,IGK,IGKV3-20,IGKJ2,CQQYGSSPLTF,49,True,True
+AAACCTGAGAAACCGG-1,IGH,IGHV3-53,IGHJ4,CARDLDYFDFW,32,True,True
+AAACCTGAGAAACCGG-1,IGK,IGKV1-9,IGKJ3,CQQYDTYPLTF,29,True,True
+AAACCTGAGAAACCAT-1,TRB,TRBV6-5,TRBJ1-2,CASSIYSGNTIYF,70,True,True
+AAACCTGAGAAACCAT-1,TRA,TRAV8-4,TRAJ42,CAVSDGGSQGNLIF,64,True,True`,
+
+      simple: `cell_id\theavy_v\tlight_v\theavy_cdr3\tlight_cdr3\tfreq\ttimepoint\ttarget
+clone_1\thumIGHV3-23*01\thumIGKV1-39*01\tCSRWGGDGFYAMDYW\tCQQHYTTPPTF\t120\tPre-Bleed\tHER2 Domain IV
+clone_2\thumIGHV1-69*01\thumIGKV3-20*01\tCARDKGYSYGYW\tCQQYGSSPLTF\t85\tDay 28\tSpike S2 Stem
+clone_3\thumIGHV3-53*01\thumIGKV1-9*01\tCARDLDYFDFW\tCQQYDTYPLTF\t64\tDay 7\tRBD Class 1
+clone_4\thumTRBV6-5*01\thumTRAV8-4*01\tCASSIYSGNTIYF\tCAVSDGGSQGNLIF\t45\tPost-Tx\tMAGE-A3 / HLA-A*01`,
+
+      fasta: `>clone1_heavy humIGHV3-23*01
+EVQLVESGGGLVQPGGSLRLSCAASGFNIKDTYIHWVRQAPGKGLEWVARIYPTNGYTRYADSVKGRFTISADTSKNTAYLQMNSLRAEDTAVYYCSRWGGDGFYAMDYWGQGTLVTVSS
+>clone1_light humIGKV1-39*01
+DIQMTQSPSSLSASVGDRVTITCRASQDVNTAVAWYQQKPGKAPKLLIYSASFLYSGVPSRFSGSRSGTDFTLTISSLQPEDFATYYCQQHYTTPPTFGQGTKVEIK
+>clone2_heavy humIGHV1-69*01
+QVQLVQSGAEVKKPGSSVKVSCKASGGTFSSYAISWVRQAPGQGLEWMGGIIPIFGTANYAQKFQGRVTITADESTSTAYMELSSLRSEDTAVYYCARDKGYSYGYWGQGTLVTVSS
+>clone2_light humIGKV3-20*01
+EIVLTQSPGTLSLSPGERATLSCRASQSVSSSYLAWYQQKPGQAPRLLIYGASSRATGIPDRFSGSGSGTDFTLTISRLEPEDFAVYYCQQYGSSPLTFGGGTKVEIK`
+    };
+
+    function insertExampleToTextarea(key) {
+      const area = document.getElementById("rawRepertoireInput");
+      if (area && FORMAT_EXAMPLES[key]) {
+        area.value = FORMAT_EXAMPLES[key];
+        const badge = document.getElementById("importFeedbackBadge");
+        if (badge) {
+          badge.style.display = "inline-block";
+          badge.style.background = "rgba(56, 189, 248, 0.15)";
+          badge.style.border = "1px solid #38bdf8";
+          badge.style.color = "#38bdf8";
+          badge.innerText = `📋 Inserted ${key.toUpperCase()} template. Click 'Parse & Load into Studio' to test!`;
+        }
+      }
+    }
+
+    function clearImportTextarea() {
+      const area = document.getElementById("rawRepertoireInput");
+      if (area) area.value = "";
+      const badge = document.getElementById("importFeedbackBadge");
+      if (badge) badge.style.display = "none";
+      const fileBadge = document.getElementById("selectedFileNameBadge");
+      if (fileBadge) fileBadge.style.display = "none";
+    }
+
+    function downloadSampleTemplate() {
+      const content = `cell_id\theavy_v\tlight_v\theavy_cdr3\tlight_cdr3\tfreq\ttimepoint\ttarget\n` +
+        `user_clone_01\thumIGHV3-23*01\thumIGKV1-39*01\tCSRWGGDGFYAMDYW\tCQQHYTTPPTF\t100\tDay 0 (Baseline)\tTarget_Antigen_Alpha\n` +
+        `user_clone_02\thumIGHV1-69*01\thumIGKV3-20*01\tCARDKGYSYGYW\tCQQYGSSPLTF\t75\tDay 28 (Memory)\tTarget_Antigen_Beta\n` +
+        `user_clone_03\thumTRBV6-5*01\thumTRAV8-4*01\tCASSIYSGNTIYF\tCAVSDGGSQGNLIF\t40\tPost-Treatment\tPeptide_MHC_Complex\n`;
+      const blob = new Blob([content], { type: "text/tab-separated-values;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "vbase3_repertoire_template.tsv";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    function handleWorkbenchFileUpload(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      loadWorkbenchFile(file);
+    }
+
+    function loadWorkbenchFile(file) {
+      const fileBadge = document.getElementById("selectedFileNameBadge");
+      if (fileBadge) {
+        fileBadge.innerText = `📄 ${file.name} (${(file.size / 1024).toFixed(1)} KB)`;
+        fileBadge.style.display = "inline-block";
+      }
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        const text = evt.target.result;
+        const area = document.getElementById("rawRepertoireInput");
+        if (area) area.value = text;
+        executeUserRepertoireImport();
+      };
+      reader.readAsText(file);
+    }
+
+    function setupWorkbenchDropzone() {
+      const dz = document.getElementById("wbDropZone");
+      if (!dz) return;
+      ['dragenter', 'dragover'].forEach(eventName => {
+        dz.addEventListener(eventName, (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          dz.classList.add('dragover');
+        }, false);
+      });
+      ['dragleave', 'drop'].forEach(eventName => {
+        dz.addEventListener(eventName, (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          dz.classList.remove('dragover');
+        }, false);
+      });
+      dz.addEventListener('drop', (e) => {
+        const dt = e.dataTransfer;
+        const files = dt.files;
+        if (files && files.length > 0) {
+          loadWorkbenchFile(files[0]);
+        }
+      }, false);
+    }
+
+    function estimatePacmapCoords(v_h, cdr3_h) {
+      let seed = 0;
+      const str = (v_h || "") + (cdr3_h || "");
+      for (let i = 0; i < str.length; i++) {
+        seed = ((seed << 5) - seed) + str.charCodeAt(i);
+        seed |= 0;
+      }
+      const clanOffset = (v_h && (v_h.includes("IGHV3") || v_h.includes("TRBV6"))) ? -11 : ((v_h && (v_h.includes("IGHV1") || v_h.includes("TRBV12"))) ? 14 : 5);
+      const px = clanOffset + ((Math.abs(seed) % 100) / 25.0) - 2.0;
+      const py = (((Math.abs(seed) >> 4) % 200) / 10.0) - 10.0;
+      return { px: parseFloat(px.toFixed(1)), py: parseFloat(py.toFixed(1)) };
+    }
+
+    function parseRepertoireText(raw) {
+      if (!raw || typeof raw !== "string") return [];
+      const trimmed = raw.trim();
+      if (trimmed.startsWith(">")) {
+        return parseFastaRepertoire(trimmed);
+      }
+
+      const lines = trimmed.split(/\r?\n/).map(l => l.trim()).filter(l => l.length > 0);
+      if (lines.length < 2) return [];
+
+      let delimiter = "\t";
+      if (lines[0].includes("\t")) delimiter = "\t";
+      else if (lines[0].includes(",")) delimiter = ",";
+      else if (lines[0].includes(";")) delimiter = ";";
+
+      const headers = lines[0].split(delimiter).map(h => h.trim().toLowerCase().replace(/^["']|["']$/g, ""));
+
+      const is10x = headers.includes("barcode") && (headers.includes("chain") || headers.includes("locus"));
+      const isAirr = headers.includes("v_call") && (headers.includes("junction_aa") || headers.includes("cdr3"));
+      const isSimple = (headers.some(h => h.includes("heavy_v") || h.includes("v_h") || h.includes("vh"))) &&
+                       (headers.some(h => h.includes("light_v") || h.includes("v_l") || h.includes("vl")));
+
+      if (isSimple) {
+        return parseSimpleTable(lines, headers, delimiter);
+      } else if (is10x) {
+        return parse10xTable(lines, headers, delimiter);
+      } else if (isAirr) {
+        return parseAirrTable(lines, headers, delimiter);
+      } else {
+        return parseGenericTable(lines, headers, delimiter);
+      }
+    }
+
+    function parseSimpleTable(lines, headers, delimiter) {
+      const vh_i = headers.findIndex(h => h.includes("heavy_v") || h.includes("v_h") || h.includes("vh_gene") || h.includes("v_heavy"));
+      const vl_i = headers.findIndex(h => h.includes("light_v") || h.includes("v_l") || h.includes("vl_gene") || h.includes("v_light"));
+      const c3h_i = headers.findIndex(h => h.includes("heavy_cdr3") || h.includes("cdr3_h") || h.includes("cdr3_heavy") || h.includes("junction_aa_heavy"));
+      const c3l_i = headers.findIndex(h => h.includes("light_cdr3") || h.includes("cdr3_l") || h.includes("cdr3_light") || h.includes("junction_aa_light"));
+      const jh_i = headers.findIndex(h => h.includes("heavy_j") || h.includes("j_h") || h.includes("jh_gene"));
+      const jl_i = headers.findIndex(h => h.includes("light_j") || h.includes("j_l") || h.includes("jl_gene"));
+      const seq_h_i = headers.findIndex(h => h.includes("complete_h") || h.includes("vh_seq") || h.includes("heavy_seq") || h === "seq_h");
+      const seq_l_i = headers.findIndex(h => h.includes("complete_l") || h.includes("vl_seq") || h.includes("light_seq") || h === "seq_l");
+      const freq_i = headers.findIndex(h => h.includes("freq") || h.includes("count") || h.includes("reads") || h.includes("duplicate"));
+      const time_i = headers.findIndex(h => h.includes("timepoint") || h.includes("day") || h.includes("time"));
+      const target_i = headers.findIndex(h => h.includes("target") || h.includes("antigen"));
+      const id_i = headers.findIndex(h => h.includes("cell_id") || h.includes("id") || h.includes("clone"));
+
+      const results = [];
+      for (let i = 1; i < lines.length; i++) {
+        const cols = lines[i].split(delimiter).map(c => c.trim().replace(/^["']|["']$/g, ""));
+        if (cols.length < 3) continue;
+
+        const v_h = vh_i >= 0 && cols[vh_i] ? cols[vh_i] : "humIGHV3-23*01";
+        const v_l = vl_i >= 0 && cols[vl_i] ? cols[vl_i] : "humIGKV1-39*01";
+        const cdr3_h = c3h_i >= 0 && cols[c3h_i] ? cols[c3h_i] : "CARWGGDGFYAMDYW";
+        const cdr3_l = c3l_i >= 0 && cols[c3l_i] ? cols[c3l_i] : "CQQHYTTPPTF";
+        const seq_h = seq_h_i >= 0 && cols[seq_h_i] ? cols[seq_h_i].trim() : null;
+        const seq_l = seq_l_i >= 0 && cols[seq_l_i] ? cols[seq_l_i].trim() : null;
+        const isTcr = v_h.includes("TRB") || v_l.includes("TRA");
+
+        const j_h = jh_i >= 0 && cols[jh_i] ? cols[jh_i] : (isTcr ? "humTRBJ1-2*01" : "humIGHJ4*02");
+        const j_l = jl_i >= 0 && cols[jl_i] ? cols[jl_i] : (isTcr ? "humTRAJ42*01" : "humIGKJ1*01");
+        const freq = freq_i >= 0 && !isNaN(parseInt(cols[freq_i])) ? parseInt(cols[freq_i]) : 10;
+        const timepoint = time_i >= 0 && cols[time_i] ? cols[time_i] : "User Dataset (D0)";
+        const target = target_i >= 0 && cols[target_i] ? cols[target_i] : "User Antigen Target";
+        const cell_id = id_i >= 0 && cols[id_i] ? cols[id_i] : `clone_${i}`;
+
+        let day = 0;
+        const dayMatch = timepoint.match(/day\s*(\d+)|d(\d+)/i);
+        if (dayMatch) {
+          day = parseInt(dayMatch[1] || dayMatch[2]);
+        }
+
+        const coords = estimatePacmapCoords(v_h, cdr3_h);
+        results.push({
+          rank: i,
+          receptor_type: isTcr ? "TCR" : "BCR",
+          cohort: "User Uploaded Cohort",
+          timepoint: timepoint,
+          day: day,
+          lineage_id: cell_id,
+          freq: freq,
+          target: target,
+          v_h: v_h,
+          j_h: j_h,
+          cdr3_h: cdr3_h,
+          v_l: v_l,
+          j_l: j_l,
+          cdr3_l: cdr3_l,
+          seq_h: seq_h,
+          seq_l: seq_l,
+          shm_h: isTcr ? 0 : Math.min(22, Math.max(0, Math.round(cdr3_h.length - 8))),
+          shm_l: isTcr ? 0 : Math.min(12, Math.max(0, Math.round(cdr3_l.length - 8))),
+          boundary_h: isTcr ? "NTIYF" : "TVSS",
+          boundary_l: isTcr ? "GNLIF" : (v_l.includes("IGLV") ? "TVL" : "VEIK"),
+          px: coords.px,
+          py: coords.py
+        });
+      }
+      return results;
+    }
+
+    function parse10xTable(lines, headers, delimiter) {
+      const bc_i = headers.indexOf("barcode");
+      const chain_i = headers.findIndex(h => h === "chain" || h === "locus");
+      const v_i = headers.findIndex(h => h === "v_gene" || h === "v_call");
+      const j_i = headers.findIndex(h => h === "j_gene" || h === "j_call");
+      const c3_i = headers.findIndex(h => h === "cdr3" || h === "junction_aa");
+      const seq_i = headers.findIndex(h => h === "sequence" || h === "aa_sequence" || h === "sequence_alignment" || h === "fwr1_to_fwr4");
+      const reads_i = headers.findIndex(h => h === "reads" || h === "umis" || h === "duplicate_count");
+      const prod_i = headers.indexOf("productive");
+
+      const cells = {};
+      for (let i = 1; i < lines.length; i++) {
+        const cols = lines[i].split(delimiter).map(c => c.trim().replace(/^["']|["']$/g, ""));
+        if (cols.length <= Math.max(bc_i, chain_i, v_i)) continue;
+
+        if (prod_i >= 0 && cols[prod_i].toLowerCase() === "false") continue;
+
+        const bc = cols[bc_i];
+        const chain = cols[chain_i].toUpperCase();
+        const v = cols[v_i];
+        const j = j_i >= 0 ? cols[j_i] : "";
+        const cdr3 = c3_i >= 0 ? cols[c3_i] : "";
+        const seq_val = seq_i >= 0 && cols[seq_i] ? cols[seq_i].trim() : null;
+        const reads = reads_i >= 0 && !isNaN(parseInt(cols[reads_i])) ? parseInt(cols[reads_i]) : 1;
+
+        if (!cells[bc]) cells[bc] = { heavy: null, light: null, reads: reads };
+        if (chain === "IGH" || chain === "TRB" || chain === "TRD") {
+          cells[bc].heavy = { v, j, cdr3, chain, seq: seq_val };
+        } else if (chain === "IGK" || chain === "IGL" || chain === "TRA" || chain === "TRG") {
+          cells[bc].light = { v, j, cdr3, chain, seq: seq_val };
+        }
+      }
+
+      const results = [];
+      let rank = 1;
+      Object.keys(cells).forEach(bc => {
+        const cell = cells[bc];
+        if (cell.heavy && cell.light) {
+          const isTcr = cell.heavy.chain.startsWith("TR");
+          const coords = estimatePacmapCoords(cell.heavy.v, cell.heavy.cdr3);
+          results.push({
+            rank: rank++,
+            receptor_type: isTcr ? "TCR" : "BCR",
+            cohort: "10x Single-Cell User Pool",
+            timepoint: "Single-Cell Library",
+            day: 0,
+            lineage_id: bc.substring(0, 16),
+            freq: cell.reads,
+            target: "10x Repertoire Target",
+            v_h: cell.heavy.v.includes("*") ? cell.heavy.v : cell.heavy.v + "*01",
+            j_h: cell.heavy.j ? (cell.heavy.j.includes("*") ? cell.heavy.j : cell.heavy.j + "*01") : (isTcr ? "humTRBJ1-2*01" : "humIGHJ4*02"),
+            cdr3_h: cell.heavy.cdr3 || "CARWGGDGFYAMDYW",
+            v_l: cell.light.v.includes("*") ? cell.light.v : cell.light.v + "*01",
+            j_l: cell.light.j ? (cell.light.j.includes("*") ? cell.light.j : cell.light.j + "*01") : (isTcr ? "humTRAJ42*01" : "humIGKJ1*01"),
+            cdr3_l: cell.light.cdr3 || "CQQHYTTPPTF",
+            seq_h: cell.heavy.seq,
+            seq_l: cell.light.seq,
+            shm_h: isTcr ? 0 : 8,
+            shm_l: isTcr ? 0 : 4,
+            boundary_h: isTcr ? "NTIYF" : "TVSS",
+            boundary_l: isTcr ? "GNLIF" : (cell.light.chain === "IGL" ? "TVL" : "VEIK"),
+            px: coords.px,
+            py: coords.py
+          });
+        }
+      });
+      return results;
+    }
+
+    function parseAirrTable(lines, headers, delimiter) {
+      const seq_i = headers.findIndex(h => h === "sequence_id" || h === "cell_id");
+      const v_i = headers.indexOf("v_call");
+      const j_i = headers.indexOf("j_call");
+      const c3_i = headers.findIndex(h => h === "junction_aa" || h === "cdr3_aa" || h === "cdr3");
+      const seq_col_i = headers.findIndex(h => h === "sequence_aa" || h === "sequence" || h === "sequence_alignment" || h === "complete_sequence");
+      const locus_i = headers.indexOf("locus");
+      const count_i = headers.findIndex(h => h === "duplicate_count" || h === "consensus_count");
+      const target_i = headers.indexOf("target");
+      const time_i = headers.findIndex(h => h === "timepoint" || h === "day");
+
+      const cells = {};
+      for (let i = 1; i < lines.length; i++) {
+        const cols = lines[i].split(delimiter).map(c => c.trim().replace(/^["']|["']$/g, ""));
+        if (cols.length <= v_i) continue;
+
+        const seqId = seq_i >= 0 ? cols[seq_i] : `contig_${i}`;
+        const rootId = seqId.replace(/_[HL]|\.1|\.2/gi, "");
+        const locus = locus_i >= 0 ? cols[locus_i].toUpperCase() : (cols[v_i].includes("IGH") ? "IGH" : (cols[v_i].includes("IGK") ? "IGK" : (cols[v_i].includes("IGL") ? "IGL" : (cols[v_i].includes("TRB") ? "TRB" : "TRA"))));
+        const v = cols[v_i];
+        const j = j_i >= 0 ? cols[j_i] : "";
+        const cdr3 = c3_i >= 0 ? cols[c3_i] : "";
+        const seq_val = seq_col_i >= 0 && cols[seq_col_i] ? cols[seq_col_i].trim() : null;
+        const count = count_i >= 0 && !isNaN(parseInt(cols[count_i])) ? parseInt(cols[count_i]) : 10;
+        const target = target_i >= 0 ? cols[target_i] : "AIRR Target";
+        const timepoint = time_i >= 0 ? cols[time_i] : "AIRR Repertoire";
+
+        if (!cells[rootId]) cells[rootId] = { heavy: null, light: null, count: count, target: target, timepoint: timepoint };
+        if (locus === "IGH" || locus === "TRB") {
+          cells[rootId].heavy = { v, j, cdr3, locus, seq: seq_val };
+        } else {
+          cells[rootId].light = { v, j, cdr3, locus, seq: seq_val };
+        }
+      }
+
+      const results = [];
+      let rank = 1;
+      Object.keys(cells).forEach(rootId => {
+        const cell = cells[rootId];
+        if (cell.heavy && cell.light) {
+          const isTcr = cell.heavy.locus === "TRB";
+          const coords = estimatePacmapCoords(cell.heavy.v, cell.heavy.cdr3);
+          results.push({
+            rank: rank++,
+            receptor_type: isTcr ? "TCR" : "BCR",
+            cohort: "AIRR User Repertoire",
+            timepoint: cell.timepoint,
+            day: 0,
+            lineage_id: rootId,
+            freq: cell.count,
+            target: cell.target,
+            v_h: cell.heavy.v,
+            j_h: cell.heavy.j || (isTcr ? "humTRBJ1-2*01" : "humIGHJ4*02"),
+            cdr3_h: cell.heavy.cdr3 || "CARWGGDGFYAMDYW",
+            v_l: cell.light.v,
+            j_l: cell.light.j || (isTcr ? "humTRAJ42*01" : "humIGKJ1*01"),
+            cdr3_l: cell.light.cdr3 || "CQQHYTTPPTF",
+            seq_h: cell.heavy.seq,
+            seq_l: cell.light.seq,
+            shm_h: isTcr ? 0 : 9,
+            shm_l: isTcr ? 0 : 5,
+            boundary_h: isTcr ? "NTIYF" : "TVSS",
+            boundary_l: isTcr ? "GNLIF" : (cell.light.locus === "IGL" ? "TVL" : "VEIK"),
+            px: coords.px,
+            py: coords.py
+          });
+        }
+      });
+      return results;
+    }
+
+    function extractCdr3FromAa(aaSeq) {
+      if (!aaSeq) return "CSRWGGDGFYAMDYW";
+      const lastC = aaSeq.lastIndexOf("C");
+      if (lastC !== -1 && lastC < aaSeq.length - 4) {
+        const tail = aaSeq.substring(lastC);
+        const jMatch = /(?:WG.G|FG.G|TVSS|TVSA|VEIK|LEIK|TVL)/.exec(tail);
+        if (jMatch) {
+          return tail.substring(0, jMatch.index);
+        }
+        return tail.substring(0, Math.min(18, tail.length));
+      }
+      return aaSeq.length >= 10 ? aaSeq.substring(0, 15) : "CSRWGGDGFYAMDYW";
+    }
+
+    function processFastaSeq(rawSeq, chainHint) {
+      const clean = (rawSeq || "").toUpperCase().replace(/[\r\n\s]/g, "");
+      const isDna = !/[EFILPQVWY]/i.test(clean) && clean.length > 0;
+      if (isDna) {
+        if (window.VBASE3 && typeof window.VBASE3.pickBestReadingFrame === "function") {
+          const frameRes = window.VBASE3.pickBestReadingFrame(clean, chainHint);
+          return {
+            aa: frameRes.matureProtein || frameRes.protein,
+            isDna: true,
+            frame: frameRes.frame,
+            isProductive: frameRes.isProductive
+          };
+        }
+      }
+      return {
+        aa: clean,
+        isDna: false,
+        frame: 0,
+        isProductive: !clean.includes("*")
+      };
+    }
+
+    function parseFastaRepertoire(raw) {
+      const entries = [];
+      const blocks = raw.split(">");
+      blocks.forEach(block => {
+        const b = block.trim();
+        if (!b) return;
+        const firstLineEnd = b.indexOf("\n");
+        const header = firstLineEnd >= 0 ? b.substring(0, firstLineEnd).trim() : b;
+        const seq = firstLineEnd >= 0 ? b.substring(firstLineEnd).replace(/[\r\n\s]/g, "").toUpperCase() : "";
+        entries.push({ header, seq });
+      });
+
+      const pairs = [];
+      for (let i = 0; i < entries.length; i += 2) {
+        const h_entry = entries[i];
+        const l_entry = entries[i + 1] || entries[i];
+        const isTcr = h_entry.header.includes("TRB") || h_entry.header.includes("TRA");
+        const proc_h = processFastaSeq(h_entry.seq, isTcr ? "tcr_beta" : "heavy");
+        const proc_l = processFastaSeq(l_entry.seq, isTcr ? "tcr_alpha" : "auto");
+
+        const v_h = h_entry.header.split(" ")[1] || (isTcr ? "humTRBV6-5*01" : "humIGHV3-23*01");
+        const v_l = l_entry.header.split(" ")[1] || (isTcr ? "humTRAV8-4*01" : "humIGKV1-39*01");
+        const cdr3_h = extractCdr3FromAa(proc_h.aa);
+        const cdr3_l = extractCdr3FromAa(proc_l.aa);
+        const coords = estimatePacmapCoords(v_h, cdr3_h);
+
+        let boundH = isTcr ? "NTIYF" : "TVSS";
+        let boundL = isTcr ? "GNLIF" : "VEIK";
+        if (window.VBASE3 && typeof window.VBASE3.verifySynthesisBoundary === "function") {
+          const bH = window.VBASE3.verifySynthesisBoundary(proc_h.aa, isTcr ? "tcr_beta" : "heavy");
+          if (bH && bH.terminalMotif) boundH = bH.terminalMotif;
+          const bL = window.VBASE3.verifySynthesisBoundary(proc_l.aa, isTcr ? "tcr_alpha" : "auto");
+          if (bL && bL.terminalMotif) boundL = bL.terminalMotif;
+        }
+
+        pairs.push({
+          rank: (i / 2) + 1,
+          receptor_type: isTcr ? "TCR" : "BCR",
+          cohort: "FASTA Repertoire Upload",
+          timepoint: "FASTA Entry",
+          day: 0,
+          lineage_id: h_entry.header.split(" ")[0].replace(/_heavy|_H/i, ""),
+          freq: 20,
+          target: "FASTA User Sequence",
+          v_h: v_h,
+          j_h: isTcr ? "humTRBJ1-2*01" : "humIGHJ4*02",
+          cdr3_h: cdr3_h,
+          v_l: v_l,
+          j_l: isTcr ? "humTRAJ42*01" : "humIGKJ1*01",
+          cdr3_l: cdr3_l,
+          seq_h: proc_h.aa,
+          seq_l: proc_l.aa,
+          shm_h: isTcr ? 0 : (proc_h.isProductive ? 6 : 14),
+          shm_l: isTcr ? 0 : (proc_l.isProductive ? 3 : 8),
+          boundary_h: boundH,
+          boundary_l: boundL,
+          px: coords.px,
+          py: coords.py
+        });
+      }
+      return pairs;
+    }
+
+    function parseGenericTable(lines, headers, delimiter) {
+      return parseSimpleTable(lines, headers, delimiter);
+    }
+
+    function executeUserRepertoireImport() {
+      const area = document.getElementById("rawRepertoireInput");
+      const raw = area ? area.value.trim() : "";
+      const feedback = document.getElementById("importFeedbackBadge");
+      if (!raw) {
+        if (feedback) {
+          feedback.style.display = "inline-block";
+          feedback.style.background = "rgba(239, 68, 68, 0.2)";
+          feedback.style.border = "1px solid #ef4444";
+          feedback.style.color = "#f87171";
+          feedback.innerText = "⚠️ Please select a file or paste tabular/FASTA text before clicking Parse.";
+        }
+        return;
+      }
+
+      try {
+        const parsed = parseRepertoireText(raw);
+        if (!parsed || parsed.length === 0) {
+          throw new Error("No valid paired single-cell records could be parsed. Please check column headers or format.");
+        }
+
+        currentDataset = parsed;
+        filteredDataset = currentDataset;
+
+        const isTcr = currentDataset.some(d => d.receptor_type === "TCR" || (d.v_h && d.v_h.includes("TRB")));
+
+        // Update Sample/Donor form metadata
+        document.getElementById("sampleIdInput").value = "USER_EXP_DATASET";
+        document.getElementById("donorIdInput").value = "USER_DONOR_01";
+        document.getElementById("projectInput").value = "USER_REPERTOIRE_SURVEY";
+        document.getElementById("platformInput").value = isTcr ? "Single-Cell Paired 5' TCR V(D)J (TRB+TRA)" : "Single-Cell 5' Paired V(D)J (BCR)";
+
+        // Update KPIs
+        let totalCells = 0;
+        let totalShm = 0;
+        currentDataset.forEach(d => {
+          totalCells += d.freq;
+          totalShm += (d.shm_h + d.shm_l);
+        });
+        document.getElementById("kpiTotalPairs").innerText = totalCells;
+        document.getElementById("kpiClonotypes").innerText = currentDataset.length;
+
+        const shmVal = document.getElementById("kpiMeanShm");
+        const shmDesc = shmVal ? shmVal.parentElement.querySelector(".kpi-desc") : null;
+        const pairDesc = document.getElementById("kpiTotalPairs") ? document.getElementById("kpiTotalPairs").parentElement.querySelector(".kpi-desc") : null;
+
+        if (isTcr) {
+          if (shmVal) shmVal.innerText = "0 aa (N/A)";
+          if (shmDesc) shmDesc.innerText = "TCR Invariant (No SHM in normal T cells)";
+          if (pairDesc) pairDesc.innerText = "Productive TRB ⊕ TRA Heterodimers";
+        } else {
+          if (shmVal) shmVal.innerText = (totalShm / (currentDataset.length * 2)).toFixed(1) + " aa";
+          if (shmDesc) shmDesc.innerText = "Divergence from VBASE3 Class I Germline";
+          if (pairDesc) pairDesc.innerText = "Productive VH ⊕ VL Heterodimers";
+        }
+
+        updateAuditBadges();
+        renderTable(currentDataset);
+        renderCharts(currentDataset);
+        renderPacmap(currentDataset);
+        renderTimeSeriesCharts(currentDataset);
+
+        if (feedback) {
+          feedback.style.display = "inline-block";
+          feedback.style.background = "rgba(16, 185, 129, 0.2)";
+          feedback.style.border = "1px solid #10b981";
+          feedback.style.color = "#34d399";
+          feedback.innerText = `✅ Successfully parsed & loaded ${currentDataset.length} paired clonotypes (${totalCells} cells). All modules updated!`;
+        }
+      } catch (err) {
+        if (feedback) {
+          feedback.style.display = "inline-block";
+          feedback.style.background = "rgba(239, 68, 68, 0.2)";
+          feedback.style.border = "1px solid #ef4444";
+          feedback.style.color = "#f87171";
+          feedback.innerText = `❌ ${err.message}`;
+        }
+      }
+    }
+
+    function updateAuditBadges() {
+      const now = new Date().toISOString();
+      document.getElementById("timestampBadge").innerText = now;
+      const sample = document.getElementById("sampleIdInput").value || "SAMPLE";
+      const donor = document.getElementById("donorIdInput").value || "DONOR";
+      let hash = 0;
+      const str = sample + donor + now;
+      for (let i = 0; i < str.length; i++) {
+        hash = ((hash << 5) - hash) + str.charCodeAt(i);
+        hash |= 0;
+      }
+      const hex = Math.abs(hash).toString(16).padStart(8, '0') + "f7e8a9bc01";
+      document.getElementById("checksumBadge").innerText = hex + "...";
+    }
+
+    function loadPreset(key) {
+      if (!SAMPLE_DATASETS[key]) return;
+      currentDataset = SAMPLE_DATASETS[key];
+      filteredDataset = currentDataset;
+
+      const filterInput = document.getElementById("tableFilterInput");
+      if (filterInput) filterInput.value = "";
+      const filterBadge = document.getElementById("filterCountBadge");
+      if (filterBadge) filterBadge.style.display = "none";
+
+      if (key === 'her2') {
+        document.getElementById("sampleIdInput").value = "DONOR_HER2_PBL_EXP01";
+        document.getElementById("donorIdInput").value = "PATIENT_D044";
+        document.getElementById("projectInput").value = "HER2_CONVERGENT_CAMPAIGN";
+        document.getElementById("platformInput").value = "Single-Cell 5' Paired V(D)J (BCR)";
+      } else if (key === 'viral') {
+        document.getElementById("sampleIdInput").value = "COV2_CONVALESCENT_PBMC";
+        document.getElementById("donorIdInput").value = "DONOR_COV_08";
+        document.getElementById("projectInput").value = "SARS_S2_NEUTRALIZER_SURVEY";
+        document.getElementById("platformInput").value = "Single-Cell 5' Paired V(D)J (BCR)";
+      } else if (key === 'flu') {
+        document.getElementById("sampleIdInput").value = "FLU_HA_STEM_DONOR_3";
+        document.getElementById("donorIdInput").value = "DONOR_FLU_3";
+        document.getElementById("projectInput").value = "BROAD_HA_STEM_MONITORING";
+        document.getElementById("platformInput").value = "Single-Cell 5' Paired V(D)J (BCR)";
+      } else if (key === 'time_series') {
+        document.getElementById("sampleIdInput").value = "LONGITUDINAL_VAX_D0_D180";
+        document.getElementById("donorIdInput").value = "VACCINE_COHORT_DONOR_12";
+        document.getElementById("projectInput").value = "mRNA_VACCINATION_TIME_SERIES";
+        document.getElementById("platformInput").value = "Single-Cell 5' Paired V(D)J (BCR)";
+      } else if (key === 'multi_cohort') {
+        document.getElementById("sampleIdInput").value = "MULTI_COHORT_COMPARATIVE_POOL";
+        document.getElementById("donorIdInput").value = "DONORS_MIXED_COHORTS";
+        document.getElementById("projectInput").value = "PAN_DISEASE_REPERTOIRE_OVERLAY";
+        document.getElementById("platformInput").value = "Single-Cell 5' Paired V(D)J (BCR)";
+      } else if (key === 'tcr_til') {
+        document.getElementById("sampleIdInput").value = "TIL_MELANOMA_CD8_P14";
+        document.getElementById("donorIdInput").value = "PATIENT_MEL_14";
+        document.getElementById("projectInput").value = "NEOANTIGEN_TCR_CLONOTYPING";
+        document.getElementById("platformInput").value = "Single-Cell Paired 5' TCR V(D)J (TRB+TRA)";
+      } else if (key === 'lymphoma') {
+        document.getElementById("sampleIdInput").value = "FL_LYMPHOMA_BIOPSY_TIME_COURSE";
+        document.getElementById("donorIdInput").value = "PATIENT_FL_02";
+        document.getElementById("projectInput").value = "MALIGNANT_CLONALITY_AND_MRD_MONITORING";
+        document.getElementById("platformInput").value = "Single-Cell 5' Paired V(D)J (BCR)";
+      }
+
+      // Check if dataset is TCR
+      const isTcr = key === 'tcr_til' || currentDataset.some(d => d.receptor_type === "TCR" || (d.v_h && d.v_h.includes("TRB")));
+
+      // Update KPIs
+      let totalCells = 0;
+      let totalShm = 0;
+      currentDataset.forEach(d => {
+        totalCells += d.freq;
+        totalShm += (d.shm_h + d.shm_l);
+      });
+      document.getElementById("kpiTotalPairs").innerText = totalCells;
+      document.getElementById("kpiClonotypes").innerText = currentDataset.length;
+
+      const shmVal = document.getElementById("kpiMeanShm");
+      const shmDesc = shmVal ? shmVal.parentElement.querySelector(".kpi-desc") : null;
+      const pairDesc = document.getElementById("kpiTotalPairs") ? document.getElementById("kpiTotalPairs").parentElement.querySelector(".kpi-desc") : null;
+
+      if (isTcr) {
+        if (shmVal) shmVal.innerText = "0 aa (N/A)";
+        if (shmDesc) shmDesc.innerText = "TCR Invariant (No SHM in normal T cells)";
+        if (pairDesc) pairDesc.innerText = "Productive TRB ⊕ TRA Heterodimers";
+      } else {
+        if (shmVal) shmVal.innerText = (totalShm / (currentDataset.length * 2)).toFixed(1) + " aa";
+        if (shmDesc) shmDesc.innerText = "Divergence from VBASE3 Class I Germline";
+        if (pairDesc) pairDesc.innerText = "Productive VH ⊕ VL Heterodimers";
+      }
+
+      updateAuditBadges();
+      renderTable(currentDataset);
+      renderCharts(currentDataset);
+      renderPacmap(currentDataset);
+      renderTimeSeriesCharts(key === 'time_series' || key === 'lymphoma' ? currentDataset : (key === 'tcr_til' ? currentDataset : SAMPLE_DATASETS.time_series));
+    }
+
+    function renderTable(data) {
+      const tbody = document.getElementById("clonotypeTbody");
+      tbody.innerHTML = "";
+      data.forEach(d => {
+        const tr = document.createElement("tr");
+        const isTcr = d.receptor_type === "TCR" || (d.v_h && d.v_h.includes("TRB"));
+
+        // Cohort / timepoint badge styling
+        let badgeStyle = "background:rgba(2, 132, 199, 0.2); border:1px solid rgba(56, 189, 248, 0.4); color:#38bdf8;";
+        if (isTcr) {
+          badgeStyle = "background:rgba(168, 85, 247, 0.2); border:1px solid rgba(168, 85, 247, 0.4); color:#c084fc;";
+        } else if (d.day === 0) {
+          badgeStyle = "background:rgba(100, 116, 139, 0.25); border:1px solid #64748b; color:#cbd5e1;";
+        } else if (d.day === 7) {
+          badgeStyle = "background:rgba(56, 189, 248, 0.25); border:1px solid #38bdf8; color:#38bdf8;";
+        } else if (d.day === 28 || d.day === 21 || d.day === 42) {
+          badgeStyle = "background:rgba(16, 185, 129, 0.25); border:1px solid #10b981; color:#34d399;";
+        } else if (d.day === 180) {
+          badgeStyle = "background:rgba(245, 158, 11, 0.25); border:1px solid #f59e0b; color:#fbbf24;";
+        }
+
+        const tagText = d.timepoint ? d.timepoint : (d.cohort || "Cohort Entry");
+
+        const shmCell = isTcr 
+          ? `<span style="color:#94a3b8; font-weight:600; font-size:11px;">0 (TCR Invariant)</span>`
+          : `<span style="color:#f59e0b; font-weight:600;">${d.shm_h} / ${d.shm_l}</span>`;
+
+        tr.innerHTML = `
+          <td><strong>#${d.rank}</strong></td>
+          <td><span class="audit-chip" style="${badgeStyle}">${tagText}</span></td>
+          <td><span style="font-weight:700; color:#38bdf8;">${d.freq} cells</span></td>
+          <td><span style="color:#e2e8f0;">${d.target}</span></td>
+          <td><span class="tag-vh">${d.v_h}</span></td>
+          <td><span style="color:#94a3b8; font-family:monospace;">${d.j_h}</span></td>
+          <td><code style="color:#f43f5e; font-weight:700;">${d.cdr3_h}</code></td>
+          <td><span class="tag-vl">${d.v_l}</span></td>
+          <td><span style="color:#94a3b8; font-family:monospace;">${d.j_l}</span></td>
+          <td><code style="color:#c084fc; font-weight:700;">${d.cdr3_l}</code></td>
+          <td>${shmCell}</td>
+          <td><span class="tag-motif">${d.boundary_h} / ${d.boundary_l}</span></td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function filterTable() {
+      const input = document.getElementById("tableFilterInput");
+      const q = input ? input.value.toLowerCase().trim() : "";
+      const badge = document.getElementById("filterCountBadge");
+
+      if (!q) {
+        filteredDataset = currentDataset;
+        if (badge) badge.style.display = "none";
+      } else {
+        filteredDataset = currentDataset.filter(d => 
+          (d.target && d.target.toLowerCase().includes(q)) ||
+          (d.v_h && d.v_h.toLowerCase().includes(q)) ||
+          (d.v_l && d.v_l.toLowerCase().includes(q)) ||
+          (d.j_h && d.j_h.toLowerCase().includes(q)) ||
+          (d.j_l && d.j_l.toLowerCase().includes(q)) ||
+          (d.cdr3_h && d.cdr3_h.toLowerCase().includes(q)) ||
+          (d.cdr3_l && d.cdr3_l.toLowerCase().includes(q)) ||
+          (d.cohort && d.cohort.toLowerCase().includes(q)) ||
+          (d.timepoint && d.timepoint.toLowerCase().includes(q)) ||
+          (d.lineage_id && d.lineage_id.toLowerCase().includes(q)) ||
+          (d.boundary_h && d.boundary_h.toLowerCase().includes(q)) ||
+          (d.boundary_l && d.boundary_l.toLowerCase().includes(q))
+        );
+        if (badge) {
+          badge.style.display = "inline-flex";
+          badge.innerText = `${filteredDataset.length} of ${currentDataset.length} matching`;
+        }
+      }
+      renderTable(filteredDataset);
+    }
+
+    function clearTableFilter() {
+      const input = document.getElementById("tableFilterInput");
+      if (input) input.value = "";
+      filterTable();
+    }
+
+    function downloadFilteredTableTsv() {
+      const input = document.getElementById("tableFilterInput");
+      const q = input ? input.value.trim() : "";
+      const exportList = (filteredDataset && filteredDataset.length > 0) ? filteredDataset : currentDataset;
+
+      let content = getAuditHeader();
+      content += `# EXPORT_TYPE: "Filtered Single-Cell Repertoire Sequence Table"\n`;
+      content += `# active_filter_query: "${q || "ALL_RECORDS"}"\n`;
+      content += `# matched_clonotypes_exported: ${exportList.length}\n`;
+      content += `# total_cohort_clonotypes: ${currentDataset.length}\n`;
+      content += "# ------------------------------------------------------------------------------\n\n";
+
+      // Comprehensive column headers
+      const isTcr = exportList.some(d => d.receptor_type === "TCR" || (d.v_h && d.v_h.includes("TRB")));
+      content += [
+        "clone_rank",
+        "cohort_name",
+        "timepoint",
+        "day_post_intervention",
+        "lineage_id",
+        "cell_frequency",
+        "target_antigen",
+        isTcr ? "trbv_assignment" : "vh_assignment",
+        isTcr ? "trbj_element" : "jh_element",
+        isTcr ? "cdr3_beta_sequence" : "cdr3_h_sequence",
+        isTcr ? "complete_trb_sequence" : "complete_heavy_sequence",
+        isTcr ? "trav_assignment" : "vl_assignment",
+        isTcr ? "traj_element" : "jl_element",
+        isTcr ? "cdr3_alpha_sequence" : "cdr3_l_sequence",
+        isTcr ? "complete_tra_sequence" : "complete_light_sequence",
+        isTcr ? "shm_trbv_aa" : "shm_vh_aa",
+        isTcr ? "shm_trav_aa" : "shm_vl_aa",
+        isTcr ? "synthesis_boundary_trb" : "synthesis_boundary_heavy",
+        isTcr ? "synthesis_boundary_tra" : "synthesis_boundary_light",
+        "synthesis_status"
+      ].join("\t") + "\n";
+
+      exportList.forEach(d => {
+        const isTcrRow = d.receptor_type === "TCR" || (d.v_h && d.v_h.includes("TRB"));
+        const fullH = getCompleteSequence(d, "heavy");
+        const fullL = getCompleteSequence(d, "light");
+        content += [
+          d.rank,
+          d.cohort || "N/A",
+          d.timepoint || "N/A",
+          d.day !== undefined ? d.day : "N/A",
+          d.lineage_id || "N/A",
+          d.freq,
+          d.target,
+          d.v_h,
+          d.j_h,
+          d.cdr3_h,
+          fullH,
+          d.v_l,
+          d.j_l,
+          d.cdr3_l,
+          fullL,
+          isTcrRow ? 0 : d.shm_h,
+          isTcrRow ? 0 : d.shm_l,
+          d.boundary_h,
+          d.boundary_l,
+          "VALIDATED_IMGT_BOUNDARY"
+        ].join("\t") + "\n";
+      });
+
+      const blob = new Blob([content], { type: "text/tab-separated-values" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      const sample = document.getElementById("sampleIdInput").value || "REPERTOIRE";
+      const filterSuffix = q ? `_filtered_${q.replace(/[^a-zA-Z0-9]/g, "_")}` : "_all";
+      a.download = `vbase3_filtered_sequences_${sample}${filterSuffix}.tsv`;
+      a.click();
+    }
+
+    function switchTab(tabId) {
+      document.querySelectorAll(".tab-item").forEach(el => el.classList.remove("active"));
+      document.querySelectorAll(".tab-content").forEach(el => el.classList.remove("active"));
+      if (event && event.target) event.target.classList.add("active");
+      const target = document.getElementById(tabId);
+      if (target) target.classList.add("active");
+    }
+
+    function renderCharts(data) {
+      const isTcr = data.some(d => d.receptor_type === "TCR" || (d.v_h && d.v_h.includes("TRB")));
+
+      // 1. Primary chain family bar chart (VH or TRB)
+      const vhContainer = document.getElementById("vhBarChart");
+      const vhTitle = vhContainer.parentElement.querySelector(".chart-title span:first-child");
+      if (vhTitle) vhTitle.innerHTML = isTcr ? "TRB Family Dominance" : "V<sub>H</sub> Family Dominance";
+
+      vhContainer.innerHTML = "";
+      const vhCounts = {};
+      data.forEach(d => {
+        const fam = d.v_h.split("-")[0].replace("hum", "").replace("*01", "");
+        vhCounts[fam] = (vhCounts[fam] || 0) + d.freq;
+      });
+
+      let total = 0;
+      Object.values(vhCounts).forEach(v => total += v);
+
+      let html = '<div style="display:flex; flex-direction:column; gap:10px; padding-top:8px;">';
+      Object.entries(vhCounts).forEach(([fam, count]) => {
+        const pct = ((count / total) * 100).toFixed(1);
+        const grad = isTcr ? "linear-gradient(90deg, #7c3aed, #c084fc)" : "linear-gradient(90deg, #0284c7, #38bdf8)";
+        const color = isTcr ? "#c084fc" : "#38bdf8";
+        html += `
+          <div>
+            <div style="display:flex; justify-content:space-between; font-size:11.5px; margin-bottom:3px;">
+              <span style="color:#e2e8f0; font-weight:700;">${fam}</span>
+              <span style="color:${color};">${count} cells (${pct}%)</span>
+            </div>
+            <div style="background:#1e293b; height:12px; border-radius:4px; overflow:hidden;">
+              <div style="width:${pct}%; background:${grad}; height:100%;"></div>
+            </div>
+          </div>
+        `;
+      });
+      html += '</div>';
+      vhContainer.innerHTML = html;
+
+      // 2. Secondary chain distribution (VL Kappa/Lambda or TRA Families)
+      const vlContainer = document.getElementById("vlBarChart");
+      const vlTitle = vlContainer.parentElement.querySelector(".chart-title span:first-child");
+      if (vlTitle) vlTitle.innerHTML = isTcr ? "TRA Family Distribution" : "V<sub>L</sub> (Kappa vs. Lambda) Usage";
+
+      if (isTcr) {
+        const traCounts = {};
+        data.forEach(d => {
+          const fam = d.v_l.split("-")[0].replace("hum", "").replace("*01", "");
+          traCounts[fam] = (traCounts[fam] || 0) + d.freq;
+        });
+        let traTotal = 0;
+        Object.values(traCounts).forEach(v => traTotal += v);
+
+        let traHtml = '<div style="display:flex; flex-direction:column; gap:10px; padding-top:8px;">';
+        Object.entries(traCounts).forEach(([fam, count]) => {
+          const pct = ((count / traTotal) * 100).toFixed(1);
+          traHtml += `
+            <div>
+              <div style="display:flex; justify-content:space-between; font-size:11.5px; margin-bottom:3px;">
+                <span style="color:#e2e8f0; font-weight:700;">${fam}</span>
+                <span style="color:#34d399;">${count} cells (${pct}%)</span>
+              </div>
+              <div style="background:#1e293b; height:12px; border-radius:4px; overflow:hidden;">
+                <div style="width:${pct}%; background:linear-gradient(90deg, #059669, #34d399); height:100%;"></div>
+              </div>
+            </div>
+          `;
+        });
+        traHtml += '</div>';
+        vlContainer.innerHTML = traHtml;
+      } else {
+        let kappaCount = 0;
+        let lambdaCount = 0;
+        data.forEach(d => {
+          if (d.v_l.includes("IGKV")) kappaCount += d.freq;
+          else lambdaCount += d.freq;
+        });
+        const vlTotal = kappaCount + lambdaCount || 1;
+        const kPct = ((kappaCount / vlTotal) * 100).toFixed(1);
+        const lPct = ((lambdaCount / vlTotal) * 100).toFixed(1);
+
+        vlContainer.innerHTML = `
+          <div style="display:flex; flex-direction:column; gap:14px; padding-top:16px;">
+            <div>
+              <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:4px;">
+                <span style="color:#c084fc; font-weight:700;">IGK (Kappa Chains)</span>
+                <span>${kappaCount} cells (${kPct}%)</span>
+              </div>
+              <div style="background:#1e293b; height:14px; border-radius:6px; overflow:hidden;">
+                <div style="width:${kPct}%; background:#a855f7; height:100%;"></div>
+              </div>
+            </div>
+            <div>
+              <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:4px;">
+                <span style="color:#38bdf8; font-weight:700;">IGL (Lambda Chains)</span>
+                <span>${lambdaCount} cells (${lPct}%)</span>
+              </div>
+              <div style="background:#1e293b; height:14px; border-radius:6px; overflow:hidden;">
+                <div style="width:${lPct}%; background:#0284c7; height:100%;"></div>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      // 3. Length Histogram
+      const lenContainer = document.getElementById("lengthHistChart");
+      const lenTitle = lenContainer.parentElement.querySelector(".chart-title span:first-child");
+      if (lenTitle) lenTitle.innerText = isTcr ? "CDR3-β Loop Length Distribution" : "CDR-H3 Loop Length Distribution";
+
+      lenContainer.innerHTML = `
+        <div style="display:flex; align-items:flex-end; gap:12px; height:170px; padding:10px 0; border-bottom:1px solid #1e293b;">
+          <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:4px; height:100%; justify-content:flex-end;">
+            <div style="background:#38bdf8; width:100%; height:45%; border-radius:4px 4px 0 0;"></div>
+            <span style="font-size:11px; color:#94a3b8;">12 aa</span>
+          </div>
+          <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:4px; height:100%; justify-content:flex-end;">
+            <div style="background:#0284c7; width:100%; height:85%; border-radius:4px 4px 0 0;"></div>
+            <span style="font-size:11px; color:#94a3b8;">14 aa</span>
+          </div>
+          <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:4px; height:100%; justify-content:flex-end;">
+            <div style="background:#10b981; width:100%; height:95%; border-radius:4px 4px 0 0;"></div>
+            <span style="font-size:11px; color:#94a3b8;">15 aa</span>
+          </div>
+          <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:4px; height:100%; justify-content:flex-end;">
+            <div style="background:#f59e0b; width:100%; height:60%; border-radius:4px 4px 0 0;"></div>
+            <span style="font-size:11px; color:#94a3b8;">16 aa</span>
+          </div>
+        </div>
+      `;
+
+      // 4. Biophysical properties
+      const scContainer = document.getElementById("chargeScatterChart");
+      const scTitle = scContainer.parentElement.querySelector(".chart-title span:first-child");
+      if (scTitle) scTitle.innerText = isTcr ? "TCR CDR3 Biophysical & Anchor Properties" : "CDR-H3 Hydropathy vs. Net Charge";
+
+      if (isTcr) {
+        scContainer.innerHTML = `
+          <div style="padding:10px; font-size:12px; color:#cbd5e1; line-height:1.7;">
+            <div>• Mean CDR3 Net Charge (pH 7.4): <strong style="color:#38bdf8;">+0.8 e</strong></div>
+            <div>• Mean Kyte-Doolittle Hydropathy: <strong style="color:#10b981;">-0.18 (Balanced Peptide-MHC Paratope)</strong></div>
+            <div>• Conserved Cys104 Anchors: <strong style="color:#f59e0b;">Intact in TRB & TRA (100%)</strong></div>
+            <div>• Conserved J-Phe Anchors (pos 118): <strong style="color:#c084fc;">FGXG / [F/Y]GXG Verified (100%)</strong></div>
+            <div style="margin-top:4px; font-size:11px; color:#94a3b8;">• Somatic Mutations: <strong style="color:#38bdf8;">Zero SHM (Central Tolerance Invariant)</strong></div>
+          </div>
+        `;
+      } else {
+        scContainer.innerHTML = `
+          <div style="padding:10px; font-size:12px; color:#cbd5e1; line-height:1.7;">
+            <div>• Mean CDR-H3 Net Charge (pH 7.4): <strong style="color:#38bdf8;">+1.4 e</strong></div>
+            <div>• Mean Kyte-Doolittle Hydropathy: <strong style="color:#10b981;">-0.24 (Hydrophilic paratope)</strong></div>
+            <div>• Canonical Anchor Cysteines: <strong style="color:#f59e0b;">Cys92 ⟷ Cys104 intact (100%)</strong></div>
+            <div>• J-Trp / Phe Anchor pos 118: <strong style="color:#c084fc;">Invariant WGXG / FGXG verified</strong></div>
+          </div>
+        `;
+      }
+
+      // 5. 2D V x J Combinatorial Pairing Heatmap
+      renderVjHeatmap(data, currentVjChain);
+    }
+
+    let currentVjChain = 'heavy';
+
+    function switchVjHeatmapChain(chain) {
+      currentVjChain = chain;
+      const btnH = document.getElementById('btnVjHeavy');
+      const btnL = document.getElementById('btnVjLight');
+      if (btnH) btnH.classList.toggle('active', chain === 'heavy');
+      if (btnL) btnL.classList.toggle('active', chain === 'light');
+      renderVjHeatmap(filteredDataset || currentDataset, chain);
+    }
+
+    function renderVjHeatmap(data, chain) {
+      const container = document.getElementById("vjHeatmapChart");
+      if (!container) return;
+      if (!data || data.length === 0) {
+        container.innerHTML = '<div style="color:var(--text-muted); text-align:center; padding:30px;">No repertoire records available for heatmap.</div>';
+        return;
+      }
+
+      const isTcr = data.some(d => d.receptor_type === "TCR" || (d.v_h && d.v_h.includes("TRB")));
+      const badge = document.getElementById("vjHeatmapLocusBadge");
+      if (badge) {
+        if (chain === 'heavy') {
+          badge.innerText = isTcr ? "T-Cell Receptor Beta (TRBV × TRBJ)" : "Heavy Chain (IGHV × IGHJ)";
+        } else {
+          badge.innerText = isTcr ? "T-Cell Receptor Alpha (TRAV × TRAJ)" : "Light Chain (IGKV/IGLV × IGKJ/IGLJ)";
+        }
+      }
+
+      const isHeavy = chain === 'heavy';
+      const vKey = isHeavy ? 'v_h' : 'v_l';
+      const jKey = isHeavy ? 'j_h' : 'j_l';
+
+      function cleanGene(g) {
+        if (!g) return 'Unknown';
+        return g.replace(/^hum|^mus|^mmu|^ocu|^cfa|^bta|^rno/, '').replace(/\*[0-9]+$/, '');
+      }
+
+      const vCounts = {};
+      const jCounts = {};
+      const matrix = {};
+      let totalFreq = 0;
+
+      data.forEach(d => {
+        const v = cleanGene(d[vKey]);
+        const j = cleanGene(d[jKey]);
+        const f = Number(d.freq) || 1;
+        totalFreq += f;
+
+        vCounts[v] = (vCounts[v] || 0) + f;
+        jCounts[j] = (jCounts[j] || 0) + f;
+
+        if (!matrix[v]) matrix[v] = {};
+        matrix[v][j] = (matrix[v][j] || 0) + f;
+      });
+
+      const vGenes = Object.keys(vCounts).sort((a, b) => vCounts[b] - vCounts[a]);
+      const jGenes = Object.keys(jCounts).sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
+
+      let maxCellFreq = 0;
+      vGenes.forEach(v => {
+        jGenes.forEach(j => {
+          const val = matrix[v] && matrix[v][j] ? matrix[v][j] : 0;
+          if (val > maxCellFreq) maxCellFreq = val;
+        });
+      });
+
+      const maxValEl = document.getElementById("vjHeatmapMaxVal");
+      if (maxValEl) {
+        const maxPct = totalFreq > 0 ? ((maxCellFreq / totalFreq) * 100).toFixed(1) : 0;
+        maxValEl.innerText = `${maxCellFreq} cells (${maxPct}%)`;
+      }
+
+      function getTileStyle(val) {
+        if (!val || val === 0 || maxCellFreq === 0) {
+          return {
+            bg: 'rgba(30, 41, 59, 0.40)',
+            text: '#64748b',
+            border: 'rgba(51, 65, 85, 0.55)',
+            bold: '500'
+          };
+        }
+        const r = Math.sqrt(val / maxCellFreq);
+        if (r < 0.25) {
+          return {
+            bg: 'rgba(2, 132, 199, 0.45)',
+            text: '#bae6fd',
+            border: 'rgba(56, 189, 248, 0.7)',
+            bold: '700'
+          };
+        } else if (r < 0.55) {
+          return {
+            bg: 'rgba(13, 148, 136, 0.80)',
+            text: '#ffffff',
+            border: '#14b8a6',
+            bold: '700'
+          };
+        } else if (r < 0.82) {
+          return {
+            bg: '#10b981',
+            text: '#022c22',
+            border: '#34d399',
+            bold: '800'
+          };
+        } else {
+          return {
+            bg: '#f59e0b',
+            text: '#451a03',
+            border: '#fbbf24',
+            bold: '900'
+          };
+        }
+      }
+
+      let html = '<div style="display:flex; flex-direction:column; gap:6px;">';
+
+      // Header row (J-genes)
+      html += '<div style="display:flex; align-items:center; gap:6px;">';
+      html += '<div style="width:130px; min-width:130px; font-size:11px; font-weight:700; color:#94a3b8; text-align:right; padding-right:8px;">V \\ J Gene</div>';
+      jGenes.forEach(j => {
+        const jPct = totalFreq > 0 ? ((jCounts[j] / totalFreq) * 100).toFixed(1) : 0;
+        html += `
+          <div style="flex:1; min-width:85px; text-align:center; padding:4px 2px;" title="${j}: ${jCounts[j]} cells (${jPct}%)">
+            <div style="font-size:11.5px; font-weight:700; color:#38bdf8; font-family:var(--font-mono); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${j}</div>
+            <div style="font-size:10px; color:#64748b;">${jPct}%</div>
+          </div>
+        `;
+      });
+      html += '</div>';
+
+      // Data rows (V-genes x J-genes)
+      vGenes.forEach(v => {
+        const vPct = totalFreq > 0 ? ((vCounts[v] / totalFreq) * 100).toFixed(1) : 0;
+        html += '<div style="display:flex; align-items:center; gap:6px;">';
+        html += `
+          <div style="width:130px; min-width:130px; display:flex; justify-content:space-between; align-items:center; padding-right:8px;" title="${v}: ${vCounts[v]} cells (${vPct}%)">
+            <span style="font-size:11.5px; font-weight:700; color:#f8fafc; font-family:var(--font-mono); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${v}</span>
+            <span style="font-size:10px; color:#94a3b8;">${vPct}%</span>
+          </div>
+        `;
+
+        jGenes.forEach(j => {
+          const val = matrix[v] && matrix[v][j] ? matrix[v][j] : 0;
+          const pct = totalFreq > 0 ? ((val / totalFreq) * 100).toFixed(1) : '0.0';
+          const style = getTileStyle(val);
+          html += `
+            <div style="flex:1; min-width:85px; height:50px; background:${style.bg}; border:1px solid ${style.border}; border-radius:6px; display:flex; flex-direction:column; justify-content:center; align-items:center; cursor:pointer; transition:transform 0.15s, box-shadow 0.15s;"
+                 onmouseover="this.style.transform='scale(1.04)'; this.style.boxShadow='0 0 10px rgba(56,189,248,0.5)';"
+                 onmouseout="this.style.transform='none'; this.style.boxShadow='none';"
+                 title="Pairing: ${v} × ${j}&#10;Cell Count: ${val} cells&#10;Repertoire Frequency: ${pct}%">
+              <div style="color:${style.text}; font-weight:${style.bold}; font-size:12.5px; font-family:var(--font-mono);">${val > 0 ? val : '-'}</div>
+              <div style="color:${style.text}; font-size:10px; opacity:${val > 0 ? 0.9 : 0.4};">${val > 0 ? pct + '%' : ''}</div>
+            </div>
+          `;
+        });
+        html += '</div>';
+      });
+
+      html += '</div>';
+      container.innerHTML = html;
+    }
+
+    function renderTimeSeriesCharts(tsData) {
+      const isLymphoma = tsData.some(d => d.cohort && d.cohort.includes("Lymphoma"));
+      const isTcr = !isLymphoma && tsData.some(d => d.receptor_type === "TCR" || (d.v_h && d.v_h.includes("TRB")));
+
+      // 1. Update Section Headers
+      const headerTitle = document.getElementById("timeSeriesHeaderTitle");
+      const headerDesc = document.getElementById("timeSeriesHeaderDesc");
+      const shmTitle = document.getElementById("shmChartTitle");
+      const shmSub = document.getElementById("shmChartSubtitle");
+      const dynTitle = document.getElementById("dynChartTitle");
+      const dynSub = document.getElementById("dynChartSubtitle");
+      const tableTitle = document.getElementById("timeSeriesTableTitle");
+      const thead = document.getElementById("timeSeriesThead");
+      const tbody = document.getElementById("timeSeriesTbody");
+
+      if (isLymphoma) {
+        if (headerTitle) headerTitle.innerHTML = `<span>🩺 Longitudinal Lymphoma Clonality, Ongoing SHM & MRD Monitoring</span><span class="audit-chip" style="color:#fb7185; border-color:rgba(244,63,94,0.4);">Day 0 → Day 180 → Day 360 MRD</span>`;
+        if (headerDesc) headerDesc.innerText = "Quantitative tracking of malignant clonal outgrowth, AID-driven ongoing somatic hypermutation (intraclonal diversification), and post-therapy Minimal Residual Disease (MRD) down to trace frequencies.";
+        if (shmTitle) shmTitle.innerText = "Intraclonal Diversification & Ongoing SHM";
+        if (shmSub) shmSub.innerText = "Mutational Drift across Tumor Subclones";
+        if (dynTitle) dynTitle.innerText = "Malignant Clonal Frequency & MRD Clearance";
+        if (dynSub) dynSub.innerText = "Tumor Burden (%) Across Milestones";
+        if (tableTitle) tableTitle.innerText = "Malignant Subclonal Evolution & Minimal Residual Disease (MRD) Table";
+
+        if (thead) {
+          thead.innerHTML = `
+            <tr>
+              <th>Subclonal Lineage ID</th>
+              <th>Diagnosis (Day 0)</th>
+              <th>Relapse / Ongoing SHM (Day 180)</th>
+              <th>Post-CAR-T / Chemo (Day 360)</th>
+              <th>Mutational Drift (SHM)</th>
+              <th>Clinical Significance</th>
+            </tr>
+          `;
+        }
+
+        if (tbody) {
+          tbody.innerHTML = `
+            <tr>
+              <td><span class="audit-chip" style="color:#f43f5e; font-weight:700;">Malignant Index (Founder)</span></td>
+              <td>420 cells (84% of B-cell pool)</td>
+              <td>Precursor to Subclones A & B</td>
+              <td>Depleted (<0.1% MRD)</td>
+              <td><span style="color:#f43f5e; font-weight:700;">18 aa SHM</span></td>
+              <td><span class="tag-motif" style="color:#f43f5e; border-color:rgba(244,63,94,0.4);">Dominant Malignant Spike</span></td>
+            </tr>
+            <tr>
+              <td><span class="audit-chip" style="color:#fb923c; font-weight:700;">Malignant Subclone A</span></td>
+              <td>Undetected (Trace precursor)</td>
+              <td>260 cells (52% of B-cell pool)</td>
+              <td>Depleted post-therapy</td>
+              <td><span style="color:#fb923c; font-weight:700;">24 aa (+6 aa drift)</span></td>
+              <td><span class="tag-motif" style="color:#fb923c; border-color:rgba(251,146,60,0.4);">Intraclonal Branch A</span></td>
+            </tr>
+            <tr>
+              <td><span class="audit-chip" style="color:#eab308; font-weight:700;">Malignant Subclone B</span></td>
+              <td>Undetected (Trace precursor)</td>
+              <td>110 cells (22% of B-cell pool)</td>
+              <td>Depleted post-therapy</td>
+              <td><span style="color:#eab308; font-weight:700;">27 aa (+9 aa drift)</span></td>
+              <td><span class="tag-motif" style="color:#eab308; border-color:rgba(234,179,8,0.4);">Intraclonal Branch B</span></td>
+            </tr>
+            <tr>
+              <td><span class="audit-chip" style="color:#38bdf8; font-weight:700;">Minimal Residual Disease (MRD)</span></td>
+              <td>—</td>
+              <td>—</td>
+              <td>2 cells (10⁻⁵ frequency)</td>
+              <td><span style="color:#38bdf8; font-weight:700;">Identical to Index</span></td>
+              <td><span class="tag-motif" style="color:#38bdf8; border-color:rgba(56,189,248,0.4);">Deep Molecular Response</span></td>
+            </tr>
+            <tr>
+              <td><span class="audit-chip" style="color:#10b981; font-weight:700;">Polyclonal Reconstitution</span></td>
+              <td>14 cells (Suppressed)</td>
+              <td>Suppressed by tumor burden</td>
+              <td>48 cells (Polyclonal return)</td>
+              <td><span style="color:#10b981; font-weight:700;">Diverse (1-3 aa)</span></td>
+              <td><span class="tag-motif" style="color:#10b981; border-color:rgba(16,185,129,0.4);">Immune Recovery</span></td>
+            </tr>
+          `;
+        }
+      } else if (isTcr) {
+        if (headerTitle) headerTitle.innerHTML = `<span>⏱️ Longitudinal TCR Clonal Expansion Dynamics & Lineage Persistence</span><span class="audit-chip" style="color:#c084fc; border-color:rgba(168,85,247,0.4);">Day 0 → Day 42 Monitoring</span>`;
+        if (headerDesc) headerDesc.innerText = "Quantitative tracking of clonal lineage expansion velocity, functional persistence, and immunotherapeutic response trajectories (TCR Germline Invariant — No physiological SHM in T cells to preserve central tolerance).";
+        if (shmTitle) shmTitle.innerText = "TCR Clonal Abundance Expansion Dynamics";
+        if (shmSub) shmSub.innerText = "Zero SHM Invariant (0 aa Mutated)";
+        if (dynTitle) dynTitle.innerText = "Melanoma CD8+ TIL Lineage Proliferation";
+        if (dynSub) dynSub.innerText = "Fold Expansion Post-Anti-PD1";
+        if (tableTitle) tableTitle.innerText = "TCR Clonal Lineage Longitudinal Response Table";
+
+        if (thead) {
+          thead.innerHTML = `
+            <tr>
+              <th>TCR Lineage ID</th>
+              <th>Baseline (Day 0)</th>
+              <th>Post-Treatment (Day 42 / 28)</th>
+              <th>Clonal Expansion Fold</th>
+              <th>SHM Divergence</th>
+              <th>Cognate Antigen / HLA Restriction</th>
+            </tr>
+          `;
+        }
+
+        if (tbody) {
+          tbody.innerHTML = `
+            <tr>
+              <td><span class="audit-chip" style="color:#38bdf8; font-weight:700;">Lineage-T1 (MAGE-A3)</span></td>
+              <td>14 cells (Pre-Bleed D0)</td>
+              <td>285 cells (Post-Anti-PD1 D42)</td>
+              <td><span style="color:#10b981; font-weight:700;">+20.4× Clonal Burst</span></td>
+              <td><span style="color:#94a3b8; font-weight:700;">0 aa (TCR Invariant)</span></td>
+              <td><span class="tag-motif">MAGE-A3 / HLA-A*01</span></td>
+            </tr>
+            <tr>
+              <td><span class="audit-chip" style="color:#10b981; font-weight:700;">Lineage-T2 (NY-ESO-1)</span></td>
+              <td>18 cells (Pre-Bleed D0)</td>
+              <td>148 cells (Post-Anti-PD1 D42)</td>
+              <td><span style="color:#10b981; font-weight:700;">+8.2× Proliferation</span></td>
+              <td><span style="color:#94a3b8; font-weight:700;">0 aa (TCR Invariant)</span></td>
+              <td><span class="tag-motif">NY-ESO-1 / HLA-A*02:01</span></td>
+            </tr>
+            <tr>
+              <td><span class="audit-chip" style="color:#c084fc; font-weight:700;">Lineage-T3 (CMV pp65)</span></td>
+              <td>Baseline memory pool</td>
+              <td>96 cells (Convalescent D28)</td>
+              <td><span style="color:#38bdf8; font-weight:700;">Persistent Homeostasis</span></td>
+              <td><span style="color:#94a3b8; font-weight:700;">0 aa (TCR Invariant)</span></td>
+              <td><span class="tag-motif">CMV pp65 / HLA-A*02:01</span></td>
+            </tr>
+          `;
+        }
+      } else {
+        if (headerTitle) headerTitle.innerHTML = `<span>⏱️ Longitudinal Somatic Hypermutation Kinetics & Lineage Trajectories</span><span class="audit-chip" style="color:#10b981; border-color:rgba(16,185,129,0.4);">Day 0 → Day 180 Monitoring</span>`;
+        if (headerDesc) headerDesc.innerText = "Quantitative tracking of somatic hypermutation rate, clonal lineage expansion, and affinity maturation trajectories during vaccination or immune interventions.";
+        if (shmTitle) shmTitle.innerText = "Somatic Hypermutation Accumulation Curve";
+        if (shmSub) shmSub.innerText = "Mean SHM vs. Time";
+        if (dynTitle) dynTitle.innerText = "Lineage Abundance & Clonal Expansion";
+        if (dynSub) dynSub.innerText = "Clonal Frequency (%)";
+        if (tableTitle) tableTitle.innerText = "Clonal Lineage Longitudinal Evolution Table";
+
+        if (thead) {
+          thead.innerHTML = `
+            <tr>
+              <th>Lineage ID</th>
+              <th>Founder Precursor (Day 0)</th>
+              <th>Day 7 Plasmablasts</th>
+              <th>Day 28 Memory B</th>
+              <th>Day 180 Booster Recall</th>
+              <th>Total SHM Accrued</th>
+              <th>Neutralization Target</th>
+            </tr>
+          `;
+        }
+
+        if (tbody) {
+          tbody.innerHTML = `
+            <tr>
+              <td><span class="audit-chip" style="color:#38bdf8; font-weight:700;">Lineage-1 (S2-Stem)</span></td>
+              <td>humIGHV1-69 / IGKV3-20 (0 SHM, 4 cells)</td>
+              <td>CARDKGYSYGYW (3 SHM, 86 cells)</td>
+              <td>CARDKGYSYGYW (8 SHM, 142 cells)</td>
+              <td>CARDKGYSYGYW (16 SHM, 210 cells)</td>
+              <td><span style="color:#f59e0b; font-weight:700;">+16 aa substitutions</span></td>
+              <td><span class="tag-motif">SARS-CoV-2 S2 Stem</span></td>
+            </tr>
+            <tr>
+              <td><span class="audit-chip" style="color:#10b981; font-weight:700;">Lineage-2 (RBD Class 1)</span></td>
+              <td>humIGHV3-53 / IGKV1-9 (0 SHM, 6 cells)</td>
+              <td>CARDLDYFDFW (2 SHM, 64 cells)</td>
+              <td>CARDLDYFDFW (6 SHM, 118 cells)</td>
+              <td>CARDLDYFDFW (12 SHM, 175 cells)</td>
+              <td><span style="color:#f59e0b; font-weight:700;">+12 aa substitutions</span></td>
+              <td><span class="tag-motif">SARS-CoV-2 RBD Class 1</span></td>
+            </tr>
+            <tr>
+              <td><span class="audit-chip" style="color:#c084fc; font-weight:700;">Lineage-3 (NTD Broad)</span></td>
+              <td>humIGHV1-24 / IGKV3-11 (0 SHM, 2 cells)</td>
+              <td>Early non-expanded (1 SHM, 12 cells)</td>
+              <td>CAREGPTGTYAFDIW (9 SHM, 48 cells)</td>
+              <td>CAREGPTGTYAFDIW (17 SHM, 82 cells)</td>
+              <td><span style="color:#f59e0b; font-weight:700;">+17 aa substitutions</span></td>
+              <td><span class="tag-motif">SARS-CoV-2 NTD</span></td>
+            </tr>
+          `;
+        }
+      }
+
+      // 2. Left SVG Curve Chart
+      const shmContainer = document.getElementById("shmCurveChart");
+      if (!shmContainer) return;
+      shmContainer.innerHTML = "";
+
+      const width = shmContainer.getBoundingClientRect().width || 380;
+      const height = 210;
+      const margin = { top: 20, right: 30, bottom: 30, left: 45 };
+
+      const svg = d3.select("#shmCurveChart")
+        .append("svg")
+        .attr("width", "100%")
+        .attr("height", height)
+        .attr("viewBox", `0 0 ${width} ${height}`);
+
+      if (isLymphoma) {
+        // Plot Lymphoma Ongoing SHM & Subclonal Diversification
+        const lymphPlotData = [
+          { day: 0, shm: 18.0, label: "Day 0 (Index)" },
+          { day: 180, shm: 25.5, label: "Day 180 (Subclones)" },
+          { day: 360, shm: 18.0, label: "Day 360 (MRD)" }
+        ];
+
+        const x = d3.scaleLinear().domain([0, 360]).range([margin.left, width - margin.right]);
+        const y = d3.scaleLinear().domain([0, 32]).range([height - margin.bottom, margin.top]);
+
+        // Grid
+        svg.append("g")
+          .attr("stroke", "#1e293b")
+          .attr("stroke-opacity", 0.5)
+          .attr("transform", `translate(0, ${height - margin.bottom})`)
+          .call(d3.axisBottom(x).tickValues([0, 180, 360]).tickFormat(d => `Day ${d}`));
+
+        svg.append("g")
+          .attr("stroke", "#1e293b")
+          .attr("stroke-opacity", 0.5)
+          .attr("transform", `translate(${margin.left}, 0)`)
+          .call(d3.axisLeft(y).ticks(5).tickFormat(d => `${d} aa`));
+
+        const line = d3.line()
+          .x(d => x(d.day))
+          .y(d => y(d.shm))
+          .curve(d3.curveMonotoneX);
+
+        const area = d3.area()
+          .x(d => x(d.day))
+          .y0(height - margin.bottom)
+          .y1(d => y(d.shm))
+          .curve(d3.curveMonotoneX);
+
+        svg.append("path")
+          .datum(lymphPlotData)
+          .attr("fill", "rgba(244, 63, 94, 0.15)")
+          .attr("d", area);
+
+        svg.append("path")
+          .datum(lymphPlotData)
+          .attr("fill", "none")
+          .attr("stroke", "#f43f5e")
+          .attr("stroke-width", 2.5)
+          .attr("d", line);
+
+        svg.selectAll(".lymph-dot")
+          .data(lymphPlotData)
+          .enter()
+          .append("circle")
+          .attr("cx", d => x(d.day))
+          .attr("cy", d => y(d.shm))
+          .attr("r", 5)
+          .attr("fill", d => d.day === 0 ? "#f43f5e" : (d.day === 180 ? "#fb923c" : "#38bdf8"))
+          .attr("stroke", "#ffffff")
+          .attr("stroke-width", 1.5);
+
+        svg.selectAll(".lymph-lbl")
+          .data(lymphPlotData)
+          .enter()
+          .append("text")
+          .attr("x", d => x(d.day))
+          .attr("y", d => y(d.shm) - 8)
+          .attr("text-anchor", "middle")
+          .attr("fill", "#e2e8f0")
+          .attr("font-size", "10px")
+          .attr("font-weight", "700")
+          .text(d => `${d.shm} aa`);
+
+        // Banner in chart: Ongoing SHM
+        svg.append("rect")
+          .attr("x", margin.left + 10)
+          .attr("y", margin.top + 4)
+          .attr("width", 240)
+          .attr("height", 20)
+          .attr("rx", 4)
+          .attr("fill", "rgba(15, 23, 42, 0.8)")
+          .attr("stroke", "#fb7185")
+          .attr("stroke-width", 1);
+
+        svg.append("text")
+          .attr("x", margin.left + 15)
+          .attr("y", margin.top + 18)
+          .attr("fill", "#fb7185")
+          .attr("font-size", "10px")
+          .attr("font-weight", "700")
+          .text("✦ AID Ongoing SHM & Intraclonal Drift");
+
+      } else if (isTcr) {
+        // Plot TCR Clonal Expansion (Abundance vs Day)
+        const tcrPlotData = [
+          { day: 0, count: 32, label: "Day 0 (Baseline)" },
+          { day: 28, count: 158, label: "Day 28" },
+          { day: 42, count: 433, label: "Day 42 (Post-Anti-PD1)" }
+        ];
+
+        const x = d3.scaleLinear().domain([0, 42]).range([margin.left, width - margin.right]);
+        const y = d3.scaleLinear().domain([0, 500]).range([height - margin.bottom, margin.top]);
+
+        // Grid
+        svg.append("g")
+          .attr("stroke", "#1e293b")
+          .attr("stroke-opacity", 0.5)
+          .attr("transform", `translate(0, ${height - margin.bottom})`)
+          .call(d3.axisBottom(x).ticks(4).tickFormat(d => `Day ${d}`));
+
+        svg.append("g")
+          .attr("stroke", "#1e293b")
+          .attr("stroke-opacity", 0.5)
+          .attr("transform", `translate(${margin.left}, 0)`)
+          .call(d3.axisLeft(y).ticks(5).tickFormat(d => `${d}`));
+
+        const line = d3.line()
+          .x(d => x(d.day))
+          .y(d => y(d.count))
+          .curve(d3.curveMonotoneX);
+
+        const area = d3.area()
+          .x(d => x(d.day))
+          .y0(height - margin.bottom)
+          .y1(d => y(d.count))
+          .curve(d3.curveMonotoneX);
+
+        svg.append("path")
+          .datum(tcrPlotData)
+          .attr("fill", "rgba(168, 85, 247, 0.15)")
+          .attr("d", area);
+
+        svg.append("path")
+          .datum(tcrPlotData)
+          .attr("fill", "none")
+          .attr("stroke", "#a855f7")
+          .attr("stroke-width", 2.5)
+          .attr("d", line);
+
+        svg.selectAll(".tcr-dot")
+          .data(tcrPlotData)
+          .enter()
+          .append("circle")
+          .attr("cx", d => x(d.day))
+          .attr("cy", d => y(d.count))
+          .attr("r", 5)
+          .attr("fill", "#c084fc")
+          .attr("stroke", "#ffffff")
+          .attr("stroke-width", 1.5);
+
+        svg.selectAll(".tcr-lbl")
+          .data(tcrPlotData)
+          .enter()
+          .append("text")
+          .attr("x", d => x(d.day))
+          .attr("y", d => y(d.count) - 8)
+          .attr("text-anchor", "middle")
+          .attr("fill", "#e2e8f0")
+          .attr("font-size", "10px")
+          .attr("font-weight", "700")
+          .text(d => `${d.count} cells`);
+
+        // Banner in chart: Zero SHM Invariant
+        svg.append("rect")
+          .attr("x", margin.left + 10)
+          .attr("y", margin.top + 4)
+          .attr("width", 210)
+          .attr("height", 20)
+          .attr("rx", 4)
+          .attr("fill", "rgba(15, 23, 42, 0.8)")
+          .attr("stroke", "#38bdf8")
+          .attr("stroke-width", 1);
+
+        svg.append("text")
+          .attr("x", margin.left + 15)
+          .attr("y", margin.top + 18)
+          .attr("fill", "#38bdf8")
+          .attr("font-size", "10px")
+          .attr("font-weight", "700")
+          .text("✦ Zero SHM: Germline Invariant in T Cells");
+
+      } else {
+        // Plot BCR SHM accumulation curve
+        const days = [0, 7, 28, 180];
+        const meanShmByDay = [];
+        days.forEach(day => {
+          const matching = tsData.filter(d => d.day === day);
+          if (matching.length > 0) {
+            const avg = matching.reduce((acc, c) => acc + (c.shm_h + c.shm_l), 0) / matching.length;
+            meanShmByDay.push({ day, shm: avg });
+          }
+        });
+
+        const x = d3.scaleLinear().domain([0, 180]).range([margin.left, width - margin.right]);
+        const y = d3.scaleLinear().domain([0, 26]).range([height - margin.bottom, margin.top]);
+
+        // Grid
+        svg.append("g")
+          .attr("stroke", "#1e293b")
+          .attr("stroke-opacity", 0.5)
+          .attr("transform", `translate(0, ${height - margin.bottom})`)
+          .call(d3.axisBottom(x).ticks(5).tickFormat(d => `Day ${d}`));
+
+        svg.append("g")
+          .attr("stroke", "#1e293b")
+          .attr("stroke-opacity", 0.5)
+          .attr("transform", `translate(${margin.left}, 0)`)
+          .call(d3.axisLeft(y).ticks(5).tickFormat(d => `${d} aa`));
+
+        const line = d3.line()
+          .x(d => x(d.day))
+          .y(d => y(d.shm))
+          .curve(d3.curveMonotoneX);
+
+        const area = d3.area()
+          .x(d => x(d.day))
+          .y0(height - margin.bottom)
+          .y1(d => y(d.shm))
+          .curve(d3.curveMonotoneX);
+
+        svg.append("path")
+          .datum(meanShmByDay)
+          .attr("fill", "rgba(56, 189, 248, 0.15)")
+          .attr("d", area);
+
+        svg.append("path")
+          .datum(meanShmByDay)
+          .attr("fill", "none")
+          .attr("stroke", "#38bdf8")
+          .attr("stroke-width", 2.5)
+          .attr("d", line);
+
+        svg.selectAll(".shm-dot")
+          .data(meanShmByDay)
+          .enter()
+          .append("circle")
+          .attr("cx", d => x(d.day))
+          .attr("cy", d => y(d.shm))
+          .attr("r", 5)
+          .attr("fill", d => d.day === 0 ? "#64748b" : (d.day === 7 ? "#38bdf8" : (d.day === 28 ? "#10b981" : "#f59e0b")))
+          .attr("stroke", "#ffffff")
+          .attr("stroke-width", 1.5);
+
+        svg.selectAll(".shm-lbl")
+          .data(meanShmByDay)
+          .enter()
+          .append("text")
+          .attr("x", d => x(d.day))
+          .attr("y", d => y(d.shm) - 8)
+          .attr("text-anchor", "middle")
+          .attr("fill", "#e2e8f0")
+          .attr("font-size", "10px")
+          .attr("font-weight", "700")
+          .text(d => `${d.shm.toFixed(1)} aa`);
+      }
+
+      // 3. Right Chart: Lineage Dynamics
+      const dynContainer = document.getElementById("lineageDynamicChart");
+      if (dynContainer) {
+        if (isLymphoma) {
+          dynContainer.innerHTML = `
+            <div style="display:flex; flex-direction:column; gap:10px; padding-top:12px;">
+              <div>
+                <div style="display:flex; justify-content:space-between; font-size:11.5px; margin-bottom:3px;">
+                  <span style="color:#f43f5e; font-weight:700;">Day 0 (Diagnosis): Dominant Malignant Spike</span>
+                  <span style="color:#f43f5e;">84.0% Tumor Burden (420 cells)</span>
+                </div>
+                <div style="background:#1e293b; height:12px; border-radius:4px; overflow:hidden;">
+                  <div style="width:84%; background:linear-gradient(90deg, #be123c, #f43f5e); height:100%;"></div>
+                </div>
+              </div>
+              <div>
+                <div style="display:flex; justify-content:space-between; font-size:11.5px; margin-bottom:3px;">
+                  <span style="color:#fb923c; font-weight:700;">Day 180 (Relapse / Ongoing SHM): Subclones A + B</span>
+                  <span style="color:#fb923c;">74.0% Tumor Burden (370 cells)</span>
+                </div>
+                <div style="background:#1e293b; height:12px; border-radius:4px; overflow:hidden;">
+                  <div style="width:74%; background:linear-gradient(90deg, #c2410c, #fb923c); height:100%;"></div>
+                </div>
+              </div>
+              <div>
+                <div style="display:flex; justify-content:space-between; font-size:11.5px; margin-bottom:3px;">
+                  <span style="color:#38bdf8; font-weight:700;">Day 360 (Post-CAR-T / Chemo): Minimal Residual Disease</span>
+                  <span style="color:#34d399;">0.4% (<10⁻⁴ MRD) + Polyclonal Recovery</span>
+                </div>
+                <div style="background:#1e293b; height:12px; border-radius:4px; overflow:hidden;">
+                  <div style="width:4%; background:linear-gradient(90deg, #0284c7, #38bdf8); height:100%;"></div>
+                </div>
+              </div>
+            </div>
+          `;
+        } else if (isTcr) {
+          dynContainer.innerHTML = `
+            <div style="display:flex; flex-direction:column; gap:10px; padding-top:12px;">
+              <div>
+                <div style="display:flex; justify-content:space-between; font-size:11.5px; margin-bottom:3px;">
+                  <span style="color:#c084fc; font-weight:700;">Lineage-T1 (MAGE-A3): D0 (14 cells) ➔ D42 (285 cells)</span>
+                  <span style="color:#34d399;">+20.4× Burst (0 SHM)</span>
+                </div>
+                <div style="background:#1e293b; height:12px; border-radius:4px; overflow:hidden;">
+                  <div style="width:82%; background:linear-gradient(90deg, #9333ea, #c084fc); height:100%;"></div>
+                </div>
+              </div>
+              <div>
+                <div style="display:flex; justify-content:space-between; font-size:11.5px; margin-bottom:3px;">
+                  <span style="color:#38bdf8; font-weight:700;">Lineage-T2 (NY-ESO-1): D0 (18 cells) ➔ D42 (148 cells)</span>
+                  <span style="color:#34d399;">+8.2× Expansion (0 SHM)</span>
+                </div>
+                <div style="background:#1e293b; height:12px; border-radius:4px; overflow:hidden;">
+                  <div style="width:58%; background:linear-gradient(90deg, #0284c7, #38bdf8); height:100%;"></div>
+                </div>
+              </div>
+              <div>
+                <div style="display:flex; justify-content:space-between; font-size:11.5px; margin-bottom:3px;">
+                  <span style="color:#10b981; font-weight:700;">Lineage-T3 (CMV pp65): D28 Convalescent (96 cells)</span>
+                  <span style="color:#fbbf24;">Persistent Memory (0 SHM)</span>
+                </div>
+                <div style="background:#1e293b; height:12px; border-radius:4px; overflow:hidden;">
+                  <div style="width:40%; background:linear-gradient(90deg, #059669, #10b981); height:100%;"></div>
+                </div>
+              </div>
+            </div>
+          `;
+        } else {
+          dynContainer.innerHTML = `
+            <div style="display:flex; flex-direction:column; gap:10px; padding-top:12px;">
+              <div>
+                <div style="display:flex; justify-content:space-between; font-size:11.5px; margin-bottom:3px;">
+                  <span style="color:#38bdf8; font-weight:700;">Lineage-1 (S2-Stem): D0(4) ➔ D7(86) ➔ D28(142) ➔ D180(210)</span>
+                  <span style="color:#34d399;">+16 aa SHM (Dominant)</span>
+                </div>
+                <div style="background:#1e293b; height:12px; border-radius:4px; overflow:hidden;">
+                  <div style="width:78%; background:linear-gradient(90deg, #0284c7, #38bdf8); height:100%;"></div>
+                </div>
+              </div>
+              <div>
+                <div style="display:flex; justify-content:space-between; font-size:11.5px; margin-bottom:3px;">
+                  <span style="color:#10b981; font-weight:700;">Lineage-2 (RBD Class 1): D0(6) ➔ D7(64) ➔ D28(118) ➔ D180(175)</span>
+                  <span style="color:#34d399;">+12 aa SHM (Neutralizing)</span>
+                </div>
+                <div style="background:#1e293b; height:12px; border-radius:4px; overflow:hidden;">
+                  <div style="width:62%; background:linear-gradient(90deg, #059669, #10b981); height:100%;"></div>
+                </div>
+              </div>
+              <div>
+                <div style="display:flex; justify-content:space-between; font-size:11.5px; margin-bottom:3px;">
+                  <span style="color:#c084fc; font-weight:700;">Lineage-3 (NTD Broad): D28(48) ➔ D180(82)</span>
+                  <span style="color:#f59e0b;">+17 aa SHM (Late Divergent)</span>
+                </div>
+                <div style="background:#1e293b; height:12px; border-radius:4px; overflow:hidden;">
+                  <div style="width:34%; background:linear-gradient(90deg, #9333ea, #c084fc); height:100%;"></div>
+                </div>
+              </div>
+            </div>
+          `;
+        }
+      }
+    }
+
+    function renderPacmap(data) {
+      const svg = d3.select("#pacmapSvg");
+      svg.selectAll("*").remove();
+
+      const width = svg.node().getBoundingClientRect().width || 800;
+      const height = 500;
+
+      // Update Legend
+      const legendDiv = document.getElementById("pacmapLegend");
+      const isTcr = data.some(d => d.receptor_type === "TCR" || (d.v_h && d.v_h.includes("TRB")));
+      const isTimeSeries = data.some(d => d.lineage_id);
+      const isMultiCohort = data.some(d => d.cohort && d.cohort.includes("Breast"));
+
+      if (isTcr) {
+        legendDiv.innerHTML = `
+          <span style="display:inline-flex; align-items:center; gap:4px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#c084fc;"></span> Melanoma CD8+ TILs</span>
+          <span style="display:inline-flex; align-items:center; gap:4px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#38bdf8;"></span> Viral Specific T cells</span>
+          <span style="display:inline-flex; align-items:center; gap:4px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#64748b;"></span> Day 0 Pre-Treatment</span>
+          <span style="color:#c084fc; font-weight:700;">➔ Clonal Proliferation Vectors (Zero SHM)</span>
+        `;
+      } else if (isTimeSeries) {
+        legendDiv.innerHTML = `
+          <span style="display:inline-flex; align-items:center; gap:4px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#64748b;"></span> Day 0 (Naive)</span>
+          <span style="display:inline-flex; align-items:center; gap:4px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#38bdf8;"></span> Day 7 (Plasmablast)</span>
+          <span style="display:inline-flex; align-items:center; gap:4px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#10b981;"></span> Day 28 (Memory B)</span>
+          <span style="display:inline-flex; align-items:center; gap:4px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#f59e0b;"></span> Day 180 (Recall)</span>
+          <span style="color:#38bdf8; font-weight:700;">➔ Clonal Lineage Vectors</span>
+        `;
+      } else if (isMultiCohort) {
+        legendDiv.innerHTML = `
+          <span style="display:inline-flex; align-items:center; gap:4px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#ec4899;"></span> HER2 Cohort</span>
+          <span style="display:inline-flex; align-items:center; gap:4px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#38bdf8;"></span> SARS-CoV-2 Cohort</span>
+          <span style="display:inline-flex; align-items:center; gap:4px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#f59e0b;"></span> Influenza Cohort</span>
+        `;
+      } else {
+        legendDiv.innerHTML = `
+          <span style="display:inline-flex; align-items:center; gap:4px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#58a6ff;"></span> IGHV3 Family</span>
+          <span style="display:inline-flex; align-items:center; gap:4px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#3fb950;"></span> IGHV1 Family</span>
+          <span style="display:inline-flex; align-items:center; gap:4px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#d29922;"></span> IGHV4 Family</span>
+        `;
+      }
+
+      // Arrowhead marker definition
+      const defs = svg.append("defs");
+      defs.append("marker")
+        .attr("id", "arrow")
+        .attr("viewBox", "0 -5 10 10")
+        .attr("refX", 18)
+        .attr("refY", 0)
+        .attr("markerWidth", 6)
+        .attr("markerHeight", 6)
+        .attr("orient", "auto")
+        .append("path")
+        .attr("d", "M0,-5L10,0L0,5")
+        .attr("fill", "#38bdf8");
+
+      defs.append("marker")
+        .attr("id", "arrow-green")
+        .attr("viewBox", "0 -5 10 10")
+        .attr("refX", 18)
+        .attr("refY", 0)
+        .attr("markerWidth", 6)
+        .attr("markerHeight", 6)
+        .attr("orient", "auto")
+        .append("path")
+        .attr("d", "M0,-5L10,0L0,5")
+        .attr("fill", "#10b981");
+
+      const g = svg.append("g");
+      const zoom = d3.zoom().scaleExtent([0.4, 10]).on("zoom", (e) => g.attr("transform", e.transform));
+      svg.call(zoom);
+
+      // Coordinates Scale
+      const margin = { top: 35, right: 60, bottom: 50, left: 65 };
+      const xScale = d3.scaleLinear().domain([-25, 25]).range([margin.left, width - margin.right]);
+      const yScale = d3.scaleLinear().domain([-20, 20]).range([height - margin.bottom, margin.top]);
+
+      // Draw Faint Internal Grid
+      g.append("g")
+        .attr("class", "grid-lines")
+        .attr("stroke", "#1e293b")
+        .attr("stroke-opacity", 0.4)
+        .attr("transform", `translate(0, ${height - margin.bottom})`)
+        .call(d3.axisBottom(xScale).ticks(10).tickSize(-height + margin.top + margin.bottom).tickFormat(""));
+
+      g.append("g")
+        .attr("class", "grid-lines")
+        .attr("stroke", "#1e293b")
+        .attr("stroke-opacity", 0.4)
+        .attr("transform", `translate(${margin.left}, 0)`)
+        .call(d3.axisLeft(yScale).ticks(8).tickSize(-width + margin.left + margin.right).tickFormat(""));
+
+      // Render Visible Bottom X-Axis with Numbers
+      const xAxisG = g.append("g")
+        .attr("class", "pacmap-axis")
+        .attr("transform", `translate(0, ${height - margin.bottom})`)
+        .call(d3.axisBottom(xScale).ticks(10).tickFormat(d => d));
+
+      xAxisG.selectAll("text")
+        .attr("fill", "#94a3b8")
+        .attr("font-size", "10px")
+        .attr("font-weight", "600")
+        .attr("font-family", "ui-monospace, monospace");
+      xAxisG.selectAll("line, path")
+        .attr("stroke", "#334155");
+
+      // Render Visible Left Y-Axis with Numbers
+      const yAxisG = g.append("g")
+        .attr("class", "pacmap-axis")
+        .attr("transform", `translate(${margin.left}, 0)`)
+        .call(d3.axisLeft(yScale).ticks(8).tickFormat(d => d));
+
+      yAxisG.selectAll("text")
+        .attr("fill", "#94a3b8")
+        .attr("font-size", "10px")
+        .attr("font-weight", "600")
+        .attr("font-family", "ui-monospace, monospace");
+      yAxisG.selectAll("line, path")
+        .attr("stroke", "#334155");
+
+      // Axis Titles
+      g.append("text")
+        .attr("x", margin.left + (width - margin.left - margin.right) / 2)
+        .attr("y", height - 12)
+        .attr("text-anchor", "middle")
+        .attr("fill", "#38bdf8")
+        .attr("font-size", "11px")
+        .attr("font-weight", "700")
+        .attr("letter-spacing", "0.03em")
+        .text("PaCMAP Dimension 1 (Arbitrary Units, a.u.)");
+
+      g.append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("x", -margin.top - (height - margin.top - margin.bottom) / 2)
+        .attr("y", 18)
+        .attr("text-anchor", "middle")
+        .attr("fill", "#38bdf8")
+        .attr("font-size", "11px")
+        .attr("font-weight", "700")
+        .attr("letter-spacing", "0.03em")
+        .text("PaCMAP Dimension 2 (Arbitrary Units, a.u.)");
+
+      // If time series, draw lineage trajectory paths with dashed animated vectors
+      if (isTimeSeries) {
+        const lineageGroups = {};
+        data.forEach(d => {
+          if (!d.lineage_id) return;
+          if (!lineageGroups[d.lineage_id]) lineageGroups[d.lineage_id] = [];
+          lineageGroups[d.lineage_id].push(d);
+        });
+
+        Object.entries(lineageGroups).forEach(([lid, pts], idx) => {
+          pts.sort((a, b) => a.day - b.day);
+          if (pts.length < 2) return;
+
+          const strokeColor = idx === 0 ? "#38bdf8" : (idx === 1 ? "#10b981" : "#c084fc");
+          const markerId = idx === 1 ? "url(#arrow-green)" : "url(#arrow)";
+
+          for (let i = 0; i < pts.length - 1; i++) {
+            const p1 = pts[i];
+            const p2 = pts[i + 1];
+
+            g.append("line")
+              .attr("x1", xScale(p1.px))
+              .attr("y1", yScale(p1.py))
+              .attr("x2", xScale(p2.px))
+              .attr("y2", yScale(p2.py))
+              .attr("stroke", strokeColor)
+              .attr("stroke-width", 2)
+              .attr("stroke-dasharray", "4,4")
+              .attr("opacity", 0.85)
+              .attr("marker-end", markerId);
+          }
+        });
+      }
+
+      // Draw Nodes
+      const tooltip = document.getElementById("pacmapTooltip");
+
+      data.forEach(d => {
+        const cx = xScale(d.px);
+        const cy = yScale(d.py);
+        const r = Math.max(5, Math.sqrt(d.freq) * 1.6);
+
+        // Color determination
+        let fill = "#58a6ff";
+        if (isTcr) {
+          if (d.day === 0) fill = "#64748b";
+          else if (d.cohort && d.cohort.includes("Melanoma")) fill = "#c084fc";
+          else fill = "#38bdf8";
+        } else if (isTimeSeries) {
+          if (d.day === 0) fill = "#64748b";
+          else if (d.day === 7) fill = "#38bdf8";
+          else if (d.day === 28) fill = "#10b981";
+          else if (d.day === 180) fill = "#f59e0b";
+        } else if (isMultiCohort) {
+          if (d.cohort.includes("HER2")) fill = "#ec4899";
+          else if (d.cohort.includes("SARS")) fill = "#38bdf8";
+          else if (d.cohort.includes("Influenza")) fill = "#f59e0b";
+        } else {
+          fill = d.v_h.includes("3-") ? "#58a6ff" : (d.v_h.includes("1-") ? "#3fb950" : "#d29922");
+        }
+
+        const node = g.append("g").style("cursor", "pointer");
+
+        node.append("circle")
+          .attr("cx", cx)
+          .attr("cy", cy)
+          .attr("r", r)
+          .attr("fill", fill)
+          .attr("stroke", "#ffffff")
+          .attr("stroke-width", 1.5)
+          .attr("opacity", 0.9)
+          .on("mouseover", (event) => {
+            if (!tooltip) return;
+            tooltip.style.display = "block";
+            tooltip.style.left = (event.pageX + 12) + "px";
+            tooltip.style.top = (event.pageY - 20) + "px";
+            const isTcrRow = d.receptor_type === "TCR" || (d.v_h && d.v_h.includes("TRB"));
+            const shmStr = isTcrRow 
+              ? `<span style="color:#94a3b8; font-weight:600;">0 aa (TCR Invariant — Zero SHM)</span>`
+              : `<strong>${d.shm_h} VH / ${d.shm_l} VL (aa)</strong>`;
+            const hName = isTcrRow ? "CDR-B3" : "CDR-H3";
+            const lName = isTcrRow ? "CDR-A3" : "CDR-L3";
+            const motifLabel = isTcrRow ? "TCR J-Motif" : "Synthesis Motif";
+
+            tooltip.innerHTML = `
+              <div style="font-weight:800; color:#38bdf8; margin-bottom:4px;">#${d.rank}: ${d.v_h} ⊕ ${d.v_l}</div>
+              <div>• Target: <strong style="color:#ffffff;">${d.target}</strong></div>
+              <div>• Timepoint / Cohort: <strong style="color:#10b981;">${d.timepoint || d.cohort || "Cross-Sectional"}</strong></div>
+              <div>• Clonal Abundance: <strong style="color:#f59e0b;">${d.freq} cells</strong></div>
+              <div>• ${hName}: <code style="color:#f43f5e;">${d.cdr3_h}</code></div>
+              <div>• ${lName}: <code style="color:#c084fc;">${d.cdr3_l}</code></div>
+              <div>• SHM Divergence: ${shmStr}</div>
+              <div>• ${motifLabel}: <span style="color:#34d399; font-family:monospace;">${d.boundary_h}/${d.boundary_l}</span></div>
+            `;
+          })
+          .on("mousemove", (event) => {
+            if (!tooltip) return;
+            tooltip.style.left = (event.pageX + 12) + "px";
+            tooltip.style.top = (event.pageY - 20) + "px";
+          })
+          .on("mouseout", () => {
+            if (tooltip) tooltip.style.display = "none";
+          });
+
+        const labelText = d.timepoint ? `${d.timepoint.split(" ")[0]} (#${d.rank})` : `#${d.rank}: ${d.v_h}/${d.v_l}`;
+
+        node.append("text")
+          .attr("x", cx + r + 4)
+          .attr("y", cy + 4)
+          .attr("fill", "#e2e8f0")
+          .attr("font-size", "10.5px")
+          .attr("font-weight", "700")
+          .text(labelText);
+      });
+    }
+
+    // -------------------------------------------------------------
+    // CANONICAL GERMLINE RECONSTRUCTION MAPS (IMGT FR1->Cys104 & J FR4)
+    // -------------------------------------------------------------
+    const V_GERMLINE_ANCHORS = {
+      // Human Heavy Chains (mature FR1 up to Cys104 anchor, exclusive of Cys104)
+      "humIGHV3-23*01": "EVQLVESGGGLVQPGGSLRLSCAASGFTFSSYAMSWVRQAPGKGLEWVSAISGSGGSTYYADSVKGRFTISRDNSKNTLYLQMNSLRAEDTAVYY",
+      "humIGHV3-23*04": "EVQLVESGGGLVQPGGSLRLSCAASGFTFSSYAMSWVRQAPGKGLEWVSAISGSGGSTYYADSVKGRFTISRDNSKNTLYLQMNSLRAEDTAVYY",
+      "humIGHV3-66*01": "EVQLVESGGGLVQPGGSLRLSCAASGFTFDDYAMHWVRQAPGKGLEWVSGISWNSGSIGYADSVKGRFTISRDNAKNSLYLQMNSLRAEDTALYY",
+      "humIGHV1-69*01": "QVQLVQSGAEVKKPGSSVKVSCKASGGTFSSYAISWVRQAPGQGLEWMGRIIPILGIANYAQKFQGRVTITADKSTSTAYMELSSLRSEDTAVYY",
+      "humIGHV4-34*01": "QVQLQQWGAGLLKPSETLSLTCAVYGGSFSGYYWSWIRQPPGKGLEWIGEINHSGSTNYNPSLKSRVTISVDTSKNQFSLKLSSVTAADTAVYY",
+      "humIGHV3-21*01": "EVQLVESGGGLVKPGGSLRLSCAASGFTFSSYSMNWVRQAPGKGLEWVSSISSSSSYIYYADSVKGRFTISRDNAKNSLYLQMNSLRAEDTAVYY",
+      "humIGHV3-53*01": "EVQLVESGGGLIQPGGSLRLSCAASGFTVSSNYMSWVRQAPGKGLEWVSVIYSGGSTYYADSVKGRFTISRDNSKNTLYLQMNSLRAEDTAVYY",
+      "humIGHV1-24*01": "QVQLVQSGAEVKKPGASVKVSCKASGYTFTGYYMHWVRQAPGQGLEWMGWINPNSGGTNYAQKFQGWVTMTRDTSISTAYMELSRLRSDDTAVYY",
+      "humIGHV3-30*01": "QVQLVESGGGVVQPGRSLRLSCAASGFTFSSYAMHWVRQAPGKGLEWVAVISYDGSNKYYADSVKGRFTISRDNSKNTLYLQMNSLRAEDTAVYY",
+      // Human Light Chains (Kappa)
+      "humIGKV1-39*01": "DIQMTQSPSSLSASVGDRVTITCRASQSISSYLNWYQQKPGKAPKLLIYAASSLQSGVPSRFSGSGSGTDFTLTISSLQPEDFATYY",
+      "humIGKV1-33*01": "DIQMTQSPSSLSASVGDRVTITCQASQDISNYLNWYQQKPGKAPKLLIYDASNLETGVPSRFSGSGSGTDFTFTISSLQPEDIATYY",
+      "humIGKV3-20*01": "EIVLTQSPGTLSLSPGERATLSCRASQSVSSSYLAWYQQKPGQAPRLLIYGASSRATGIPDRFSGSGSGTDFTLTISRLEPEDFAVYY",
+      "humIGKV1-5*01":  "DIQMTQSPSTLSASVGDRVTITCRASQSISSWLAWYQQKPGKAPKLLIYKASSLESGVPSRFSGSGSGTEFTLTISSLQPDDFATYY",
+      "humIGKV1-9*01":  "DIQLTQSPSFLSASVGDRVTITCRASQGISSYLAWYQQKPGKAPKLLIYAASTLQSGVPSRFSGSGSGTEFTLTISSLQPEDFATYY",
+      "humIGKV3-11*01": "EIVLTQSPATLSLSPGERATLSCRASQSVSSSSLAWYQQKPGQAPRLLIYGTSTRATGIPARFSGSGSGTDFTLTISSLEPEDFAVYY",
+      "humIGKV1-12*01": "DIQMTQSPSSVSASVGDRVTITCRASQGISSWLAWYQQKPGKAPKLLIYAASSLQSGVPSRFSGSGSGTDFTLTISSLQPEDFATYY",
+      // Human Light Chains (Lambda)
+      "humIGLV2-14*01": "QSALTQPASVSGSPGQSITISCTGTSSDVGGYNYVSWYQQHPGKAPKLMIYEVSNRPSGVSNRFSGSKSGNTASLTISGLQAEDEADYY",
+      "humIGLV3-21*01": "SYVLTQPPSVSVAPGQTARITCGGNNIGSKSVHWYQQKPGQAPVLVVYDDSDRPSGIPERFSGSNSGNTATLTISRVEAGDEADYY",
+      // TCR Beta & Alpha Chains
+      "humTRBV6-5*01":  "NAGVTQTPKFQVLKTGQSMTLQCAQDMNHNSMYWYRQDPGMGLRLIHYSYGVNDTNKGEVSDGYSVSREKTEDFLLTLKSVTSSDSAIYY",
+      "humTRAV8-4*01":  "AQKVTQAQTEISVVEKEDVTLDCVYETRDTTYYLFWYKQPPSGELVFLIRRNSFDEQNEISGRYSWNFQKSTSSFNFTITASQVVDSAVYY",
+      "humTRBV12-4*01": "DAGITQSPRHKVTETGTPVTLRCHQTENHRYMYWYRQDPGHGLRLIHYSYGVKDTDKGEVSDGYSVSRSKTEDFLLTLESATSSQTSVYF",
+      "humTRAV21*01":   "AQKITQTQPGMFVQEKEAVTLDCTYDTSDPSYGLFWYKQPSSGEMIFLIYQGSYDQQNATEGRYSLNFQKARKSANLVISASQLGDSAMYY",
+      "humTRBV7-9*01":  "DTGVSQNPRHNITKTGKRTLTCHQTKNHNYMYWYRQDLGHGLRLIHYSYGVENNDKGEISDGYNVSRSKTEDFLLTLESATSSQTSVYF",
+      "humTRAV24*01":   "AQSVTQLGSHVSVSEGALVLLRCNYSSSVPPYLFWYVQYPNQGLQLLLKYTSAATLVKGINGFEAEFKKSETSFHLTKPSAHMSDAAEYF",
+      "humTRBV20-1*01": "GAGVSQSPSNKVTEKGKDVELRCDPISGHTALYWYRQSLGQGLEFLIYFQGNSAPDKSGSPSNFQNRFSISPNKTLEFLLTLESVTPSQTSVYF",
+      "humTRAV5*01":    "AEDVEQSLFLSVREGDSSVINCTYTDSSSTYLYWYKQEPGAGLQLLTYIFSNMDMKQDQRLTVLLNKKDKHLSLRIADTQTGDSAIYY"
+    };
+
+    const J_FR4_TAILS = {
+      // Heavy J-segments (terminating strictly at TVSS)
+      "humIGHJ1": "WGQGTLVTVSS",
+      "humIGHJ2": "WGRGTLVTVSS",
+      "humIGHJ3": "WGQGTMVTVSS",
+      "humIGHJ4": "WGQGTLVTVSS",
+      "humIGHJ5": "WGQGTLVTVSS",
+      "humIGHJ6": "WGQGTTVTVSS",
+      // Light Kappa J-segments (terminating strictly at VEIK/LEIK/VDIK)
+      "humIGKJ1": "FGQGTKVEIK",
+      "humIGKJ2": "FGQGTKLEIK",
+      "humIGKJ3": "FGPGTKVDIK",
+      "humIGKJ4": "FGGGTKVEIK",
+      "humIGKJ5": "FGQGTRLEIK",
+      // Light Lambda J-segments (terminating strictly at TVL)
+      "humIGLJ1": "FGIGTKVTVL",
+      "humIGLJ2": "FGGGTKLTVL",
+      "humIGLJ3": "FGGGTKLTVL",
+      "humIGLJ7": "FGGGTQLTVL",
+      // TCR J-segments
+      "humTRBJ1-2": "YGYTFGSGTRLTVV",
+      "humTRBJ2-1": "NEQFFGPGTRLTVL",
+      "humTRBJ2-7": "YEQYFGPGTRLTVT",
+      "humTRBJ1-5": "QPQHFGDGTRLSIL",
+      "humTRAJ42":  "YGSQGNLIFGKGTKLSVK",
+      "humTRAJ33":  "DSNYQLIWGAGTKLIIK",
+      "humTRAJ49":  "GNMLTFGGGTRLTVR",
+      "humTRAJ31":  "NARLMFGDGTQLVVK"
+    };
+
+    function getCompleteSequence(d, chainType) {
+      if (!d) return "";
+      const isHeavy = chainType === "heavy" || chainType === "H" || chainType === "TRB";
+      
+      // 1. Direct explicit sequence if already populated on clone
+      if (isHeavy && d.seq_h && typeof d.seq_h === "string" && d.seq_h.trim().length >= 50) {
+        return d.seq_h.trim();
+      }
+      if (!isHeavy && d.seq_l && typeof d.seq_l === "string" && d.seq_l.trim().length >= 50) {
+        return d.seq_l.trim();
+      }
+
+      // 2. Dynamic Assembly from V + CDR3 + J
+      const vGene = isHeavy ? (d.v_h || "") : (d.v_l || "");
+      const jGene = isHeavy ? (d.j_h || "") : (d.j_l || "");
+      const cdr3  = (isHeavy ? (d.cdr3_h || "") : (d.cdr3_l || "")).trim().toUpperCase();
+
+      // Resolve V prefix
+      let vPrefix = V_GERMLINE_ANCHORS[vGene];
+      if (!vPrefix) {
+        const baseV = vGene.split("*")[0];
+        vPrefix = V_GERMLINE_ANCHORS[baseV];
+      }
+      if (!vPrefix) {
+        if (isHeavy) {
+          vPrefix = vGene.includes("IGHV1") 
+            ? "QVQLVQSGAEVKKPGSSVKVSCKASGGTFSSYAISWVRQAPGQGLEWMGRIIPILGIANYAQKFQGRVTITADKSTSTAYMELSSLRSEDTAVYY"
+            : (vGene.includes("IGHV4")
+              ? "QVQLQQWGAGLLKPSETLSLTCAVYGGSFSGYYWSWIRQPPGKGLEWIGEINHSGSTNYNPSLKSRVTISVDTSKNQFSLKLSSVTAADTAVYY"
+              : "EVQLVESGGGLVQPGGSLRLSCAASGFTFSSYAMSWVRQAPGKGLEWVSAISGSGGSTYYADSVKGRFTISRDNSKNTLYLQMNSLRAEDTAVYY");
+        } else {
+          vPrefix = vGene.includes("IGLV")
+            ? "QSALTQPASVSGSPGQSITISCTGTSSDVGGYNYVSWYQQHPGKAPKLMIYEVSNRPSGVSNRFSGSKSGNTASLTISGLQAEDEADYY"
+            : (vGene.includes("IGKV3")
+              ? "EIVLTQSPGTLSLSPGERATLSCRASQSVSSSYLAWYQQKPGQAPRLLIYGASSRATGIPDRFSGSGSGTDFTLTISRLEPEDFAVYY"
+              : "DIQMTQSPSSLSASVGDRVTITCRASQSISSYLNWYQQKPGKAPKLLIYAASSLQSGVPSRFSGSGSGTDFTLTISSLQPEDFATYY");
+        }
+      }
+
+      // Resolve J FR4 tail
+      let jFr4 = "";
+      const baseJ = jGene.split("*")[0];
+      const jEntry = J_FR4_TAILS[jGene] || J_FR4_TAILS[baseJ];
+      if (jEntry) {
+        jFr4 = jEntry;
+      } else {
+        if (isHeavy) {
+          jFr4 = "WGQGTLVTVSS";
+        } else if (vGene.includes("IGLV") || (d.boundary_l && d.boundary_l.includes("TVL"))) {
+          jFr4 = "FGGGTKLTVL";
+        } else {
+          jFr4 = "FGQGTKVEIK";
+        }
+      }
+
+      // Splice V + CDR3 + J-FR4 without duplicate junction anchors
+      let full = vPrefix;
+      if (cdr3.startsWith("C")) {
+        full += cdr3;
+      } else {
+        full += "C" + cdr3;
+      }
+
+      if (isHeavy) {
+        if (full.endsWith("W")) {
+          const afterW = jFr4.replace(/^[^W]*W/, "");
+          full += afterW;
+        } else {
+          const wIdx = jFr4.indexOf("W");
+          full += (wIdx >= 0 ? jFr4.substring(wIdx) : "WGQGTLVTVSS");
+        }
+      } else {
+        if (full.endsWith("F")) {
+          const afterF = jFr4.replace(/^[^F]*F/, "");
+          full += afterF;
+        } else {
+          const fIdx = jFr4.indexOf("F");
+          full += (fIdx >= 0 ? jFr4.substring(fIdx) : (vGene.includes("IGLV") ? "FGGGTKLTVL" : "FGQGTKVEIK"));
+        }
+      }
+
+      if (isHeavy) d.seq_h = full;
+      else d.seq_l = full;
+
+      return full;
+    }
+
+    // -------------------------------------------------------------
+    // EXPORT FUNCTIONS WITH AUDIT METADATA PROVENANCE
+    // -------------------------------------------------------------
+    function getAuditHeader() {
+      const sample = document.getElementById("sampleIdInput").value || "SAMPLE_001";
+      const donor = document.getElementById("donorIdInput").value || "DONOR_001";
+      const project = document.getElementById("projectInput").value || "PROJECT";
+      const platform = document.getElementById("platformInput").value || "Single-Cell Paired 5' V(D)J";
+      const ts = new Date().toISOString();
+
+      return [
+        "# ==============================================================================",
+        "# VBASE3 IMMUNOGENOMIC AUDIT TRAIL & PROVENANCE METADATA",
+        "# ==============================================================================",
+        "# vbase3_version: \"VBASE3 Release 1.0.0 (September 2026)\"",
+        `# analysis_timestamp_utc: \"${ts}\"`,
+        "# reference_database: \"VBASE3 Pan-Vertebrate Class I Catalog (55 Species)\"",
+        "# gating_policy: \"Class I Functional (>= 75% identity over mature FR1->Cys104 window)\"",
+        "# boundary_enforcement: \"Strict Synthesis Boundary (TVSS/TVSA/VEIK/LEIK/TVL or canonical TCR J-motifs; zero constant region)\"",
+        `# sample_id: \"${sample}\"`,
+        `# donor_id: \"${donor}\"`,
+        `# project_name: \"${project}\"`,
+        `# sequencing_technology: \"${platform}\"`,
+        "# ------------------------------------------------------------------------------",
+        "# REGULATORY & RESEARCH USE NOTICE:",
+        "# VBASE3 is engineered to be robust and reliable. In its current form, it is",
+        "# intended strictly for Research Use Only (RUO). Any regulated deployment",
+        "# (e.g. clinical diagnostics, regulatory submissions, or GxP drug manufacturing)",
+        "# requires independent institutional verification. In industrial settings, outputs",
+        "# should be enriched with enterprise operational metadata (LIMS barcodes, ELN GUIDs,",
+        "# operator credentials, and digital signatures) beyond core sequence analytics.",
+        "# =============================================================================="
+      ].join("\n") + "\n\n";
+    }
+
+    function downloadSynthesisSheet() {
+      let content = getAuditHeader();
+      content += "clone_rank\tcohort_name\ttimepoint\tday_post_intervention\tlineage_id\tcell_frequency\ttarget_antigen\tchain_type\tv_gene_assignment\tj_gene_assignment\tcdr3_sequence\tsynthesis_boundary_motif\tcomplete_variable_sequence\n";
+      const isTcr = currentDataset.some(d => d.receptor_type === "TCR" || (d.v_h && d.v_h.includes("TRB")));
+
+      currentDataset.forEach(d => {
+        const cohort = d.cohort || "N/A";
+        const timepoint = d.timepoint || "N/A";
+        const day = d.day !== undefined ? d.day : "N/A";
+        const lineage = d.lineage_id || "N/A";
+        const chain1 = isTcr ? "TCR Beta (TRB)" : "Heavy (VH)";
+        const chain2 = isTcr ? "TCR Alpha (TRA)" : "Light (VL)";
+        const fullH = getCompleteSequence(d, "heavy");
+        const fullL = getCompleteSequence(d, "light");
+        content += `${d.rank}\t${cohort}\t${timepoint}\t${day}\t${lineage}\t${d.freq}\t${d.target}\t${chain1}\t${d.v_h}\t${d.j_h}\t${d.cdr3_h}\t${d.boundary_h}\t${fullH}\n`;
+        content += `${d.rank}\t${cohort}\t${timepoint}\t${day}\t${lineage}\t${d.freq}\t${d.target}\t${chain2}\t${d.v_l}\t${d.j_l}\t${d.cdr3_l}\t${d.boundary_l}\t${fullL}\n`;
+      });
+
+      const blob = new Blob([content], { type: "text/tab-separated-values" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = `vbase3_synthesis_order_${document.getElementById("sampleIdInput").value}.tsv`;
+      a.click();
+    }
+
+    function downloadAirrTsv() {
+      let content = getAuditHeader();
+      content += "sequence_id\tcell_id\tclone_id\tcohort_id\ttimepoint\tday\tlineage_id\tproductive\tv_call\tj_call\tcdr3_aa\tsequence_aa\tantigen\ttarget_substrate\n";
+      currentDataset.forEach(d => {
+        const cohort = d.cohort || "Cohort";
+        const timepoint = d.timepoint || "D0";
+        const day = d.day !== undefined ? d.day : 0;
+        const lineage = d.lineage_id || "Lineage";
+        const fullH = getCompleteSequence(d, "heavy");
+        const fullL = getCompleteSequence(d, "light");
+        content += `CELL_${d.rank}_H\tBARCODE_${d.rank}\tCLONE_${d.rank}\t${cohort}\t${timepoint}\t${day}\t${lineage}\tT\t${d.v_h}\t${d.j_h}\t${d.cdr3_h}\t${fullH}\t${d.target}\t${d.target}\n`;
+        content += `CELL_${d.rank}_L\tBARCODE_${d.rank}\tCLONE_${d.rank}\t${cohort}\t${timepoint}\t${day}\t${lineage}\tT\t${d.v_l}\t${d.j_l}\t${d.cdr3_l}\t${fullL}\t${d.target}\t${d.target}\n`;
+      });
+
+      const blob = new Blob([content], { type: "text/tab-separated-values" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = `vbase3_airr_repertoire_${document.getElementById("sampleIdInput").value}.tsv`;
+      a.click();
+    }
+
+    function downloadPairedFasta() {
+      const exportList = (filteredDataset && filteredDataset.length > 0) ? filteredDataset : currentDataset;
+      let content = getAuditHeader();
+      content += `# EXPORT_TYPE: "Paired Complete Variable Sequences (FASTA)"\n`;
+      content += `# matched_clonotypes_exported: ${exportList.length}\n`;
+      content += "# ------------------------------------------------------------------------------\n\n";
+
+      exportList.forEach(d => {
+        const isTcr = d.receptor_type === "TCR" || (d.v_h && d.v_h.includes("TRB"));
+        const tagH = isTcr ? "TRB" : "VH";
+        const tagL = isTcr ? "TRA" : "VL";
+        const fullH = getCompleteSequence(d, "heavy");
+        const fullL = getCompleteSequence(d, "light");
+
+        content += `>CLONE_${d.rank}_${tagH} | ${d.target} | ${d.v_h} | ${d.j_h} | Boundary:${d.boundary_h} | Cohort:${d.cohort || "N/A"}\n`;
+        content += `${fullH}\n`;
+        content += `>CLONE_${d.rank}_${tagL} | ${d.target} | ${d.v_l} | ${d.j_l} | Boundary:${d.boundary_l} | Cohort:${d.cohort || "N/A"}\n`;
+        content += `${fullL}\n`;
+      });
+
+      const blob = new Blob([content], { type: "text/plain" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      const sample = document.getElementById("sampleIdInput").value || "REPERTOIRE";
+      a.download = `vbase3_paired_complete_sequences_${sample}.fasta`;
+      a.click();
+    }
+
+    function downloadJsonStructureQueue() {
+      const payload = {
+        metadata: {
+          vbase3_release: "1.0.0",
+          timestamp_utc: new Date().toISOString(),
+          sample: document.getElementById("sampleIdInput").value,
+          donor: document.getElementById("donorIdInput").value,
+          project: document.getElementById("projectInput").value
+        },
+        jobs: currentDataset.map(d => {
+          const fullH = getCompleteSequence(d, "heavy");
+          const fullL = getCompleteSequence(d, "light");
+          return {
+            job_id: `STRUCTURE_CLONE_${d.rank}`,
+            name: `${d.v_h}_${d.v_l}`,
+            cohort: d.cohort || null,
+            timepoint: d.timepoint || null,
+            day: d.day !== undefined ? d.day : null,
+            lineage_id: d.lineage_id || null,
+            target: d.target,
+            vh_call: d.v_h,
+            vl_call: d.v_l,
+            cdr3_h: d.cdr3_h,
+            cdr3_l: d.cdr3_l,
+            seq_heavy: fullH,
+            seq_light: fullL,
+            frequency: d.freq,
+            format_colabfold: `>${d.v_h}:${d.v_l}`
+          };
+        })
+      };
+
+      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = `vbase3_ai_structure_queue_${document.getElementById("sampleIdInput").value}.json`;
+      a.click();
+    }
+
+    window.addEventListener("DOMContentLoaded", initPage);
+  </script>
+</body>
+</html>

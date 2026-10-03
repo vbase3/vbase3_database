@@ -1,0 +1,1209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="vbase3-agent-api" content="vbase3_sdk.js:window.VBASE3">
+    <title>Dog (Canis lupus familiaris) Antibody Analyzer — VBASE3</title>
+    <link rel="stylesheet" href="css/fonts.css">
+    <script src="js/vbase3_sdk.js"></script>
+    <style>
+        :root {
+            --bg-base: #060d17;
+            --bg-card: rgba(13, 27, 42, 0.85);
+            --bg-card-hover: rgba(20, 39, 61, 0.95);
+            --border-glass: rgba(56, 189, 248, 0.22);
+            --border-glow: rgba(245, 158, 11, 0.45);
+            
+            --accent-emerald: #10b981;
+            --accent-teal: #14b8a6;
+            --accent-cyan: #06b6d4;
+            --accent-blue: #38bdf8;
+            --accent-amber: #f59e0b;
+            --accent-purple: #a855f7;
+            --accent-rose: #f43f5e;
+            
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            
+            --cdr1-color: #38bdf8;
+            --cdr2-color: #4ade80;
+            --cdr3-color: #f43f5e;
+            --fr-color: #94a3b8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: var(--bg-base);
+            color: var(--text-primary);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            min-height: 100vh;
+            line-height: 1.5;
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(245, 158, 11, 0.12) 0%, transparent 45%),
+                radial-gradient(circle at 85% 85%, rgba(217, 119, 6, 0.10) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(56, 189, 248, 0.05) 0%, transparent 65%);
+            background-attachment: fixed;
+        }
+
+        header {
+            background: rgba(6, 13, 23, 0.90);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border-glass);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 14px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 14px;
+        }
+
+        .logo-group {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .logo-badge {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            box-shadow: 0 4px 16px rgba(245, 158, 11, 0.35);
+        }
+
+        .logo-text h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: -0.02em;
+        }
+
+        .logo-text p {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .species-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            background: rgba(245, 158, 11, 0.12);
+            border: 1px solid rgba(245, 158, 11, 0.35);
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--accent-amber);
+        }
+
+        .nav-portal-links {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .portal-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 12px;
+            padding: 6px 12px;
+            border-radius: 8px;
+            border: 1px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .portal-link:hover {
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--border-glass);
+        }
+
+        .portal-link.active {
+            color: #ffffff;
+            background: rgba(245, 158, 11, 0.2);
+            border-color: var(--accent-amber);
+            font-weight: 600;
+        }
+
+        main {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+
+        .hero-banner {
+            background: linear-gradient(135deg, rgba(13, 27, 42, 0.95), rgba(20, 39, 61, 0.75));
+            border: 1px solid var(--border-glass);
+            border-radius: 16px;
+            padding: 24px 32px;
+            margin-bottom: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #ffffff, var(--accent-amber));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-desc {
+            color: var(--text-secondary);
+            font-size: 14px;
+            max-width: 750px;
+            line-height: 1.6;
+        }
+
+        .kpi-row {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .kpi-card {
+            background: rgba(6, 13, 23, 0.6);
+            border: 1px solid var(--border-glass);
+            border-radius: 12px;
+            padding: 12px 18px;
+            text-align: center;
+            min-width: 100px;
+        }
+
+        .kpi-num {
+            font-family: 'Outfit', sans-serif;
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--accent-amber);
+        }
+
+        .kpi-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-top: 2px;
+        }
+
+        .tabs-header {
+            display: flex;
+            gap: 10px;
+            border-bottom: 1px solid var(--border-glass);
+            margin-bottom: 24px;
+            overflow-x: auto;
+            padding-bottom: 4px;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-family: 'Outfit', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            padding: 10px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .tab-btn.active {
+            color: #ffffff;
+            background: rgba(245, 158, 11, 0.2);
+            box-shadow: inset 0 -2px 0 var(--accent-amber);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.25s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        @media (max-width: 1024px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            border-radius: 14px;
+            padding: 22px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 12px;
+        }
+
+        .card-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        textarea {
+            width: 100%;
+            background: rgba(6, 13, 23, 0.85);
+            border: 1px solid var(--border-glass);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-family: 'Fira Code', monospace;
+            font-size: 13px;
+            padding: 12px;
+            resize: vertical;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        textarea:focus {
+            border-color: var(--accent-amber);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, var(--accent-amber), #d97706);
+            border: none;
+            color: #ffffff;
+            font-family: 'Outfit', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 8px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 2px 10px rgba(245, 158, 11, 0.25);
+        }
+
+        .btn:hover {
+            filter: brightness(1.1);
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--border-glass);
+            color: var(--text-secondary);
+            box-shadow: none;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+        }
+
+        .example-pill {
+            background: rgba(245, 158, 11, 0.12);
+            border: 1px solid rgba(245, 158, 11, 0.35);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-size: 11.5px;
+            font-weight: 500;
+            padding: 4px 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .example-pill:hover {
+            background: rgba(245, 158, 11, 0.25);
+            border-color: var(--accent-amber);
+        }
+
+        .results-box {
+            background: rgba(6, 13, 23, 0.7);
+            border: 1px solid var(--border-glass);
+            border-radius: 10px;
+            padding: 16px;
+            margin-top: 14px;
+        }
+
+        .match-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 700;
+            font-family: 'Fira Code', monospace;
+            background: rgba(245, 158, 11, 0.15);
+            border: 1px solid var(--accent-amber);
+            color: var(--accent-amber);
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 13px;
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+        }
+
+        .result-label {
+            color: var(--text-secondary);
+        }
+
+        .result-val {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-family: 'Fira Code', monospace;
+        }
+
+        .badge-functional {
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid var(--accent-emerald);
+            color: var(--accent-emerald);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .badge-boundary {
+            background: rgba(56, 189, 248, 0.15);
+            border: 1px solid var(--accent-blue);
+            color: var(--accent-blue);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .badge-hallmark {
+            background: rgba(245, 158, 11, 0.15);
+            border: 1px solid var(--accent-amber);
+            color: var(--accent-amber);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            border: 1px solid var(--border-glass);
+            border-radius: 12px;
+            background: var(--bg-card);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            text-align: left;
+        }
+
+        th {
+            background: rgba(6, 13, 23, 0.95);
+            padding: 12px 16px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            color: var(--text-secondary);
+            border-bottom: 1px solid var(--border-glass);
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 12px 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        tr:hover td {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .seq-font {
+            font-family: 'Fira Code', monospace;
+            font-size: 12px;
+            word-break: break-all;
+        }
+
+        .search-bar {
+            width: 100%;
+            max-width: 400px;
+            background: rgba(6, 13, 23, 0.85);
+            border: 1px solid var(--border-glass);
+            border-radius: 8px;
+            color: var(--text-primary);
+            padding: 8px 14px;
+            font-size: 13px;
+            outline: none;
+            margin-bottom: 14px;
+        }
+
+        .search-bar:focus {
+            border-color: var(--accent-amber);
+        }
+
+        .filter-btn-group {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 14px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-glass);
+            color: var(--text-secondary);
+            font-size: 12px;
+            padding: 5px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .filter-btn.active {
+            background: rgba(245, 158, 11, 0.2);
+            border-color: var(--accent-amber);
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        .domain-track-wrapper {
+            overflow-x: auto;
+            padding-bottom: 6px;
+            margin-top: 10px;
+        }
+
+        .color-cdr1 { color: var(--cdr1-color); font-weight: 600; }
+        .color-cdr2 { color: var(--cdr2-color); font-weight: 600; }
+        .color-cdr3 { color: var(--cdr3-color); font-weight: 600; }
+        .color-fr   { color: var(--fr-color); }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo-group">
+                <div class="logo-badge" style="background:linear-gradient(135deg, #f59e0b, #d97706);">
+                    🐕
+                </div>
+                <div class="logo-text">
+                    <h1>Canine Variable Domain Analyzer</h1>
+                    <p>VBASE3 Pan-Vertebrate Synthesis & Repertoire Platform — <em>Canis lupus familiaris</em></p>
+                </div>
+            </div>
+            <div class="species-pill">
+                🐕 Canis lupus familiaris: Veterinary mAbs & Lambda Dominance
+            </div>
+            <div class="nav-portal-links"><a href="index.html" class="portal-link">🏠 Portal Home</a><a href="dnaplot.html" class="portal-link">🧬 DNAPLOT</a><a href="repertoire_analysis.html" class="portal-link">📊 Repertoire Analysis</a><a href="human_vbase3_analyzer.html" class="portal-link">👤 Human</a><a href="mouse_vbase3_analyzer.html" class="portal-link">🐭 Mouse</a><a href="rabbit_vbase3_analyzer.html" class="portal-link">🐇 Rabbit</a><a href="camelid_vbase3_analyzer.html" class="portal-link">🦙 Camelid (VHH)</a><a href="dog_vbase3_analyzer.html" class="portal-link active">🐕 Dog</a><a href="chicken_vbase3_analyzer.html" class="portal-link">🐔 Chicken</a><a href="xenopus_du_pasquier_hsu.html" class="portal-link">🐸 Xenopus</a></div>
+        </div>
+    </header>
+
+    <main>
+        <div class="hero-banner">
+            <div>
+                <div class="hero-title">Canine Antibody & Veterinary Biotherapeutic Workbench</div>
+                <div class="hero-desc">Curated database of 29 Class I canine V-genes, benchmark caninized biotherapeutics (Lokivetmab, Bedinvetmab, Gilvetmab), and light chain lambda-dominance profiling.</div>
+            </div>
+            <div class="kpi-row">
+                <div class="kpi-card">
+                    <div class="kpi-num" id="kpi-vgenes">29</div>
+                    <div class="kpi-label">Class I V-Genes</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-num" style="color:#10b981;">5</div>
+                    <div class="kpi-label">J-Segments</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-num" style="color:#38bdf8;">5</div>
+                    <div class="kpi-label">D-Elements</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-num" style="color:#a855f7;">3</div>
+                    <div class="kpi-label">Benchmark mAbs</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tabs-header">
+            <button class="tab-btn active" onclick="switchTab('analyzer')">⚡ 1. Quick V(D)J Analyzer</button>
+            <button class="tab-btn" onclick="switchTab('catalog')">📖 2. Germline Catalog (29 V-Genes)</button>
+            <button class="tab-btn" onclick="switchTab('benchmarks')">🔬 3. Landmark Monoclonal Clones</button>
+            <button class="tab-btn" onclick="switchTab('biology')">🏛️ 4. Engineering & Biological Context</button>
+        </div>
+
+        <!-- TAB 1: ANALYZER -->
+        <div id="tab-analyzer" class="tab-content active">
+            <div class="grid-2">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">📥 Input Dog Antibody Sequence</div>
+                        <span style="font-size:12px; color:var(--text-secondary);">DNA or Amino Acid</span>
+                    </div>
+                    <div style="margin-bottom:12px;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; flex-wrap:wrap; gap:6px;">
+                            <span style="font-size:12px; color:var(--text-secondary); margin-right:8px;">Load Landmark Preset:</span>
+                        </div>
+                        <div class="btn-group" id="benchmarkPills" style="margin-top:6px;">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+                    <textarea id="seqInput" rows="7" placeholder="Paste Dog nucleotide or amino acid sequence (FASTA format supported)..."></textarea>
+                    <div class="btn-group" style="margin-top:12px;">
+                        <button class="btn" onclick="runAnalysis()">⚡ Analyze Sequence</button>
+                        <button class="btn btn-secondary" onclick="clearInput()">Clear</button>
+                        <button class="btn btn-secondary" id="btnExportAirr" style="display:none;" onclick="exportAirrTsv()">📥 Export AIRR TSV</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">📊 Analysis Results</div>
+                        <div id="matchScoreBadge" class="match-badge" style="display:none;"></div>
+                    </div>
+                    <div id="analysisEmpty" style="text-align:center; padding:40px 20px; color:var(--text-muted);">
+                        <div style="font-size:36px; margin-bottom:10px;">🐕</div>
+                        <div>Enter a Canine nucleotide or amino acid sequence, or click a landmark preset above to begin.</div>
+                    </div>
+                    <div id="analysisResults" style="display:none;">
+                        <div class="results-box">
+                            <div class="result-item">
+                                <span class="result-label">Closest Functional V-Gene:</span>
+                                <span class="result-val" id="resVGene">-</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Closest Functional D-Gene:</span>
+                                <span class="result-val" id="resDGene">-</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Closest Functional J-Gene:</span>
+                                <span class="result-val" id="resJGene">-</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">C-Terminal Synthesis Boundary:</span>
+                                <span class="result-val" id="resBoundary">-</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Somatic Hypermutation (SHM):</span>
+                                <span class="result-val" id="resShm">-</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Structural / Chain Hallmark:</span>
+                                <span class="result-val" id="resHallmark">-</span>
+                            </div>
+                        </div>
+
+                        <div style="margin-top:16px;">
+                            <div style="font-family:'Outfit',sans-serif; font-size:13px; font-weight:700; margin-bottom:6px; color:var(--text-secondary);">
+                                IMGT DOMAIN ARCHITECTURE & CDR ANNOTATION
+                            </div>
+                            <div class="domain-track-wrapper">
+                                <div id="domainAreaTrack" style="display:flex; gap:3px; min-width:max-content;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 2: GERMLINE CATALOG -->
+        <div id="tab-catalog" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">📚 Canine Class I Functional Repertoire Catalog</div>
+                    <span style="font-size:12px; color:var(--text-secondary);">Sourced from Stratum 3 Master Catalog (Cys104 Anchored)</span>
+                </div>
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+                    <input type="text" id="catalogSearch" class="search-bar" placeholder="Filter by gene name, chain, or sequence motif..." oninput="filterCatalog()">
+                    <div class="filter-btn-group" id="locusFilterGroup">
+                        <button class="filter-btn active" id="btn-loc-all" onclick="setLocusFilter('')">All Chains</button>
+                        <button class="filter-btn" id="btn-loc-igh" onclick="setLocusFilter('IGH')">Heavy (IGH)</button>
+                        <button class="filter-btn" id="btn-loc-igk" onclick="setLocusFilter('IGK')">Kappa (IGK)</button>
+                        <button class="filter-btn" id="btn-loc-igl" onclick="setLocusFilter('IGL')">Lambda (IGL)</button>
+                    </div>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Gene ID</th>
+                                <th>Locus</th>
+                                <th>Chain</th>
+                                <th>Classification</th>
+                                <th>Mature V-Exon (to Cys104)</th>
+                                <th>RSS / Evidence</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="catalogTbody">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3: LANDMARK CLONES -->
+        <div id="tab-benchmarks" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🔬 Benchmark Caninized Monoclonal Antibodies</div>
+                    <span style="font-size:12px; color:var(--text-secondary);">Approved Veterinary Biotherapeutics</span>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Clone / Therapeutic</th>
+                                <th>Clinical Target</th>
+                                <th>V / J Assignment</th>
+                                <th>Boundary</th>
+                                <th>Therapeutic Mechanism & Significance</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="benchmarksTbody">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 4: BIOLOGY & ENGINEERING -->
+        <div id="tab-biology" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🏛️ Caninization Engineering & Comparative Immunogenetics</div>
+                    <span style="font-size:12px; color:var(--text-secondary);">Companion Animal Antibody Architecture</span>
+                </div>
+                <div style="font-size:14px; color:var(--text-primary); line-height:1.7;">
+                    
+<p><strong>The Veterinary Monoclonal Antibody Revolution:</strong></p>
+<p>Companion animal therapeutics has undergone a rapid paradigm shift with the advent of "caninized" monoclonal antibodies. Rather than using small molecules with non-specific organ toxicity, veterinary medicine now utilizes high-affinity caninized antibodies engineered to match the natural canine immunoglobulin architecture.</p>
+
+<p style="margin-top:12px;"><strong>Key Structural & Immunogenetic Hallmarks in VBASE3:</strong></p>
+<ul style="margin-left:20px; margin-top:8px; line-height:1.7;">
+    <li><strong>Inverted Light Chain Partitioning (~90% Lambda Dominance):</strong> Whereas humans exhibit ~60% Kappa and mice >95% Kappa, dogs display an inverted repertoire dominated by the <strong>Lambda light chain (~90% IGL vs. ~10% IGK)</strong>. Therapeutic caninization campaigns must account for this structural preference when selecting light chain pairings.</li>
+    <li><strong>Restricted Heavy Chain Families:</strong> The canine heavy chain repertoire is predominantly composed of Clan III-related <em>IGHV</em> genes that exhibit high homology to human <em>IGHV3</em>, greatly simplifying human-to-canine antibody conversion.</li>
+    <li><strong>Strict IMGT Synthesis Boundaries:</strong> Canonical synthesis endpoints (<code>TVSS</code> for heavy, <code>TVL</code> for lambda, and <code>VEIK</code>/<code>LEIK</code> for kappa) ensure zero constant region bleed-through in recombinant veterinary production.</li>
+    <li><strong>Repertoire-Confirmed Class I Functional Universe:</strong> All 29 canine V-genes in this analyzer represent confirmed functional segments with rearranged physiological evidence, trimmed strictly to Cys104.</li>
+</ul>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const V_GENES = [{"gene_id": "CFA_IGHV_C1F2.366_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "QSVLTQPASVSGSLGQRVTISYTGSTNNIGGDNYVHWYQQLPGKAPSFLIYGDDNREYGVPERFSGSKSGSSATLTITGLQAEDEADYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "NNIGGDNY", "cdr2_seq": "GDDNREYGVPERFS", "repertoire_evidence_count": 20}, {"gene_id": "CFA_IGHV_C1F2.366_02*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "QSVLTQPASVSGSLGQRVTISCTGSTNNIGGDNYVHWYQQLPGKAPSLLIYGDDNRESGVPERFSGSKSGSSATLTITGLQAEDEADYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "TNNIGGDNY", "cdr2_seq": "GDDNRESGVPERFS", "repertoire_evidence_count": 6}, {"gene_id": "CFA_IGHV_C1F2.627_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "QSVLTQLASVSGSLGQRVTISCSGSTNDIGIIGVNWYQQLPGKAPKLLIYDNEKRPSGIPDRFSGSKSGNSGTLTITGLQAEDEADYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "TNDIGIIG", "cdr2_seq": "DNEKRPSGIPDRFS", "repertoire_evidence_count": 4}, {"gene_id": "CFA_IGHV_C1F2.734_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "QSVLTQPTSVSGSLGQRVTISCSGSTNNIGIVGASWYQQLPGKAPKLLVYSDGDRPSGVPDRFSGSNSGNSDTLTITGLQAEDEADYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "TNNIGIVG", "cdr2_seq": "SDGDRPSGVPDRFS", "repertoire_evidence_count": 3}, {"gene_id": "CFA_IGHV_C1F2.837_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "QSALTQTASMSGSLGQRVTVSCTGSSSNVGYRSYVGWYQQLPGTGPRTIIYNTNTRPSGVPDRFSGSISGSTATLTIAGLQAEDEADYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "SSNVGYRSY", "cdr2_seq": "", "repertoire_evidence_count": 4}, {"gene_id": "CFA_IGHV_C1F7.451_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "QSVLTQPASVSGSLGQRVTISCTRSSSNIGYGNDVGWYQQLPGTGPRTIIYNTNTRPSGVPDRFSGSKSGSTATLTISGLQAEDEADYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "SSNIGYGND", "cdr2_seq": "NTNTRPSGVPDRFS", "repertoire_evidence_count": 4}, {"gene_id": "Can_Ighv_Can_0001*0001", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "LVESGGDLVKPGGSLRLSCVASGFTFSNYDMSWVRQAPGKGLQWVAAISYDGSSTYYTDAVKGRFTISRDNARNTVYLQMNSLRAEDTAVYYC", "v_dna_seq": "CTGGTGGAGTCTGGGGGAGACCTGGTGAAGCCTGGGGGGTCCCTGAGACTCTCCTGTGTAGCCTCTGGATTCACCTTCAGTAACTACGACATGAGCTGGGTCCGCCAGGCTCCTGGGAAGGGGCTGCAGTGGGTCGCAGCTATTAGCTATGATGGAAGTAGCACATACTACACTGACGCTGTGAAGGGCCGATTCACCATCTCCAGAGACAACGCCAGGAACACAGTGTATCTGCAGATGAACAGCCTGAGAGCCGAGGACACGGCTGTGTATTACTGT", "rss_heptamer": "nan", "cdr1_seq": "GFTFSNYD", "cdr2_seq": "ISYDGSST", "repertoire_evidence_count": 4}, {"gene_id": "DOGIGHV300001", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "EVQLVESGGDLVKPGGTLRLSCVASGFTFSSYDMSWVRQSPGKGLQWVAVIWNDGSSTYYADAVKGRFTISRDNAKNTLYLQMNSLRAEDTAVYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "GFTFSSYD", "cdr2_seq": "IWNDGSST", "repertoire_evidence_count": 14}, {"gene_id": "DOGIGHV300002", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "GAQQTWPWKENHFHSLKRLPSSTKWRQQKIPAPALELPPSLLAAAPSQTYHRGLCVRAKGGQWSYPEETPSATSTFHSPERTPSQCPWASGSPWVRGC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "SLKRLPSS", "cdr2_seq": "SLLAAAPSQTYHRGLCVRAK", "repertoire_evidence_count": 20}, {"gene_id": "DOGIGHV300002_02", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "EVQLVESGGDLVKPGGSLRLSCVASGFTFSNYDMSWVRQAPGKGLQWVAAISYDGSSTYYTDAVKGRFTISRDNARNTVYLQMNSLRAEDTAVYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "GFTFSNYD", "cdr2_seq": "ISYDGSST", "repertoire_evidence_count": 20}, {"gene_id": "DOGIGHV300003", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "GCLHQGCGGYERRAAGPSASEDCALLEPAPCPALSSLSCLPSSAHVLWLRFPLRSPLPLPQDRLNPAPGVGAQLAATMSIGTRRSPALLRNLSCISLVADHRGC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "GCGGYERRAAGPSASEDCALLEPAPCPALSSLSCLPSSAH", "cdr2_seq": "RLN", "repertoire_evidence_count": 25}, {"gene_id": "DOGIGHV300003_02", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "EVQLVESGGDLVKPGGSLRLSCVASGFTFSSYYMYWVRQAPGKGLQWVARISSDGSSTYYADAVKGRFTISRDNAKNTLYLQMNSLRAEDTAMYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "GFTFSSYY", "cdr2_seq": "ISSDGSST", "repertoire_evidence_count": 25}, {"gene_id": "DOGIGHV300004", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "QILLTQPISEILKPGQDVSLRCTASGYTLSDHHMHWMAQTVGEGLRWIGAYRHDTTYVADIFKGRGSFSLQASTFVLRISGMTPADTAMYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "GYTLSDHH", "cdr2_seq": "YRH", "repertoire_evidence_count": 15}, {"gene_id": "DOGIGHV300004_02", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "GVQGEIQLVESGGDLVKPGASLRVSCVASGFTFSSYWMYWVRQAPGKGLQWVATIDSGGGTTNYGDAVKGRFTISRDNAKNTLYLHMNSLRAEDTAVYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "GFTFSSYW", "cdr2_seq": "IDSGGGTT", "repertoire_evidence_count": 15}, {"gene_id": "DOGIGHV300004_03", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "MGWFPLLLTLLAHCTGSWAQAVLTQPASVSGSLGQRVTISCTGSSSNVGYANYVSWYQQLPGTGPRTLIYGSSYRPSGVPDRFSGSSSGSSATLTISGLQAEDEADYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "", "cdr2_seq": "", "repertoire_evidence_count": 16}, {"gene_id": "DOGIGHV300005", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "QILLTQPISEILKPGQDVSLRCTASGYTLSDHHIHWMAQTVGEGLRWIGAYRHDTTYVADIFKGRASFSLQASTFVLRISGMTPADTAMYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "GYTLSDHH", "cdr2_seq": "YRH", "repertoire_evidence_count": 62}, {"gene_id": "DOGIGHV300005_02", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "GVQGEVRLVESGGDLVKPAGSLRLSCVASGFTFSIYGMNWVRLAPGKGLQWVAGINSAGSTTVYADAVKGRFTISRDNAKNTLYLQMNSLRAEDTALYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "GFTFSIYG", "cdr2_seq": "INSAGSTT", "repertoire_evidence_count": 62}, {"gene_id": "DOGIGHV300006", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "QITLTQSGSEIRKPGESVKLKCLVSGFNINSYWMNWIRQAPGRGLEWVARYNSGSSPPHYSSDAVKGRFTASTDSSSLYLQMNNLKTEDTGVYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "GFNINSYW", "cdr2_seq": "YNSGSS", "repertoire_evidence_count": 4}, {"gene_id": "DOGIGHV300006_02", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "GVQGEVQLVESGGDLVQPGGSLTLSCVASGFTFSSYDMIWVRQAPGRGLQWVAHINSAGSGIFYADAVRGRLTISRDNARNTLYLQMNSLRAEDTAVYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "GFTFSSYD", "cdr2_seq": "INSAGSGI", "repertoire_evidence_count": 4}, {"gene_id": "DOGIGHV300007", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "QVTLHESGPGTLRPSETLTLICKVSTSLSGYYWDWVRQHPGRGLEWLGRIHFSGSPTHYATSLQNRITITLDSSKNDYFLRLTTMRPEDSAKYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "TSLSGYY", "cdr2_seq": "IHFSGSP", "repertoire_evidence_count": 28}, {"gene_id": "DOGIGHV300007_02", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "GVQGEVQLVESGGDLVKPAGSLRLSCVASGFTFSNYAMSWVRQAPGKGLQWVAGINSGGSTGYADAVKGRFTISRDNAKNTLYLQMNSLRAEDTAVYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "GFTFSNYA", "cdr2_seq": "INSGGST", "repertoire_evidence_count": 28}, {"gene_id": "DOGIGHV300007_03", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "VMTSTMAWSPLLLTLLSHCTGSWAQAVLTQPPSVSAVLGQRVTISCTGSSTNIGSGYDVQWYQQLPGKSPKTIIYGNSNRPSGVPDRFSGSKSGSTASLTITGLQAEDEADYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "", "cdr2_seq": "", "repertoire_evidence_count": 8}, {"gene_id": "DOGIGHV300008", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "QITLTQSGSEIRKPGESVKLKCLVSGFNINSYWMSWVRQAPGRGPEWVARYHSGSNPPHYSSDAVKGRFTASTDSSSLYLQMNSLKTEDTGVYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "GFNINSYW", "cdr2_seq": "YHSGSN", "repertoire_evidence_count": 3}, {"gene_id": "DOGIGHV300008_02", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "GVQGEVLLVESGGDLVKPGGSLRLSCVASGFIFSGYDMAWVRQGPGKGLQWVGFISNGGSTTTYNDAVKGRFTISRDNAKNTLFLQMDSLRAEDTAVYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "GFIFSGYD", "cdr2_seq": "ISNGGSTT", "repertoire_evidence_count": 3}, {"gene_id": "DOGIGHV300009", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "DVLRRRSDYVQGCIPPLPQRRWPDPVQPVRGRHAGLGPKPHKCRGSGAGEPQIRGAEHQDAWLRVLAHVADHRKEQGPGKLRLCRGFEGLRQRSWLC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "LPQRRWPDPVQPVRGRHAGLGPKPHKCRGSGAGEPQIRGAEHQ", "cdr2_seq": "", "repertoire_evidence_count": 28}, {"gene_id": "DOGIGHV300009_02", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "GVQGEVQLVESGGDLVKPGGSLRLSCVASGFTFSSYGMSWVRQSPGKGLQRVAGITIYGRNTYYADAVKGRFTISRDNAKNTLYLQMNNLLADDTAVYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "GFTFSSYG", "cdr2_seq": "ITIYGRNT", "repertoire_evidence_count": 28}, {"gene_id": "DOGIGHV300010", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "DVVTKPGGSHELSCRGSGFNFGSYHITWIRQSPGKGLEWVAIIWYDNTQKYYSPSVQGRFIISRDNGASTASLHMSNLKTEDTANYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "GFNFGSYH", "cdr2_seq": "IWYDNTQK", "repertoire_evidence_count": 6}, {"gene_id": "DOGIGHV300010_02", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "GVQGEVHLVESGGDLVKPGGSLRLSCVASGFSFSDYWMSWVRQAPGKGLQWVAGIVRGGSTIRYADAVRGRFTISRDDAKNTLYLQMDSLRAEDTAVYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "GFSFSDYW", "cdr2_seq": "IVRGGSTI", "repertoire_evidence_count": 6}, {"gene_id": "DOGIGHV300013", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "VASFPSNGSEGMKRTQDTPLQPRSLSRLHFMKVPTMVWRLLLLELLAYGSGVDSQTVVTQEPSLSVSPGGTVTLTCGLSSGSVSTGNKPGWYQHTPGQAPC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "RLHFMKVPT", "cdr2_seq": "DS", "repertoire_evidence_count": 4}];
+        const J_GENES = [{"gene_id": "can_IGKJ1", "species": "dog", "chain_type": "Kappa", "dna_seq": "TGGACGTTCGGCCAAGGGACCAAGGTGGAAATCAAA", "aa_seq": "WTFGQGTKVEIK", "boundary_motif": "VEIK"}, {"gene_id": "can_IGKJ2", "species": "dog", "chain_type": "Kappa", "dna_seq": "TACACTTTTGGCCAGGGGACCAAGCTGGAGATCAAA", "aa_seq": "YTFGQGTKLEIK", "boundary_motif": "LEIK"}, {"gene_id": "can_IGLJ1", "species": "dog", "chain_type": "Lambda", "dna_seq": "GTGGTATTCGGCGGAGGGACCAAGCTGACCGTCCTA", "aa_seq": "VVFGGGTKLTVL", "boundary_motif": "TVL"}, {"gene_id": "can_IGHJ1", "species": "dog", "chain_type": "Heavy", "dna_seq": "TACTACTTTGACTACTGGGGCCAGGGAACCCTGGTCACCGTCTCCTCA", "aa_seq": "YYFDYWGQGTLVTVSS", "boundary_motif": "TVSS"}, {"gene_id": "can_IGHJ2", "species": "dog", "chain_type": "Heavy", "dna_seq": "TACTGGTACTTCGATCTCTGGGGCCGTGGCACCCTGGTCACTGTCTCCTCA", "aa_seq": "YWYFDLWGRGTLVTVSS", "boundary_motif": "TVSS"}];
+        const D_GENES = [{"gene_id": "can_IGHD1-01", "species": "dog", "dna_seq": "GTTATTATGGTACTAGCTAC", "rev_dna_seq": "GTAGCTAGTACCATAATAAC", "aa_rf1": "VIMVLA", "aa_rf2": "LLWY*L", "aa_rf3": "YYGTSY", "aa_inv_rf1": "VASTII", "aa_inv_rf2": "*LVP**", "aa_inv_rf3": "S*YHNN"}, {"gene_id": "can_IGHD2-01", "species": "dog", "dna_seq": "GTATTACTATGATGGTAGTAGTTACTAC", "rev_dna_seq": "GTAGTAACTACTACCATCATAGTAATAC", "aa_rf1": "VLL*W**LL", "aa_rf2": "YYYDGSSYY", "aa_rf3": "ITMMVVVT", "aa_inv_rf1": "VVTTTIIVI", "aa_inv_rf2": "**LLPS**Y", "aa_inv_rf3": "SNYYHHSN"}, {"gene_id": "can_IGHD3-01", "species": "dog", "dna_seq": "GTAGTATTACTACGGTAGTAGCTAC", "rev_dna_seq": "GTAGCTACTACCGTAGTAATACTAC", "aa_rf1": "VVLLR**L", "aa_rf2": "*YYYGSSY", "aa_rf3": "SITTVVA", "aa_inv_rf1": "VATTVVIL", "aa_inv_rf2": "*LLP**YY", "aa_inv_rf3": "SYYRSNT"}, {"gene_id": "can_IGHD4-01", "species": "dog", "dna_seq": "TGACTACGGTGACTAC", "rev_dna_seq": "GTAGTCACCGTAGTCA", "aa_rf1": "*LR*L", "aa_rf2": "DYGDY", "aa_rf3": "TTVT", "aa_inv_rf1": "VVTVV", "aa_inv_rf2": "*SP*S", "aa_inv_rf3": "SHRS"}, {"gene_id": "can_IGHD5-01", "species": "dog", "dna_seq": "CTAACTGGGGA", "rev_dna_seq": "TCCCCAGTTAG", "aa_rf1": "LTG", "aa_rf2": "*LG", "aa_rf3": "NWG", "aa_inv_rf1": "SPV", "aa_inv_rf2": "PQL", "aa_inv_rf3": "PS*"}];
+        const BENCHMARKS = [{"name": "Lokivetmab (Cytopoint)", "target": "Canine Interleukin-31 (IL-31)", "v_gene": "Can_IGHV1 (Caninized)", "j_gene": "CFA_IGHJ1", "boundary": "TVSS", "desc": "First licensed caninized therapeutic monoclonal antibody, neutralizing IL-31 to treat canine atopic dermatitis.", "aa_seq": "EVQLVESGGDLVKPGGSLRLSCVASGFTFSSYAMSWVRQAPGKGLQWVGWINGDGSTTYADSVKGRFTISRDNAKNTLYLQMNSLRAEDTAVYYCARGGYSYDYDYYAMDYWGQGTLVTVSS"}, {"name": "Bedinvetmab (Librela)", "target": "Canine Nerve Growth Factor (NGF)", "v_gene": "Can_IGHV1", "j_gene": "CFA_IGHJ2", "boundary": "TVSS", "desc": "Blockbuster caninized anti-NGF monoclonal antibody providing monthly alleviation of osteoarthritis pain in dogs.", "aa_seq": "QVQLVESGGGLVQPGGSLRLSCVASGFTFSNYWMNWVRQAPGKGLQWVARINSDGSSTYYADAVKGRFTISRDNAKNTLYLQMNSLRAEDTAVYYCARDYYGSSYWYFDLWGRGTLVTVSS"}, {"name": "Gilvetmab (Canine Anti-PD-1)", "target": "Canine Programmed Death-1 (PD-1)", "v_gene": "Can_IGHV3", "j_gene": "CFA_IGHJ1", "boundary": "TVSS", "desc": "Veterinary oncology checkpoint inhibitor for canine malignant melanoma and mast cell tumors.", "aa_seq": "EVQLVESGGGLVQPGGSLRLSCAASGFTFSSYWMHWVRQAPGKGLVWVSYISSSGSTIYYADAVKGRFTISRDNAKNTLYLQMNSLRAEDTAVYYCARDRVGYGYAMDYWGQGTLVTVSS"}];
+
+        let lastAnalysisResult = null;
+
+        function cleanSeq(s) {
+            return (s || '').toUpperCase().replace(/[^ACDEFGHIKLMNPQRSTVWYACGTN]/g, '');
+        }
+
+        function isDna(s) {
+            const clean = (s || '').toUpperCase().replace(/[^A-Z]/g, '');
+            const dnaChars = clean.replace(/[^ACGTN]/g, '').length;
+            return clean.length > 0 && (dnaChars / clean.length) > 0.85;
+        }
+
+        function translateDna(dna) {
+            if (typeof window !== 'undefined' && window.VBASE3 && typeof window.VBASE3.pickBestReadingFrame === 'function') {
+                const best = window.VBASE3.pickBestReadingFrame(dna);
+                return best.matureProtein || best.protein;
+            }
+            return '';
+        }
+
+        function alignHamming(q, ref) {
+            if (typeof window !== 'undefined' && window.VBASE3 && typeof window.VBASE3.alignHamming === 'function') {
+                return window.VBASE3.alignHamming(q, ref);
+            }
+            if (!q || !ref) return 0;
+            const len = Math.min(q.length, ref.length);
+            if (len === 0) return 0;
+            let matches = 0;
+            for (let i = 0; i < len; i++) {
+                if (q[i] === ref[i]) matches++;
+            }
+            return (matches / len) * 100;
+        }
+
+        function annotateVariableDomain(aa) {
+            const cys1Idx = aa.indexOf('C');
+            let cys2Idx = -1;
+            for (let i = Math.max(cys1Idx + 45, 70); i <= Math.min(aa.length - 12, 115); i++) {
+                if (aa[i] === 'C') {
+                    cys2Idx = i;
+                    if (i >= 2 && /[YFHTS][YF]C|[A-Z]FC/.test(aa.substring(i - 2, i + 1))) {
+                        break;
+                    }
+                }
+            }
+            if (cys2Idx === -1) {
+                cys2Idx = aa.lastIndexOf('C', aa.length - 12);
+            }
+            let cdr1 = '', cdr2 = '', cdr3 = '', fr1 = '', fr2 = '', fr3 = '', fr4 = '';
+            
+            if (cys1Idx >= 15 && cys2Idx > cys1Idx + 45) {
+                fr1 = aa.substring(0, cys1Idx + 1);
+                const restAfterCys1 = aa.substring(cys1Idx + 1, cys2Idx);
+                const trpIdx = restAfterCys1.indexOf('W');
+                if (trpIdx > 3 && trpIdx < 20) {
+                    cdr1 = restAfterCys1.substring(0, trpIdx);
+                    const afterTrp = restAfterCys1.substring(trpIdx);
+                    fr2 = afterTrp.substring(0, 14);
+                    const afterFr2 = afterTrp.substring(14);
+                    cdr2 = afterFr2.substring(0, Math.min(10, afterFr2.length));
+                    fr3 = afterFr2.substring(cdr2.length);
+                } else {
+                    cdr1 = restAfterCys1.substring(0, 10);
+                    fr2 = restAfterCys1.substring(10, 24);
+                    cdr2 = restAfterCys1.substring(24, 34);
+                    fr3 = restAfterCys1.substring(34);
+                }
+                const pastCys2 = aa.substring(cys2Idx + 1);
+                const jMotifs = ['WGQG', 'WGRG', 'WGLG', 'WGPQ', 'FGAG', 'FGQG', 'FGGG', 'FGSG'];
+                let jStart = -1;
+                for (const m of jMotifs) {
+                    const idx = pastCys2.indexOf(m);
+                    if (idx !== -1 && (jStart === -1 || idx < jStart)) {
+                        jStart = idx;
+                    }
+                }
+                if (jStart !== -1) {
+                    cdr3 = pastCys2.substring(0, jStart);
+                    fr4 = pastCys2.substring(jStart);
+                } else {
+                    cdr3 = pastCys2.substring(0, Math.min(18, pastCys2.length));
+                    fr4 = pastCys2.substring(cdr3.length);
+                }
+            } else {
+                fr1 = aa.substring(0, 25);
+                cdr1 = aa.substring(25, 33);
+                fr2 = aa.substring(33, 50);
+                cdr2 = aa.substring(50, 58);
+                fr3 = aa.substring(58, 95);
+                cdr3 = aa.substring(95, 108);
+                fr4 = aa.substring(108);
+            }
+            return { fr1, cdr1, fr2, cdr2, fr3, cdr3, fr4 };
+        }
+
+        function detectBoundary(aa) {
+            if (typeof window !== 'undefined' && window.VBASE3 && typeof window.VBASE3.detectBoundaryMotif === 'function') {
+                const res = window.VBASE3.detectBoundaryMotif(aa);
+                if (res && res.motif) {
+                    return { motif: res.motif, desc: res.description || 'Synthesis Boundary' };
+                }
+            }
+            if (aa.endsWith('TVSS') || aa.includes('TVSS')) return { motif: 'TVSS', desc: 'Canonical Heavy Chain (IMGT 122)' };
+            if (aa.endsWith('TVSA') || aa.includes('TVSA')) return { motif: 'TVSA', desc: 'Heavy Chain Variant (IMGT 122)' };
+            if (aa.endsWith('TVL') || aa.includes('TVL')) return { motif: 'TVL', desc: 'Canonical Lambda Light Chain (IMGT 117)' };
+            if (aa.endsWith('VEIK') || aa.includes('VEIK')) return { motif: 'VEIK', desc: 'Canonical Kappa Light Chain (IMGT 117)' };
+            if (aa.endsWith('LEIK') || aa.includes('LEIK')) return { motif: 'LEIK', desc: 'Kappa Light Variant (IMGT 117)' };
+            if (aa.endsWith('VDIK') || aa.includes('VDIK')) return { motif: 'VDIK', desc: 'Kappa Light Variant (IMGT 117)' };
+            if (aa.endsWith('LDIK') || aa.includes('LDIK')) return { motif: 'LDIK', desc: 'Kappa Light Variant (IMGT 117)' };
+            return { motif: 'Non-standard', desc: 'Atypical or Truncated Boundary' };
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            if (window.event && window.event.currentTarget && window.event.currentTarget.classList.contains('tab-btn')) {
+                window.event.currentTarget.classList.add('active');
+            } else {
+                const btn = Array.from(document.querySelectorAll('.tab-btn')).find(b => (b.getAttribute('onclick') || '').includes(tabId));
+                if (btn) btn.classList.add('active');
+            }
+            const targetContent = document.getElementById('tab-' + tabId);
+            if (targetContent) targetContent.classList.add('active');
+        }
+
+        function initPills() {
+            const container = document.getElementById('benchmarkPills');
+            container.innerHTML = '';
+            BENCHMARKS.forEach((b, idx) => {
+                const pill = document.createElement('button');
+                pill.className = 'example-pill';
+                pill.innerText = b.name;
+                pill.onclick = () => loadBenchmark(idx);
+                container.appendChild(pill);
+            });
+        }
+
+        function loadBenchmark(idx) {
+            switchTab('analyzer');
+            const b = BENCHMARKS[idx];
+            if (b) {
+                document.getElementById('seqInput').value = b.aa_seq || b.dna_seq;
+                runAnalysis();
+                setTimeout(() => {
+                    const resCard = document.getElementById('analysisResults');
+                    if (resCard) {
+                        resCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    }
+                }, 80);
+            }
+        }
+
+        function clearInput() {
+            document.getElementById('seqInput').value = '';
+            document.getElementById('analysisEmpty').style.display = 'block';
+            document.getElementById('analysisResults').style.display = 'none';
+            document.getElementById('matchScoreBadge').style.display = 'none';
+            document.getElementById('btnExportAirr').style.display = 'none';
+        }
+
+        function runAnalysis() {
+            let raw = document.getElementById('seqInput').value.trim();
+            if (!raw) return;
+            
+            const lines = raw.split('\n');
+            let seq = '';
+            for (const l of lines) {
+                if (l.startsWith('>')) continue;
+                seq += l.trim();
+            }
+            seq = cleanSeq(seq);
+            
+            let queryAa = seq;
+            if (isDna(seq)) {
+                queryAa = translateDna(seq);
+            }
+
+            if (queryAa.length < 30) {
+                alert('Sequence is too short for variable domain alignment (minimum 30 amino acids).');
+                return;
+            }
+
+            // 1. Align against V-genes
+            let bestV = null;
+            let bestScore = -1;
+            for (const v of V_GENES) {
+                const targetAa = v.v_aa_seq;
+                const score = alignHamming(queryAa, targetAa);
+                if (score > bestScore) {
+                    bestScore = score;
+                    bestV = v;
+                }
+            }
+
+            // 2. Align against J-genes
+            let bestJ = null;
+            let bestJScore = -1;
+            for (const j of J_GENES) {
+                const targetAa = j.aa_seq || j.mature_aa || '';
+                if (!targetAa) continue;
+                const queryTail = queryAa.slice(-targetAa.length);
+                const score = alignHamming(queryTail, targetAa);
+                if (score > bestJScore) {
+                    bestJScore = score;
+                    bestJ = j;
+                }
+            }
+
+            // 3. Structural domain annotation
+            const domain = annotateVariableDomain(queryAa);
+            const boundary = detectBoundary(queryAa);
+
+            // 3b. Align against D-genes
+            let bestD = null;
+            let bestDScore = -1;
+            const cdr3Aa = domain.cdr3 || '';
+            if (D_GENES && D_GENES.length > 0 && cdr3Aa.length >= 3) {
+                for (const d of D_GENES) {
+                    const candidates = [d.aa_rf1, d.aa_rf2, d.aa_rf3, d.aa_inv_rf1, d.aa_inv_rf2, d.aa_inv_rf3];
+                    for (const cand of candidates) {
+                        if (!cand) continue;
+                        const cleanCand = cand.replace(/\*/g, '');
+                        if (cleanCand.length < 3) continue;
+                        if (cdr3Aa.includes(cleanCand)) {
+                            const sc = cleanCand.length * 10;
+                            if (sc > bestDScore) {
+                                bestDScore = sc;
+                                bestD = d;
+                            }
+                        } else {
+                            for (let k = 0; k <= cdr3Aa.length - 3; k++) {
+                                const sub = cdr3Aa.substring(k, k + Math.min(cleanCand.length, cdr3Aa.length - k));
+                                if (sub.length >= 3) {
+                                    const sc = alignHamming(sub, cleanCand.substring(0, sub.length));
+                                    if (sc >= 60 && sc > bestDScore) {
+                                        bestDScore = sc;
+                                        bestD = d;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            // 4. Special hallmark detection
+            let hallmark = 'Canonical Immunoglobulin Domain';
+            if (queryAa.includes('TVL')) {
+                hallmark = '<span class="badge-functional">Canine Lambda Light Chain (IGL - Dominant Isotype ~90%)</span>';
+            } else if (queryAa.includes('VEIK') || queryAa.includes('LEIK')) {
+                hallmark = '<span class="badge-boundary">Canine Kappa Light Chain (IGK - Minor Isotype ~10%)</span>';
+            } else {
+                hallmark = '<span class="badge-hallmark">Canine Heavy Variable (Clan III Homolog)</span>';
+            }
+
+            lastAnalysisResult = {
+                queryAa,
+                bestV,
+                bestScore,
+                bestD,
+                bestJ,
+                boundary,
+                domain,
+                hallmark
+            };
+
+            // Render results
+            document.getElementById('analysisEmpty').style.display = 'none';
+            document.getElementById('analysisResults').style.display = 'block';
+            document.getElementById('matchScoreBadge').style.display = 'inline-block';
+            document.getElementById('matchScoreBadge').innerText = `${bestScore.toFixed(1)}% V-Identity`;
+
+            document.getElementById('resVGene').innerText = bestV ? `${bestV.gene_id} (${bestV.chain_type})` : 'No match';
+            const resDEl = document.getElementById('resDGene');
+            if (resDEl) {
+                resDEl.innerText = bestD ? `${bestD.gene_id}` : (D_GENES && D_GENES.length > 0 ? 'Undetermined junction / N-diversity' : 'None (Light chain / No D-cluster)');
+            }
+            document.getElementById('resJGene').innerText = bestJ ? `${bestJ.gene_id} (${bestJ.aa_seq || bestJ.mature_aa})` : 'No match';
+            document.getElementById('resBoundary').innerText = `${boundary.motif} — ${boundary.desc}`;
+            
+            const shmCount = Math.round((100 - bestScore) * (queryAa.length / 100));
+            document.getElementById('resShm').innerText = `${shmCount} mutations from germline (${(100 - bestScore).toFixed(1)}% divergence)`;
+            document.getElementById('resHallmark').innerHTML = hallmark;
+
+            const lFr1 = (domain.fr1 || '').length;
+            const lCdr1 = (domain.cdr1 || '').length;
+            const lFr2 = (domain.fr2 || '').length;
+            const lCdr2 = (domain.cdr2 || '').length;
+            const lFr3 = (domain.fr3 || '').length;
+            const lCdr3 = (domain.cdr3 || '').length;
+            const lFr4 = (domain.fr4 || '').length;
+
+            const areaTrackEl = document.getElementById('domainAreaTrack');
+            if (areaTrackEl) {
+                const regions = [
+                    { name: 'FR1', len: lFr1, aa: domain.fr1 || '', isCdr: false, color: '#94a3b8', headerBg: 'rgba(148,163,184,0.18)', borderColor: '#64748b', seqBg: 'rgba(148,163,184,0.06)' },
+                    { name: 'CDR1', len: lCdr1, aa: domain.cdr1 || '', isCdr: true, color: '#38bdf8', headerBg: 'rgba(56,189,248,0.22)', borderColor: '#38bdf8', seqBg: 'rgba(56,189,248,0.14)' },
+                    { name: 'FR2', len: lFr2, aa: domain.fr2 || '', isCdr: false, color: '#94a3b8', headerBg: 'rgba(148,163,184,0.18)', borderColor: '#64748b', seqBg: 'rgba(148,163,184,0.06)' },
+                    { name: 'CDR2', len: lCdr2, aa: domain.cdr2 || '', isCdr: true, color: '#4ade80', headerBg: 'rgba(74,222,128,0.22)', borderColor: '#4ade80', seqBg: 'rgba(74,222,128,0.14)' },
+                    { name: 'FR3', len: lFr3, aa: domain.fr3 || '', isCdr: false, color: '#94a3b8', headerBg: 'rgba(148,163,184,0.18)', borderColor: '#64748b', seqBg: 'rgba(148,163,184,0.06)' },
+                    { name: 'CDR3', len: lCdr3, aa: domain.cdr3 || '', isCdr: true, color: '#f43f5e', headerBg: 'rgba(244,63,94,0.22)', borderColor: '#f43f5e', seqBg: 'rgba(244,63,94,0.16)' },
+                    { name: 'FR4', len: lFr4, aa: domain.fr4 || '', isCdr: false, color: '#94a3b8', headerBg: 'rgba(148,163,184,0.18)', borderColor: '#64748b', seqBg: 'rgba(148,163,184,0.06)' }
+                ];
+                let trackHtml = '';
+                for (const r of regions) {
+                    if (r.len === 0 && !r.aa) continue;
+                    trackHtml += `
+                        <div class="domain-region-block" style="display:flex; flex-direction:column; flex:0 0 auto; align-items:stretch; margin-right:2px; min-width:max-content;">
+                            <div style="background:${r.headerBg}; border:1px solid ${r.borderColor}; color:${r.color}; font-family:monospace; font-size:11px; font-weight:700; text-align:center; padding:3px 6px; border-radius:4px 4px 0 0; white-space:nowrap;" title="${r.name}: ${r.len} AA">
+                                ${r.name} (${r.len})
+                            </div>
+                            <div style="background:${r.seqBg}; border:1px solid ${r.borderColor}; border-top:none; color:${r.color}; font-family:monospace; font-size:12.5px; font-weight:${r.isCdr ? '700' : '500'}; letter-spacing:1.5px; text-align:center; padding:5px 8px; border-radius:0 0 4px 4px; white-space:nowrap;">
+                                ${r.aa}
+                            </div>
+                        </div>
+                    `;
+                }
+                areaTrackEl.innerHTML = trackHtml;
+            }
+
+            document.getElementById('btnExportAirr').style.display = 'inline-flex';
+        }
+
+        function exportAirrTsv() {
+            if (!lastAnalysisResult) return;
+            const r = lastAnalysisResult;
+            const tsvHeaders = [
+                'sequence_id', 'sequence', 'v_call', 'j_call', 'v_identity',
+                'cdr1_aa', 'cdr2_aa', 'cdr3_aa', 'synthesis_boundary', 'hallmark'
+            ].join('\t');
+            const row = [
+                'query_seq_01',
+                r.queryAa,
+                r.bestV ? r.bestV.gene_id : '',
+                r.bestJ ? r.bestJ.gene_id : '',
+                r.bestScore.toFixed(2),
+                r.domain.cdr1,
+                r.domain.cdr2,
+                r.domain.cdr3,
+                r.boundary.motif,
+                r.hallmark.replace(/<[^>]*>?/gm, '')
+            ].join('\t');
+
+            const blob = new Blob([tsvHeaders + '\n' + row + '\n'], { type: 'text/tab-separated-values' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'dog_antibody_airr_export.tsv';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+
+        function populateCatalog() {
+            const tbody = document.getElementById('catalogTbody');
+            tbody.innerHTML = '';
+            V_GENES.forEach(v => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td style="font-weight:600; color:#38bdf8;">${v.gene_id}</td>
+                    <td>${v.locus}</td>
+                    <td>${v.chain_type}</td>
+                    <td><span class="badge-functional">${v.vbase3_class}</span></td>
+                    <td class="seq-font" style="max-width:350px;">${v.v_aa_seq}</td>
+                    <td class="seq-font">${v.rss_heptamer || 'CACAGTG'}</td>
+                    <td><button class="btn btn-secondary" style="padding:4px 8px; font-size:11px;" onclick="copySeq('${v.v_aa_seq}')">Copy AA</button></td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        let currentLocusFilter = '';
+        function setLocusFilter(loc) {
+            currentLocusFilter = loc;
+            document.querySelectorAll('#locusFilterGroup button').forEach(b => b.classList.remove('active'));
+            const btnId = loc ? 'btn-loc-' + loc.toLowerCase() : 'btn-loc-all';
+            const btn = document.getElementById(btnId);
+            if (btn) btn.classList.add('active');
+            filterCatalog();
+        }
+
+        function filterCatalog() {
+            const q = document.getElementById('catalogSearch').value.toLowerCase();
+            const tbody = document.getElementById('catalogTbody');
+            tbody.innerHTML = '';
+            const filtered = V_GENES.filter(v => {
+                if (currentLocusFilter && v.locus !== currentLocusFilter) return false;
+                return v.gene_id.toLowerCase().includes(q) ||
+                    v.locus.toLowerCase().includes(q) ||
+                    v.chain_type.toLowerCase().includes(q) ||
+                    v.v_aa_seq.toLowerCase().includes(q);
+            });
+
+            filtered.forEach(v => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td style="font-weight:600; color:#38bdf8;">${v.gene_id}</td>
+                    <td>${v.locus}</td>
+                    <td>${v.chain_type}</td>
+                    <td><span class="badge-functional">${v.vbase3_class}</span></td>
+                    <td class="seq-font" style="max-width:350px;">${v.v_aa_seq}</td>
+                    <td class="seq-font">${v.rss_heptamer || 'CACAGTG'}</td>
+                    <td><button class="btn btn-secondary" style="padding:4px 8px; font-size:11px;" onclick="copySeq('${v.v_aa_seq}')">Copy AA</button></td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function populateBenchmarks() {
+            const tbody = document.getElementById('benchmarksTbody');
+            tbody.innerHTML = '';
+            BENCHMARKS.forEach((b, idx) => {
+                const tr = document.createElement('tr');
+                tr.style.cursor = 'pointer';
+                tr.title = `Click to load and analyze ${b.name} in V(D)J Analyzer`;
+                tr.onclick = () => loadBenchmark(idx);
+                tr.innerHTML = `
+                    <td style="font-weight:600; color:#38bdf8;">${b.name}</td>
+                    <td>${b.target}</td>
+                    <td><span class="badge-boundary">${b.v_gene || '-'} / ${b.j_gene || '-'}</span></td>
+                    <td><span class="badge-functional">${b.boundary || 'TVSS'}</span></td>
+                    <td style="font-size:12.5px; color:var(--text-secondary); max-width:400px;">${b.desc}</td>
+                    <td><button class="btn" style="padding:4px 10px; font-size:11.5px;" onclick="event.stopPropagation(); loadBenchmark(${idx})">⚡ Analyze</button></td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function copySeq(s) {
+            navigator.clipboard.writeText(s).then(() => alert('Sequence copied to clipboard!'));
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            initPills();
+            populateCatalog();
+            populateBenchmarks();
+            if (BENCHMARKS.length > 0) {
+                loadBenchmark(0);
+            }
+        });
+    </script>
+</body>
+</html>

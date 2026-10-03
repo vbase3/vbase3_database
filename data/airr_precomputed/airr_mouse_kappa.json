@@ -1,0 +1,421 @@
+{
+  "species": "mouse",
+  "chain": "kappa",
+  "total_sequences": 2596,
+  "v_j_matrix": {
+    "IGKV0-27SB*00": {
+      "IGKJ5": 26,
+      "IGKJ2": 11
+    },
+    "IGKV0-2GER*00": {
+      "IGKJ2": 10,
+      "IGKJ5": 1,
+      "IGKJ1": 1
+    },
+    "IGKV0-3OCT*00": {
+      "IGKJ1": 28,
+      "IGKJ5": 1,
+      "IGKJ2": 1,
+      "IGKJ4": 1,
+      "IGKJ3": 432
+    },
+    "IGKV0-4NLT*00": {
+      "IGKJ4": 2,
+      "IGKJ5": 2
+    },
+    "IGKV0-5LMS*00": {
+      "IGKJ5": 5,
+      "IGKJ1": 2,
+      "IGKJ2": 8
+    },
+    "IGKV0-75EL*00": {
+      "IGKJ5": 5
+    },
+    "IGKV0-ASTG*00": {
+      "IGKJ5": 1,
+      "IGKJ2": 3
+    },
+    "IGKV0-B7FG*00": {
+      "IGKJ1": 20,
+      "IGKJ5": 17,
+      "IGKJ2": 1
+    },
+    "IGKV0-FAPY*00": {
+      "IGKJ2": 8,
+      "IGKJ1": 9
+    },
+    "IGKV0-IEGN*00": {
+      "IGKJ1": 15,
+      "IGKJ5": 8,
+      "IGKJ4": 1,
+      "IGKJ2": 1
+    },
+    "IGKV0-INEU*00": {
+      "IGKJ1": 159,
+      "IGKJ3": 6
+    },
+    "IGKV0-L6FQ*00": {
+      "IGKJ1": 3,
+      "IGKJ3": 10
+    },
+    "IGKV0-N7JM*00": {
+      "IGKJ5": 1
+    },
+    "IGKV0-NLKT*00": {
+      "IGKJ1": 43,
+      "IGKJ2": 41,
+      "IGKJ5": 2
+    },
+    "IGKV0-ON62*00": {
+      "IGKJ2": 97,
+      "IGKJ5": 169,
+      "IGKJ1": 25
+    },
+    "IGKV0-PKIS*00": {
+      "IGKJ1": 18,
+      "IGKJ2": 17,
+      "IGKJ4": 7,
+      "IGKJ5": 16
+    },
+    "IGKV0-PYQA*00": {
+      "IGKJ1": 7,
+      "IGKJ2": 1
+    },
+    "IGKV0-QAUY*00": {
+      "IGKJ1": 2
+    },
+    "IGKV0-SRYC*00": {
+      "IGKJ2": 3,
+      "IGKJ1": 4,
+      "IGKJ5": 4
+    },
+    "IGKV0-TQPS*00": {
+      "IGKJ5": 108,
+      "IGKJ1": 12
+    },
+    "IGKV0-UPWU*00": {
+      "IGKJ1": 32,
+      "IGKJ3": 43
+    },
+    "IGKV0-WHTG*00": {
+      "IGKJ1": 1,
+      "IGKJ5": 1,
+      "IGKJ4": 1
+    },
+    "IGKV0-YRHO*00": {
+      "IGKJ1": 1
+    },
+    "IGKV0189": {
+      "IGKJ5": 7,
+      "IGKJ4": 2,
+      "IGKJ1": 7,
+      "IGKJ2": 32,
+      "IGKJ3": 23
+    },
+    "IGKV0190": {
+      "IGKJ1": 15,
+      "IGKJ5": 1
+    },
+    "IGKV0191": {
+      "IGKJ5": 3,
+      "IGKJ1": 11
+    },
+    "IGKV0194": {
+      "IGKJ1": 10,
+      "IGKJ5": 8
+    },
+    "IGKV0195": {
+      "IGKJ1": 1
+    },
+    "IGKV0196": {
+      "IGKJ1": 16,
+      "IGKJ2": 1,
+      "IGKJ5": 1
+    },
+    "IGKV0248": {
+      "IGKJ1": 368,
+      "IGKJ3": 1
+    },
+    "IGKV0251": {
+      "IGKJ4": 6,
+      "IGKJ2": 2
+    },
+    "IGKV0252": {
+      "IGKJ1": 10,
+      "IGKJ4": 36
+    },
+    "IGKV0254": {
+      "IGKJ5": 19,
+      "IGKJ1": 23,
+      "IGKJ2": 6,
+      "IGKJ4": 7
+    },
+    "IGKV0256": {
+      "IGKJ1": 3
+    },
+    "IGKV0257": {
+      "IGKJ1": 1,
+      "IGKJ2": 1,
+      "IGKJ5": 20
+    },
+    "IGKV0258": {
+      "IGKJ1": 2
+    },
+    "IGKV0259": {
+      "IGKJ5": 4,
+      "IGKJ1": 97,
+      "IGKJ4": 4,
+      "IGKJ2": 11
+    },
+    "IGKV0261": {
+      "IGKJ1": 14,
+      "IGKJ4": 5,
+      "IGKJ2": 2,
+      "IGKJ5": 1
+    },
+    "IGKV0314": {
+      "IGKJ4": 4,
+      "IGKJ1": 151,
+      "IGKJ3": 16
+    },
+    "IGKV0315": {
+      "IGKJ1": 36,
+      "IGKJ4": 2,
+      "IGKJ3": 5
+    },
+    "IGKV0316": {
+      "IGKJ5": 2,
+      "IGKJ4": 2,
+      "IGKJ3": 8,
+      "IGKJ1": 7
+    },
+    "IGKV0318": {
+      "IGKJ1": 71
+    },
+    "IGKV0319": {
+      "IGKJ5": 5
+    },
+    "IGKV0321": {
+      "IGKJ4": 3,
+      "IGKJ5": 12
+    },
+    "musIGKV200024": {
+      "IGKJ1": 4
+    },
+    "musIGKV200214": {
+      "IGKJ1": 12,
+      "IGKJ2": 1,
+      "IGKJ5": 11
+    },
+    "musIGKV200216": {
+      "IGKJ1": 1,
+      "IGKJ5": 1
+    },
+    "musIGKV200217": {
+      "IGKJ3": 6,
+      "IGKJ1": 1
+    }
+  },
+  "top_cdr3_clones": [
+    {
+      "cdr3": "CLLLPPVSSFPTHVRGF",
+      "count": 302
+    },
+    {
+      "cdr3": "CQNNEDPF",
+      "count": 91
+    },
+    {
+      "cdr3": "CQYNSYPF",
+      "count": 89
+    },
+    {
+      "cdr3": "CQYYSYPF",
+      "count": 65
+    },
+    {
+      "cdr3": "CQWSSNPF",
+      "count": 37
+    },
+    {
+      "cdr3": "CQDYSSPF",
+      "count": 37
+    },
+    {
+      "cdr3": "CNDYINPF",
+      "count": 37
+    },
+    {
+      "cdr3": "CQYASYPF",
+      "count": 31
+    },
+    {
+      "cdr3": "CNDYSNPF",
+      "count": 30
+    },
+    {
+      "cdr3": "CNDYSYPF",
+      "count": 28
+    },
+    {
+      "cdr3": "CQSNEDPF",
+      "count": 26
+    },
+    {
+      "cdr3": "CQSNSWMF",
+      "count": 24
+    },
+    {
+      "cdr3": "CQYNEDPF",
+      "count": 23
+    },
+    {
+      "cdr3": "CNDYTNPF",
+      "count": 22
+    },
+    {
+      "cdr3": "CQGTHFPF",
+      "count": 19
+    },
+    {
+      "cdr3": "CQHNEYPF",
+      "count": 19
+    },
+    {
+      "cdr3": "CQWRSYPF",
+      "count": 19
+    },
+    {
+      "cdr3": "CNDYGNPF",
+      "count": 19
+    },
+    {
+      "cdr3": "CQWSSY",
+      "count": 18
+    },
+    {
+      "cdr3": "CQWSSYPF",
+      "count": 18
+    },
+    {
+      "cdr3": "CQYHRSPF",
+      "count": 17
+    },
+    {
+      "cdr3": "CQYDNLF",
+      "count": 17
+    },
+    {
+      "cdr3": "CQYDEFPF",
+      "count": 16
+    },
+    {
+      "cdr3": "CQWISY",
+      "count": 15
+    },
+    {
+      "cdr3": "CQSNSWPF",
+      "count": 14
+    },
+    {
+      "cdr3": "CKGTHFPF",
+      "count": 14
+    },
+    {
+      "cdr3": "CLLLPPISSFPTHVRGF",
+      "count": 14
+    },
+    {
+      "cdr3": "CQGSHVPF",
+      "count": 13
+    },
+    {
+      "cdr3": "CQYASSPF",
+      "count": 12
+    },
+    {
+      "cdr3": "CQSHEDPF",
+      "count": 12
+    },
+    {
+      "cdr3": "CNDYNNPF",
+      "count": 12
+    },
+    {
+      "cdr3": "CLWYSNHF",
+      "count": 9
+    },
+    {
+      "cdr3": "CQSNSWIF",
+      "count": 9
+    },
+    {
+      "cdr3": "CQHYSTPF",
+      "count": 8
+    },
+    {
+      "cdr3": "CQSYNLF",
+      "count": 8
+    },
+    {
+      "cdr3": "CLLLPPLSSFPTHVRGF",
+      "count": 8
+    },
+    {
+      "cdr3": "CLLLPPVSSFPTHARGF",
+      "count": 8
+    },
+    {
+      "cdr3": "CQRSSYPF",
+      "count": 7
+    },
+    {
+      "cdr3": "CQWSGYPF",
+      "count": 7
+    },
+    {
+      "cdr3": "CQSSNLF",
+      "count": 7
+    },
+    {
+      "cdr3": "CFLLPPVSSFPTHVRGF",
+      "count": 7
+    },
+    {
+      "cdr3": "CLFLPPVSSFPTHVRGF",
+      "count": 6
+    },
+    {
+      "cdr3": "CLKTWQFITVRMIIVIF",
+      "count": 6
+    },
+    {
+      "cdr3": "CQGNTLPF",
+      "count": 5
+    },
+    {
+      "cdr3": "CQWSSHPF",
+      "count": 5
+    },
+    {
+      "cdr3": "CLWYSTHF",
+      "count": 5
+    },
+    {
+      "cdr3": "CQGSGYPF",
+      "count": 5
+    },
+    {
+      "cdr3": "CLLLPPVSSFPF",
+      "count": 5
+    },
+    {
+      "cdr3": "CNTYGNPF",
+      "count": 5
+    },
+    {
+      "cdr3": "CHHYGTPF",
+      "count": 4
+    }
+  ]
+}

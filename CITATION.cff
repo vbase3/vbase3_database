@@ -1,0 +1,39 @@
+cff-version: 1.2.0
+message: "If you use VBASE2 or its modern AIRR release, please cite it as below."
+title: "VBASE2 Legacy (AIRR-Compliant Edition): Curated Human and Mouse Immunoglobulin V-Genes"
+abstract: "The standardized AIRR Community distribution of the foundational VBASE2 database, updated with GRCh38.p14 and GRCm39 reference genomic coordinates."
+authors:
+  - family-names: "Müller"
+    given-names: "Werner"
+    affiliation: "Emeritus Professor of Cellular Immunology, University of Manchester"
+    email: "werner.muller@manchester.ac.uk"
+    orcid: "https://orcid.org/0000-0002-1297-9725"
+  - family-names: "Retter"
+    given-names: "Ida"
+preferred-citation:
+  type: article
+  authors:
+    - family-names: "Retter"
+      given-names: "Ida"
+    - family-names: "Althaus"
+      given-names: "Heiko H."
+    - family-names: "Münch"
+      given-names: "Richard"
+    - family-names: "Müller"
+      given-names: "Werner"
+  title: "VBASE2, an integrative V gene database"
+  journal: "Nucleic Acids Research"
+  volume: 33
+  issue: "Database issue"
+  pages: "D671-D674"
+  year: 2005
+  doi: "10.1093/nar/gki088"
+license: "CC-BY-4.0"
+repository-code: "https://github.com/vbase-project/vbase2-legacy"
+url: "https://www.vbase2.org"
+keywords:
+  - "AIRR Community"
+  - "VBASE2"
+  - "Immunoglobulin"
+  - "Antibody"
+  - "Germline Reference Set"

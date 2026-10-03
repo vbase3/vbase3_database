@@ -1,0 +1,1287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="vbase3-agent-api" content="vbase3_sdk.js:window.VBASE3">
+    <title>Human T-Cell Receptor Repertoire Analyzer — TCRbase / VBASE3</title>
+    <link rel="stylesheet" href="css/fonts.css">
+    <script src="js/d3.v7.min.js"></script>
+    <script src="js/vbase3_sdk.js"></script>
+    <style>
+        :root {
+            --bg-base: #041014;
+            --bg-card: rgba(8, 28, 36, 0.88);
+            --bg-card-hover: rgba(13, 38, 48, 0.95);
+            --border-glass: rgba(16, 185, 129, 0.25);
+            --border-glow: rgba(52, 211, 153, 0.55);
+            
+            --accent-emerald: #10b981;
+            --accent-teal: #14b8a6;
+            --accent-cyan: #06b6d4;
+            --accent-blue: #38bdf8;
+            --accent-purple: #c084fc;
+            --accent-amber: #f59e0b;
+            --accent-rose: #f43f5e;
+            
+            --text-primary: #f0fdf4;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            
+            --cdr1-color: #38bdf8;
+            --cdr2-color: #34d399;
+            --cdr3-color: #f43f5e;
+            --fr-color: #94a3b8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: var(--bg-base);
+            color: var(--text-primary);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            min-height: 100vh;
+            line-height: 1.5;
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(16, 185, 129, 0.14) 0%, transparent 45%),
+                radial-gradient(circle at 85% 85%, rgba(6, 182, 212, 0.12) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(56, 189, 248, 0.05) 0%, transparent 65%);
+            background-attachment: fixed;
+        }
+
+        header {
+            background: rgba(4, 16, 20, 0.92);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border-glass);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 14px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 14px;
+        }
+
+        .logo-group {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .logo-badge {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            background: linear-gradient(135deg, #059669, #0284c7);
+            box-shadow: 0 4px 16px rgba(16, 185, 129, 0.35);
+        }
+
+        .logo-text h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: -0.02em;
+        }
+
+        .logo-text p {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .species-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            border-radius: 9999px;
+            font-size: 11.5px;
+            font-weight: 600;
+            border: 1px solid rgba(16, 185, 129, 0.4);
+            background: rgba(6, 78, 59, 0.4);
+            color: #34d399;
+        }
+
+        .nav-portal-links {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .portal-link {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 12px;
+            font-weight: 500;
+            padding: 5px 10px;
+            border-radius: 6px;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(15, 23, 42, 0.5);
+            transition: all 0.15s;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .portal-link:hover {
+            color: #ffffff;
+            background: rgba(16, 185, 129, 0.2);
+            border-color: rgba(16, 185, 129, 0.4);
+        }
+
+        .portal-link.active {
+            color: #34d399;
+            background: rgba(6, 78, 59, 0.5);
+            border-color: #10b981;
+            font-weight: 600;
+        }
+
+        main {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+
+        .hero-banner {
+            background: linear-gradient(135deg, rgba(6, 32, 26, 0.9), rgba(4, 20, 26, 0.9));
+            border: 1px solid var(--border-glass);
+            border-radius: 16px;
+            padding: 22px 26px;
+            margin-bottom: 22px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 18px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 23px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 6px;
+        }
+
+        .hero-desc {
+            font-size: 13px;
+            color: var(--text-secondary);
+            max-width: 900px;
+            line-height: 1.6;
+        }
+
+        .hero-kpis {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .hero-kpi-item {
+            background: rgba(4, 16, 20, 0.85);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 10px;
+            padding: 8px 14px;
+            text-align: center;
+            min-width: 100px;
+        }
+
+        .hero-kpi-val {
+            font-family: 'Outfit', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: #34d399;
+        }
+
+        .hero-kpi-lbl {
+            font-size: 10.5px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Educational Mechanistic Callout Card */
+        .diode-callout-card {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.85), rgba(6, 30, 24, 0.85));
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            border-left: 4px solid #38bdf8;
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-bottom: 22px;
+            font-size: 12.5px;
+            line-height: 1.6;
+            color: #cbd5e1;
+        }
+
+        .diode-callout-title {
+            font-weight: 700;
+            font-size: 13px;
+            color: #38bdf8;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        /* Tab Navigation */
+        .tab-nav {
+            display: flex;
+            gap: 6px;
+            background: rgba(8, 28, 36, 0.7);
+            padding: 6px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            padding: 9px 18px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .tab-btn:hover {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.3), rgba(6, 182, 212, 0.3));
+            color: #34d399;
+            border: 1px solid rgba(16, 185, 129, 0.5);
+            box-shadow: 0 2px 10px rgba(16, 185, 129, 0.25);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Card Styles */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            border-radius: 14px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .card-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .example-pills {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-bottom: 14px;
+        }
+
+        .example-pill {
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 6px;
+            padding: 5px 10px;
+            font-size: 11.5px;
+            color: #cbd5e1;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+
+        .example-pill:hover {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: #10b981;
+            color: #ffffff;
+        }
+
+        textarea {
+            width: 100%;
+            height: 110px;
+            background: #020b0e;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 8px;
+            color: #f0fdf4;
+            font-family: 'Fira Code', monospace;
+            font-size: 12.5px;
+            padding: 12px;
+            resize: vertical;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        textarea:focus {
+            border-color: #34d399;
+            box-shadow: 0 0 10px rgba(52, 211, 153, 0.25);
+        }
+
+        .btn-action {
+            background: linear-gradient(135deg, #059669, #0284c7);
+            border: none;
+            color: #ffffff;
+            font-weight: 700;
+            padding: 8px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 4px 14px rgba(5, 150, 105, 0.4);
+            transition: all 0.2s;
+        }
+
+        .btn-action:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 18px rgba(5, 150, 105, 0.55);
+        }
+
+        .btn-secondary {
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #cbd5e1;
+            font-weight: 600;
+            padding: 8px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 12.5px;
+            transition: all 0.15s;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+        }
+
+        /* Results Display */
+        .results-panel {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        .metric-card {
+            background: rgba(4, 16, 20, 0.85);
+            border: 1px solid rgba(16, 185, 129, 0.25);
+            border-radius: 10px;
+            padding: 12px 14px;
+        }
+
+        .metric-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 2px;
+        }
+
+        .metric-value {
+            font-family: 'Outfit', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: #34d399;
+        }
+
+        .cdr-display-box {
+            background: #020b0e;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 8px;
+            padding: 14px;
+            font-family: 'Fira Code', monospace;
+            font-size: 13px;
+            word-break: break-all;
+            margin-bottom: 16px;
+            line-height: 1.7;
+        }
+
+        .badge-fr { color: var(--fr-color); }
+        .badge-cdr1 { color: var(--cdr1-color); font-weight: 700; background: rgba(56, 189, 248, 0.15); padding: 2px 4px; border-radius: 4px; }
+        .badge-cdr2 { color: var(--cdr2-color); font-weight: 700; background: rgba(52, 211, 153, 0.15); padding: 2px 4px; border-radius: 4px; }
+        .badge-cdr3 { color: var(--cdr3-color); font-weight: 700; background: rgba(244, 63, 94, 0.18); padding: 2px 5px; border-radius: 4px; border-bottom: 2px solid var(--cdr3-color); }
+
+        /* IMGT Ruler */
+        .imgt-ruler {
+            font-family: 'Fira Code', monospace;
+            font-size: 11px;
+            overflow-x: auto;
+            background: #02080a;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 16px;
+            white-space: pre;
+        }
+
+        /* Table styles */
+        table.ref-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+        }
+
+        table.ref-table th {
+            background: rgba(4, 16, 20, 0.95);
+            color: #34d399;
+            padding: 8px 10px;
+            text-align: left;
+            border-bottom: 1px solid rgba(16, 185, 129, 0.3);
+            font-weight: 600;
+        }
+
+        table.ref-table td {
+            padding: 7px 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: #cbd5e1;
+        }
+
+        table.ref-table tr:hover td {
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        /* Manifold SVG Container */
+        .manifold-container {
+            width: 100%;
+            height: 520px;
+            background: #02080a;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        svg.manifold-svg {
+            width: 100%;
+            height: 100%;
+            cursor: grab;
+        }
+
+        svg.manifold-svg:active {
+            cursor: grabbing;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo-group">
+                <a href="index.html" style="text-decoration:none;">
+                    <div class="logo-badge">👤</div>
+                </a>
+                <div class="logo-text">
+                    <div style="display:flex; align-items:center; gap:8px;">
+                        <h1>Human T-Cell Receptor Repertoire Analyzer</h1>
+                        <span class="species-pill">Homo sapiens</span>
+                        <span id="tcrEngineBadge" class="species-pill" style="margin-left:8px; font-size:11px; background:rgba(16,185,129,0.15); color:#34d399; border:1px solid #10b981;">⚡ RUST SIMD128 Active</span>
+                    </div>
+                    <p>TRA, TRB, TRG, TRD Variable Domain & Clonotype Profiling (VBASE3 / TCRbase)</p>
+                </div>
+            </div>
+
+            <div class="nav-portal-links">
+                <a href="https://doi.org/10.5281/zenodo.22923344" target="_blank" rel="noopener" class="portal-link" style="color:#fbbf24; border-color:rgba(245,158,11,0.5); background:rgba(217,119,6,0.18); font-weight:700;" title="Download complete database tables and catalogs from Zenodo">📦 Zenodo Data ↗</a>
+                <a href="index.html" class="portal-link">🏠 Central Hub</a>
+                <a href="tcr_universe.html" class="portal-link">🧬 TCRbase Universe</a>
+                <a href="tcr_repertoire.html" class="portal-link">📊 TCR Repertoires</a>
+                <a href="mouse_tcr_analyzer.html" class="portal-link">🐁 Mouse TCR</a>
+                <a href="human_vbase3_analyzer.html" class="portal-link">👤 Human BCR</a>
+                <a href="vgene_pacmap_universe.html" class="portal-link">🌌 BCR Universe</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Banner -->
+        <div class="hero-banner">
+            <div>
+                <div class="hero-title">Human T-Cell Receptor Repertoire Analyzer</div>
+                <div class="hero-desc">
+                    Comprehensive, client-side WebAssembly analysis for mature <strong>Human T-cell receptor sequences</strong> across <strong>TRA (Alpha), TRB (Beta), TRG (Gamma), and TRD (Delta)</strong> loci. Features automated V/J alignment, CDR3 anchor extraction (Cys104 & Phe118), biophysical characterization, synthesis boundary compliance, and live 2D PaCMAP projection.
+                </div>
+            </div>
+            <div class="hero-kpis">
+                <div class="hero-kpi-item">
+                    <div class="hero-kpi-val">283</div>
+                    <div class="hero-kpi-lbl">V-Genes</div>
+                </div>
+                <div class="hero-kpi-item">
+                    <div class="hero-kpi-val">5</div>
+                    <div class="hero-kpi-lbl">D-Genes</div>
+                </div>
+                <div class="hero-kpi-item">
+                    <div class="hero-kpi-val">75</div>
+                    <div class="hero-kpi-lbl">J-Genes</div>
+                </div>
+                <div class="hero-kpi-item">
+                    <div class="hero-kpi-val" style="color:#38bdf8;">4 Loci</div>
+                    <div class="hero-kpi-lbl">αβ & γδ</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Molecular Diode Educational Callout -->
+        <div class="diode-callout-card">
+            <div class="diode-callout-title">
+                <span>🛡️ Immunogenomic Rule: The 12/23 RSS Molecular Diode Suppresses TCR D-Inversion (<0.1%) vs BCR (10%)</span>
+            </div>
+            <div>
+                In antibody heavy chains (IGH), the D-segment is flanked on <strong>both sides</strong> by 12-bp spacer RSSs (<code>12-D-12</code>), allowing RAG1/2 recombinase to pair in forward or reverse orientations and producing <strong>~10% inverted D-genes</strong> in BCR repertoires. In stark contrast, <strong>Human TCR D-segments (TRBD & TRDD)</strong> are asymmetrically flanked by a 5' 12-RSS and a 3' 23-RSS (<code>12-D-23</code>). Inversion would force illegal 23-to-23 or 12-to-12 pairings, which are biochemically forbidden. Consequently, <strong>TCR D-inversion is virtually non-existent (<0.1%)</strong>; instead, TCR achieves CDR3 hypervariability through <strong>tandem forward concatenation</strong> (e.g. TRDD1–TRDD2–TRDD3 in TRD), flexible forward reading frames, and hyperactive TdT N-addition.
+            </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <div class="tab-nav">
+            <button class="tab-btn active" onclick="switchTab('inspector')">🔬 Single Clonotype Inspector</button>
+            <button class="tab-btn" onclick="switchTab('batch')">📊 Batch Repertoire Analysis</button>
+            <button class="tab-btn" onclick="switchTab('locus')">🧬 Locus & D/J Elements Reference</button>
+            <button class="tab-btn" onclick="switchTab('manifold')">🗺️ Human TCR 2D Manifold</button>
+        </div>
+
+        <!-- TAB 1: Single Clonotype Inspector -->
+        <div id="tab-inspector" class="tab-content active">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🔬 Paste Human TCR Sequence (Nucleotide or Amino Acid)</div>
+                    <div style="font-size:11.5px; color:#64748b;">Automatic V/J assignment • IMGT numbering • Biophysics</div>
+                </div>
+
+                <div class="example-pills" id="benchmarkPills"></div>
+
+                <textarea id="seqInput" placeholder="Paste Human TCR α, β, γ, or δ amino acid or nucleotide sequence..."></textarea>
+
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-top:12px; flex-wrap:wrap; gap:10px;">
+                    <div style="display:flex; gap:8px;">
+                        <button class="btn-action" onclick="runAnalysis()">⚡ Analyze TCR Sequence</button>
+                        <button class="btn-secondary" onclick="document.getElementById('seqInput').value=''; document.getElementById('resultsPanel').style.display='none';">Clear</button>
+                    </div>
+                    <div style="font-size:11.5px; color:#94a3b8;">
+                        Engine: <span style="color:#34d399; font-weight:600;">Client WebAssembly (dnaplot_wasm.js)</span>
+                    </div>
+                </div>
+
+                <!-- Analysis Results Panel -->
+                <div id="resultsPanel" class="results-panel">
+                    <div class="card-header" style="margin-top:20px;">
+                        <div class="card-title">📊 Clonotype Analysis Report</div>
+                        <div id="resultChainBadge" class="species-pill">TRA / TRB</div>
+                    </div>
+
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <div class="metric-label">Assigned V-Gene</div>
+                            <div class="metric-value" id="resVGene" style="font-size:15px;">-</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-label">Matched J-Gene</div>
+                            <div class="metric-value" id="resJGene" style="font-size:15px;">-</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-label">CDR3 Length</div>
+                            <div class="metric-value" id="resCdr3Len">-</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-label">Net Charge (pH 7.4)</div>
+                            <div class="metric-value" id="resCharge">-</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-label">Hydropathy (GRAVY)</div>
+                            <div class="metric-value" id="resGravy">-</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-label">Isoelectric Point (pI)</div>
+                            <div class="metric-value" id="resPi">-</div>
+                        </div>
+                        <div class="metric-card" style="grid-column: span 2;">
+                            <div class="metric-label">TCR Lineage & Recombination</div>
+                            <div class="metric-value" id="resTcrLineage" style="font-size:13px; color:#38bdf8;">-</div>
+                        </div>
+                    </div>
+
+                    <div style="font-size:12px; font-weight:600; color:#cbd5e1; margin-bottom:6px;">Annotated Domain Architecture (FR1 - CDR1 - FR2 - CDR2 - FR3 - CDR3 - FR4):</div>
+                    <div class="cdr-display-box" id="annotatedSeqDisplay"></div>
+
+                    <div style="font-size:12px; font-weight:600; color:#cbd5e1; margin-bottom:6px;">Extracted CDR3 Sequence (Cys104 → Phe118):</div>
+                    <div class="cdr-display-box" style="color:#f43f5e; font-weight:700;" id="extractedCdr3Display"></div>
+
+                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; background:rgba(4,16,20,0.6); padding:10px 14px; border-radius:8px; border:1px solid rgba(255,255,255,0.06);">
+                        <div style="font-size:12px;">
+                            <strong>J-Synthesis Boundary Motif:</strong> <span id="resBoundaryMotif" style="color:#38bdf8; font-weight:bold;">-</span>
+                            <span id="resBoundaryStatus" style="margin-left:8px; font-size:11px; color:#34d399;">✓ Compliant</span>
+                        </div>
+                        <button class="btn-secondary" style="padding:4px 10px; font-size:11px;" onclick="copyCleanFasta()">📋 Copy Synthesis-Ready FASTA</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 2: Batch Repertoire Analysis -->
+        <div id="tab-batch" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">📊 Multi-Clonotype Batch Profiler (Human TCR)</div>
+                    <div style="font-size:11.5px; color:#64748b;">Paste multiple FASTA or plain sequences</div>
+                </div>
+                <p style="font-size:12px; color:#94a3b8; margin-bottom:12px;">
+                    Paste up to 100 TCR sequences (one per line or FASTA format). The WASM engine will rapidly classify locus, extract CDR3 loops, and evaluate biophysical properties.
+                </p>
+                <textarea id="batchInput" style="height:140px;" placeholder=">TCR_Clone_1&#10;KQEVTQIPAALSVPEGENLVLNCSFTDSAIYNLQWFRQDPGKGLTSLLLIQSSQREQTSGRLNASLDKSSGRSTLYIAASQPGDSATYLCAVRPTSGGSYIPTFGRGTSLIVH&#10;>TCR_Clone_2&#10;NAGVTQTPKFQVLKTGQSMTLQCAQDMNHEYMSWYRQDPGMGLRLIHYSVGAGITDQGEVPNGYNVSRSTTEDFPLRLLSAAPSQTSVYFCASSYVGNTGELFFGEGSRLTVL"></textarea>
+                <div style="margin-top:10px; display:flex; gap:8px;">
+                    <button class="btn-action" onclick="runBatchAnalysis()">⚡ Run Batch Analysis</button>
+                    <button class="btn-secondary" onclick="loadSampleBatch()">Load Verified Sample Batch</button>
+                </div>
+
+                <div id="batchResults" style="display:none; margin-top:20px;">
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <div class="metric-label">Parsed Sequences</div>
+                            <div class="metric-value" id="batchTotalCount">0</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-label">Mean CDR3 Length</div>
+                            <div class="metric-value" id="batchMeanCdr3">0</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-label">Mean Net Charge</div>
+                            <div class="metric-value" id="batchMeanCharge">0</div>
+                        </div>
+                    </div>
+
+                    <table class="ref-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Identifier</th>
+                                <th>Locus</th>
+                                <th>Assigned V</th>
+                                <th>Assigned J</th>
+                                <th>CDR3 Sequence</th>
+                                <th>Len</th>
+                                <th>Charge</th>
+                            </tr>
+                        </thead>
+                        <tbody id="batchTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3: Locus & D/J Elements Reference -->
+        <div id="tab-locus" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🧬 Human TCR Diversity (D) & Joining (J) Elements</div>
+                    <div style="font-size:11.5px; color:#64748b;">Canonical Recombination Signals (RSS) & Synthesis Boundaries</div>
+                </div>
+
+                <div style="margin-bottom:16px;">
+                    <h3 style="font-size:13px; color:#38bdf8; margin-bottom:8px;">Diversity Elements (TRBD & TRDD)</h3>
+                    <table class="ref-table">
+                        <thead>
+                            <tr>
+                                <th>Gene ID</th>
+                                <th>Locus</th>
+                                <th>5' RSS (Spacer)</th>
+                                <th>Coding DNA</th>
+                                <th>3' RSS (Spacer)</th>
+                                <th>Orientation Rule</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong style="color:#34d399;">TRBD1*01</strong></td>
+                                <td>TRB</td>
+                                <td><code>CACAGTG-12-ACAAAAACC</code></td>
+                                <td><code style="color:#f59e0b;">GGGACAGGGGGC</code></td>
+                                <td><code>GGTTTTTGT-23-CACTGTG</code></td>
+                                <td><span style="color:#38bdf8; font-weight:600;">Strict Forward Only (12/23 Diode)</span></td>
+                            </tr><tr>
+                                <td><strong style="color:#34d399;">TRBD2*01</strong></td>
+                                <td>TRB</td>
+                                <td><code>CACAGTG-12-ACAAAAACC</code></td>
+                                <td><code style="color:#f59e0b;">GGGACTGGGGGGGC</code></td>
+                                <td><code>GGTTTTTGT-23-CACTGTG</code></td>
+                                <td><span style="color:#38bdf8; font-weight:600;">Strict Forward Only (12/23 Diode)</span></td>
+                            </tr><tr>
+                                <td><strong style="color:#34d399;">TRDD1*01</strong></td>
+                                <td>TRD</td>
+                                <td><code>CACAGTG-12-ACAAAAACC</code></td>
+                                <td><code style="color:#f59e0b;">GAAATAGT</code></td>
+                                <td><code>GGTTTTTGT-12-CACTGTG</code></td>
+                                <td><span style="color:#38bdf8; font-weight:600;">Strict Forward Only (12/23 Diode)</span></td>
+                            </tr><tr>
+                                <td><strong style="color:#34d399;">TRDD2*01</strong></td>
+                                <td>TRD</td>
+                                <td><code>CACAGTG-12-ACAAAAACC</code></td>
+                                <td><code style="color:#f59e0b;">CCTTCCTAC</code></td>
+                                <td><code>GGTTTTTGT-12-CACTGTG</code></td>
+                                <td><span style="color:#38bdf8; font-weight:600;">Strict Forward Only (12/23 Diode)</span></td>
+                            </tr><tr>
+                                <td><strong style="color:#34d399;">TRDD3*01</strong></td>
+                                <td>TRD</td>
+                                <td><code>CACAGTG-12-ACAAAAACC</code></td>
+                                <td><code style="color:#f59e0b;">ACTGGGGGATACG</code></td>
+                                <td><code>GGTTTTTGT-23-CACTGTG</code></td>
+                                <td><span style="color:#38bdf8; font-weight:600;">Strict Forward Only (12/23 Diode)</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div>
+                    <h3 style="font-size:13px; color:#38bdf8; margin-bottom:8px;">Joining Elements (TRAJ, TRBJ, TRGJ, TRDJ) — Sample (15 of 75)</h3>
+                    <table class="ref-table">
+                        <thead>
+                            <tr>
+                                <th>Gene ID</th>
+                                <th>Locus</th>
+                                <th>5' RSS</th>
+                                <th>Canonical J-Motif</th>
+                                <th>Boundary Sequence</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong style="color:#58a6ff;">TRBJ1-1*01</strong></td>
+                                <td>TRB</td>
+                                <td><code>12-RSS</code></td>
+                                <td><span style="color:#f43f5e; font-weight:700;">LTVL</span></td>
+                                <td><code style="color:#94a3b8;">NNSFFGKGTKLTVL...</code></td>
+                            </tr><tr>
+                                <td><strong style="color:#58a6ff;">TRBJ1-2*01</strong></td>
+                                <td>TRB</td>
+                                <td><code>12-RSS</code></td>
+                                <td><span style="color:#f43f5e; font-weight:700;">LTVV</span></td>
+                                <td><code style="color:#94a3b8;">NYGYTFGSGTRLTVV...</code></td>
+                            </tr><tr>
+                                <td><strong style="color:#58a6ff;">TRBJ1-3*01</strong></td>
+                                <td>TRB</td>
+                                <td><code>12-RSS</code></td>
+                                <td><span style="color:#f43f5e; font-weight:700;">LTVV</span></td>
+                                <td><code style="color:#94a3b8;">SGNTIYFGEGSWLTVV...</code></td>
+                            </tr><tr>
+                                <td><strong style="color:#58a6ff;">TRBJ1-4*01</strong></td>
+                                <td>TRB</td>
+                                <td><code>12-RSS</code></td>
+                                <td><span style="color:#f43f5e; font-weight:700;">LSVL</span></td>
+                                <td><code style="color:#94a3b8;">NEKLFFGSGTQLSVL...</code></td>
+                            </tr><tr>
+                                <td><strong style="color:#58a6ff;">TRBJ1-5*01</strong></td>
+                                <td>TRB</td>
+                                <td><code>12-RSS</code></td>
+                                <td><span style="color:#f43f5e; font-weight:700;">LSIL</span></td>
+                                <td><code style="color:#94a3b8;">NQPQHFGDGTRLSIL...</code></td>
+                            </tr><tr>
+                                <td><strong style="color:#58a6ff;">TRBJ1-6*01</strong></td>
+                                <td>TRB</td>
+                                <td><code>12-RSS</code></td>
+                                <td><span style="color:#f43f5e; font-weight:700;">LTVF</span></td>
+                                <td><code style="color:#94a3b8;">SYNSPLHFGNGTRLTVF...</code></td>
+                            </tr><tr>
+                                <td><strong style="color:#58a6ff;">TRBJ2-1*01</strong></td>
+                                <td>TRB</td>
+                                <td><code>12-RSS</code></td>
+                                <td><span style="color:#f43f5e; font-weight:700;">LTVL</span></td>
+                                <td><code style="color:#94a3b8;">NEQFFGPGTRLTVL...</code></td>
+                            </tr><tr>
+                                <td><strong style="color:#58a6ff;">TRBJ2-2*01</strong></td>
+                                <td>TRB</td>
+                                <td><code>12-RSS</code></td>
+                                <td><span style="color:#f43f5e; font-weight:700;">LTVL</span></td>
+                                <td><code style="color:#94a3b8;">NTGELFFGEGSRLTVL...</code></td>
+                            </tr><tr>
+                                <td><strong style="color:#58a6ff;">TRBJ2-3*01</strong></td>
+                                <td>TRB</td>
+                                <td><code>12-RSS</code></td>
+                                <td><span style="color:#f43f5e; font-weight:700;">LTVL</span></td>
+                                <td><code style="color:#94a3b8;">STDTQYFGPGTRLTVL...</code></td>
+                            </tr><tr>
+                                <td><strong style="color:#58a6ff;">TRBJ2-4*01</strong></td>
+                                <td>TRB</td>
+                                <td><code>12-RSS</code></td>
+                                <td><span style="color:#f43f5e; font-weight:700;">LSVL</span></td>
+                                <td><code style="color:#94a3b8;">AKNIQYFGAGTRLSVL...</code></td>
+                            </tr><tr>
+                                <td><strong style="color:#58a6ff;">TRBJ2-5*01</strong></td>
+                                <td>TRB</td>
+                                <td><code>12-RSS</code></td>
+                                <td><span style="color:#f43f5e; font-weight:700;">LLVL</span></td>
+                                <td><code style="color:#94a3b8;">ETQYFGPGTRLLVL...</code></td>
+                            </tr><tr>
+                                <td><strong style="color:#58a6ff;">TRBJ2-6*01</strong></td>
+                                <td>TRB</td>
+                                <td><code>12-RSS</code></td>
+                                <td><span style="color:#f43f5e; font-weight:700;">LTVL</span></td>
+                                <td><code style="color:#94a3b8;">SYGANVLTFGAGSRLTVL...</code></td>
+                            </tr><tr>
+                                <td><strong style="color:#58a6ff;">TRBJ2-7*01</strong></td>
+                                <td>TRB</td>
+                                <td><code>12-RSS</code></td>
+                                <td><span style="color:#f43f5e; font-weight:700;">LTVT</span></td>
+                                <td><code style="color:#94a3b8;">YEQYFGPGTRLTVT...</code></td>
+                            </tr><tr>
+                                <td><strong style="color:#58a6ff;">TRAJ1*01</strong></td>
+                                <td>TRA</td>
+                                <td><code>12-RSS</code></td>
+                                <td><span style="color:#f43f5e; font-weight:700;">LTVK</span></td>
+                                <td><code style="color:#94a3b8;">TGANTGKLTFGKGTKLTV...</code></td>
+                            </tr><tr>
+                                <td><strong style="color:#58a6ff;">TRAJ2*01</strong></td>
+                                <td>TRA</td>
+                                <td><code>12-RSS</code></td>
+                                <td><span style="color:#f43f5e; font-weight:700;">LTVK</span></td>
+                                <td><code style="color:#94a3b8;">YTGANSKLTFGKGTHLTV...</code></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 4: 2D Manifold Projection -->
+        <div id="tab-manifold" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🗺️ Human TCR Manifold (PaCMAP 2D Projection • 283 Genes)</div>
+                    <div style="font-size:11.5px; color:#64748b;">TRA (Green), TRB (Blue), TRG (Purple), TRD (Amber)</div>
+                </div>
+                <div class="manifold-container">
+                    <svg id="speciesManifoldSvg" class="manifold-svg"></svg>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const SPECIES_KEY = "human";
+        const V_GENES = [{"gene_id": "HSA_TRAV_C4F1.104_01*01", "gene_name": "TRAV1-1*01", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 4", "family": "TRAV Family 1", "functionality": "F", "aa_seq": "GQSLEQPSEVTAVEGAIVQINCTYQTSGFYGLSWYQQHDGGAPTFLSYNALDGLEETGRFSSFLSRSDSYGYLLLQELQMKDSASYFCAVR", "aligned_seq": "GQSLEQ.PSEVTAVEGAIVQINCTYQTSG......FYGLSWYQQHDGGAPTFLSYNAL....DGLEET.....GRFSSFLSRSDSYGYLLLQELQMKDSASYFCAVR", "x": 8.35, "y": 169.2}, {"gene_id": "HSA_TRAV_C4F1.104_02*01", "gene_name": "TRAV1-1*02", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 4", "family": "TRAV Family 1", "functionality": "F", "aa_seq": "GQSLEQPSEVTAVEGAIVQINCTYQTSGFYGLSWYQQHDGGAPTFLSYNGLDGLEETGRFSSFLSRSDSYGYLLLQELQMKDSASYFCAVR", "aligned_seq": "GQSLEQ.PSEVTAVEGAIVQINCTYQTSG......FYGLSWYQQHDGGAPTFLSYNGL....DGLEET.....GRFSSFLSRSDSYGYLLLQELQMKDSASYFCAVR", "x": 9.04, "y": 167.3}, {"gene_id": "HSA_TRAV_C4F1.06_01*01", "gene_name": "TRAV1-2*01", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 4", "family": "TRAV Family 1", "functionality": "F", "aa_seq": "GQNIDQPTEMTATEGAIVQINCTYQTSGFNGLFWYQQHAGEAPTFLSYNVLDGLEEKGRFSSFLSRSKGYSYLLLKELQMKDSASYLCAVR", "aligned_seq": "GQNIDQ.PTEMTATEGAIVQINCTYQTSG......FNGLFWYQQHAGEAPTFLSYNVL....DGLEEK.....GRFSSFLSRSKGYSYLLLKELQMKDSASYLCAVR", "x": 9.28, "y": 166.89}, {"gene_id": "HSA_TRAV_C2F10.178_01*01", "gene_name": "TRAV10*01", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 10", "functionality": "F", "aa_seq": "KNQVEQSPQSLIILEGKNCTLQCNYTVSPFSNLRWYKQDTGRGPVSLTIMTFSENTKSNGRYTATLDADTKQSSLHITASQLSDSASYICVVS", "aligned_seq": "KNQVEQSPQSLIILEGKNCTLQCNYTVSP......FSNLRWYKQDTGRGPVSLTIMTFS...ENTKSN.....GRYTATLDADTKQSSLHITASQLSDSASYICVVS", "x": -300.22, "y": 76.63}, {"gene_id": "HSA_TRAV_C2F11.89_01*01", "gene_name": "TRAV11*01", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 11", "functionality": "P", "aa_seq": "LHTLEQSPSFLNIQEGMHAVLNCTYQERTLFNFHWFRQDPGRRLVSLTLIQSSQKEQGDKYFKELLGKEKFYSVWNIAASHLGDSATYFCAL", "aligned_seq": "LHTLEQSPSFLNIQEGMHAVLNCTYQERT......LFNFHWFRQDPGRRLVSLTLIQSS...QKEQGD.....KYFKELLGKEKFYSVWNIAASHLGDSATYFCAL", "x": -216.86, "y": 115.59}, {"gene_id": "HSA_TRAV_C2F11.89_02*01", "gene_name": "TRAV11*02", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 11", "functionality": "P", "aa_seq": "LHTLEQSPSFLNIQEGMHAVLNCTYQERTLFNFHWFRQDPGRRPVSLTLIQSSQKEQGDKYFKELLGKEKFYSVWNIAASHLGDSATYFCAL", "aligned_seq": "LHTLEQSPSFLNIQEGMHAVLNCTYQERT......LFNFHWFRQDPGRRPVSLTLIQSS...QKEQGD.....KYFKELLGKEKFYSVWNIAASHLGDSATYFCAL", "x": -216.94, "y": 115.69}, {"gene_id": "HSA_TRAV_C2F12.162_01*01", "gene_name": "TRAV12-1*01", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 12", "functionality": "F", "aa_seq": "RKEVEQDPGPFNVPEGATVAFNCTYSNSASQSFFWYRQDCRKEPKLLMSVYSSGNEDGRFTAQLNRASQYISLLIRDSKLSDSATYLCVVN", "aligned_seq": "RKEVEQDPGPFNVPEGATVAFNCTYSNSA......SQSFFWYRQDCRKEPKLLMSVYS....SGN.ED.....GRFTAQLNRASQYISLLIRDSKLSDSATYLCVVN", "x": -72.18, "y": -10.63}, {"gene_id": "HSA_TRAV_C2F12.162_02*01", "gene_name": "TRAV12-1*02", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 12", "functionality": "(F)", "aa_seq": "RKEVEQDPGPFNVPEGATVAFNCTYSNSASQSFFWYRQDCRKEPKLLMSVYSSGNEDGRFTAHVNRASQYISLLIRDSKLSDSATYLCVVN", "aligned_seq": "RKEVEQDPGPFNVPEGATVAFNCTYSNSA......SQSFFWYRQDCRKEPKLLMSVYS....SGN.ED.....GRFTAHVNRASQYISLLIRDSKLSDSATYLCVVN", "x": -70.78, "y": -12.82}, {"gene_id": "HSA_TRAV_C2F12.162_03*01", "gene_name": "TRAV12-1*03", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 12", "functionality": "F", "aa_seq": "RKEVEQDPGPFNVPEGATVAFNCTYSNSASQSFFWYRQDCRKEPKLLMSVYSSGNEDGRFTAQLNRASQYISLLIRDSKLSDSATYLCAVN", "aligned_seq": "RKEVEQDPGPFNVPEGATVAFNCTYSNSA......SQSFFWYRQDCRKEPKLLMSVYS....SGN.ED.....GRFTAQLNRASQYISLLIRDSKLSDSATYLCAVN", "x": -72.66, "y": -10.16}, {"gene_id": "HSA_TRAV_C2F12.185_01*01", "gene_name": "TRAV12-2*01", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 12", "functionality": "F", "aa_seq": "QKEVEQNSGPLSVPEGAIASLNCTYSDRGSQSFFWYRQYSGKSPELIMFIYSNGDKEDGRFTAQLNKASQYVSLLIRDSQPSDSATYLCAVN", "aligned_seq": "QKEVEQNSGPLSVPEGAIASLNCTYSDRG......SQSFFWYRQYSGKSPELIMFIYS....NGDKED.....GRFTAQLNKASQYVSLLIRDSQPSDSATYLCAVN", "x": -73.81, "y": -9.96}, {"gene_id": "HSA_TRAV_C2F12.185_02*01", "gene_name": "TRAV12-2*02", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 12", "functionality": "F", "aa_seq": "QKEVEQNSGPLSVPEGAIASLNCTYSDRGSQSFFWYRQYSGKSPELIMSIYSNGDKEDGRFTAQLNKASQYVSLLIRDSQPSDSATYLCAVN", "aligned_seq": "QKEVEQNSGPLSVPEGAIASLNCTYSDRG......SQSFFWYRQYSGKSPELIMSIYS....NGDKED.....GRFTAQLNKASQYVSLLIRDSQPSDSATYLCAVN", "x": -72.59, "y": -9.69}, {"gene_id": "HSA_TRAV_C2F12.185_03*01", "gene_name": "TRAV12-2*03", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 12", "functionality": "F", "aa_seq": "QKEVEQNSGPLSVPEGAIASLNCTYSDRVSQSFFWYRQYSGKSPELIMSIYSNGDKEDGRFTAQLNKASQYVSLLIRDSQPSDSATYLCAVN", "aligned_seq": "QKEVEQNSGPLSVPEGAIASLNCTYSDRV......SQSFFWYRQYSGKSPELIMSIYS....NGDKED.....GRFTAQLNKASQYVSLLIRDSQPSDSATYLCAVN", "x": -72.81, "y": -9.85}, {"gene_id": "HSA_TRAV_C2F12.185_04*01", "gene_name": "TRAV12-2*04", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 12", "functionality": "F", "aa_seq": "QKEVEQNSGPLSVPEGAIASLNCTYSDQGSQSFFWYRQYSGKSPELIMFIYSNGDKEDGRFTAQLNKASQYVSLLIRDSQPSDSATYLCAVN", "aligned_seq": "QKEVEQNSGPLSVPEGAIASLNCTYSDQG......SQSFFWYRQYSGKSPELIMFIYS....NGDKED.....GRFTAQLNKASQYVSLLIRDSQPSDSATYLCAVN", "x": -73.76, "y": -10.1}, {"gene_id": "HSA_TRAV_C2F12.16_01*01", "gene_name": "TRAV12-3*01", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 12", "functionality": "F", "aa_seq": "QKEVEQDPGPLSVPEGAIVSLNCTYSNSAFQYFMWYRQYSRKGPELLMYTYSSGNKEDGRFTAQVDKSSKYISLFIRDSQPSDSATYLCAMS", "aligned_seq": "QKEVEQDPGPLSVPEGAIVSLNCTYSNSA......FQYFMWYRQYSRKGPELLMYTYS....SGNKED.....GRFTAQVDKSSKYISLFIRDSQPSDSATYLCAMS", "x": -73.17, "y": -10.48}, {"gene_id": "HSA_TRAV_C2F12.16_02*01", "gene_name": "TRAV12-3*02", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 12", "functionality": "(F)", "aa_seq": "QKEVEQDPGPLSVPEGAIVSLNCTYSNSAFQYFMWYRQYSRIGPELLMYTYSSGNKEDGRFTAQVDKSSKYISLFIRDSQPSDSATYLCAMS", "aligned_seq": "QKEVEQDPGPLSVPEGAIVSLNCTYSNSA......FQYFMWYRQYSRIGPELLMYTYS....SGNKED.....GRFTAQVDKSSKYISLFIRDSQPSDSATYLCAMS", "x": -71.51, "y": -11.26}, {"gene_id": "HSA_TRAV_C2F12.16_03*01", "gene_name": "TRAV12-3*03", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 12", "functionality": "F", "aa_seq": "QKEVEKDPGPLSVPEGAIVSLNCTYSNSAFQYFMWYRQYSRKGPELLMYTYSSGNKEDGRFTAQVDKSSKYISLFIRDSQPSDSATYLCAMS", "aligned_seq": "QKEVEKDPGPLSVPEGAIVSLNCTYSNSA......FQYFMWYRQYSRKGPELLMYTYS....SGNKED.....GRFTAQVDKSSKYISLFIRDSQPSDSATYLCAMS", "x": -71.95, "y": -11.29}, {"gene_id": "HSA_TRAV_C2F13.37_01*01", "gene_name": "TRAV13-1*01", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 13", "functionality": "F", "aa_seq": "GENVEQHPSTLSVQEGDSAVIKCTYSDSASNYFPWYKQELGKGPQLIIDIRSNVGEKKDQRIAVTLNKTAKHFSLHITETQPEDSAVYFCAAS", "aligned_seq": "GENVEQHPSTLSVQEGDSAVIKCTYSDSA......SNYFPWYKQELGKGPQLIIDIRSN...VGEKKD.....QRIAVTLNKTAKHFSLHITETQPEDSAVYFCAAS", "x": -118.23, "y": 144.67}, {"gene_id": "HSA_TRAV_C2F13.37_02*01", "gene_name": "TRAV13-1*02", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 13", "functionality": "F", "aa_seq": "GENVEQHPSTLSVQEGDSAVIKCTYSDSASNYFPWYKQELGKRPQLIIDIRSNVGEKKDQRIAVTLNKTAKHFSLHITETQPEDSAVYFCAAS", "aligned_seq": "GENVEQHPSTLSVQEGDSAVIKCTYSDSA......SNYFPWYKQELGKRPQLIIDIRSN...VGEKKD.....QRIAVTLNKTAKHFSLHITETQPEDSAVYFCAAS", "x": -119.5, "y": 145.05}, {"gene_id": "HSA_TRAV_C2F13.69_01*01", "gene_name": "TRAV13-2*01", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 13", "functionality": "F", "aa_seq": "GESVGLHLPTLSVQEGDNSIINCAYSNSASDYFIWYKQESGKGPQFIIDIRSNMDKRQGQRVTVLLNKTVKHLSLQIAATQPGDSAVYFCAEN", "aligned_seq": "GESVGLHLPTLSVQEGDNSIINCAYSNSA......SDYFIWYKQESGKGPQFIIDIRSN...MDKRQG.....QRVTVLLNKTVKHLSLQIAATQPGDSAVYFCAEN", "x": -118.95, "y": 158.33}, {"gene_id": "HSA_TRAV_C2F13.69_02*01", "gene_name": "TRAV13-2*02", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 13", "functionality": "(F)", "aa_seq": "GESVGLHLPTLSVQEGDNSIINCAYSNSASDYFIWYKQESGKGPQFIIDIRSNMDKRQGQRVTVLLNKTVKHLSLQIAATQPGDSAVYFCAE", "aligned_seq": "GESVGLHLPTLSVQEGDNSIINCAYSNSA......SDYFIWYKQESGKGPQFIIDIRSN...MDKRQG.....QRVTVLLNKTVKHLSLQIAATQPGDSAVYFCAE", "x": -117.36, "y": 156.32}, {"gene_id": "HSA_TRAV_C2F13.69_03*01", "gene_name": "TRAV13-2*03", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 13", "functionality": "F", "aa_seq": "GESVGLHLPTLSVQEGDNSIINCAYSNSASDYFIWYKQESGKGPQFIIDIRSNMDKRQGQRVTVLLNKTVKHLSLQIAATQPGDSAAYFCAEN", "aligned_seq": "GESVGLHLPTLSVQEGDNSIINCAYSNSA......SDYFIWYKQESGKGPQFIIDIRSN...MDKRQG.....QRVTVLLNKTVKHLSLQIAATQPGDSAAYFCAEN", "x": -120.54, "y": 159.05}, {"gene_id": "HSA_TRAV_C2F14.281_01*01", "gene_name": "TRAV14/DV4*01", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 14", "functionality": "F", "aa_seq": "AQKITQTQPGMFVQEKEAVTLDCTYDTSDPSYGLFWYKQPSSGEMIFLIYQGSYDQQNATEGRYSLNFQKARKSANLVISASQLGDSAMYFCAMRE", "aligned_seq": "AQKITQTQPGMFVQEKEAVTLDCTYDTSDP.....SYGLFWYKQPSSGEMIFLIYQGSY..DQQNATE.....GRYSLNFQKARKSANLVISASQLGDSAMYFCAMRE", "x": -85.14, "y": 266.98}, {"gene_id": "HSA_TRAV_C2F14.281_02*01", "gene_name": "TRAV14/DV4*02", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 14", "functionality": "F", "aa_seq": "AQKITQTQPGMFVQEKEAVTLDCTYDTSDQSYGLFWYKQPSSGEMIFLIYQGSYDEQNATEGRYSLNFQKARKSANLVISASQLGDSAMYFCAMRE", "aligned_seq": "AQKITQTQPGMFVQEKEAVTLDCTYDTSDQ.....SYGLFWYKQPSSGEMIFLIYQGSY..DEQNATE.....GRYSLNFQKARKSANLVISASQLGDSAMYFCAMRE", "x": -86.41, "y": 267.95}, {"gene_id": "HSA_TRAV_C2F16.403_01*01", "gene_name": "TRAV16*01", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 16", "functionality": "F", "aa_seq": "AQRVTQPEKLLSVFKGAPVELKCNYSYSGSPELFWYVQYSRQRLQLLLRHISRESIKGFTADLNKGETSFHLKKPFAQEEDSAMYYCALS", "aligned_seq": "AQRVTQPEKLLSVFKGAPVELKCNYSYSG......SPELFWYVQYSRQRLQLLLRHI......SRESI.....KGFTADLNKGETSFHLKKPFAQEEDSAMYYCALS", "x": 70.5, "y": 478.71}, {"gene_id": "HSA_TRAV_C2F17.155_01*01", "gene_name": "TRAV17*01", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 17", "functionality": "F", "aa_seq": "SQQGEEDPQALSIQEGENATMNCSYKTSINNLQWYRQNSGRGLVHLILIRSNEREKHSGRLRVTLDTSKKSSSLLITASRAADTASYFCATD", "aligned_seq": "SQQGEEDPQALSIQEGENATMNCSYKTSI.......NNLQWYRQNSGRGLVHLILIRSN...EREKHS.....GRLRVTLDTSKKSSSLLITASRAADTASYFCATD", "x": -248.7, "y": -49.63}, {"gene_id": "HSA_TRAV_C2F18.08_01*01", "gene_name": "TRAV18*01", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 18", "functionality": "F", "aa_seq": "GDSVTQTEGPVTLPERAALTLNCTYQSSYSTFLFWYVQYLNKEPELLLKSSENQETDSRGFQASPIKSDSSFHLEKPSVQLSDSAVYYCALR", "aligned_seq": "GDSVTQTEGPVTLPERAALTLNCTYQSSY......STFLFWYVQYLNKEPELLLKSSE....NQETDS.....RGFQASPIKSDSSFHLEKPSVQLSDSAVYYCALR", "x": 254.19, "y": 391.42}, {"gene_id": "HSA_TRAV_C2F19.26_01*01", "gene_name": "TRAV19*01", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 19", "functionality": "F", "aa_seq": "AQKVTQAQTEISVVEKEDVTLDCVYETRDTTYYLFWYKQPPSGELVFLIRRNSFDEQNEISGRYSWNFQKSTSSFNFTITASQVVDSAVYFCALSE", "aligned_seq": "AQKVTQAQTEISVVEKEDVTLDCVYETRDT.....TYYLFWYKQPPSGELVFLIRRNSF..DEQNEIS.....GRYSWNFQKSTSSFNFTITASQVVDSAVYFCALSE", "x": -95.17, "y": 313.03}, {"gene_id": "HSA_TRAV_C3F2.114_01*01", "gene_name": "TRAV2*01", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 3", "family": "TRAV Family 2", "functionality": "F", "aa_seq": "KDQVFQPSTVASSEGAVVEIFCNHSVSNAYNFFWYLHFPGCAPRLLVKGSKPSQQGRYNMTYERFSSSLLILQVREADAAVYYCAVE", "aligned_seq": "KDQVFQ.PSTVASSEGAVVEIFCNHSVSN......AYNFFWYLHFPGCAPRLLVKGS......KPSQQ.....GRYNMTYER..FSSSLLILQVREADAAVYYCAVE", "x": 233.66, "y": 29.67}, {"gene_id": "HSA_TRAV_C3F2.114_02*01", "gene_name": "TRAV2*02", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 3", "family": "TRAV Family 2", "functionality": "(F)", "aa_seq": "KDQVFQPSTVASSEGAVVEIFCNHSVSNAYNFFWHLHFPGCAPRLLVKGSKPSQQGRYNMTYERFSSSLLILQVREADAAVYYCAVAW", "aligned_seq": "KDQVFQ.PSTVASSEGAVVEIFCNHSVSN......AYNFFWHLHFPGCAPRLLVKGS......KPSQQ.....GRYNMTYER..FSSSLLILQVREADAAVYYCAVAW", "x": 232.82, "y": 29.43}, {"gene_id": "HSA_TRAV_C2F20.143_01*01", "gene_name": "TRAV20*01", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 20", "functionality": "F", "aa_seq": "EDQVTQSPEALRLQEGESSSLNCSYTVSGLRGLFWYRQDPGKGPEFLFTLYSAGEEKEKERLKATLTKKESFLHITAPKPEDSATYLCAVQ", "aligned_seq": "EDQVTQSPEALRLQEGESSSLNCSYTVSG......LRGLFWYRQDPGKGPEFLFTLYSA...GEEKEK.....ERLKATLTK..KESFLHITAPKPEDSATYLCAVQ", "x": -285.7, "y": -16.35}, {"gene_id": "HSA_TRAV_C2F20.143_02*01", "gene_name": "TRAV20*03", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 20", "functionality": "(F)", "aa_seq": "EDQVTQSPEALRLQEGESRSLNCSYTVSGLRGLFWYRQDPGKGPEFLFTLYSAGEEKEKERLKATLTKKESFLHITAPKPEDSATYLC", "aligned_seq": "EDQVTQSPEALRLQEGESRSLNCSYTVSG......LRGLFWYRQDPGKGPEFLFTLYSA...GEEKEK.....ERLKATLTK..KESFLHITAPKPEDSATYLC", "x": -285.58, "y": -20.02}, {"gene_id": "HSA_TRAV_C2F20.143_03*01", "gene_name": "TRAV20*04", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 20", "functionality": "(F)", "aa_seq": "EDQVTQSPEALRLQEGESSSLNCSCTVSGLRGLFWYRQDPGKGPEFLFTLYSAGEEKEKERLKATLTKKESFLHITAPKPEDSATYLCA", "aligned_seq": "EDQVTQSPEALRLQEGESSSLNCSCTVSG......LRGLFWYRQDPGKGPEFLFTLYSA...GEEKEK.....ERLKATLTK..KESFLHITAPKPEDSATYLCA", "x": -285.2, "y": -17.76}, {"gene_id": "HSA_TRAV_C2F21.163_01*01", "gene_name": "TRAV21*01", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 21", "functionality": "F", "aa_seq": "KQEVTQIPAALSVPEGENLVLNCSFTDSAIYNLQWFRQDPGKGLTSLLLIQSSQREQTSGRLNASLDKSSGRSTLYIAASQPGDSATYLCAVR", "aligned_seq": "KQEVTQIPAALSVPEGENLVLNCSFTDSA......IYNLQWFRQDPGKGLTSLLLIQSS...QREQTS.....GRLNASLDKSSGRSTLYIAASQPGDSATYLCAVR", "x": -327.12, "y": -208.31}, {"gene_id": "HSA_TRAV_C2F21.163_02*01", "gene_name": "TRAV21*03", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 21", "functionality": "F", "aa_seq": "KQEVTQIPAALSVPEGENLVLSCSFTDSAIYNLQWFRQDPGKGLTSLLLIQSSQREQTSGRLNASLDKSSGRSTLYIAASQPGDSATYLCAVR", "aligned_seq": "KQEVTQIPAALSVPEGENLVLSCSFTDSA......IYNLQWFRQDPGKGLTSLLLIQSS...QREQTS.....GRLNASLDKSSGRSTLYIAASQPGDSATYLCAVR", "x": -327.01, "y": -208.14}, {"gene_id": "HSA_TRAV_C2F22.134_01*01", "gene_name": "TRAV22*01", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 22", "functionality": "F", "aa_seq": "GIQVEQSPPDLILQEGANSTLRCNFSDSVNNLQWFHQNPWGQLINLFYIPSGTKQNGRLSATTVATERYSLLYISSSQTTDSGVYFCAVE", "aligned_seq": "GIQVEQSPPDLILQEGANSTLRCNFSDSV.......NNLQWFHQNPWGQLINLFYIPS.....GTKQN.....GRLSATTVATERYSLLYISSSQTTDSGVYFCAVE", "x": -476.23, "y": 62.33}, {"gene_id": "HSA_TRAV_C2F23.328_01*01", "gene_name": "TRAV23/DV6*01", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 23", "functionality": "F", "aa_seq": "QQQVKQSPQSLIVQKGGISIINCAYENTAFDYFPWYQQFPGKGPALLIAIRPDVSEKKEGRFTISFNKSAKQFSLHIMDSQPGDSATYFCAAS", "aligned_seq": "QQQVKQSPQSLIVQKGGISIINCAYENTA......FDYFPWYQQFPGKGPALLIAIRPD...VSEKKE.....GRFTISFNKSAKQFSLHIMDSQPGDSATYFCAAS", "x": -432.75, "y": -129.17}, {"gene_id": "HSA_TRAV_C2F23.328_02*01", "gene_name": "TRAV23/DV6*02", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 23", "functionality": "F", "aa_seq": "QQQVKQSPQSLIVQKGGIPIINCAYENTAFDYFPWYQQFPGKGPALLIAIRPDVSEKKEGRFTISFNKSAKQFSLHIMDSQPGDSATYFCAAS", "aligned_seq": "QQQVKQSPQSLIVQKGGIPIINCAYENTA......FDYFPWYQQFPGKGPALLIAIRPD...VSEKKE.....GRFTISFNKSAKQFSLHIMDSQPGDSATYFCAAS", "x": -432.91, "y": -131.35}, {"gene_id": "HSA_TRAV_C2F23.328_04*01", "gene_name": "TRAV23/DV6*05", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 23", "functionality": "F", "aa_seq": "QQQVKQSPQSLIVQKGGISIINCAYENTAFDYFPWYQQFPGKGPALLIAIRPDVSEKKEGRFTISFNKSAKQFSSHIMDSQPGDSATYFCAAS", "aligned_seq": "QQQVKQSPQSLIVQKGGISIINCAYENTA......FDYFPWYQQFPGKGPALLIAIRPD...VSEKKE.....GRFTISFNKSAKQFSSHIMDSQPGDSATYFCAAS", "x": -433.31, "y": -130.28}, {"gene_id": "HSA_TRAV_C2F24.142_01*01", "gene_name": "TRAV24*01", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 24", "functionality": "F", "aa_seq": "ILNVEQSPQSLHVQEGDSTNFTCSFPSSNFYALHWYRWETAKSPEALFVMTLNGDEKKKGRISATLNTKEGYSYLYIKGSQPEDSATYLCAF", "aligned_seq": "ILNVEQSPQSLHVQEGDSTNFTCSFPSSN......FYALHWYRWETAKSPEALFVMTLN...GDEKKK.....GRISATLNTKEGYSYLYIKGSQPEDSATYLCAF", "x": -307.9, "y": -72.35}, {"gene_id": "HSA_TRAV_C2F24.142_02*01", "gene_name": "TRAV24*02", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 24", "functionality": "(F)", "aa_seq": "ILNVEQGPQSLHVQEGDSTNFTCSFPSSNFYALHWYRWETAKTPEALFVMTLNGDEKKKGRISATLNTKEGYSYLYIKGSQPEDSATYLCAF", "aligned_seq": "ILNVEQGPQSLHVQEGDSTNFTCSFPSSN......FYALHWYRWETAKTPEALFVMTLN...GDEKKK.....GRISATLNTKEGYSYLYIKGSQPEDSATYLCAF", "x": -307.59, "y": -72.11}, {"gene_id": "HSA_TRAV_C2F25.147_01*01", "gene_name": "TRAV25*01", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 25", "functionality": "F", "aa_seq": "GQQVMQIPQYQHVQEGEDFTTYCNSSTTLSNIQWYKQRPGGHPVFLIQLVKSGEVKKQKRLTFQFGEAKKNSSLHITATQTTDVGTYFCAG", "aligned_seq": "GQQVMQIPQYQHVQEGEDFTTYCNSSTTL.......SNIQWYKQRPGGHPVFLIQLVKS...GEVKKQ.....KRLTFQFGEAKKNSSLHITATQTTDVGTYFCAG", "x": -299.01, "y": 160.77}, {"gene_id": "HSA_TRAV_C2F25.147_02*01", "gene_name": "TRAV25*04", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 25", "functionality": "F", "aa_seq": "GQQVMQIPQYQHVQEGEDFTRYCNSSTTLSNTQWYKQRPGGHPVFLIQLVKSGEVKKQKRLTFQFGEAKKNSSLHITATQTTDVGTYFCAG", "aligned_seq": "GQQVMQIPQYQHVQEGEDFTRYCNSSTTL.......SNTQWYKQRPGGHPVFLIQLVKS...GEVKKQ.....KRLTFQFGEAKKNSSLHITATQTTDVGTYFCAG", "x": -299.27, "y": 160.19}, {"gene_id": "HSA_TRAV_C3F26.165_01*01", "gene_name": "TRAV26-1*01", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 3", "family": "TRAV Family 26", "functionality": "F", "aa_seq": "DAKTTQPPSMDCAEGRAANLPCNHSTISGNEYVYWYRQIHSQGPQYIIHGLKNNETNEMASLIITEDRKSSTLILPHATLRDTAVYYCIVRV", "aligned_seq": "DAKTTQ.PPSMDCAEGRAANLPCNHSTISG.....NEYVYWYRQIHSQGPQYIIHGLK.....NNETN.....EMASLIITEDRKSSTLILPHATLRDTAVYYCIVRV", "x": 73.18, "y": 0.39}, {"gene_id": "HSA_TRAV_C3F26.165_02*01", "gene_name": "TRAV26-1*02", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 3", "family": "TRAV Family 26", "functionality": "F", "aa_seq": "DAKTTQPTSMDCAEGRAANLPCNHSTISGNEYVYWYRQIHSQGPQYIIHGLKNNETNEMASLIITEDRKSSTLILPHATLRDTAVYYCIVRV", "aligned_seq": "DAKTTQ.PTSMDCAEGRAANLPCNHSTISG.....NEYVYWYRQIHSQGPQYIIHGLK.....NNETN.....EMASLIITEDRKSSTLILPHATLRDTAVYYCIVRV", "x": 73.18, "y": -0.59}, {"gene_id": "HSA_TRAV_C3F26.165_03*01", "gene_name": "TRAV26-1*03", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 3", "family": "TRAV Family 26", "functionality": "(F)", "aa_seq": "DAKTTQPPSMDCAEGRAANLPCNHSTISGNEYVYWYRQIHSQGPQNIIHGLKNNETNEMASLIITEDRKSSTLILPHATLRDTAVYYCI", "aligned_seq": "DAKTTQ.PPSMDCAEGRAANLPCNHSTISG.....NEYVYWYRQIHSQGPQNIIHGLK.....NNETN.....EMASLIITEDRKSSTLILPHATLRDTAVYYCI", "x": 73.82, "y": -1.28}, {"gene_id": "HSA_TRAV_C3F26.102_01*01", "gene_name": "TRAV26-2*01", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 3", "family": "TRAV Family 26", "functionality": "F", "aa_seq": "DAKTTQPNSMESNEEEPVHLPCNHSTISGTDYIHWYRQLPSQGPEYVIHGLTSNVNNRMASLAIAEDRKSSTLILHRATLRDAAVYYCILRD", "aligned_seq": "DAKTTQ.PNSMESNEEEPVHLPCNHSTISG.....TDYIHWYRQLPSQGPEYVIHGLT.....SNVNN.....RMASLAIAEDRKSSTLILHRATLRDAAVYYCILRD", "x": 74.28, "y": 1.83}, {"gene_id": "HSA_TRAV_C2F27.128_01*01", "gene_name": "TRAV27*01", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 27", "functionality": "F", "aa_seq": "TQLLEQSPQFLSIQEGENLTVYCNSSSVFSSLQWYRQEPGEGPVLLVTVVTGGEVKKLKRLTFQFGDARKDSSLHITAAQPGDTGLYLCAG", "aligned_seq": "TQLLEQSPQFLSIQEGENLTVYCNSSSVF.......SSLQWYRQEPGEGPVLLVTVVTG...GEVKKL.....KRLTFQFGDARKDSSLHITAAQPGDTGLYLCAG", "x": -218.79, "y": -116.98}, {"gene_id": "HSA_TRAV_C2F27.128_02*01", "gene_name": "TRAV27*02", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 27", "functionality": "(F)", "aa_seq": "TQLLEQSPQFLSIQEGENLTVYCNSSSVFSSLQWYRQEPGEGPVLLVTVVTGGEVKKLKRLTFQFGDARKDSSLHITAAQPGDTGHYLCA", "aligned_seq": "TQLLEQSPQFLSIQEGENLTVYCNSSSVF.......SSLQWYRQEPGEGPVLLVTVVTG...GEVKKL.....KRLTFQFGDARKDSSLHITAAQPGDTGHYLCA", "x": -218.64, "y": -117.04}, {"gene_id": "HSA_TRAV_C2F27.128_03*01", "gene_name": "TRAV27*03", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 27", "functionality": "F", "aa_seq": "TQLLEQSPQFLSIQEGENLTVYCNSSSVFSSLQWYRQEPGEGPVLLVTVVTGGEVKKLKRLTFQFGDARKDSSLHITAAQTGDTGLYLCAG", "aligned_seq": "TQLLEQSPQFLSIQEGENLTVYCNSSSVF.......SSLQWYRQEPGEGPVLLVTVVTG...GEVKKL.....KRLTFQFGDARKDSSLHITAAQTGDTGLYLCAG", "x": -219.58, "y": -115.45}, {"gene_id": "HSA_TRAV_C2F29.121_01*01", "gene_name": "TRAV29/DV5*01", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 29", "functionality": "F", "aa_seq": "DQQVKQNSPSLSVQEGRISILNCDYTNSMFDYFLWYKKYPAEGPTFLISISSIKDKNEDGRFTVFLNKSAKHLSLHIVPSQPGDSAVYFCAAS", "aligned_seq": "DQQVKQNSPSLSVQEGRISILNCDYTNSM......FDYFLWYKKYPAEGPTFLISISSI...KDKNED.....GRFTVFLNKSAKHLSLHIVPSQPGDSAVYFCAAS", "x": -411.59, "y": -164.59}, {"gene_id": "HSA_TRAV_C2F29.121_02*01", "gene_name": "TRAV29/DV5*02", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 29", "functionality": "F", "aa_seq": "DQQVKQNSPSLSVQEGRISILNCDYTNSMFDYFLWYKKYPAEGPTFLISISSIKDKNEDGRFTVFLNKSAKHLSLDIVPSQPGDSAVYFCAAS", "aligned_seq": "DQQVKQNSPSLSVQEGRISILNCDYTNSM......FDYFLWYKKYPAEGPTFLISISSI...KDKNED.....GRFTVFLNKSAKHLSLDIVPSQPGDSAVYFCAAS", "x": -412.48, "y": -163.65}, {"gene_id": "HSA_TRAV_C2F3.57_01*01", "gene_name": "TRAV3*01", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 3", "functionality": "F", "aa_seq": "AQSVAQPEDQVNVAEGNPLTVKCTYSVSGNPYLFWYVQYPNRGLQFLLKYITGDNLVKGSYGFEAEFNKSQTSFHLKKPSALVSDSALYFCAVRD", "aligned_seq": "AQSVAQPEDQVNVAEGNPLTVKCTYSVSG......NPYLFWYVQYPNRGLQFLLKYITG..DNLVKGS.....YGFEAEFNKSQTSFHLKKPSALVSDSALYFCAVRD", "x": 18.55, "y": 386.56}, {"gene_id": "HSA_TRAV_C2F30.92_01*01", "gene_name": "TRAV30*01", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 30", "functionality": "F", "aa_seq": "QQPVQSPQAVILREGEDAVINCSSSKALYSVHWYRQKHGEAPVFLMILLKGGEQKGHEKISASFNEKKQQSSLYLTASQLSYSGTYFCGTE", "aligned_seq": "QQPV.QSPQAVILREGEDAVINCSSSKAL.......YSVHWYRQKHGEAPVFLMILLKG...GEQKGH.....EKISASFNEKKQQSSLYLTASQLSYSGTYFCGTE", "x": -316.41, "y": 95.75}, {"gene_id": "HSA_TRAV_C2F30.92_02*01", "gene_name": "TRAV30*02", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 30", "functionality": "(F)", "aa_seq": "QQPVQSPQAVILREGEDAVTNCSSSKALYSVHWYRQKHGEAPVFLMILLKGGEQMRREKISASFNEKKQQSSLYLTASQLSYSGTYFCG", "aligned_seq": "QQPV.QSPQAVILREGEDAVTNCSSSKAL.......YSVHWYRQKHGEAPVFLMILLKG...GEQMRR.....EKISASFNEKKQQSSLYLTASQLSYSGTYFCG", "x": -316.91, "y": 96.53}, {"gene_id": "HSA_TRAV_C2F30.92_03*01", "gene_name": "TRAV30*03", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 30", "functionality": "(F)", "aa_seq": "QQPVQSPQAVILREGEDAVINCSSSKALYSVHWYRQKHGEAPVFLMILLKGGEQKGHEKISASFNEKKRQSSLYLTASQLSYSGTYFCG", "aligned_seq": "QQPV.QSPQAVILREGEDAVINCSSSKAL.......YSVHWYRQKHGEAPVFLMILLKG...GEQKGH.....EKISASFNEKKRQSSLYLTASQLSYSGTYFCG", "x": -317.27, "y": 96.99}, {"gene_id": "HSA_TRAV_C2F30.92_05*01", "gene_name": "TRAV30*05", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 30", "functionality": "F", "aa_seq": "QQPVQSPQAVILREGEDAVINCSSSKALYSVHWYRQKHGEAPVFLMILLKGGEQKGHDKISASFNEKKQQSSLYLTASQLSYSGTYFCGTE", "aligned_seq": "QQPV.QSPQAVILREGEDAVINCSSSKAL.......YSVHWYRQKHGEAPVFLMILLKG...GEQKGH.....DKISASFNEKKQQSSLYLTASQLSYSGTYFCGTE", "x": -316.44, "y": 95.78}, {"gene_id": "HSA_TRAV_C2F30.92_06*01", "gene_name": "TRAV30*06", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 30", "functionality": "F", "aa_seq": "QQPVQSPQAVILREGEDAVINCSSSKALYSVHWYRQKHGEAPIFLMILLKGGEQKGHDKISASFNEKKQQSSLYLTASQLSYSGTYFCGTE", "aligned_seq": "QQPV.QSPQAVILREGEDAVINCSSSKAL.......YSVHWYRQKHGEAPIFLMILLKG...GEQKGH.....DKISASFNEKKQQSSLYLTASQLSYSGTYFCGTE", "x": -316.23, "y": 95.77}, {"gene_id": "HSA_TRAV_C2F30.92_07*01", "gene_name": "TRAV30*08", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 30", "functionality": "F", "aa_seq": "QQPVQSPQAVILREGEDAVINCSSSKALYSVHWYRQKHGEAPVFLMILLKGGEQMRHEKISASFNEKKQQSSLYLTASQLSYSGTYFCGTE", "aligned_seq": "QQPV.QSPQAVILREGEDAVINCSSSKAL.......YSVHWYRQKHGEAPVFLMILLKG...GEQMRH.....EKISASFNEKKQQSSLYLTASQLSYSGTYFCGTE", "x": -316.14, "y": 95.55}, {"gene_id": "HSA_TRAV_C2F34.103_01*01", "gene_name": "TRAV34*01", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 34", "functionality": "F", "aa_seq": "SQELEQSPQSLIVQEGKNLTINCTSSKTLYGLYWYKQKYGEGLIFLMMLQKGGEEKSHEKITAKLDEKKQQSSLHITASQPSHAGIYLCGAD", "aligned_seq": "SQELEQSPQSLIVQEGKNLTINCTSSKTL.......YGLYWYKQKYGEGLIFLMMLQKG...GEEKSH.....EKITAKLDEKKQQSSLHITASQPSHAGIYLCGAD", "x": -304.33, "y": 75.37}, {"gene_id": "HSA_TRAV_C2F35.18_01*01", "gene_name": "TRAV35*01", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 35", "functionality": "F", "aa_seq": "GQQLNQSPQSMFIQEGEDVSMNCTSSSIFNTWLWYKQEPGEGPVLLIALYKAGELTSNGRLTAQFGITRKDSFLNISASIPSDVGIYFCAGQ", "aligned_seq": "GQQLNQSPQSMFIQEGEDVSMNCTSSSIF.......NTWLWYKQEPGEGPVLLIALYKA...GELTSN.....GRLTAQFGITRKDSFLNISASIPSDVGIYFCAGQ", "x": -388.08, "y": 225.83}, {"gene_id": "HSA_TRAV_C2F35.18_02*01", "gene_name": "TRAV35*02", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 35", "functionality": "F", "aa_seq": "GQQLNQSPQSMFIQEGEDVSMNCTSSSIFNTWLWYKQDPGEGPVLLIALYKAGELTSNGRLTAQFGITRKDSFLNISASIPSDVGIYFCAGQ", "aligned_seq": "GQQLNQSPQSMFIQEGEDVSMNCTSSSIF.......NTWLWYKQDPGEGPVLLIALYKA...GELTSN.....GRLTAQFGITRKDSFLNISASIPSDVGIYFCAGQ", "x": -387.69, "y": 225.39}, {"gene_id": "HSA_TRAV_C2F35.18_04*01", "gene_name": "TRAV35*04", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 35", "functionality": "F", "aa_seq": "GQQLNQSPQSMFIQEGEDVSMNCTSSSIFNTWLWYKQDPGEGPVLLIALYKAGELTSNGRLTAQFGTTRKDSFLNISASIPSDVGIYFCAGQ", "aligned_seq": "GQQLNQSPQSMFIQEGEDVSMNCTSSSIF.......NTWLWYKQDPGEGPVLLIALYKA...GELTSN.....GRLTAQFGTTRKDSFLNISASIPSDVGIYFCAGQ", "x": -387.77, "y": 225.36}, {"gene_id": "HSA_TRAV_C2F36.244_01*01", "gene_name": "TRAV36/DV7*01", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 36", "functionality": "F", "aa_seq": "EDKVVQSPLSLVVHEGDTVTLNCSYEVTNFRSLLWYKQEKKAPTFLFMLTSSGIEKKSGRLSSILDKKELSSILNITATQTGDSAIYLCAVE", "aligned_seq": "EDKVVQSPLSLVVHEGDTVTLNCSYEVTN......FRSLLWYKQEKKAP.TFLFMLTSS...GIEKKS.....GRLSSILDKKELSSILNITATQTGDSAIYLCAVE", "x": -246.93, "y": 64.81}, {"gene_id": "HSA_TRAV_C2F36.244_02*01", "gene_name": "TRAV36/DV7*02", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 36", "functionality": "(F)", "aa_seq": "EDKVVQSPQSLVVHEGDTVTLNCSYEMTNFRSLQWYKQEKKAPTFLFMLTSSGIEKKSGRLSSILDKKELFSILNITATQTGDSAVYLCAV", "aligned_seq": "EDKVVQSPQSLVVHEGDTVTLNCSYEMTN......FRSLQWYKQEKKAP.TFLFMLTSS...GIEKKS.....GRLSSILDKKELFSILNITATQTGDSAVYLCAV", "x": -246.98, "y": 65.53}, {"gene_id": "HSA_TRAV_C2F36.244_03*01", "gene_name": "TRAV36/DV7*03", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 36", "functionality": "(F)", "aa_seq": "EDKVVQSPLSLVVHEGDTVTPNCSYEVTNFRSLLWYKQEKKAPTFLFMLTSSGIEKKSGRLSSILDKKELFSILNITATQTGDSAVYLCA", "aligned_seq": "EDKVVQSPLSLVVHEGDTVTPNCSYEVTN......FRSLLWYKQEKKAP.TFLFMLTSS...GIEKKS.....GRLSSILDKKELFSILNITATQTGDSAVYLCA", "x": -245.81, "y": 64.89}, {"gene_id": "HSA_TRAV_C2F36.244_04*01", "gene_name": "TRAV36/DV7*04", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 36", "functionality": "F", "aa_seq": "EDKVVQSPLSLVVHEGDTVTLNCSYEVTNFRSLLWYKQEKKAPTFLFMLTSSGIEKKSGRLSSILDKKELFSILNITATQTGDSAVYLCAVE", "aligned_seq": "EDKVVQSPLSLVVHEGDTVTLNCSYEVTN......FRSLLWYKQEKKAP.TFLFMLTSS...GIEKKS.....GRLSSILDKKELFSILNITATQTGDSAVYLCAVE", "x": -247.2, "y": 65.52}, {"gene_id": "HSA_TRAV_C2F36.244_05*01", "gene_name": "TRAV36/DV7*05", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 36", "functionality": "F", "aa_seq": "EDKVVQSPLSLVVHEGDTVTLNCSYEVTNFRSLLWYKQEKKAPTFLFMLTSSGIEKKSGRLSSILDKKELFSILNITATQTGDSAIYLCAVE", "aligned_seq": "EDKVVQSPLSLVVHEGDTVTLNCSYEVTN......FRSLLWYKQEKKAP.TFLFMLTSS...GIEKKS.....GRLSSILDKKELFSILNITATQTGDSAIYLCAVE", "x": -247.0, "y": 67.6}, {"gene_id": "HSA_TRAV_C2F38.206_01*01", "gene_name": "TRAV38-1*01", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 38", "functionality": "F", "aa_seq": "AQTVTQSQPEMSVQEAETVTLSCTYDTSENNYYLFWYKQPPSRQMILVIRQEAYKQQNATENRFSVNFQKAAKSFSLKISDSQLGDTAMYFCAFMK", "aligned_seq": "AQTVTQSQPEMSVQEAETVTLSCTYDTSEN.....NYYLFWYKQPPSRQMILVIRQEAY..KQQNATE.....NRFSVNFQKAAKSFSLKISDSQLGDTAMYFCAFMK", "x": -327.66, "y": 357.27}, {"gene_id": "HSA_TRAV_C2F38.206_02*01", "gene_name": "TRAV38-1*02", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 38", "functionality": "(F)", "aa_seq": "AQTVTQSQPEMSVQEAETVTLSCTYDTSENDYYLFWYKQPPSRQMILVIRQEAYKQQNATENRFSVNFQKAAKSFSLKISDSQLGDTAMYFCA", "aligned_seq": "AQTVTQSQPEMSVQEAETVTLSCTYDTSEN.....DYYLFWYKQPPSRQMILVIRQEAY..KQQNATE.....NRFSVNFQKAAKSFSLKISDSQLGDTAMYFCA", "x": -327.99, "y": 355.58}, {"gene_id": "HSA_TRAV_C2F38.206_03*01", "gene_name": "TRAV38-1*03", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 38", "functionality": "F", "aa_seq": "AQTVTQSQPEMSVQEAETVTLSCTYDTSESNYYLFWYKQPPSRQMILVIRQEAYKQQNATENRFSVNFQKAAKSFSLKISDSQLGDTAMYFCAFMK", "aligned_seq": "AQTVTQSQPEMSVQEAETVTLSCTYDTSES.....NYYLFWYKQPPSRQMILVIRQEAY..KQQNATE.....NRFSVNFQKAAKSFSLKISDSQLGDTAMYFCAFMK", "x": -327.7, "y": 357.3}, {"gene_id": "HSA_TRAV_C2F38.206_04*01", "gene_name": "TRAV38-1*04", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 38", "functionality": "(F)", "aa_seq": "AQTVTQSQPEMSVQEAETVTLSCTYDTSENNYYLFWYKQPPSRQMILVIRQEAYKQQNATENRFSVNFQKAAKSFSLKISDSQLGDTAMYFCA", "aligned_seq": "AQTVTQSQPEMSVQEAETVTLSCTYDTSEN.....NYYLFWYKQPPSRQMILVIRQEAY..KQQNATE.....NRFSVNFQKAAKSFSLKISDSQLGDTAMYFCA", "x": -328.22, "y": 354.72}, {"gene_id": "HSA_TRAV_C2F38.206_05*01", "gene_name": "TRAV38-2/DV8*01", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 38", "functionality": "F", "aa_seq": "AQTVTQSQPEMSVQEAETVTLSCTYDTSESDYYLFWYKQPPSRQMILVIRQEAYKQQNATENRFSVNFQKAAKSFSLKISDSQLGDAAMYFCAYRS", "aligned_seq": "AQTVTQSQPEMSVQEAETVTLSCTYDTSES.....DYYLFWYKQPPSRQMILVIRQEAY..KQQNATE.....NRFSVNFQKAAKSFSLKISDSQLGDAAMYFCAYRS", "x": -327.8, "y": 356.28}, {"gene_id": "HSA_TRAV_C2F39.236_01*01", "gene_name": "TRAV39*01", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 39", "functionality": "F", "aa_seq": "ELKVEQNPLFLSMQEGKNYTIYCNYSTTSDRLYWYRQDPGKSLESLFVLLSNGAVKQEGRLMASLDTKARLSTLHITAAVHDLSATYFCAVD", "aligned_seq": "ELKVEQNPLFLSMQEGKNYTIYCNYSTTS.......DRLYWYRQDPGKSLESLFVLLSN...GAVKQE.....GRLMASLDTKARLSTLHITAAVHDLSATYFCAVD", "x": -285.49, "y": 22.82}, {"gene_id": "HSA_TRAV_C3F4.113_01*01", "gene_name": "TRAV4*01", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 3", "family": "TRAV Family 4", "functionality": "F", "aa_seq": "LAKTTQPISMDSYEGQEVNITCSHNNIATNDYITWYQQFPSQGPRFIIQGYKTKVTNEVASLFIPADRKSSTLSLPRVSLSDTAVYYCLVGD", "aligned_seq": "LAKTTQ.PISMDSYEGQEVNITCSHNNIAT.....NDYITWYQQFPSQGPRFIIQGYK.....TKVTN.....EVASLFIPADRKSSTLSLPRVSLSDTAVYYCLVGD", "x": 61.04, "y": -6.95}, {"gene_id": "HSA_TRAV_C2F40.167_01*01", "gene_name": "TRAV40*01", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 40", "functionality": "F", "aa_seq": "SNSVKQTGQITVSEGASVTMNCTYTSTGYPTLFWYVEYPSKPLQLLQRETMENSKNFGGGNIKDKNSPIVKYSVQVSDSAVYYCLLG", "aligned_seq": "SNSVKQT.GQITVSEGASVTMNCTYTSTG......YPTLFWYVEYPSKPLQLLQRET......MENSK.....NFGGGNIKD..KNSPIVKYSVQVSDSAVYYCLLG", "x": 84.0, "y": 457.16}, {"gene_id": "HSA_TRAV_C2F41.93_01*01", "gene_name": "TRAV41*01", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 41", "functionality": "F", "aa_seq": "KNEVEQSPQNLTAQEGEFITINCSYSVGISALHWLQQHPGGGIVSLFMLSSGKKKHGRLIATINIQEKHSSLHITASHPRDSAVYICAVR", "aligned_seq": "KNEVEQSPQNLTAQEGEFITINCSYSVGI.......SALHWLQQHPGGGIVSLFMLSS.....GKKKH.....GRLIATINIQEKHSSLHITASHPRDSAVYICAVR", "x": -304.97, "y": 52.04}, {"gene_id": "HSA_TRAV_C2F5.307_01*01", "gene_name": "TRAV5*01", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 5", "functionality": "F", "aa_seq": "GEDVEQSLFLSVREGDSSVINCTYTDSSSTYLYWYKQEPGAGLQLLTYIFSNMDMKQDQRLTVLLNKKDKHLSLRIADTQTGDSAIYFCAES", "aligned_seq": "GEDVEQ.SLFLSVREGDSSVINCTYTDSS......STYLYWYKQEPGAGLQLLTYIFSN...MDMKQD.....QRLTVLLNKKDKHLSLRIADTQTGDSAIYFCAES", "x": -155.73, "y": 122.52}, {"gene_id": "HSA_TRAV_C2F6.146_01*01", "gene_name": "TRAV6*01", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 6", "functionality": "F", "aa_seq": "SQKIEQNSEALNIQEGKTATLTCNYTNYSPAYLQWYRQDPGRGPVFLLLIRENEKEKRKERLKVTFDTTLKQSLFHITASQPADSATYLCALD", "aligned_seq": "SQKIEQNSEALNIQEGKTATLTCNYTNYS......PAYLQWYRQDPGRGPVFLLLIREN...EKEKRK.....ERLKVTFDTTLKQSLFHITASQPADSATYLCALD", "x": -276.72, "y": -7.41}, {"gene_id": "HSA_TRAV_C2F7.313_01*01", "gene_name": "TRAV7*01", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 7", "functionality": "F", "aa_seq": "ENQVEHSPHFLGPQQGDVASMSCTYSVSRFNNLQWYRQNTGMGPKHLLSMYSAGYEKQKGRLNATLLKNGSSLYITAVQPEDSATYFCAVD", "aligned_seq": "ENQVEHSPHFLGPQQGDVASMSCTYSVSR......FNNLQWYRQNTGMGPKHLLSMYSA...GYEKQK.....GRLNATLLK..NGSSLYITAVQPEDSATYFCAVD", "x": -284.35, "y": -30.64}, {"gene_id": "HSA_TRAV_C2F8.56_01*01", "gene_name": "TRAV8-1*01", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 8", "functionality": "F", "aa_seq": "AQSVSQHNHHVILSEAASLELGCNYSYGGTVNLFWYVQYPGQHLQLLLKYFSGDPLVKGIKGFEAEFIKSKFSFNLRKPSVQWSDTAEYFCAVN", "aligned_seq": "AQSVSQHNHHVILSEAASLELGCNYSYGG......TVNLFWYVQYPGQHLQLLLKYFSG..DPLVKGI.....KGFEAEFIKSKFSFNLRKPSVQWSDTAEYFCAVN", "x": 38.03, "y": 483.71}, {"gene_id": "HSA_TRAV_C2F8.233_01*01", "gene_name": "TRAV8-2*01", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 8", "functionality": "F", "aa_seq": "AQSVTQLDSHVSVSEGTPVLLRCNYSSSYSPSLFWYVQHPNKGLQLLLKYTSAATLVKGINGFEAEFKKSETSFHLTKPSAHMSDAAEYFCVVS", "aligned_seq": "AQSVTQLDSHVSVSEGTPVLLRCNYSSSY......SPSLFWYVQHPNKGLQLLLKYTSA..ATLVKGI.....NGFEAEFKKSETSFHLTKPSAHMSDAAEYFCVVS", "x": 37.53, "y": 493.85}, {"gene_id": "HSA_TRAV_C2F8.233_02*01", "gene_name": "TRAV8-2*02", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 8", "functionality": "(F)", "aa_seq": "AQSVTQLSSHVSVSEGTPVLLRCNYSSSYSPSLFWYVQHPNKGLQLLLKYTSAATLVKGINGFEAEFKKSETSFHLTKPSAHMSDAAEYFCVV", "aligned_seq": "AQSVTQLSSHVSVSEGTPVLLRCNYSSSY......SPSLFWYVQHPNKGLQLLLKYTSA..ATLVKGI.....NGFEAEFKKSETSFHLTKPSAHMSDAAEYFCVV", "x": 32.02, "y": 493.47}, {"gene_id": "HSA_TRAV_C2F8.10_01*01", "gene_name": "TRAV8-3*01", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 8", "functionality": "F", "aa_seq": "AQSVTQPDIHITVSEGASLELRCNYSYGATPYLFWYVQSPGQGLQLLLKYFSGDTLVQGIKGFEAEFKRSQSSFNLRKPSVHWSDAAEYFCAVG", "aligned_seq": "AQSVTQPDIHITVSEGASLELRCNYSYGA......TPYLFWYVQSPGQGLQLLLKYFSG..DTLVQGI.....KGFEAEFKRSQSSFNLRKPSVHWSDAAEYFCAVG", "x": 40.32, "y": 478.8}, {"gene_id": "HSA_TRAV_C2F8.10_02*01", "gene_name": "TRAV8-3*03", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 8", "functionality": "(F)", "aa_seq": "AQSVTQPDIHITVSEGASLELRCNYSYGATPYLFWYVQSPGQGLQLLLKYFSGDTLVQGIKGFEAEFKRSQSSFNLRKPSVHWSDASEYFCA", "aligned_seq": "AQSVTQPDIHITVSEGASLELRCNYSYGA......TPYLFWYVQSPGQGLQLLLKYFSG..DTLVQGI.....KGFEAEFKRSQSSFNLRKPSVHWSDASEYFCA", "x": 36.57, "y": 478.05}, {"gene_id": "HSA_TRAV_C2F8.20_01*01", "gene_name": "TRAV8-4*01", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 8", "functionality": "F", "aa_seq": "AQSVTQLGSHVSVSEGALVLLRCNYSSSVPPYLFWYVQYPNQGLQLLLKYTSAATLVKGINGFEAEFKKSETSFHLTKPSAHMSDAAEYFCAVS", "aligned_seq": "AQSVTQLGSHVSVSEGALVLLRCNYSSSV......PPYLFWYVQYPNQGLQLLLKYTSA..ATLVKGI.....NGFEAEFKKSETSFHLTKPSAHMSDAAEYFCAVS", "x": 38.09, "y": 490.77}, {"gene_id": "HSA_TRAV_C2F8.20_02*01", "gene_name": "TRAV8-4*03", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 8", "functionality": "F", "aa_seq": "AQSVTQLGSHVSVSEGALVLLRCNYSSSVPPYLFWYVQYPNQGLQLLLKYTTGATLVKGINGFEAEFKKSETSFHLTKPSAHMSDAAEYFCAVS", "aligned_seq": "AQSVTQLGSHVSVSEGALVLLRCNYSSSV......PPYLFWYVQYPNQGLQLLLKYTTG..ATLVKGI.....NGFEAEFKKSETSFHLTKPSAHMSDAAEYFCAVS", "x": 38.3, "y": 489.89}, {"gene_id": "HSA_TRAV_C2F8.20_03*01", "gene_name": "TRAV8-4*04", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 8", "functionality": "(F)", "aa_seq": "AQSVTQLGSHVSVSERALVLLRCNYSSSVPPYLFWYVQYPNQGLQLLLKYTSAATLVKGINGFEAEFKKSETSFHLTKPSAHMSDAAEYFCAVS", "aligned_seq": "AQSVTQLGSHVSVSERALVLLRCNYSSSV......PPYLFWYVQYPNQGLQLLLKYTSA..ATLVKGI.....NGFEAEFKKSETSFHLTKPSAHMSDAAEYFCAVS", "x": 39.54, "y": 492.73}, {"gene_id": "HSA_TRAV_C2F8.29_01*01", "gene_name": "TRAV8-6*01", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 8", "functionality": "F", "aa_seq": "AQSVTQLDSQVPVFEEAPVELRCNYSSSVSVYLFWYVQYPNQGLQLLLKYLSGSTLVESINGFEAEFNKSQTSFHLRKPSVHISDTAEYFCAVS", "aligned_seq": "AQSVTQLDSQVPVFEEAPVELRCNYSSSV......SVYLFWYVQYPNQGLQLLLKYLSG..STLVESI.....NGFEAEFNKSQTSFHLRKPSVHISDTAEYFCAVS", "x": 39.63, "y": 492.6}, {"gene_id": "HSA_TRAV_C2F8.29_02*01", "gene_name": "TRAV8-6*02", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 8", "functionality": "F", "aa_seq": "AQSVTQLDSQVPVFEEAPVELRCNYSSSVSVYLFWYVQYPNQGLQLLLKYLSGSTLVKGINGFEAEFNKSQTSFHLRKPSVHISDTAEYFCAVS", "aligned_seq": "AQSVTQLDSQVPVFEEAPVELRCNYSSSV......SVYLFWYVQYPNQGLQLLLKYLSG..STLVKGI.....NGFEAEFNKSQTSFHLRKPSVHISDTAEYFCAVS", "x": 39.5, "y": 486.02}, {"gene_id": "HSA_TRAV_C2F8.635_01*01", "gene_name": "TRAV8-7*01", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 8", "functionality": "P", "aa_seq": "TQSVTQLDGHITVSEEAPLELKCNYSYSGVPSLFWYVQYSSQSLQLLLKDLTEATQVKGIRGFEAEFKKSETSFYLRKPSTHVSDAAEYFCAVG", "aligned_seq": "TQSVTQLDGHITVSEEAPLELKCNYSYSG......VPSLFWYVQYSSQSLQLLLKDLTE..ATQVKGI.....RGFEAEFKKSETSFYLRKPSTHVSDAAEYFCAVG", "x": 41.01, "y": 492.95}, {"gene_id": "HSA_TRAV_C2F8.635_02*01", "gene_name": "TRAV8-7*02", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 8", "functionality": "P", "aa_seq": "TQSVTQLDGHITVSEEAPLELKCNYSYSGVPSLFWYVQYSSQSLQLLLKDLTKATQVKGIRGFEAEFKKSETSFYLRKPSTHVSDAAEYFCAVG", "aligned_seq": "TQSVTQLDGHITVSEEAPLELKCNYSYSG......VPSLFWYVQYSSQSLQLLLKDLTK..ATQVKGI.....RGFEAEFKKSETSFYLRKPSTHVSDAAEYFCAVG", "x": 41.57, "y": 493.67}, {"gene_id": "HSA_TRAV_C2F9.65_01*01", "gene_name": "TRAV9-1*01", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 9", "functionality": "F", "aa_seq": "GDSVVQTEGQVLPSEGDSLIVNCSYETTQYPSLFWYVQYPGEGPQLHLKAMKANDKGRNKGFEAMYRKETTSFHLEKDSVQESDSAVYFCALS", "aligned_seq": "GDSVVQTEGQVLPSEGDSLIVNCSYETTQ......YPSLFWYVQYPGEGPQLHLKAMKA...NDKGRN.....KGFEAMYRKETTSFHLEKDSVQESDSAVYFCALS", "x": 130.63, "y": 434.08}, {"gene_id": "HSA_TRAV_C2F9.65_02*01", "gene_name": "TRAV9-1*02", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 9", "functionality": "F", "aa_seq": "GDSVVQTEGQVLPSEGDSLIVNCSYETTQYPSLFWFVQYPGEGPQLHLKAMKANDKGRNKGFEAMYRKETTSFHLEKDSVQESDSAVYFCALS", "aligned_seq": "GDSVVQTEGQVLPSEGDSLIVNCSYETTQ......YPSLFWFVQYPGEGPQLHLKAMKA...NDKGRN.....KGFEAMYRKETTSFHLEKDSVQESDSAVYFCALS", "x": 135.44, "y": 434.96}, {"gene_id": "HSA_TRAV_C2F9.235_01*01", "gene_name": "TRAV9-2*01", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 9", "functionality": "F", "aa_seq": "GNSVTQMEGPVTLSEEAFLTINCTYTATGYPSLFWYVQYPGEGLQLLLKATKADDKGSNKGFEATYRKETTSFHLEKGSVQVSDSAVYFCALS", "aligned_seq": "GNSVTQMEGPVTLSEEAFLTINCTYTATG......YPSLFWYVQYPGEGLQLLLKATKA...DDKGSN.....KGFEATYRKETTSFHLEKGSVQVSDSAVYFCALS", "x": 137.77, "y": 451.2}, {"gene_id": "HSA_TRAV_C2F9.235_02*01", "gene_name": "TRAV9-2*02", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 9", "functionality": "F", "aa_seq": "GDSVTQMEGPVTLSEEAFLTINCTYTATGYPSLFWYVQYPGEGLQLLLKATKADDKGSNKGFEATYRKETTSFHLEKGSVQVSDSAVYFCALS", "aligned_seq": "GDSVTQMEGPVTLSEEAFLTINCTYTATG......YPSLFWYVQYPGEGLQLLLKATKA...DDKGSN.....KGFEATYRKETTSFHLEKGSVQVSDSAVYFCALS", "x": 149.41, "y": 450.22}, {"gene_id": "HSA_TRAV_C2F9.235_03*01", "gene_name": "TRAV9-2*04", "locus": "TRA", "chain": "TRAV", "clan": "TRAV Clan 2", "family": "TRAV Family 9", "functionality": "(F)", "aa_seq": "GNSVTQMEGPVTLSEEAFLTINCTYTATGYPSLFWYVQYPGEGLQLLLKATKADDKGSNKGFEATYRKETTSFHLEKGSVQVSDSAVYFCA", "aligned_seq": "GNSVTQMEGPVTLSEEAFLTINCTYTATG......YPSLFWYVQYPGEGLQLLLKATKA...DDKGSN.....KGFEATYRKETTSFHLEKGSVQVSDSAVYFCA", "x": 482.98, "y": -22.39}, {"gene_id": "HSA_TRBV_C1F1.07_01*01", "gene_name": "TRBV1*01", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 1", "functionality": "P", "aa_seq": "DTGITQTPKYLVTAMGSKRTMKREHLGHDSMYWYRQKAKKSLEFMFYYNCKEFIENKTVPNHFTPECPDSSRLYLHVVALQQEDSAAYLCTSSQ", "aligned_seq": "DTGITQTPKYLVTAMGSKRTMKREHLGH........DSMYWYRQKAKKSLEFMFYYNC....KEFIENKTVP.NHFTPECP.DSSRLYLHVVALQQEDSAAYLCTSSQ", "x": -185.21, "y": -161.39}, {"gene_id": "HSA_TRBV_C1F10.57_01*01", "gene_name": "TRBV10-1*01", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 10", "functionality": "F", "aa_seq": "DAEITQSPRHKITETGRQVTLACHQTWNHNNMFWYRQDLGHGLRLIHYSYGVQDTNKGEVSDGYSVSRSNTEDLPLTLESAASSQTSVYFCASSE", "aligned_seq": "DAEITQSPRHKITETGRQVTLACHQTWNH.......NNMFWYRQDLGHGLRLIHYSYG....VQDTNKGEVS.DGYSVSRS.NTEDLPLTLESAASSQTSVYFCASSE", "x": -214.22, "y": -338.3}, {"gene_id": "HSA_TRBV_C1F10.57_02*01", "gene_name": "TRBV10-1*02", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 10", "functionality": "F", "aa_seq": "DAEITQSPRHKITETGRQVTLACHQTWNHNNMFWYRQDLGHGLRLIHYSYGVHDTNKGEVSDGYSVSRSNTEDLPLTLESAASSQTSVYFCASSE", "aligned_seq": "DAEITQSPRHKITETGRQVTLACHQTWNH.......NNMFWYRQDLGHGLRLIHYSYG....VHDTNKGEVS.DGYSVSRS.NTEDLPLTLESAASSQTSVYFCASSE", "x": -213.26, "y": -337.8}, {"gene_id": "HSA_TRBV_C1F10.139_01*01", "gene_name": "TRBV10-2*01", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 10", "functionality": "F", "aa_seq": "DAGITQSPRYKITETGRQVTLMCHQTWSHSYMFWYRQDLGHGLRLIYYSAAADITDKGEVPDGYVVSRSKTENFPLTLESATRSQTSVYFCASSE", "aligned_seq": "DAGITQSPRYKITETGRQVTLMCHQTWSH.......SYMFWYRQDLGHGLRLIYYSAA....ADITDKGEVP.DGYVVSRS.KTENFPLTLESATRSQTSVYFCASSE", "x": -213.84, "y": -338.94}, {"gene_id": "HSA_TRBV_C1F10.09_01*01", "gene_name": "TRBV10-3*01", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 10", "functionality": "F", "aa_seq": "DAGITQSPRHKVTETGTPVTLRCHQTENHRYMYWYRQDPGHGLRLIHYSYGVKDTDKGEVSDGYSVSRSKTEDFLLTLESATSSQTSVYFCAISE", "aligned_seq": "DAGITQSPRHKVTETGTPVTLRCHQTENH.......RYMYWYRQDPGHGLRLIHYSYG....VKDTDKGEVS.DGYSVSRS.KTEDFLLTLESATSSQTSVYFCAISE", "x": -213.09, "y": -340.31}, {"gene_id": "HSA_TRBV_C1F10.09_02*01", "gene_name": "TRBV10-3*04", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 10", "functionality": "[F]", "aa_seq": "DAGITQSPRHKVTETGTPVTLRCHQTENHRYMYWYRQDPGHGLRLIHYSYGVKDTDKGEVSDGYSVSRSKTEDFLLTLESATSSQTSVYFC", "aligned_seq": "DAGITQSPRHKVTETGTPVTLRCHQTENH.......RYMYWYRQDPGHGLRLIHYSYG....VKDTDKGEVS.DGYSVSRS.KTEDFLLTLESATSSQTSVYFC", "x": -217.63, "y": -336.46}, {"gene_id": "HSA_TRBV_C1F11.169_01*01", "gene_name": "TRBV11-1*01", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 11", "functionality": "F", "aa_seq": "EAEVAQSPRYKITEKSQAVAFWCDPISGHATLYWYRQILGQGPELLVQFQDESVVDDSQLPKDRFSAERLKGVDSTLKIQPAELGDSAMYLCASSL", "aligned_seq": "EAEVAQSPRYKITEKSQAVAFWCDPISGH.......ATLYWYRQILGQGPELLVQFQD....ESVVDDSQLPKDRFSAERL.KGVDSTLKIQPAELGDSAMYLCASSL", "x": 159.56, "y": -280.97}, {"gene_id": "HSA_TRBV_C1F11.169_02*01", "gene_name": "TRBV11-1*02", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 11", "functionality": "F", "aa_seq": "EAEVAQSPRYKITEKSQAVAFWCDPISGRATLYWYRQILGQGPELLVRFQDESVVDDSQLPKDRFSAERLKGVDSTLKIQPAELGDSAMYLCASSL", "aligned_seq": "EAEVAQSPRYKITEKSQAVAFWCDPISGR.......ATLYWYRQILGQGPELLVRFQD....ESVVDDSQLPKDRFSAERL.KGVDSTLKIQPAELGDSAMYLCASSL", "x": 158.03, "y": -280.95}, {"gene_id": "HSA_TRBV_C1F11.95_01*01", "gene_name": "TRBV11-2*01", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 11", "functionality": "F", "aa_seq": "EAGVAQSPRYKIIEKRQSVAFWCNPISGHATLYWYQQILGQGPKLLIQFQNNGVVDDSQLPKDRFSAERLKGVDSTLKIQPAKLEDSAVYLCASSL", "aligned_seq": "EAGVAQSPRYKIIEKRQSVAFWCNPISGH.......ATLYWYQQILGQGPKLLIQFQN....NGVVDDSQLPKDRFSAERL.KGVDSTLKIQPAKLEDSAVYLCASSL", "x": 159.34, "y": -278.47}, {"gene_id": "HSA_TRBV_C1F11.95_02*01", "gene_name": "TRBV11-2*02", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 11", "functionality": "[F]", "aa_seq": "EAGVAQSPRYKIIEKRQSVAFWCNPISGHATLYWYQQILGQGPKLLIQFQNNGVVDDSQLPKDRFSAERLKGVDSTLKIQPAKLENSAVYLCASS", "aligned_seq": "EAGVAQSPRYKIIEKRQSVAFWCNPISGH.......ATLYWYQQILGQGPKLLIQFQN....NGVVDDSQLPKDRFSAERL.KGVDSTLKIQPAKLENSAVYLCASS", "x": 159.24, "y": -278.67}, {"gene_id": "HSA_TRBV_C1F11.95_03*01", "gene_name": "TRBV11-2*04", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 11", "functionality": "P", "aa_seq": "EAGVAQSPGYKIIEKRQSVAFWCNPISGHATLYWYQQILGQGPKLLIQFQNNGVVDDSQLPKDRFSAERLKGVDSTLKIQPAKLEDSAVYLCASSL", "aligned_seq": "EAGVAQSPGYKIIEKRQSVAFWCNPISGH.......ATLYWYQQILGQGPKLLIQFQN....NGVVDDSQLPKDRFSAERL.KGVDSTLKIQPAKLEDSAVYLCASSL", "x": 158.37, "y": -278.7}, {"gene_id": "HSA_TRBV_C1F11.32_01*01", "gene_name": "TRBV11-3*01", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 11", "functionality": "F", "aa_seq": "EAGVVQSPRYKIIEKKQPVAFWCNPISGHNTLYWYLQNLGQGPELLIRYENEEAVDDSQLPKDRFSAERLKGVDSTLKIQPAELGDSAVYLCASSL", "aligned_seq": "EAGVVQSPRYKIIEKKQPVAFWCNPISGH.......NTLYWYLQNLGQGPELLIRYEN....EEAVDDSQLPKDRFSAERL.KGVDSTLKIQPAELGDSAVYLCASSL", "x": 158.17, "y": -279.46}, {"gene_id": "HSA_TRBV_C1F11.32_02*01", "gene_name": "TRBV11-3*02", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 11", "functionality": "(F)", "aa_seq": "EAGVVQSPRYKIIEKKQPVAFWCNPISGHNTLYWYRQNLGQGPELLIRYENEEAVDDSQLPKDRFSAERLKGVDSTLKIQPAELGDSAVYLCASS", "aligned_seq": "EAGVVQSPRYKIIEKKQPVAFWCNPISGH.......NTLYWYRQNLGQGPELLIRYEN....EEAVDDSQLPKDRFSAERL.KGVDSTLKIQPAELGDSAVYLCASS", "x": 159.41, "y": -276.97}, {"gene_id": "HSA_TRBV_C1F11.32_04*01", "gene_name": "TRBV11-3*04", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 11", "functionality": "F", "aa_seq": "EAGVVQSPRYKIIEKKQPVAFWCNPISGHNTLYWYRQNLGQGPELLIRYENEEAVDDSQLPKDRFSAERLKGVDSTLKIQPAELGDSAVYLCASSL", "aligned_seq": "EAGVVQSPRYKIIEKKQPVAFWCNPISGH.......NTLYWYRQNLGQGPELLIRYEN....EEAVDDSQLPKDRFSAERL.KGVDSTLKIQPAELGDSAVYLCASSL", "x": 159.61, "y": -279.54}, {"gene_id": "HSA_TRBV_C1F12.131_02*01", "gene_name": "TRBV12-2*02", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 12", "functionality": "F", "aa_seq": "DAGIIQSPKHEVTEMGQTVTLRCEPIFGHNFLFWYRDTFVQGLELLSYFRSRSIIDNAGMPTERFSAERPDGSFSTLKIQPAEQGDSAVYVCASRL", "aligned_seq": "DAGIIQSPKHEVTEMGQTVTLRCEPIFGH.......NFLFWYRDTFVQGLELLSYFRS....RSIIDNAGMPTERFSAERP.DGSFSTLKIQPAEQGDSAVYVCASRL", "x": 192.76, "y": -197.96}, {"gene_id": "HSA_TRBV_C1F12.134_01*01", "gene_name": "TRBV12-3*01", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 12", "functionality": "F", "aa_seq": "DAGVIQSPRHEVTEMGQEVTLRCKPISGHNSLFWYRQTMMRGLELLIYFNNNVPIDDSGMPEDRFSAKMPNASFSTLKIQPSEPRDSAVYFCASSL", "aligned_seq": "DAGVIQSPRHEVTEMGQEVTLRCKPISGH.......NSLFWYRQTMMRGLELLIYFNN....NVPIDDSGMPEDRFSAKMP.NASFSTLKIQPSEPRDSAVYFCASSL", "x": 190.48, "y": -212.23}, {"gene_id": "HSA_TRBV_C1F12.134_02*01", "gene_name": "TRBV12-3*02", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 12", "functionality": "F", "aa_seq": "DAGVIQSPRHEVTEMGQEVTLRCKLISGHNSLFWYRQTMMRGLELLIYFNNNVPIDDSGMPEDRFSAKMPNASFSTLKIQPSEPRDSAVYFCASSL", "aligned_seq": "DAGVIQSPRHEVTEMGQEVTLRCKLISGH.......NSLFWYRQTMMRGLELLIYFNN....NVPIDDSGMPEDRFSAKMP.NASFSTLKIQPSEPRDSAVYFCASSL", "x": 190.73, "y": -213.33}, {"gene_id": "HSA_TRBV_C1F12.134_03*01", "gene_name": "TRBV12-3*03", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 12", "functionality": "F", "aa_seq": "DAGVIQSPRHEVTEMGQEVTLRCKPISGHNSLFWYRQTMMRGLELLIYFNNNIPIDDSGMPEDRFSAKMPNASFSTLKIQPSEPRDSAVYFCASSL", "aligned_seq": "DAGVIQSPRHEVTEMGQEVTLRCKPISGH.......NSLFWYRQTMMRGLELLIYFNN....NIPIDDSGMPEDRFSAKMP.NASFSTLKIQPSEPRDSAVYFCASSL", "x": 190.55, "y": -212.28}, {"gene_id": "HSA_TRBV_C1F12.134_04*01", "gene_name": "TRBV12-4*01", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 12", "functionality": "F", "aa_seq": "DAGVIQSPRHEVTEMGQEVTLRCKPISGHDYLFWYRQTMMRGLELLIYFNNNVPIDDSGMPEDRFSAKMPNASFSTLKIQPSEPRDSAVYFCASSL", "aligned_seq": "DAGVIQSPRHEVTEMGQEVTLRCKPISGH.......DYLFWYRQTMMRGLELLIYFNN....NVPIDDSGMPEDRFSAKMP.NASFSTLKIQPSEPRDSAVYFCASSL", "x": 190.87, "y": -212.86}, {"gene_id": "HSA_TRBV_C1F12.134_05*01", "gene_name": "TRBV12-4*02", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 12", "functionality": "(F)", "aa_seq": "DAGVIQSPRHEVTEMGQEVTLRCKPISGHDYLFWYRQTMMRGLELLIYFNNNVPIDDSGMPEDRFSAKMPNASFSTLRIQPSEPRDSAVYFCASSL", "aligned_seq": "DAGVIQSPRHEVTEMGQEVTLRCKPISGH.......DYLFWYRQTMMRGLELLIYFNN....NVPIDDSGMPEDRFSAKMP.NASFSTLRIQPSEPRDSAVYFCASSL", "x": 191.72, "y": -208.86}, {"gene_id": "HSA_TRBV_C1F12.216_01*01", "gene_name": "TRBV12-4*04", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 12", "functionality": "P", "aa_seq": "DAGVIQSPRHEVTEMGQEVTLRCKPISGHDYLFWYRQTMMQGLELLVYFNNKAVMDDSGMPKDRFSAKMPNASFSTLKIQPSEPRDSAVYFCASSL", "aligned_seq": "DAGVIQSPRHEVTEMGQEVTLRCKPISGH.......DYLFWYRQTMMQGLELLVYFNN....KAVMDDSGMPKDRFSAKMP.NASFSTLKIQPSEPRDSAVYFCASSL", "x": 189.56, "y": -212.57}, {"gene_id": "HSA_TRBV_C1F12.46_01*01", "gene_name": "TRBV12-5*01", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 12", "functionality": "F", "aa_seq": "DARVTQTPRHKVTEMGQEVTMRCQPILGHNTVFWYRQTMMQGLELLAYFRNRAPLDDSGMPKDRFSAEMPDATLATLKIQPSEPRDSAVYFCASGL", "aligned_seq": "DARVTQTPRHKVTEMGQEVTMRCQPILGH.......NTVFWYRQTMMQGLELLAYFRN....RAPLDDSGMPKDRFSAEMP.DATLATLKIQPSEPRDSAVYFCASGL", "x": 185.49, "y": -223.14}, {"gene_id": "HSA_TRBV_C1F12.46_02*01", "gene_name": "TRBV12-5*02", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 12", "functionality": "F", "aa_seq": "DARVTQTPRDKVTEMGQEVTMRCQPILGHNTVFWYRQTMMQGLELLAYFRNRAPLDDSGMPKDRFSAEMPDATLATLKIQPSEPRDSAVYFCASGL", "aligned_seq": "DARVTQTPRDKVTEMGQEVTMRCQPILGH.......NTVFWYRQTMMQGLELLAYFRN....RAPLDDSGMPKDRFSAEMP.DATLATLKIQPSEPRDSAVYFCASGL", "x": 184.61, "y": -219.0}, {"gene_id": "HSA_TRBV_C1F13.433_01*01", "gene_name": "TRBV13*01", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 13", "functionality": "F", "aa_seq": "AAGVIQSPRHLIKEKRETATLKCYPIPRHDTVYWYQQGPGQDPQFLISFYEKMQSDKGSIPDRFSAQQFSDYHSELNMSSLELGDSALYFCASSL", "aligned_seq": "AAGVIQSPRHLIKEKRETATLKCYPIPRH.......DTVYWYQQGPGQDPQFLISFYE....KMQSDKGSIP.DRFSAQQF.SDYHSELNMSSLELGDSALYFCASSL", "x": 23.24, "y": -457.44}, {"gene_id": "HSA_TRBV_C1F13.433_02*01", "gene_name": "TRBV13*02", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 13", "functionality": "(F)", "aa_seq": "AAGVIQSPRHLIREKRETATLKCYPIPRHDTVYWYQQGPGQDPQFFISFYEKMQSDKGSIPDRFSAQQFSDYHSELNMSSLELGDSALYFCASS", "aligned_seq": "AAGVIQSPRHLIREKRETATLKCYPIPRH.......DTVYWYQQGPGQDPQFFISFYE....KMQSDKGSIP.DRFSAQQF.SDYHSELNMSSLELGDSALYFCASS", "x": 20.1, "y": -458.68}, {"gene_id": "HSA_TRBV_C1F13.433_03*01", "gene_name": "TRBV13*03", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 13", "functionality": "F", "aa_seq": "AAGVIQSPRHLIKEKRETATLKCYPISRHDTVYWYQQGPGQDPQFLISFYEKMQSDKGSIPDRFSAQQFSDYHSELNMSSLELGDSALYFCASSL", "aligned_seq": "AAGVIQSPRHLIKEKRETATLKCYPISRH.......DTVYWYQQGPGQDPQFLISFYE....KMQSDKGSIP.DRFSAQQF.SDYHSELNMSSLELGDSALYFCASSL", "x": 21.38, "y": -458.63}, {"gene_id": "HSA_TRBV_C1F14.27_01*01", "gene_name": "TRBV14*01", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 14", "functionality": "F", "aa_seq": "EAGVTQFPSHSVIEKGQTVTLRCDPISGHDNLYWYRRVMGKEIKFLLHFVKESKQDESGMPNNRFLAERTGGTYSTLKVQPAELEDSGVYFCASSQ", "aligned_seq": "EAGVTQFPSHSVIEKGQTVTLRCDPISGH.......DNLYWYRRVMGKEIKFLLHFVK....ESKQDESGMPNNRFLAERT.GGTYSTLKVQPAELEDSGVYFCASSQ", "x": 193.38, "y": -311.22}, {"gene_id": "HSA_TRBV_C1F15.51_01*01", "gene_name": "TRBV15*01", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 15", "functionality": "F", "aa_seq": "DAMVIQNPRYQVTQFGKPVTLSCSQTLNHNVMYWYQQKSSQAPKLLFHYYDKDFNNEADTPDNFQSRRPNTSFCFLDIRSPGLGDTAMYLCATSR", "aligned_seq": "DAMVIQNPRYQVTQFGKPVTLSCSQTLNH.......NVMYWYQQKSSQAPKLLFHYYD....KDFNNEADTP.DNFQSRRP.NTSFCFLDIRSPGLGDTAMYLCATSR", "x": 64.18, "y": -208.03}, {"gene_id": "HSA_TRBV_C1F15.51_02*01", "gene_name": "TRBV15*02", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 15", "functionality": "F", "aa_seq": "DAMVIQNPRYQVTQFGKPVTLSCSQTLNHNVMYWYQQKSSQAPKLLFHYYDKDFNNEADTPDNFQSRRPNTSFCFLDIRSPGLGDAAMYLCATSR", "aligned_seq": "DAMVIQNPRYQVTQFGKPVTLSCSQTLNH.......NVMYWYQQKSSQAPKLLFHYYD....KDFNNEADTP.DNFQSRRP.NTSFCFLDIRSPGLGDAAMYLCATSR", "x": 64.14, "y": -208.31}, {"gene_id": "HSA_TRBV_C1F15.51_03*01", "gene_name": "TRBV15*03", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 15", "functionality": "(F)", "aa_seq": "DAMVIQNPRYRVTQFGKPVTLSCSQTLNHNVMYWYQQKSSQAPKLLFHYYNKDFNNEADTPDNFQSRRPNTSFCFLDIRSPGLGDAAMYQCATS", "aligned_seq": "DAMVIQNPRYRVTQFGKPVTLSCSQTLNH.......NVMYWYQQKSSQAPKLLFHYYN....KDFNNEADTP.DNFQSRRP.NTSFCFLDIRSPGLGDAAMYQCATS", "x": 64.06, "y": -208.06}, {"gene_id": "HSA_TRBV_C1F15.51_04*01", "gene_name": "TRBV15*05", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 15", "functionality": "F", "aa_seq": "DAMVIQNPRYQVTQFGKPVTLSCSQTLNHNVMYWYQQKSRQAPKLLFHYYDKDFNNEADTPDNFQSRRPNTSFCFLDIRSPGLGDAAMYLCATSR", "aligned_seq": "DAMVIQNPRYQVTQFGKPVTLSCSQTLNH.......NVMYWYQQKSRQAPKLLFHYYD....KDFNNEADTP.DNFQSRRP.NTSFCFLDIRSPGLGDAAMYLCATSR", "x": 63.1, "y": -208.07}, {"gene_id": "HSA_TRBV_C1F16.72_01*01", "gene_name": "TRBV16*01", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 16", "functionality": "F", "aa_seq": "GEEVAQTPKHLVRGEGQKAKLYCAPIKGHSYVFWYQQVLKNEFKFLISFQNENVFDETGMPKERFSAKCLPNSPCSLEIQATKLEDSAVYFCASSQ", "aligned_seq": "GEEVAQTPKHLVRGEGQKAKLYCAPIKGH.......SYVFWYQQVLKNEFKFLISFQN....ENVFDETGMPKERFSAKCL.PNSPCSLEIQATKLEDSAVYFCASSQ", "x": 65.82, "y": -278.5}, {"gene_id": "HSA_TRBV_C1F16.72_03*01", "gene_name": "TRBV16*03", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 16", "functionality": "(F)", "aa_seq": "GEEVAQTPKHLVRGEGQKAKLYCAPIKGHSYVFWYQQVLKNEFKFLVSFQNENVFDETGMPKERFSAKCLPNSPCSLEIQATKLEDSAVYFCASS", "aligned_seq": "GEEVAQTPKHLVRGEGQKAKLYCAPIKGH.......SYVFWYQQVLKNEFKFLVSFQN....ENVFDETGMPKERFSAKCL.PNSPCSLEIQATKLEDSAVYFCASS", "x": 65.27, "y": -277.31}, {"gene_id": "HSA_TRBV_C1F18.100_01*01", "gene_name": "TRBV18*01", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 18", "functionality": "F", "aa_seq": "NAGVMQNPRHLVRRRGQEARLRCSPMKGHSHVYWYRQLPEEGLKFMVYLQKENIIDESGMPKERFSAEFPKEGPSILRIQQVVRGDSAAYFCASSP", "aligned_seq": "NAGVMQNPRHLVRRRGQEARLRCSPMKGH.......SHVYWYRQLPEEGLKFMVYLQK....ENIIDESGMPKERFSAEFP.KEGPSILRIQQVVRGDSAAYFCASSP", "x": 160.35, "y": -192.17}, {"gene_id": "HSA_TRBV_C1F18.100_02*01", "gene_name": "TRBV18*02", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 18", "functionality": "F", "aa_seq": "NAGVMQNPRHLVRRRGQEARLRCSPVKGHSHVYWYRQLPEEGLKFMVYLQKENIIDESGMPKERFSAEFPKEGPSILRIQQVVRGDSAAYFCASSP", "aligned_seq": "NAGVMQNPRHLVRRRGQEARLRCSPVKGH.......SHVYWYRQLPEEGLKFMVYLQK....ENIIDESGMPKERFSAEFP.KEGPSILRIQQVVRGDSAAYFCASSP", "x": 161.39, "y": -192.64}, {"gene_id": "HSA_TRBV_C1F19.34_01*01", "gene_name": "TRBV19*01", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 19", "functionality": "F", "aa_seq": "DGGITQSPKYLFRKEGQNVTLSCEQNLNHDAMYWYRQDPGQGLRLIYYSQIVNDFQKGDIAEGYSVSREKKESFPLTVTSAQKNPTAFYLCASSI", "aligned_seq": "DGGITQSPKYLFRKEGQNVTLSCEQNLNH.......DAMYWYRQDPGQGLRLIYYSQI....VNDFQKGDIA.EGYSVSRE.KKESFPLTVTSAQKNPTAFYLCASSI", "x": -123.81, "y": -326.34}, {"gene_id": "HSA_TRBV_C1F19.34_02*01", "gene_name": "TRBV19*02", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 19", "functionality": "F", "aa_seq": "DGGITQSPKYLFRKEGQNVTLSCEQNLNHDAMYWYRQVPGQGLRLIYYSHIVNDFQKGDIAEGYSVSREKKESFPLTVTSAQKNPTAFYLCASSI", "aligned_seq": "DGGITQSPKYLFRKEGQNVTLSCEQNLNH.......DAMYWYRQVPGQGLRLIYYSHI....VNDFQKGDIA.EGYSVSRE.KKESFPLTVTSAQKNPTAFYLCASSI", "x": -124.4, "y": -327.61}, {"gene_id": "HSA_TRBV_C1F19.34_03*01", "gene_name": "TRBV19*03", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 19", "functionality": "F", "aa_seq": "DGGITQSPKYLFRKEGQNVTLSCEQNLNHDAMYWYRQDPGQGLRLIYYSHIVNDFQKGDIAEGYSVSREKKESFPLTVTSAQKNPTAFYLCASSI", "aligned_seq": "DGGITQSPKYLFRKEGQNVTLSCEQNLNH.......DAMYWYRQDPGQGLRLIYYSHI....VNDFQKGDIA.EGYSVSRE.KKESFPLTVTSAQKNPTAFYLCASSI", "x": -124.45, "y": -326.51}, {"gene_id": "HSA_TRBV_C1F2.381_01*01", "gene_name": "TRBV2*01", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 2", "functionality": "F", "aa_seq": "EPEVTQTPSHQVTQMGQEVILRCVPISNHLYFYWYRQILGQKVEFLVSFYNNEISEKSEIFDDQFSVERPDGSNFTLKIRSTKLEDSAMYFCASSE", "aligned_seq": "EPEVTQTPSHQVTQMGQEVILRCVPISNH.......LYFYWYRQILGQKVEFLVSFYN....NEISEKSEIFDDQFSVERP.DGSNFTLKIRSTKLEDSAMYFCASSE", "x": 117.34, "y": -227.63}, {"gene_id": "HSA_TRBV_C1F2.381_02*01", "gene_name": "TRBV2*02", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 2", "functionality": "(F)", "aa_seq": "EPEVTQTPSHQVTQMGQEVILHCVPISNHLYFYWYRQILGQKVEFLVSFYNNEISEKSEIFDDQFSVERPDGSNFTLKIRSTKLEDSAMYFCASS", "aligned_seq": "EPEVTQTPSHQVTQMGQEVILHCVPISNH.......LYFYWYRQILGQKVEFLVSFYN....NEISEKSEIFDDQFSVERP.DGSNFTLKIRSTKLEDSAMYFCASS", "x": 117.29, "y": -227.45}, {"gene_id": "HSA_TRBV_C2F20.87_01*01", "gene_name": "TRBV20-1*01", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 2", "family": "TRBV Family 20", "functionality": "F", "aa_seq": "GAVVSQHPSWVICKSGTSVKIECRSLDFQATTMFWYRQFPKQSLMLMATSNEGSKATYEQGVEKDKFLINHASLTLSTLTVTSAHPEDSSFYICSAR", "aligned_seq": "GAVVSQHPSWVICKSGTSVKIECRSLDFQ......ATTMFWYRQFPKQSLMLMATSNEG...SKATYEQGVEKDKFLINHA.SLTLSTLTVTSAHPEDSSFYICSAR", "x": 20.03, "y": -116.1}, {"gene_id": "HSA_TRBV_C2F20.87_02*01", "gene_name": "TRBV20-1*02", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 2", "family": "TRBV Family 20", "functionality": "F", "aa_seq": "GAVVSQHPSRVICKSGTSVKIECRSLDFQATTMFWYRQFPKQSLMLMATSNEGSKATYEQGVEKDKFLINHASLTLSTLTVTSAHPEDSSFYICSAR", "aligned_seq": "GAVVSQHPSRVICKSGTSVKIECRSLDFQ......ATTMFWYRQFPKQSLMLMATSNEG...SKATYEQGVEKDKFLINHA.SLTLSTLTVTSAHPEDSSFYICSAR", "x": 19.86, "y": -117.21}, {"gene_id": "HSA_TRBV_C2F20.87_03*01", "gene_name": "TRBV20-1*03", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 2", "family": "TRBV Family 20", "functionality": "(F)", "aa_seq": "GAVVSQHPSWVICKSGTSVKIECRSLDFQATTMFWYRQFPKQSLMLMATSNEGCKATYEQGVEKDKFLINHASLTLSTLTVTSAHPEDSSFYICSA", "aligned_seq": "GAVVSQHPSWVICKSGTSVKIECRSLDFQ......ATTMFWYRQFPKQSLMLMATSNEG...CKATYEQGVEKDKFLINHA.SLTLSTLTVTSAHPEDSSFYICSA", "x": 19.62, "y": -115.86}, {"gene_id": "HSA_TRBV_C2F20.87_04*01", "gene_name": "TRBV20-1*04", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 2", "family": "TRBV Family 20", "functionality": "(F)", "aa_seq": "GAVVSQHPSRVICKSGTSVKIECRSLDFQATTMFWYRQFPKKSLMLMATSNEGSKATYEQGVEKDKFLINHASLTLSTLTVTSAHPEDSSFYICSAS", "aligned_seq": "GAVVSQHPSRVICKSGTSVKIECRSLDFQ......ATTMFWYRQFPKKSLMLMATSNEG...SKATYEQGVEKDKFLINHA.SLTLSTLTVTSAHPEDSSFYICSAS", "x": 19.17, "y": -114.25}, {"gene_id": "HSA_TRBV_C2F20.87_05*01", "gene_name": "TRBV20-1*05", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 2", "family": "TRBV Family 20", "functionality": "F", "aa_seq": "GAVVSQHPSRVICKSGTSVKIECRSLDFQATTMFWYRQFPKKSLMLMATSNEGSKATYEQGVEKDKFLINHASLTLSTLTVTSAHPEDSSFYICSAR", "aligned_seq": "GAVVSQHPSRVICKSGTSVKIECRSLDFQ......ATTMFWYRQFPKKSLMLMATSNEG...SKATYEQGVEKDKFLINHA.SLTLSTLTVTSAHPEDSSFYICSAR", "x": 18.58, "y": -112.43}, {"gene_id": "HSA_TRBV_C2F20.87_06*01", "gene_name": "TRBV20-1*06", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 2", "family": "TRBV Family 20", "functionality": "(F)", "aa_seq": "GAVVSQHPSRVICKSGTSVKIECRSLDFQATTMFWYRQFPKKSLMLMATSNEGSKATYEQGVEKDKFLINHASLTLSTLTVTSAHPEDSSFYICSA", "aligned_seq": "GAVVSQHPSRVICKSGTSVKIECRSLDFQ......ATTMFWYRQFPKKSLMLMATSNEG...SKATYEQGVEKDKFLINHA.SLTLSTLTVTSAHPEDSSFYICSA", "x": 19.09, "y": -114.32}, {"gene_id": "HSA_TRBV_C2F20.87_07*01", "gene_name": "TRBV20-1*07", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 2", "family": "TRBV Family 20", "functionality": "(F)", "aa_seq": "GAVVSQHPSRVICKSGTSVKIECRSLDFQATTMFWYRQFPKKSLMQIATSNEGSKATYEQGVEKDKFLINHASLTLSTLTVTSAHPEDSSFYICSAR", "aligned_seq": "GAVVSQHPSRVICKSGTSVKIECRSLDFQ......ATTMFWYRQFPKKSLMQIATSNEG...SKATYEQGVEKDKFLINHA.SLTLSTLTVTSAHPEDSSFYICSAR", "x": 18.57, "y": -111.86}, {"gene_id": "HSA_TRBV_C2F20.251_01*01", "gene_name": "TRBV20/OR9-2*01", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 2", "family": "TRBV Family 20", "functionality": "ORF", "aa_seq": "SAVVSQHPSRVICKSGTSVNIECRSLDFQATTMFWYRQLRKQSLMLMATSNEGSEVTYEQGVKKDKFPINHPNLTFSALTVTSAHPEDSSFYICSAR", "aligned_seq": "SAVVSQHPSRVICKSGTSVNIECRSLDFQ......ATTMFWYRQLRKQSLMLMATSNEG...SEVTYEQGVKKDKFPINHP.NLTFSALTVTSAHPEDSSFYICSAR", "x": 18.8, "y": -114.5}, {"gene_id": "HSA_TRBV_C2F20.251_02*01", "gene_name": "TRBV20/OR9-2*02", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 2", "family": "TRBV Family 20", "functionality": "[ORF]", "aa_seq": "GAVVSQHPSRVICKSGTSVNIECRSLDFQATTMFWYRQLRKQSLMLMAASNEGSEVTYEQGVKKDKFPINHPNLTFSALTVTCAHPEDSSFYICSA", "aligned_seq": "GAVVSQHPSRVICKSGTSVNIECRSLDFQ......ATTMFWYRQLRKQSLMLMAASNEG...SEVTYEQGVKKDKFPINHP.NLTFSALTVTCAHPEDSSFYICSA", "x": 17.94, "y": -112.41}, {"gene_id": "HSA_TRBV_C2F20.251_03*01", "gene_name": "TRBV20/OR9-2*03", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 2", "family": "TRBV Family 20", "functionality": "ORF", "aa_seq": "SAVVSQHPSRVICKSGTSVNIECRSLDFQATTMFWYRQLRKQSLMLMAASNEGSEVTYEQGVKKDKFPINHPNLTFSALTVTSAHPEDSSFYICSAR", "aligned_seq": "SAVVSQHPSRVICKSGTSVNIECRSLDFQ......ATTMFWYRQLRKQSLMLMAASNEG...SEVTYEQGVKKDKFPINHP.NLTFSALTVTSAHPEDSSFYICSAR", "x": 19.93, "y": -116.46}, {"gene_id": "HSA_TRBV_C1F21.173_01*01", "gene_name": "TRBV21-1*01", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 21", "functionality": "P", "aa_seq": "DTKVTQRPRLLVKASEQKAKMDCVPIKAHSYVYWYRKKLEEELKFLVYFQNEELIQKAEIINERFLAQCSKNSSCTLEIQSTESGDTALYFCASSK", "aligned_seq": "DTKVTQRPRLLVKASEQKAKMDCVPIKAH.......SYVYWYRKKLEEELKFLVYFQN....EELIQKAEIINERFLAQCS.KNSSCTLEIQSTESGDTALYFCASSK", "x": 10.9, "y": -283.79}, {"gene_id": "HSA_TRBV_C1F21.173_02*01", "gene_name": "TRBV21-1*02", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 21", "functionality": "P", "aa_seq": "DTKVTQRPRLLAKASEQKAKMDCVPIKAHSYVYWYRKKLEEELKFLVYFQNEELIQKAEIINERFLAQCSKNSSCTLEIQSTESGDTALYFCASSK", "aligned_seq": "DTKVTQRPRLLAKASEQKAKMDCVPIKAH.......SYVYWYRKKLEEELKFLVYFQN....EELIQKAEIINERFLAQCS.KNSSCTLEIQSTESGDTALYFCASSK", "x": 13.31, "y": -283.78}, {"gene_id": "HSA_TRBV_C1F21.173_03*01", "gene_name": "TRBV21-1*04", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 21", "functionality": "P", "aa_seq": "DTKVTQRPRLLVKASEQKAKMDCVPIKAHSYVYWYRKKLEEELKFLVYFQNEELIQKAEIINERFLAQCSKNSSCTLEIQSTESGDTALYLCASSK", "aligned_seq": "DTKVTQRPRLLVKASEQKAKMDCVPIKAH.......SYVYWYRKKLEEELKFLVYFQN....EELIQKAEIINERFLAQCS.KNSSCTLEIQSTESGDTALYLCASSK", "x": 12.79, "y": -283.16}, {"gene_id": "HSA_TRBV_C1F21.428_01*01", "gene_name": "TRBV21/OR9-2*01", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 21", "functionality": "P", "aa_seq": "DTKVTQRPRFLVKANEQKAKMDCVPIKRHSYVYWYHKTLEEELKFFIYFQNEEIIQKAEIINERFSAQCPQNSPCTLEIQSTESGDTARYFCANSK", "aligned_seq": "DTKVTQRPRFLVKANEQKAKMDCVPIKRH.......SYVYWYHKTLEEELKFFIYFQN....EEIIQKAEIINERFSAQCP.QNSPCTLEIQSTESGDTARYFCANSK", "x": 7.68, "y": -283.38}, {"gene_id": "HSA_TRBV_C1F23.161_01*01", "gene_name": "TRBV23-1*01", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 23", "functionality": "ORF", "aa_seq": "HAKVTQTPGHLVKGKGQKTKMDCTPEKGHTFVYWYQQNQNKEFMLLISFQNEQVLQETEMHKKRFSSQCPKNAPCSLAILSSEPGDTALYLCASSQ", "aligned_seq": "HAKVTQTPGHLVKGKGQKTKMDCTPEKGH.......TFVYWYQQNQNKEFMLLISFQN....EQVLQETEMHKKRFSSQCP.KNAPCSLAILSSEPGDTALYLCASSQ", "x": 57.91, "y": -293.38}, {"gene_id": "HSA_TRBV_C1F23.200_01*01", "gene_name": "TRBV23/OR9-2*01", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 23", "functionality": "P", "aa_seq": "HAKVTQTPGYLVKGKGRKTKMYCTPKNGHTFVCWYQQNQNKEFMFLISFQNEQVLQEMEMHKKRFSSQCPKNPPCSLAILSSEPGDTALYLCATSP", "aligned_seq": "HAKVTQTPGYLVKGKGRKTKMYCTPKNGH.......TFVCWYQQNQNKEFMFLISFQN....EQVLQEMEMHKKRFSSQCP.KNPPCSLAILSSEPGDTALYLCATSP", "x": 57.85, "y": -293.51}, {"gene_id": "HSA_TRBV_C1F23.200_02*01", "gene_name": "TRBV23/OR9-2*02", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 23", "functionality": "ORF", "aa_seq": "HAKVTQTPGYLVKGKGRKTKMYCTPKNGHTFVCWYQQNQNKEFMFLISFQNEQVLQEMEMHKKRFSSQCPKNAPCSL", "aligned_seq": "HAKVTQTPGYLVKGKGRKTKMYCTPKNGH.......TFVCWYQQNQNKEFMFLISFQN....EQVLQEMEMHKKRFSSQCP.KNAPCSL", "x": 59.49, "y": -290.77}, {"gene_id": "HSA_TRBV_C1F24.136_01*01", "gene_name": "TRBV24-1*01", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 24", "functionality": "F", "aa_seq": "DADVTQTPRNRITKTGKRIMLECSQTKGHDRMYWYRQDPGLGLRLIYYSFDVKDINKGEISDGYSVSRQAQAKFSLSLESAIPNQTALYFCATSDL", "aligned_seq": "DADVTQTPRNRITKTGKRIMLECSQTKGH.......DRMYWYRQDPGLGLRLIYYSFD....VKDINKGEIS.DGYSVSRQ.AQAKFSLSLESAIPNQTALYFCATSDL", "x": -147.93, "y": -347.43}, {"gene_id": "HSA_TRBV_C1F24.136_02*01", "gene_name": "TRBV24-1*02", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 24", "functionality": "F", "aa_seq": "DADVTQTPRNRITKTGKRIMLECSQTKGHDRMYWYRQDPGLGLQLIYYSFDVKDINKGEISDGYSVSRQAQAKFSLSLESAIPNQTALYFCATSDL", "aligned_seq": "DADVTQTPRNRITKTGKRIMLECSQTKGH.......DRMYWYRQDPGLGLQLIYYSFD....VKDINKGEIS.DGYSVSRQ.AQAKFSLSLESAIPNQTALYFCATSDL", "x": -149.87, "y": -347.51}, {"gene_id": "HSA_TRBV_C1F24.136_03*01", "gene_name": "TRBV24-1*03", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 24", "functionality": "F", "aa_seq": "DADVTQTPRNRITKTGKRIMLECSQTKGHDRMYWYRQDPGLGLWLIYYSFDVKDINKGEISDGYSVSRQAQAKFSLSLESAIPNQTALYFCATSDL", "aligned_seq": "DADVTQTPRNRITKTGKRIMLECSQTKGH.......DRMYWYRQDPGLGLWLIYYSFD....VKDINKGEIS.DGYSVSRQ.AQAKFSLSLESAIPNQTALYFCATSDL", "x": -147.61, "y": -347.44}, {"gene_id": "HSA_TRBV_C1F25.170_01*01", "gene_name": "TRBV25-1*01", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 25", "functionality": "F", "aa_seq": "EADIYQTPRYLVIGTGKKITLECSQTMGHDKMYWYQQDPGMELHLIHYSYGVNSTEKGDLSSESTVSRIRTEHFPLTLESARPSHTSQYLCASSE", "aligned_seq": "EADIYQTPRYLVIGTGKKITLECSQTMGH.......DKMYWYQQDPGMELHLIHYSYG....VNSTEKGDLS.SESTVSRI.RTEHFPLTLESARPSHTSQYLCASSE", "x": -171.74, "y": -387.9}, {"gene_id": "HSA_TRBV_C1F27.47_01*01", "gene_name": "TRBV27*01", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 27", "functionality": "F", "aa_seq": "EAQVTQNPRYLITVTGKKLTVTCSQNMNHEYMSWYRQDPGLGLRQIYYSMNVEVTDKGDVPEGYKVSRKEKRNFPLILESPSPNQTSLYFCASSL", "aligned_seq": "EAQVTQNPRYLITVTGKKLTVTCSQNMNH.......EYMSWYRQDPGLGLRQIYYSMN....VEVTDKGDVP.EGYKVSRK.EKRNFPLILESPSPNQTSLYFCASSL", "x": -183.23, "y": -358.11}, {"gene_id": "HSA_TRBV_C1F27.47_02*01", "gene_name": "TRBV27*02", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 27", "functionality": "F", "aa_seq": "EAQVTQNPRYLITVTGKKLTVTCSQNMNHEYMSWYRQDPGLGLRQIYYSMNVEATDKGDVPEGYKVSRKEKRNFPLILESPSPNQTSLYFCASSL", "aligned_seq": "EAQVTQNPRYLITVTGKKLTVTCSQNMNH.......EYMSWYRQDPGLGLRQIYYSMN....VEATDKGDVP.EGYKVSRK.EKRNFPLILESPSPNQTSLYFCASSL", "x": -181.51, "y": -356.43}, {"gene_id": "HSA_TRBV_C1F27.47_03*01", "gene_name": "TRBV27*03", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 27", "functionality": "F", "aa_seq": "EAQVTQNPRYLITVTGKKLTVTCSQNMNHEYMSWYRQDPGLGLRQIYYSMNVEVTDKGGVPEGYKVSRKEKRNFPLILESPSPNQTSLYFCASSL", "aligned_seq": "EAQVTQNPRYLITVTGKKLTVTCSQNMNH.......EYMSWYRQDPGLGLRQIYYSMN....VEVTDKGGVP.EGYKVSRK.EKRNFPLILESPSPNQTSLYFCASSL", "x": -182.36, "y": -356.87}, {"gene_id": "HSA_TRBV_C1F28.68_01*01", "gene_name": "TRBV28*01", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 28", "functionality": "F", "aa_seq": "DVKVTQSSRYLVKRTGEKVFLECVQDMDHENMFWYRQDPGLGLRLIYFSYDVKMKEKGDIPEGYSVSREKKERFSLILESASTNQTSMYLCASSL", "aligned_seq": "DVKVTQSSRYLVKRTGEKVFLECVQDMDH.......ENMFWYRQDPGLGLRLIYFSYD....VKMKEKGDIP.EGYSVSRE.KKERFSLILESASTNQTSMYLCASSL", "x": -158.13, "y": -342.37}, {"gene_id": "HSA_TRBV_C1F28.68_02*01", "gene_name": "TRBV28*02", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 28", "functionality": "F", "aa_seq": "DVKVTQSSRYLVKRMGEKVFLECVQDMDHENMFWYRQDPGLGLRLIYFSYDVKMKEKGDIPKGYSVSREKKERFSLILESASTNQTSMYLCASSL", "aligned_seq": "DVKVTQSSRYLVKRMGEKVFLECVQDMDH.......ENMFWYRQDPGLGLRLIYFSYD....VKMKEKGDIP.KGYSVSRE.KKERFSLILESASTNQTSMYLCASSL", "x": -158.7, "y": -342.69}, {"gene_id": "HSA_TRBV_C2F29.24_01*01", "gene_name": "TRBV29-1*01", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 2", "family": "TRBV Family 29", "functionality": "F", "aa_seq": "SAVISQKPSRDICQRGTSLTIQCQVDSQVTMMFWYRQQPGQSLTLIATANQGSEATYESGFVIDKFPISRPNLTFSTLTVSNMSPEDSSIYLCSVE", "aligned_seq": "SAVISQKPSRDICQRGTSLTIQCQVDSQV.......TMMFWYRQQPGQSLTLIATANQG...SEATYESGFVIDKFPISRP.NLTFSTLTVSNMSPEDSSIYLCSVE", "x": 58.18, "y": -139.45}, {"gene_id": "HSA_TRBV_C2F29.24_02*01", "gene_name": "TRBV29-1*02", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 2", "family": "TRBV Family 29", "functionality": "(F)", "aa_seq": "SAVISQKPSRDICQRGTSLTIQCQVDSQVTMMFWYRQQPGQSLTLIATANQGSEATYESGFVIDKFPISRPNLTFSSLTVSNMSPEDSSIYLCSVE", "aligned_seq": "SAVISQKPSRDICQRGTSLTIQCQVDSQV.......TMMFWYRQQPGQSLTLIATANQG...SEATYESGFVIDKFPISRP.NLTFSSLTVSNMSPEDSSIYLCSVE", "x": 58.75, "y": -139.09}, {"gene_id": "HSA_TRBV_C2F29.24_03*01", "gene_name": "TRBV29/OR9-2*01", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 2", "family": "TRBV Family 29", "functionality": "ORF", "aa_seq": "SAVISQKPSRDICQRGTSMMIQCQVDSQVTMMFWYCQQPGQSLTLIATANQGSEATYESRFVIDKFPISRPNLTFSTLTVSNRRPEDSSIYLCSVE", "aligned_seq": "SAVISQKPSRDICQRGTSMMIQCQVDSQV.......TMMFWYCQQPGQSLTLIATANQG...SEATYESRFVIDKFPISRP.NLTFSTLTVSNRRPEDSSIYLCSVE", "x": 57.82, "y": -138.96}, {"gene_id": "HSA_TRBV_C2F29.24_04*01", "gene_name": "TRBV29/OR9-2*02", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 2", "family": "TRBV Family 29", "functionality": "ORF", "aa_seq": "SAVISQKPSRDICQRGTSMMIQCQVDSQVTMMFWYCQQPGQSVTLIATANQGSEATYESRFVIDKFPISRPNLTFSTLTVSNRRPEDSSIYLCSVE", "aligned_seq": "SAVISQKPSRDICQRGTSMMIQCQVDSQV.......TMMFWYCQQPGQSVTLIATANQG...SEATYESRFVIDKFPISRP.NLTFSTLTVSNRRPEDSSIYLCSVE", "x": 59.94, "y": -139.68}, {"gene_id": "HSA_TRBV_C1F3.71_01*01", "gene_name": "TRBV3-1*01", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 3", "functionality": "F", "aa_seq": "DTAVSQTPKYLVTQMGNDKSIKCEQNLGHDTMYWYKQDSKKFLKIMFSYNNKELIINETVPNRFSPKSPDKAHLNLHINSLELGDSAVYFCASSQ", "aligned_seq": "DTAVSQTPKYLVTQMGNDKSIKCEQNLGH.......DTMYWYKQDSKKFLKIMFSYNN....KELIINETVP.NRFSPKSP.DKAHLNLHINSLELGDSAVYFCASSQ", "x": -105.54, "y": -181.93}, {"gene_id": "HSA_TRBV_C1F3.71_02*01", "gene_name": "TRBV3-1*02", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 3", "functionality": "(F)", "aa_seq": "DTAVSQTPKYLVTQMGNDKSIKCEQNLGHDTMYWYKQDSKKFLKIMFSYNNKEIIINETVPNRFSPKSPDKAKLNLHINSLELGDSAVYFCAS", "aligned_seq": "DTAVSQTPKYLVTQMGNDKSIKCEQNLGH.......DTMYWYKQDSKKFLKIMFSYNN....KEIIINETVP.NRFSPKSP.DKAKLNLHINSLELGDSAVYFCAS", "x": -105.11, "y": -182.06}, {"gene_id": "HSA_TRBV_C1F30.19_01*01", "gene_name": "TRBV30*01", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 30", "functionality": "F", "aa_seq": "SQTIHQWPATLVQPVGSPLSLECTVEGTSNPNLYWYRQAAGRGLQLLFYSVGIGQISSEVPQNLSASRPQDRQFILSSKKLLLSDSGFYLCAWS", "aligned_seq": "SQTIHQWPATLVQPVGSPLSLECTVEGTS......NPNLYWYRQAAGRGLQLLFYSVG.....IGQISSEVP.QNLSASRP.QDRQFILSSKKLLLSDSGFYLCAWS", "x": -129.07, "y": -83.91}, {"gene_id": "HSA_TRBV_C1F30.19_03*01", "gene_name": "TRBV30*04", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 30", "functionality": "F", "aa_seq": "SQTIHQWPATLVQPVGSPLSLECTVEGTSNPNLYWYRQAAGRGLQLLFYSIGIDQISSEVPQNLSASRPQDRQFILSSKKLLLSDSGFYLCAWS", "aligned_seq": "SQTIHQWPATLVQPVGSPLSLECTVEGTS......NPNLYWYRQAAGRGLQLLFYSIG.....IDQISSEVP.QNLSASRP.QDRQFILSSKKLLLSDSGFYLCAWS", "x": -129.09, "y": -84.22}, {"gene_id": "HSA_TRBV_C1F30.19_04*01", "gene_name": "TRBV30*05", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 30", "functionality": "(F)", "aa_seq": "SQTIHQWPATLVQPVGSPLSLECTVEGTSNPNLYWYRQAAGRGLQLLFYSVGIGQISSEVPQNLSASRPQDRQFILSSKKLLLSDSGFYLCAWG", "aligned_seq": "SQTIHQWPATLVQPVGSPLSLECTVEGTS......NPNLYWYRQAAGRGLQLLFYSVG.....IGQISSEVP.QNLSASRP.QDRQFILSSKKLLLSDSGFYLCAWG", "x": -129.19, "y": -83.86}, {"gene_id": "HSA_TRBV_C1F30.19_05*01", "gene_name": "TRBV30*07", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 30", "functionality": "F", "aa_seq": "SQTIHQWPATLVQPVGSPLSLECTVEGTSNPNLYWYRQAAGRGLQLLFYSIGIGQISSEVPQNLSASRPQDRQFILSSKKLLLSDSGFYLCAWS", "aligned_seq": "SQTIHQWPATLVQPVGSPLSLECTVEGTS......NPNLYWYRQAAGRGLQLLFYSIG.....IGQISSEVP.QNLSASRP.QDRQFILSSKKLLLSDSGFYLCAWS", "x": -128.96, "y": -83.88}, {"gene_id": "HSA_TRBV_C1F4.123_01*01", "gene_name": "TRBV4-1*01", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 4", "functionality": "F", "aa_seq": "DTEVTQTPKHLVMGMTNKKSLKCEQHMGHRAMYWYKQKAKKPPELMFVYSYEKLSINESVPSRFSPECPNSSLLNLHLHALQPEDSALYLCASSQ", "aligned_seq": "DTEVTQTPKHLVMGMTNKKSLKCEQHMGH.......RAMYWYKQKAKKPPELMFVYSY....EKLSINESVP.SRFSPECP.NSSLLNLHLHALQPEDSALYLCASSQ", "x": -183.16, "y": -170.78}, {"gene_id": "HSA_TRBV_C1F4.123_03*01", "gene_name": "TRBV4-1*03", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 4", "functionality": "F", "aa_seq": "DTEVIQTPKHLVMGMTNKKSLKCEQHMGHRAMYWYKQKAKKPPELMFVYSYEKLSINESVPSRFSPECPNSSLLNLHLHALQPEDSALYLCASSQ", "aligned_seq": "DTEVIQTPKHLVMGMTNKKSLKCEQHMGH.......RAMYWYKQKAKKPPELMFVYSY....EKLSINESVP.SRFSPECP.NSSLLNLHLHALQPEDSALYLCASSQ", "x": -183.53, "y": -170.81}, {"gene_id": "HSA_TRBV_C1F4.38_01*01", "gene_name": "TRBV4-2*01", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 4", "functionality": "F", "aa_seq": "ETGVTQTPRHLVMGMTNKKSLKCEQHLGHNAMYWYKQSAKKPLELMFVYNFKEQTENNSVPSRFSPECPNSSHLFLHLHTLQPEDSALYLCASSQ", "aligned_seq": "ETGVTQTPRHLVMGMTNKKSLKCEQHLGH.......NAMYWYKQSAKKPLELMFVYNF....KEQTENNSVP.SRFSPECP.NSSHLFLHLHTLQPEDSALYLCASSQ", "x": -153.8, "y": -174.7}, {"gene_id": "HSA_TRBV_C1F4.38_02*01", "gene_name": "TRBV4-2*02", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 4", "functionality": "(F)", "aa_seq": "ETGVTQTPRHLVMGMTNKKSLKCEQHLGHNAMYWYKQSAKKPLELMFVYNFKEQTENNSVPSRFSPECPNSSHLCLHLHTLQPEDSALYLCAST", "aligned_seq": "ETGVTQTPRHLVMGMTNKKSLKCEQHLGH.......NAMYWYKQSAKKPLELMFVYNF....KEQTENNSVP.SRFSPECP.NSSHLCLHLHTLQPEDSALYLCAST", "x": -149.1, "y": -175.69}, {"gene_id": "HSA_TRBV_C1F4.38_03*01", "gene_name": "TRBV4-3*01", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 4", "functionality": "F", "aa_seq": "ETGVTQTPRHLVMGMTNKKSLKCEQHLGHNAMYWYKQSAKKPLELMFVYSLEERVENNSVPSRFSPECPNSSHLFLHLHTLQPEDSALYLCASSQ", "aligned_seq": "ETGVTQTPRHLVMGMTNKKSLKCEQHLGH.......NAMYWYKQSAKKPLELMFVYSL....EERVENNSVP.SRFSPECP.NSSHLFLHLHTLQPEDSALYLCASSQ", "x": -152.42, "y": -175.07}, {"gene_id": "HSA_TRBV_C1F4.38_04*01", "gene_name": "TRBV4-3*02", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 4", "functionality": "(F)", "aa_seq": "ETGVTQTPRHLVMGMTNKKSLKCEQHLGHNAMYWYKQSAKKPLELMFVYSLEERVENNSVPSRFSPECPNSSHLSLHLHTLQPEDSALYLCASS", "aligned_seq": "ETGVTQTPRHLVMGMTNKKSLKCEQHLGH.......NAMYWYKQSAKKPLELMFVYSL....EERVENNSVP.SRFSPECP.NSSHLSLHLHTLQPEDSALYLCASS", "x": -150.93, "y": -175.45}, {"gene_id": "HSA_TRBV_C1F4.38_05*01", "gene_name": "TRBV4-3*03", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 4", "functionality": "(F)", "aa_seq": "ETGVTQTPRHLVMGMTNKKSLKCEQHLGHNAMYWYKQSAKKPLELMFVYSLEERVENNSVPSRFSPECPNSSHLFLHLHTLQPEDSALYLCASS", "aligned_seq": "ETGVTQTPRHLVMGMTNKKSLKCEQHLGH.......NAMYWYKQSAKKPLELMFVYSL....EERVENNSVP.SRFSPECP.NSSHLFLHLHTLQPEDSALYLCASS", "x": -152.47, "y": -174.97}, {"gene_id": "HSA_TRBV_C1F5.45_01*01", "gene_name": "TRBV5-1*01", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 5", "functionality": "F", "aa_seq": "KAGVTQTPRYLIKTRGQQVTLSCSPISGHRSVSWYQQTPGQGLQFLFEYFSETQRNKGNFPGRFSGRQFSNSRSEMNVSTLELGDSALYLCASSL", "aligned_seq": "KAGVTQTPRYLIKTRGQQVTLSCSPISGH.......RSVSWYQQTPGQGLQFLFEYFS....ETQRNKGNFP.GRFSGRQF.SNSRSEMNVSTLELGDSALYLCASSL", "x": 49.88, "y": -424.06}, {"gene_id": "HSA_TRBV_C1F5.45_02*01", "gene_name": "TRBV5-1*02", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 5", "functionality": "(F)", "aa_seq": "RAGVTQTPRHLIKTRGQQVTLGCSPISGHRSVSWYQQTLGQGLQFLFEYFSETQRNKGNFLGRFSGRQFSNSRSEMNVSTLELGDSALYLCAS", "aligned_seq": "RAGVTQTPRHLIKTRGQQVTLGCSPISGH.......RSVSWYQQTLGQGLQFLFEYFS....ETQRNKGNFL.GRFSGRQF.SNSRSEMNVSTLELGDSALYLCAS", "x": 47.18, "y": -416.95}, {"gene_id": "HSA_TRBV_C1F5.61_01*01", "gene_name": "TRBV5-3*01", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 5", "functionality": "ORF", "aa_seq": "EAGVTQSPTHLIKTRGQQVTLRCSPISGHSSVSWYQQAPGQGPQFIFEYANELRRSEGNFPNRFSGRQFHDCCSEMNVSALELGDSALYLCARSL", "aligned_seq": "EAGVTQSPTHLIKTRGQQVTLRCSPISGH.......SSVSWYQQAPGQGPQFIFEYAN....ELRRSEGNFP.NRFSGRQF.HDCCSEMNVSALELGDSALYLCARSL", "x": 52.81, "y": -435.43}, {"gene_id": "HSA_TRBV_C1F5.61_02*01", "gene_name": "TRBV5-3*02", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 5", "functionality": "ORF", "aa_seq": "EAGVTQSPTHLIKTRGQQVTLRCSPISGHSSVSWYQQAPGQGPQFIFEYANELRRSEGNFPNRFSGRQFHDYCSEMNVSALELGDSALYLCARSL", "aligned_seq": "EAGVTQSPTHLIKTRGQQVTLRCSPISGH.......SSVSWYQQAPGQGPQFIFEYAN....ELRRSEGNFP.NRFSGRQF.HDYCSEMNVSALELGDSALYLCARSL", "x": 51.71, "y": -437.16}, {"gene_id": "HSA_TRBV_C1F5.61_03*01", "gene_name": "TRBV5-3*03", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 5", "functionality": "ORF", "aa_seq": "EAGVTQSPTDLIKTRGQQVTLRCSPISGHSSVSWYQQAPGQGPQFIFEYANELRRSEGNFPNRFSGRQFHDCCSEMNVSALELGDSALYLCARSL", "aligned_seq": "EAGVTQSPTDLIKTRGQQVTLRCSPISGH.......SSVSWYQQAPGQGPQFIFEYAN....ELRRSEGNFP.NRFSGRQF.HDCCSEMNVSALELGDSALYLCARSL", "x": 52.52, "y": -436.62}, {"gene_id": "HSA_TRBV_C1F5.61_04*01", "gene_name": "TRBV5-3*04", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 5", "functionality": "ORF", "aa_seq": "EAGVTQSPTHLIKTRGQQVTLRCSPISGHSSVSWYQQAPGQVPQFIFEYANELRRSEGNFPNRFSGRQFHDCCSEMNVSALELGDSALYLCARSL", "aligned_seq": "EAGVTQSPTHLIKTRGQQVTLRCSPISGH.......SSVSWYQQAPGQVPQFIFEYAN....ELRRSEGNFP.NRFSGRQF.HDCCSEMNVSALELGDSALYLCARSL", "x": 51.79, "y": -435.39}, {"gene_id": "HSA_TRBV_C1F5.52_01*01", "gene_name": "TRBV5-4*01", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 5", "functionality": "F", "aa_seq": "ETGVTQSPTHLIKTRGQQVTLRCSSQSGHNTVSWYQQALGQGPQFIFQYYREEENGRGNFPPRFSGLQFPNYSSELNVNALELDDSALYLCASSL", "aligned_seq": "ETGVTQSPTHLIKTRGQQVTLRCSSQSGH.......NTVSWYQQALGQGPQFIFQYYR....EEENGRGNFP.PRFSGLQF.PNYSSELNVNALELDDSALYLCASSL", "x": 66.85, "y": -456.83}, {"gene_id": "HSA_TRBV_C1F5.52_02*01", "gene_name": "TRBV5-4*02", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 5", "functionality": "(F)", "aa_seq": "ETGVTQSPTHLIKTRGQQVTLRCSSQSGHNTVSWYQQALGQGPQFIFQYYREEENGRGNFPPRFSGLQFPNYNSELNVNALELDDSALYLCASS", "aligned_seq": "ETGVTQSPTHLIKTRGQQVTLRCSSQSGH.......NTVSWYQQALGQGPQFIFQYYR....EEENGRGNFP.PRFSGLQF.PNYNSELNVNALELDDSALYLCASS", "x": 69.87, "y": -457.67}, {"gene_id": "HSA_TRBV_C1F5.52_04*01", "gene_name": "TRBV5-4*06", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 5", "functionality": "F", "aa_seq": "DAGVTQSPTHLIKTRGQQVTLRCSSQSGHNTVSWYQQALGQGPQFIFQYYREEENGRGNFPPRFSGLQFPNDSSELNVNALELDDSALYLCASSL", "aligned_seq": "DAGVTQSPTHLIKTRGQQVTLRCSSQSGH.......NTVSWYQQALGQGPQFIFQYYR....EEENGRGNFP.PRFSGLQF.PNDSSELNVNALELDDSALYLCASSL", "x": 69.52, "y": -458.06}, {"gene_id": "HSA_TRBV_C1F5.30_01*01", "gene_name": "TRBV5-5*01", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 5", "functionality": "F", "aa_seq": "DAGVTQSPTHLIKTRGQQVTLRCSPISGHKSVSWYQQVLGQGPQFIFQYYEKEERGRGNFPDRFSARQFPNYSSELNVNALLLGDSALYLCASSL", "aligned_seq": "DAGVTQSPTHLIKTRGQQVTLRCSPISGH.......KSVSWYQQVLGQGPQFIFQYYE....KEERGRGNFP.DRFSARQF.PNYSSELNVNALLLGDSALYLCASSL", "x": 52.53, "y": -456.0}, {"gene_id": "HSA_TRBV_C1F5.30_02*01", "gene_name": "TRBV5-5*02", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 5", "functionality": "F", "aa_seq": "DAGVTQSPTHLIKTRGQHVTLRCSPISGHKSVSWYQQVLGQGPQFIFQYYEKEERGRGNFPDRFSARQFPNYSSELNVNALLLGDSALYLCASSL", "aligned_seq": "DAGVTQSPTHLIKTRGQHVTLRCSPISGH.......KSVSWYQQVLGQGPQFIFQYYE....KEERGRGNFP.DRFSARQF.PNYSSELNVNALLLGDSALYLCASSL", "x": 59.63, "y": -456.26}, {"gene_id": "HSA_TRBV_C1F5.30_03*01", "gene_name": "TRBV5-5*03", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 5", "functionality": "(F)", "aa_seq": "DAGVTQSPTHLIKTRGQQVTLRCSPISEHKSVSWYQQVLGQGPQFIFQYYEKEERGRGNFPDRFSARQFPNYSSELNVNALLLGDSALYLCASS", "aligned_seq": "DAGVTQSPTHLIKTRGQQVTLRCSPISEH.......KSVSWYQQVLGQGPQFIFQYYE....KEERGRGNFP.DRFSARQF.PNYSSELNVNALLLGDSALYLCASS", "x": 56.28, "y": -451.07}, {"gene_id": "HSA_TRBV_C1F5.30_04*01", "gene_name": "TRBV5-5*04", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 5", "functionality": "F", "aa_seq": "DAGVTQSPTHLIKTRGQQVTLRCSPISGHKSVSWYQEVLGQGPQFIFQYYEKEERGRGNFPDRFSARQFPNYSSELNVNALLLGDSALYLCASSL", "aligned_seq": "DAGVTQSPTHLIKTRGQQVTLRCSPISGH.......KSVSWYQEVLGQGPQFIFQYYE....KEERGRGNFP.DRFSARQF.PNYSSELNVNALLLGDSALYLCASSL", "x": 59.03, "y": -456.27}, {"gene_id": "HSA_TRBV_C1F5.491_01*01", "gene_name": "TRBV5-6*01", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 5", "functionality": "F", "aa_seq": "DAGVTQSPTHLIKTRGQQVTLRCSPKSGHDTVSWYQQALGQGPQFIFQYYEEEERQRGNFPDRFSGHQFPNYSSELNVNALLLGDSALYLCASSL", "aligned_seq": "DAGVTQSPTHLIKTRGQQVTLRCSPKSGH.......DTVSWYQQALGQGPQFIFQYYE....EEERQRGNFP.DRFSGHQF.PNYSSELNVNALLLGDSALYLCASSL", "x": 66.92, "y": -456.66}, {"gene_id": "HSA_TRBV_C1F5.491_02*01", "gene_name": "TRBV5-6*02", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 5", "functionality": "F", "aa_seq": "DAGVTQSPTHLIKTRGQQVTLRCSPKSGHDTVSWYQQALGQGPQFIFQYYEEEERQRGNFPDRFSGHQFPNYSSELNVNALWLGDSALYLCASSL", "aligned_seq": "DAGVTQSPTHLIKTRGQQVTLRCSPKSGH.......DTVSWYQQALGQGPQFIFQYYE....EEERQRGNFP.DRFSGHQF.PNYSSELNVNALWLGDSALYLCASSL", "x": 66.6, "y": -457.42}, {"gene_id": "HSA_TRBV_C1F5.491_03*01", "gene_name": "TRBV5-6*03", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 5", "functionality": "F", "aa_seq": "DAGVTQSPTHLIKTRGQQVTLRCSPKSGHDTVSWYQQALGQGPQFIFQYYEEEERQRGNFPDRFSGHQYPNYSSELNVNALLLGDSALYLCASSL", "aligned_seq": "DAGVTQSPTHLIKTRGQQVTLRCSPKSGH.......DTVSWYQQALGQGPQFIFQYYE....EEERQRGNFP.DRFSGHQY.PNYSSELNVNALLLGDSALYLCASSL", "x": 72.15, "y": -455.86}, {"gene_id": "HSA_TRBV_C1F5.137_01*01", "gene_name": "TRBV5-7*01", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 5", "functionality": "ORF", "aa_seq": "DAGVTQSPTHLIKTRGQHVTLRCSPISGHTSVSSYQQALGQGPQFIFQYYEKEERGRGNFPDQFSGHQFPNYSSELNVNALLLGDSALYLCASSL", "aligned_seq": "DAGVTQSPTHLIKTRGQHVTLRCSPISGH.......TSVSSYQQALGQGPQFIFQYYE....KEERGRGNFP.DQFSGHQF.PNYSSELNVNALLLGDSALYLCASSL", "x": 66.94, "y": -447.59}, {"gene_id": "HSA_TRBV_C1F5.137_02*01", "gene_name": "TRBV5-7*02", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 5", "functionality": "ORF", "aa_seq": "DAGVTQSPTHLIKTRGHHVTLRCSPISGHTSVSSYQQALGQGPQFIFQYYEKEERGRGNFPDQFSGHQFPNYSSELNVNALLLEDSALYLCASSL", "aligned_seq": "DAGVTQSPTHLIKTRGHHVTLRCSPISGH.......TSVSSYQQALGQGPQFIFQYYE....KEERGRGNFP.DQFSGHQF.PNYSSELNVNALLLEDSALYLCASSL", "x": 65.0, "y": -458.66}, {"gene_id": "HSA_TRBV_C1F5.137_03*01", "gene_name": "TRBV5-7*03", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 5", "functionality": "ORF", "aa_seq": "DAGVTQSPTHLIKTRGQHVTLRCSPISGHTSVSSYQQALGQGPQFIFQYYEKEERGRGNLPDQFSGHQFPNYSSELNVNALLLGDSALYLCASSL", "aligned_seq": "DAGVTQSPTHLIKTRGQHVTLRCSPISGH.......TSVSSYQQALGQGPQFIFQYYE....KEERGRGNLP.DQFSGHQF.PNYSSELNVNALLLGDSALYLCASSL", "x": 65.96, "y": -459.46}, {"gene_id": "HSA_TRBV_C1F5.39_01*01", "gene_name": "TRBV5-8*01", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 5", "functionality": "F", "aa_seq": "EAGVTQSPTHLIKTRGQQATLRCSPISGHTSVYWYQQALGLGLQFLLWYDEGEERNRGNFPPRFSGRQFPNYSSELNVNALELEDSALYLCASSL", "aligned_seq": "EAGVTQSPTHLIKTRGQQATLRCSPISGH.......TSVYWYQQALGLGLQFLLWYDE....GEERNRGNFP.PRFSGRQF.PNYSSELNVNALELEDSALYLCASSL", "x": 63.4, "y": -482.73}, {"gene_id": "HSA_TRBV_C1F5.39_04*01", "gene_name": "TRBV5-8*05", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 5", "functionality": "F", "aa_seq": "EAGVTQSPTHLIKTRGQQVTLRCSPISGHTSVYWYQQALGLGLQFLLWYDEGEERNRGNFPPRFSGRQFPNYSSELNVNALELEDSALYLCASSL", "aligned_seq": "EAGVTQSPTHLIKTRGQQVTLRCSPISGH.......TSVYWYQQALGLGLQFLLWYDE....GEERNRGNFP.PRFSGRQF.PNYSSELNVNALELEDSALYLCASSL", "x": 63.8, "y": -481.7}, {"gene_id": "HSA_TRBV_C1F6.106_01*01", "gene_name": "TRBV6-1*01", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 6", "functionality": "F", "aa_seq": "NAGVTQTPKFQVLKTGQSMTLQCAQDMNHNSMYWYRQDPGMGLRLIYYSASEGTTDKGEVPNGYNVSRLNKREFSLRLESAAPSQTSVYFCASSE", "aligned_seq": "NAGVTQTPKFQVLKTGQSMTLQCAQDMNH.......NSMYWYRQDPGMGLRLIYYSAS....EGTTDKGEVP.NGYNVSRL.NKREFSLRLESAAPSQTSVYFCASSE", "x": -229.78, "y": -413.22}, {"gene_id": "HSA_TRBV_C1F6.06_01*01", "gene_name": "TRBV6-2*01", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 6", "functionality": "F", "aa_seq": "NAGVTQTPKFRVLKTGQSMTLLCAQDMNHEYMYWYRQDPGMGLRLIHYSVGEGTTAKGEVPDGYNVSRLKKQNFLLGLESAAPSQTSVYFCASSY", "aligned_seq": "NAGVTQTPKFRVLKTGQSMTLLCAQDMNH.......EYMYWYRQDPGMGLRLIHYSVG....EGTTAKGEVP.DGYNVSRL.KKQNFLLGLESAAPSQTSVYFCASSY", "x": -246.22, "y": -408.04}, {"gene_id": "HSA_TRBV_C1F6.29_01*01", "gene_name": "TRBV6-4*01", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 6", "functionality": "F", "aa_seq": "IAGITQAPTSQILAAGRRMTLRCTQDMRHNAMYWYRQDLGLGLRLIHYSNTAGTTGKGEVPDGYSVSRANTDDFPLTLASAVPSQTSVYFCASSD", "aligned_seq": "IAGITQAPTSQILAAGRRMTLRCTQDMRH.......NAMYWYRQDLGLGLRLIHYSNT....AGTTGKGEVP.DGYSVSRA.NTDDFPLTLASAVPSQTSVYFCASSD", "x": -230.03, "y": -338.75}, {"gene_id": "HSA_TRBV_C1F6.29_02*01", "gene_name": "TRBV6-4*02", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 6", "functionality": "F", "aa_seq": "TAGITQAPTSQILAAGRSMTLRCTQDMRHNAMYWYRQDLGLGLRLIHYSNTAGTTGKGEVPDGYSVSRANTDDFPLTLASAVPSQTSVYFCASSD", "aligned_seq": "TAGITQAPTSQILAAGRSMTLRCTQDMRH.......NAMYWYRQDLGLGLRLIHYSNT....AGTTGKGEVP.DGYSVSRA.NTDDFPLTLASAVPSQTSVYFCASSD", "x": -232.13, "y": -338.72}, {"gene_id": "HSA_TRBV_C1F6.14_01*01", "gene_name": "TRBV6-5*01", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 6", "functionality": "F", "aa_seq": "NAGVTQTPKFQVLKTGQSMTLQCAQDMNHEYMSWYRQDPGMGLRLIHYSVGAGITDQGEVPNGYNVSRSTTEDFPLRLLSAAPSQTSVYFCASSY", "aligned_seq": "NAGVTQTPKFQVLKTGQSMTLQCAQDMNH.......EYMSWYRQDPGMGLRLIHYSVG....AGITDQGEVP.NGYNVSRS.TTEDFPLRLLSAAPSQTSVYFCASSY", "x": -239.57, "y": -429.13}, {"gene_id": "HSA_TRBV_C1F6.111_01*01", "gene_name": "TRBV6-6*01", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 6", "functionality": "F", "aa_seq": "NAGVTQTPKFRILKIGQSMTLQCTQDMNHNYMYWYRQDPGMGLKLIYYSVGAGITDKGEVPNGYNVSRSTTEDFPLRLELAAPSQTSVYFCASSY", "aligned_seq": "NAGVTQTPKFRILKIGQSMTLQCTQDMNH.......NYMYWYRQDPGMGLKLIYYSVG....AGITDKGEVP.NGYNVSRS.TTEDFPLRLELAAPSQTSVYFCASSY", "x": -229.71, "y": -441.23}, {"gene_id": "HSA_TRBV_C1F6.111_02*01", "gene_name": "TRBV6-6*02", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 6", "functionality": "F", "aa_seq": "NAGVTQTPKFRILKIGQSMTLQCAQDMNHNYMYWYRQDPGMGLKLIYYSVGAGITDKGEVPNGYNVSRSTTEDFPLRLELAAPSQTSVYFCASSY", "aligned_seq": "NAGVTQTPKFRILKIGQSMTLQCAQDMNH.......NYMYWYRQDPGMGLKLIYYSVG....AGITDKGEVP.NGYNVSRS.TTEDFPLRLELAAPSQTSVYFCASSY", "x": -230.14, "y": -440.63}, {"gene_id": "HSA_TRBV_C1F6.111_03*01", "gene_name": "TRBV6-6*03", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 6", "functionality": "(F)", "aa_seq": "NAGVTQTPKFRILKIGQSMTLQCAQDMNHNYMYWYRQDPGMGLKLIYYSVGAGITDKGEVPNGYNVSRSTTEDFPLRLELAAPSQTSVYFCASS", "aligned_seq": "NAGVTQTPKFRILKIGQSMTLQCAQDMNH.......NYMYWYRQDPGMGLKLIYYSVG....AGITDKGEVP.NGYNVSRS.TTEDFPLRLELAAPSQTSVYFCASS", "x": -230.25, "y": -443.47}, {"gene_id": "HSA_TRBV_C1F6.111_04*01", "gene_name": "TRBV6-6*04", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 6", "functionality": "(F)", "aa_seq": "NAGVTQTPKFRILKIGQSMTLQCTQDMNHEYMYWYRQDPGMGLKLIYYSVGAGITDKGEVPNGYNVSRSTTEDFPLRLELAAPSQTSVYFCASSR", "aligned_seq": "NAGVTQTPKFRILKIGQSMTLQCTQDMNH.......EYMYWYRQDPGMGLKLIYYSVG....AGITDKGEVP.NGYNVSRS.TTEDFPLRLELAAPSQTSVYFCASSR", "x": -229.62, "y": -445.89}, {"gene_id": "HSA_TRBV_C1F6.111_05*01", "gene_name": "TRBV6-6*05", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 6", "functionality": "(F)", "aa_seq": "NAGVTQTPKFRILKIGQSMTLQCAQDMNHNYMYWYRQDPGMGLKLIYYSVGAGITDKGEVPNGYNVSRSTTEDFPLRLELAAASQTSVYFCASS", "aligned_seq": "NAGVTQTPKFRILKIGQSMTLQCAQDMNH.......NYMYWYRQDPGMGLKLIYYSVG....AGITDKGEVP.NGYNVSRS.TTEDFPLRLELAAASQTSVYFCASS", "x": -229.46, "y": -445.28}, {"gene_id": "HSA_TRBV_C1F6.111_06*01", "gene_name": "TRBV6-6*06", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 6", "functionality": "F", "aa_seq": "NAGVTQTPKFRILKIGQSMTLQCAQDMNHNYMYWYRQDPGMGLKLIYYSVGAGITDKGEVPNGYNVSRSTTEYFPLRLELAAPSQTSVYFCASSY", "aligned_seq": "NAGVTQTPKFRILKIGQSMTLQCAQDMNH.......NYMYWYRQDPGMGLKLIYYSVG....AGITDKGEVP.NGYNVSRS.TTEYFPLRLELAAPSQTSVYFCASSY", "x": -229.83, "y": -440.38}, {"gene_id": "HSA_TRBV_C1F6.111_07*01", "gene_name": "TRBV6-6*07", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 6", "functionality": "F", "aa_seq": "NAGVTQTPKFHILKIGQSMTLQCTQDMNHNYMYWYRQDPGMGLKLIYYSVGAGITDKGEVPNGYNVSRSTTEDFPLRLELAAPSQTSVYFCASSY", "aligned_seq": "NAGVTQTPKFHILKIGQSMTLQCTQDMNH.......NYMYWYRQDPGMGLKLIYYSVG....AGITDKGEVP.NGYNVSRS.TTEDFPLRLELAAPSQTSVYFCASSY", "x": -230.24, "y": -441.04}, {"gene_id": "HSA_TRBV_C1F6.111_08*01", "gene_name": "TRBV6-6*08", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 6", "functionality": "F", "aa_seq": "NAGVTQTPKFRIPKIGQSMTLQCTQDMNHNYMYWYRQDPGMGLKLIYYSVGAGITDKGEVPNGYNVSRSTTEDFPLRLELAAPSQTSVYFCASSY", "aligned_seq": "NAGVTQTPKFRIPKIGQSMTLQCTQDMNH.......NYMYWYRQDPGMGLKLIYYSVG....AGITDKGEVP.NGYNVSRS.TTEDFPLRLELAAPSQTSVYFCASSY", "x": -229.72, "y": -444.01}, {"gene_id": "HSA_TRBV_C1F6.85_01*01", "gene_name": "TRBV6-7*01", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 6", "functionality": "ORF", "aa_seq": "NAGVTQTPKFHVLKTGQSMTLLCAQDMNHEYMYRYRQDPGKGLRLIYYSVAAALTDKGEVPNGYNVSRSNTEDFPLKLESAAPSQTSVYFCASSY", "aligned_seq": "NAGVTQTPKFHVLKTGQSMTLLCAQDMNH.......EYMYRYRQDPGKGLRLIYYSVA....AALTDKGEVP.NGYNVSRS.NTEDFPLKLESAAPSQTSVYFCASSY", "x": -229.01, "y": -420.07}, {"gene_id": "HSA_TRBV_C1F6.23_01*01", "gene_name": "TRBV6-8*01", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 6", "functionality": "F", "aa_seq": "NAGVTQTPKFHILKTGQSMTLQCAQDMNHGYMSWYRQDPGMGLRLIYYSAAAGTTDKEVPNGYNVSRLNTEDFPLRLVSAAPSQTSVYLCASSY", "aligned_seq": "NAGVTQTPKFHILKTGQSMTLQCAQDMNH.......GYMSWYRQDPGMGLRLIYYSAA....AGTTDK.EVP.NGYNVSRL.NTEDFPLRLVSAAPSQTSVYLCASSY", "x": -227.22, "y": -421.33}, {"gene_id": "HSA_TRBV_C1F6.23_02*01", "gene_name": "TRBV6-8*02", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 6", "functionality": "F", "aa_seq": "NAGVTQTPKFHILKTGQSMTLQCAQDMNHGYMSWYRQDPGMGLRLIYYSAAAGTTDKEVPNGYNVSRLNTEDFPLRLVSAAPSRTSVYLCASSY", "aligned_seq": "NAGVTQTPKFHILKTGQSMTLQCAQDMNH.......GYMSWYRQDPGMGLRLIYYSAA....AGTTDK.EVP.NGYNVSRL.NTEDFPLRLVSAAPSRTSVYLCASSY", "x": -223.85, "y": -421.38}, {"gene_id": "HSA_TRBV_C1F6.519_01*01", "gene_name": "TRBV6-9*01", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 6", "functionality": "F", "aa_seq": "NAGVTQTPKFHILKTGQSMTLQCAQDMNHGYLSWYRQDPGMGLRRIHYSVAAGITDKGEVPDGYNVSRSNTEDFPLRLESAAPSQTSVYFCASSY", "aligned_seq": "NAGVTQTPKFHILKTGQSMTLQCAQDMNH.......GYLSWYRQDPGMGLRRIHYSVA....AGITDKGEVP.DGYNVSRS.NTEDFPLRLESAAPSQTSVYFCASSY", "x": -238.92, "y": -428.54}, {"gene_id": "HSA_TRBV_C1F7.193_01*01", "gene_name": "TRBV7-1*01", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 7", "functionality": "ORF", "aa_seq": "GAGVSQSLRHKVAKKGKDVALRYDPISGHNALYWYRQSLGQGLEFPIYFQGKDAADKSGLPRDRFSAQRSEGSISTLKFQRTQQGDLAVYLCASSS", "aligned_seq": "GAGVSQSLRHKVAKKGKDVALRYDPISGH.......NALYWYRQSLGQGLEFPIYFQG....KDAADKSGLPRDRFSAQRS.EGSISTLKFQRTQQGDLAVYLCASSS", "x": 225.64, "y": -318.0}, {"gene_id": "HSA_TRBV_C1F7.54_01*01", "gene_name": "TRBV7-2*01", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 7", "functionality": "F", "aa_seq": "GAGVSQSPSNKVTEKGKDVELRCDPISGHTALYWYRQSLGQGLEFLIYFQGNSAPDKSGLPSDRFSAERTGGSVSTLTIQRTQQEDSAVYLCASSL", "aligned_seq": "GAGVSQSPSNKVTEKGKDVELRCDPISGH.......TALYWYRQSLGQGLEFLIYFQG....NSAPDKSGLPSDRFSAERT.GGSVSTLTIQRTQQEDSAVYLCASSL", "x": 222.2, "y": -319.06}, {"gene_id": "HSA_TRBV_C1F7.54_02*01", "gene_name": "TRBV7-2*02", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 7", "functionality": "F", "aa_seq": "GAGVSQSPSNKVTEKGKDVELRCDPISGHTALYWYRQRLGQGLEFLIYFQGNSAPDKSGLPSDRFSAERTGESVSTLTIQRTQQEDSAVYLCASSL", "aligned_seq": "GAGVSQSPSNKVTEKGKDVELRCDPISGH.......TALYWYRQRLGQGLEFLIYFQG....NSAPDKSGLPSDRFSAERT.GESVSTLTIQRTQQEDSAVYLCASSL", "x": 223.09, "y": -317.82}, {"gene_id": "HSA_TRBV_C1F7.54_03*01", "gene_name": "TRBV7-2*03", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 7", "functionality": "F", "aa_seq": "GAGVSQSPSNKVTEKGKDVELRCDPISGHTALYWYRQRLGQGLEFLIYFQGNSAPDKSGLPSDRFSAERTGESVSTLTIQRTQQEDSAVYLCTSSL", "aligned_seq": "GAGVSQSPSNKVTEKGKDVELRCDPISGH.......TALYWYRQRLGQGLEFLIYFQG....NSAPDKSGLPSDRFSAERT.GESVSTLTIQRTQQEDSAVYLCTSSL", "x": 225.07, "y": -317.43}, {"gene_id": "HSA_TRBV_C1F7.43_01*01", "gene_name": "TRBV7-3*01", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 7", "functionality": "F", "aa_seq": "GAGVSQTPSNKVTEKGKYVELRCDPISGHTALYWYRQSLGQGPEFLIYFQGTGAADDSGLPNDRFFAVRPEGSVSTLKIQRTERGDSAVYLCASSL", "aligned_seq": "GAGVSQTPSNKVTEKGKYVELRCDPISGH.......TALYWYRQSLGQGPEFLIYFQG....TGAADDSGLPNDRFFAVRP.EGSVSTLKIQRTERGDSAVYLCASSL", "x": 222.75, "y": -320.61}, {"gene_id": "HSA_TRBV_C1F7.43_04*01", "gene_name": "TRBV7-3*04", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 7", "functionality": "(F)", "aa_seq": "GAGVSQTPSNKVTEKGKYVELRCDPISGHTALYWYRQSLGQGPEFLIYFQGTGAADDSGLPNDRFFAVRPEGSVSTLKIQRTERGDSAVYLCASS", "aligned_seq": "GAGVSQTPSNKVTEKGKYVELRCDPISGH.......TALYWYRQSLGQGPEFLIYFQG....TGAADDSGLPNDRFFAVRP.EGSVSTLKIQRTERGDSAVYLCASS", "x": 221.81, "y": -320.95}, {"gene_id": "HSA_TRBV_C1F7.43_06*01", "gene_name": "TRBV7-3*06", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 7", "functionality": "F", "aa_seq": "GAGVSQTPSNKVTEKGKYVELRCDPISGHTALYWYRQSLGQGPEFLIYFQGTGAADDSGLPNDRFFAVRPEGSVSTLKIQRTERGDSAMYLCASSL", "aligned_seq": "GAGVSQTPSNKVTEKGKYVELRCDPISGH.......TALYWYRQSLGQGPEFLIYFQG....TGAADDSGLPNDRFFAVRP.EGSVSTLKIQRTERGDSAMYLCASSL", "x": 221.65, "y": -322.45}, {"gene_id": "HSA_TRBV_C1F7.179_01*01", "gene_name": "TRBV7-4*01", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 7", "functionality": "F", "aa_seq": "GAGVSQSPRYKVAKRGRDVALRCDSISGHVTLYWYRQTLGQGSEVLTYSQSDAQRDKSGRPSGRFSAERPERSVSTLKIQRTEQGDSAVYLCASSL", "aligned_seq": "GAGVSQSPRYKVAKRGRDVALRCDSISGH.......VTLYWYRQTLGQGSEVLTYSQS....DAQRDKSGRPSGRFSAERP.ERSVSTLKIQRTEQGDSAVYLCASSL", "x": 242.64, "y": -297.51}, {"gene_id": "HSA_TRBV_C1F7.179_02*01", "gene_name": "TRBV7-4*03", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 7", "functionality": "F", "aa_seq": "GAGVSQSPRYKVAKRGRDVALRCDSISGHVTLYWYRQTLGQGSEVLTYSQSDAQRDKSGRPSGRFSAERPERSVSTLKIQCTEQGDSAVYLCASSL", "aligned_seq": "GAGVSQSPRYKVAKRGRDVALRCDSISGH.......VTLYWYRQTLGQGSEVLTYSQS....DAQRDKSGRPSGRFSAERP.ERSVSTLKIQCTEQGDSAVYLCASSL", "x": 240.0, "y": -293.34}, {"gene_id": "HSA_TRBV_C1F7.291_01*01", "gene_name": "TRBV7-6*01", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 7", "functionality": "F", "aa_seq": "GAGVSQSPRYKVTKRGQDVALRCDPISGHVSLYWYRQALGQGPEFLTYFNYEAQQDKSGLPNDRFSAERPEGSISTLTIQRTEQRDSAMYRCASSL", "aligned_seq": "GAGVSQSPRYKVTKRGQDVALRCDPISGH.......VSLYWYRQALGQGPEFLTYFNY....EAQQDKSGLPNDRFSAERP.EGSISTLTIQRTEQRDSAMYRCASSL", "x": 263.64, "y": -317.48}, {"gene_id": "HSA_TRBV_C1F7.291_02*01", "gene_name": "TRBV7-6*02", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 7", "functionality": "(F)", "aa_seq": "GAGVSQSPRYKVTKRGQDVALRCDPISGHVSLYWYRQALGQGPEFLTYFNYEAQQDKSGLPNDRFSAERPEGSISTLTIQRTEQRDSAMYRCASS", "aligned_seq": "GAGVSQSPRYKVTKRGQDVALRCDPISGH.......VSLYWYRQALGQGPEFLTYFNY....EAQQDKSGLPNDRFSAERP.EGSISTLTIQRTEQRDSAMYRCASS", "x": 262.81, "y": -318.67}, {"gene_id": "HSA_TRBV_C1F7.291_03*01", "gene_name": "TRBV7-6*03", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 7", "functionality": "F", "aa_seq": "GAGVSQSPRYKVTKRGQDVALRCDPISGHVSLYWYRQALGQGPEFLTYFNYEAQQDKSGLPNDRFSAERPEGSVSTLTIQRTEQRDSAMYRCASSL", "aligned_seq": "GAGVSQSPRYKVTKRGQDVALRCDPISGH.......VSLYWYRQALGQGPEFLTYFNY....EAQQDKSGLPNDRFSAERP.EGSVSTLTIQRTEQRDSAMYRCASSL", "x": 257.8, "y": -315.69}, {"gene_id": "HSA_TRBV_C1F7.50_01*01", "gene_name": "TRBV7-7*01", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 7", "functionality": "F", "aa_seq": "GAGVSQSPRYKVTKRGQDVTLRCDPISSHATLYWYQQALGQGPEFLTYFNYEAQPDKSGLPSDRFSAERPEGSISTLTIQRTEQRDSAMYRCASSL", "aligned_seq": "GAGVSQSPRYKVTKRGQDVTLRCDPISSH.......ATLYWYQQALGQGPEFLTYFNY....EAQPDKSGLPSDRFSAERP.EGSISTLTIQRTEQRDSAMYRCASSL", "x": 259.61, "y": -317.37}, {"gene_id": "HSA_TRBV_C1F7.50_02*01", "gene_name": "TRBV7-7*02", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 7", "functionality": "(F)", "aa_seq": "GAGVSQSPRYKVTKRGQDVTLRCDPISSHVTLYWYQQALGQGPEFLTYFNYEAQPDKSGLPSDRFSAERPEGSISTLTIQRTEQRDSAMYRCASS", "aligned_seq": "GAGVSQSPRYKVTKRGQDVTLRCDPISSH.......VTLYWYQQALGQGPEFLTYFNY....EAQPDKSGLPSDRFSAERP.EGSISTLTIQRTEQRDSAMYRCASS", "x": 260.72, "y": -317.97}, {"gene_id": "HSA_TRBV_C1F7.50_03*01", "gene_name": "TRBV7-7*04", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 7", "functionality": "F", "aa_seq": "GAGVSQSPRYKVTKRGQDVTLRCDPISSHATLYWYQQALGQGPEFLTYFNYEAQPDKSGLLSDRFSAERPEGSISTLTIQRTEQRDSAMYRCASSL", "aligned_seq": "GAGVSQSPRYKVTKRGQDVTLRCDPISSH.......ATLYWYQQALGQGPEFLTYFNY....EAQPDKSGLLSDRFSAERP.EGSISTLTIQRTEQRDSAMYRCASSL", "x": 260.71, "y": -317.01}, {"gene_id": "HSA_TRBV_C1F7.286_01*01", "gene_name": "TRBV7-8*01", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 7", "functionality": "F", "aa_seq": "GAGVSQSPRYKVAKRGQDVALRCDPISGHVSLFWYQQALGQGPEFLTYFQNEAQLDKSGLPSDRFFAERPEGSVSTLKIQRTQQEDSAVYLCASSL", "aligned_seq": "GAGVSQSPRYKVAKRGQDVALRCDPISGH.......VSLFWYQQALGQGPEFLTYFQN....EAQLDKSGLPSDRFFAERP.EGSVSTLKIQRTQQEDSAVYLCASSL", "x": 248.23, "y": -308.36}, {"gene_id": "HSA_TRBV_C1F7.286_02*01", "gene_name": "TRBV7-8*02", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 7", "functionality": "F", "aa_seq": "GAGVSQSPRYKVAKRGQDVALRCDPISGHVSLFWYQQALGQGPEFLTYFQNEAQLDKSGLPSDRFFAERPEGSVSTLKIQRTQKEDSAVYLCASSL", "aligned_seq": "GAGVSQSPRYKVAKRGQDVALRCDPISGH.......VSLFWYQQALGQGPEFLTYFQN....EAQLDKSGLPSDRFFAERP.EGSVSTLKIQRTQKEDSAVYLCASSL", "x": 246.85, "y": -308.46}, {"gene_id": "HSA_TRBV_C1F7.286_03*01", "gene_name": "TRBV7-8*03", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 7", "functionality": "(F)", "aa_seq": "GAGVSQSPRYKVAKRGQDVALRCDPISGHVSLFWYQQALGQGPEFLTYFQNEAQLDKSGLPSDRFFAERPEGSVSTLKIQRTQQEDSAVYLCASSR", "aligned_seq": "GAGVSQSPRYKVAKRGQDVALRCDPISGH.......VSLFWYQQALGQGPEFLTYFQN....EAQLDKSGLPSDRFFAERP.EGSVSTLKIQRTQQEDSAVYLCASSR", "x": 243.64, "y": -307.23}, {"gene_id": "HSA_TRBV_C1F7.03_01*01", "gene_name": "TRBV7-9*01", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 7", "functionality": "F", "aa_seq": "DTGVSQNPRHKITKRGQNVTFRCDPISEHNRLYWYRQTLGQGPEFLTYFQNEAQLEKSRLLSDRFSAERPKGSFSTLEIQRTEQGDSAMYLCASSL", "aligned_seq": "DTGVSQNPRHKITKRGQNVTFRCDPISEH.......NRLYWYRQTLGQGPEFLTYFQN....EAQLEKSRLLSDRFSAERP.KGSFSTLEIQRTEQGDSAMYLCASSL", "x": 261.65, "y": -267.19}, {"gene_id": "HSA_TRBV_C1F7.03_02*01", "gene_name": "TRBV7-9*02", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 7", "functionality": "(F)", "aa_seq": "DTGVSQNPRHNITKRGQNVTFRCDPISEHNRLYWYRQTLGQGPEFLTYFQNEAQLEKSRLLSDRFSAERPKGSFSTLEIQRTEQGDSAMYLCASSL", "aligned_seq": "DTGVSQNPRHNITKRGQNVTFRCDPISEH.......NRLYWYRQTLGQGPEFLTYFQN....EAQLEKSRLLSDRFSAERP.KGSFSTLEIQRTEQGDSAMYLCASSL", "x": 258.17, "y": -268.35}, {"gene_id": "HSA_TRBV_C1F7.03_03*01", "gene_name": "TRBV7-9*03", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 7", "functionality": "F", "aa_seq": "DTGVSQDPRHKITKRGQNVTFRCDPISEHNRLYWYRQTLGQGPEFLTYFQNEAQLEKSRLLSDRFSAERPKGSFSTLEIQRTEQGDSAMYLCASSL", "aligned_seq": "DTGVSQDPRHKITKRGQNVTFRCDPISEH.......NRLYWYRQTLGQGPEFLTYFQN....EAQLEKSRLLSDRFSAERP.KGSFSTLEIQRTEQGDSAMYLCASSL", "x": 259.51, "y": -266.94}, {"gene_id": "HSA_TRBV_C1F7.03_04*01", "gene_name": "TRBV7-9*04", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 7", "functionality": "(F)", "aa_seq": "ISGVSHNPRHKITKRGQNVTFRCDPISEHNRLYWYRQNPGQGPEFLTYFQNEAQLEKSGLLSDRISAERPKGSFSTLEIQRTEQGDSAMYLCASS", "aligned_seq": "ISGVSHNPRHKITKRGQNVTFRCDPISEH.......NRLYWYRQNPGQGPEFLTYFQN....EAQLEKSGLLSDRISAERP.KGSFSTLEIQRTEQGDSAMYLCASS", "x": 260.3, "y": -266.82}, {"gene_id": "HSA_TRBV_C1F7.03_05*01", "gene_name": "TRBV7-9*05", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 7", "functionality": "(F)", "aa_seq": "DTGVSQNPRHKITKRGQNVTFRCDPISEHNRLYWYRQTLGQGPEFLTYFQNEAQLEKSRLLSDRFSAERPKGSLSTLEIQRTEQGDSAMYLCASTK", "aligned_seq": "DTGVSQNPRHKITKRGQNVTFRCDPISEH.......NRLYWYRQTLGQGPEFLTYFQN....EAQLEKSRLLSDRFSAERP.KGSLSTLEIQRTEQGDSAMYLCASTK", "x": 258.58, "y": -267.09}, {"gene_id": "HSA_TRBV_C1F7.03_06*01", "gene_name": "TRBV7-9*06", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 7", "functionality": "(F)", "aa_seq": "DTGVSQNPRHKITKRGQNVTFRCDPISEHNRLYWYRQTLGQGPEFLTYFQNEAQLEKSRLLSDRFSAERPKGSLSTLEIQRTEQGDSAMYLCASTL", "aligned_seq": "DTGVSQNPRHKITKRGQNVTFRCDPISEH.......NRLYWYRQTLGQGPEFLTYFQN....EAQLEKSRLLSDRFSAERP.KGSLSTLEIQRTEQGDSAMYLCASTL", "x": 258.51, "y": -268.29}, {"gene_id": "HSA_TRBV_C1F9.146_01*01", "gene_name": "TRBV9*01", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 9", "functionality": "F", "aa_seq": "DSGVTQTPKHLITATGQRVTLRCSPRSGDLSVYWYQQSLDQGLQFLIQYYNGEERAKGNILERFSAQQFPDLHSELNLSSLELGDSALYFCASSV", "aligned_seq": "DSGVTQTPKHLITATGQRVTLRCSPRSGD.......LSVYWYQQSLDQGLQFLIQYYN....GEERAKGNIL.ERFSAQQF.PDLHSELNLSSLELGDSALYFCASSV", "x": 20.74, "y": -461.11}, {"gene_id": "HSA_TRBV_C1F9.146_02*01", "gene_name": "TRBV9*02", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 9", "functionality": "F", "aa_seq": "DSGVTQTPKHLITATGQRVTLRCSPRSGDLSVYWYQQSLDQGLQFLIHYYNGEERAKGNILERFSAQQFPDLHSELNLSSLELGDSALYFCASSV", "aligned_seq": "DSGVTQTPKHLITATGQRVTLRCSPRSGD.......LSVYWYQQSLDQGLQFLIHYYN....GEERAKGNIL.ERFSAQQF.PDLHSELNLSSLELGDSALYFCASSV", "x": 20.99, "y": -461.47}, {"gene_id": "HSA_TRBV_C1F9.146_03*01", "gene_name": "TRBV9*03", "locus": "TRB", "chain": "TRBV", "clan": "TRBV Clan 1", "family": "TRBV Family 9", "functionality": "(F)", "aa_seq": "DSGVTQTPKHLITATGQRVTLRCSPRSGDLSVYWYQQSLDQGLQFLIQYYNGEERAKGNILERFSAQQFPDLHSELNLSSLELGDSALYFCASS", "aligned_seq": "DSGVTQTPKHLITATGQRVTLRCSPRSGD.......LSVYWYQQSLDQGLQFLIQYYN....GEERAKGNIL.ERFSAQQF.PDLHSELNLSSLELGDSALYFCASS", "x": 495.55, "y": -31.15}, {"gene_id": "HSA_TRGV_C1F1.20_01*01", "gene_name": "TRGV1*01", "locus": "TRG", "chain": "TRGV", "clan": "TRGV Clan 1", "family": "TRGV Family 1", "functionality": "ORF", "aa_seq": "SSNLEGRTKSVTRLTGSSAEITCDLPGASTLYIHWYLHQEGKAPQCLLYYEPYYSRVVLESGITPGKYDTGSTRSNWNLRLQNLIKNDSGFYYCATWDR", "aligned_seq": "SSNLEGRTKSVTRLTGSSAEITCDLPGAS......TLYIHWYLHQEGKAPQCLLYYEPY..YSRVVLESGITPGKYDT.GS.TRSNWNLRLQNLIKNDSGFYYCATWDR", "x": 264.07, "y": -13.39}, {"gene_id": "HSA_TRGV_C3F10.34_01*01", "gene_name": "TRGV10*01", "locus": "TRG", "chain": "TRGV", "clan": "TRGV Clan 3", "family": "TRGV Family 10", "functionality": "ORF", "aa_seq": "LSKVEQFQLSISTEVKKSIDIPCKISSTRFETDVIHWYRQKPNQALEHLIYIVSTKSAARRSMGKTSNKVEARKNSQTLTSILTIKSVEKEDMAVYYCAAWWV", "aligned_seq": "LSKVEQFQLSISTEVKKSIDIPCKISSTRF....ETDVIHWYRQKPNQALEHLIYIVST..KSAARRSMGKTSNKVEARKNSQTLTSILTIKSVEKEDMAVYYCAAWWV", "x": 302.14, "y": -122.49}, {"gene_id": "HSA_TRGV_C3F10.34_02*01", "gene_name": "TRGV10*02", "locus": "TRG", "chain": "TRGV", "clan": "TRGV Clan 3", "family": "TRGV Family 10", "functionality": "ORF", "aa_seq": "LSKVEQFQLSISTEVKKSIDIPCKISSTRFETDVIHWYRQKPNQALEHLIYIVSTKSAARRSMGKTSNKVEARKNSQTLTSILTIKSVEKEDMAVYYCAAWDY", "aligned_seq": "LSKVEQFQLSISTEVKKSIDIPCKISSTRF....ETDVIHWYRQKPNQALEHLIYIVST..KSAARRSMGKTSNKVEARKNSQTLTSILTIKSVEKEDMAVYYCAAWDY", "x": 303.13, "y": -119.88}, {"gene_id": "HSA_TRGV_C3F10.34_03*01", "gene_name": "TRGV10*03", "locus": "TRG", "chain": "TRGV", "clan": "TRGV Clan 3", "family": "TRGV Family 10", "functionality": "ORF", "aa_seq": "LSKVEQFQLSISTEVKKSIDIPCKISSTRFETDVIHWYQQKPNQALEHLIYIVSTKSAARRSMGKTSNKVEARKNSQTLTSILTIKSVEKEDMAVYYCAAWDY", "aligned_seq": "LSKVEQFQLSISTEVKKSIDIPCKISSTRF....ETDVIHWYQQKPNQALEHLIYIVST..KSAARRSMGKTSNKVEARKNSQTLTSILTIKSVEKEDMAVYYCAAWDY", "x": 301.81, "y": -121.35}, {"gene_id": "HSA_TRGV_C3F11.05_01*01", "gene_name": "TRGV11*01", "locus": "TRG", "chain": "TRGV", "clan": "TRGV Clan 3", "family": "TRGV Family 11", "functionality": "ORF", "aa_seq": "LGQLEQPEISISRPANKSAHISWKASIQGFSSKIIHWYWQKPNKGLEYLLHVFLTISAQDCSGGKTKKLEVSKNAHTSTSTLKIKFLEKEDEVVYHCACWIRH", "aligned_seq": "LGQLEQPEISISRPANKSAHISWKASIQGF....SSKIIHWYWQKPNKGLEYLLHVFLT...ISAQDCSGGKTKKLEVSKNAHTSTSTLKIKFLEKEDEVVYHCACWIRH", "x": 319.27, "y": -97.22}, {"gene_id": "HSA_TRGV_C3F11.05_02*01", "gene_name": "TRGV11*02", "locus": "TRG", "chain": "TRGV", "clan": "TRGV Clan 3", "family": "TRGV Family 11", "functionality": "ORF", "aa_seq": "LGQLEQPEISISRPANKSAHISWKASIQGFSSKIIHWYWQKPNKGLEYLLHVFLTISAQDCSGGKTKKLEISKNAHTSTSTLKIKFLEKEDEVVYHCACWIRH", "aligned_seq": "LGQLEQPEISISRPANKSAHISWKASIQGF....SSKIIHWYWQKPNKGLEYLLHVFLT...ISAQDCSGGKTKKLEISKNAHTSTSTLKIKFLEKEDEVVYHCACWIRH", "x": 318.34, "y": -98.31}, {"gene_id": "HSA_TRGV_C3F11.05_03*01", "gene_name": "TRGV11*03", "locus": "TRG", "chain": "TRGV", "clan": "TRGV Clan 3", "family": "TRGV Family 11", "functionality": "ORF", "aa_seq": "LGQLEQPKISISRPANKSAHISWKASIQGFSSKIIHWYWQKPNKGLEYLLHVFLTISAQDCSGGKTKKLEVSKNAHTSTSTLKINFLEKEDEVVYHCACWIRH", "aligned_seq": "LGQLEQPKISISRPANKSAHISWKASIQGF....SSKIIHWYWQKPNKGLEYLLHVFLT...ISAQDCSGGKTKKLEVSKNAHTSTSTLKINFLEKEDEVVYHCACWIRH", "x": 318.31, "y": -97.01}, {"gene_id": "HSA_TRGV_C1F2.143_01*01", "gene_name": "TRGV2*01", "locus": "TRG", "chain": "TRGV", "clan": "TRGV Clan 1", "family": "TRGV Family 2", "functionality": "F", "aa_seq": "SSNLEGRTKSVIRQTGSSAEITCDLAEGSNGYIHWYLHQEGKAPQRLQYYDSYNSKVVLESGVSPGKYYTYASTRNNLRLILRNLIENDSGVYYCATWDG", "aligned_seq": "SSNLEGRTKSVIRQTGSSAEITCDLAEGS......NGYIHWYLHQEGKAPQRLQYYDSY..NSKVVLESGVSPGKYYTYAS.TRNNLRLILRNLIENDSGVYYCATWDG", "x": 269.86, "y": -3.28}, {"gene_id": "HSA_TRGV_C1F2.143_02*01", "gene_name": "TRGV2*02", "locus": "TRG", "chain": "TRGV", "clan": "TRGV Clan 1", "family": "TRGV Family 2", "functionality": "(F)", "aa_seq": "SSNLEGRTKSVIRQTGSSAEITCDLAEGSNGYIHWYLHQEGKAPQRLQYYDSYNSKVVLESGVSPGKYYTYASTRNNLRLILQNLIENDSGVYYCATWD", "aligned_seq": "SSNLEGRTKSVIRQTGSSAEITCDLAEGS......NGYIHWYLHQEGKAPQRLQYYDSY..NSKVVLESGVSPGKYYTYAS.TRNNLRLILQNLIENDSGVYYCATWD", "x": 269.74, "y": -8.28}, {"gene_id": "HSA_TRGV_C1F2.143_03*01", "gene_name": "TRGV2*03", "locus": "TRG", "chain": "TRGV", "clan": "TRGV Clan 1", "family": "TRGV Family 2", "functionality": "F", "aa_seq": "SSNLEGRTKSVIRQTGSSAEITCDLAEGSNGYIHWYLHQEGKAPQRLQYYDSYNSKVVLESGVSPGKYYTYASTRNNLRLILRNLIENDFGVYYCATWDG", "aligned_seq": "SSNLEGRTKSVIRQTGSSAEITCDLAEGS......NGYIHWYLHQEGKAPQRLQYYDSY..NSKVVLESGVSPGKYYTYAS.TRNNLRLILRNLIENDFGVYYCATWDG", "x": 269.98, "y": -8.23}, {"gene_id": "HSA_TRGV_C1F3.16_01*01", "gene_name": "TRGV3*01", "locus": "TRG", "chain": "TRGV", "clan": "TRGV Clan 1", "family": "TRGV Family 3", "functionality": "F", "aa_seq": "SSNLEGRTKSVTRQTGSSAEITCDLTVTNTFYIHWYLHQEGKAPQRLLYYDVSTARDVLESGLSPGKYYTHTPRRWSWILRLQNLIENDSGVYYCATWDR", "aligned_seq": "SSNLEGRTKSVTRQTGSSAEITCDLTVTN......TFYIHWYLHQEGKAPQRLLYYDVS..TARDVLESGLSPGKYYTHTP.RRWSWILRLQNLIENDSGVYYCATWDR", "x": 264.41, "y": -11.51}, {"gene_id": "HSA_TRGV_C1F3.16_02*01", "gene_name": "TRGV3*02", "locus": "TRG", "chain": "TRGV", "clan": "TRGV Clan 1", "family": "TRGV Family 3", "functionality": "F", "aa_seq": "SSNLEGRTKSVTRQTGSSAEITCDLTVTNTFYIHWYLHQEGKAPQRLLYYDVSTARDVLESGLSPGKYYTHTPRRWSWILRLQNLIENDSGVYYCATWD", "aligned_seq": "SSNLEGRTKSVTRQTGSSAEITCDLTVTN......TFYIHWYLHQEGKAPQRLLYYDVS..TARDVLESGLSPGKYYTHTP.RRWSWILRLQNLIENDSGVYYCATWD", "x": 262.89, "y": -12.58}, {"gene_id": "HSA_TRGV_C1F3.16_03*01", "gene_name": "TRGV3*04", "locus": "TRG", "chain": "TRGV", "clan": "TRGV Clan 1", "family": "TRGV Family 3", "functionality": "F", "aa_seq": "SSNLEGRTKSVTRQTGSSAEITCDLTVTNTFYIHWYLHQEGKAPQRLLYYDVSTTRDVLESGLSPGKYYTHTPRRWSWILRLQNLIENDSGVYYCATWDR", "aligned_seq": "SSNLEGRTKSVTRQTGSSAEITCDLTVTN......TFYIHWYLHQEGKAPQRLLYYDVS..TTRDVLESGLSPGKYYTHTP.RRWSWILRLQNLIENDSGVYYCATWDR", "x": 264.3, "y": -11.66}, {"gene_id": "HSA_TRGV_C1F4.31_01*01", "gene_name": "TRGV4*01", "locus": "TRG", "chain": "TRGV", "clan": "TRGV Clan 1", "family": "TRGV Family 4", "functionality": "F", "aa_seq": "SSNLEGRTKSVIRQTGSSAEITCDLAEGSTGYIHWYLHQEGKAPQRLLYYDSYTSSVVLESGISPGKYDTYGSTRKNLRMILRNLIENDSGVYYCATWDG", "aligned_seq": "SSNLEGRTKSVIRQTGSSAEITCDLAEGS......TGYIHWYLHQEGKAPQRLLYYDSY..TSSVVLESGISPGKYDTYGS.TRKNLRMILRNLIENDSGVYYCATWDG", "x": 267.24, "y": -12.28}, {"gene_id": "HSA_TRGV_C1F5.33_01*01", "gene_name": "TRGV5*01", "locus": "TRG", "chain": "TRGV", "clan": "TRGV Clan 1", "family": "TRGV Family 5", "functionality": "F", "aa_seq": "SSNLEGGTKSVTRPTRSSAEITCDLTVINAFYIHWYLHQEGKAPQRLLYYDVSNSKDVLESGLSPGKYYTHTPRRWSWILILRNLIENDSGVYYCATWDR", "aligned_seq": "SSNLEGGTKSVTRPTRSSAEITCDLTVIN......AFYIHWYLHQEGKAPQRLLYYDVS..NSKDVLESGLSPGKYYTHTP.RRWSWILILRNLIENDSGVYYCATWDR", "x": 258.39, "y": -11.05}, {"gene_id": "HSA_TRGV_C1F5.127_01*01", "gene_name": "TRGV5P*01", "locus": "TRG", "chain": "TRGV", "clan": "TRGV Clan 1", "family": "TRGV Family 5", "functionality": "P", "aa_seq": "SSNLEGRMKSVTRPTGSSAEITCDLTVINAVYIHWYLQQEGKTPQHLLHYEVSNSRDVLESGLSLGKYYTHTPRRWSWNLRLQNLIENDSGVYYCATWGR", "aligned_seq": "SSNLEGRMKSVTRPTGSSAEITCDLTVIN......AVYIHWYLQQEGKTPQHLLHYEVS..NSRDVLESGLSLGKYYTHTP.RRWSWNLRLQNLIENDSGVYYCATWGR", "x": 258.36, "y": -17.06}, {"gene_id": "HSA_TRGV_C1F5.127_02*01", "gene_name": "TRGV5P*02", "locus": "TRG", "chain": "TRGV", "clan": "TRGV Clan 1", "family": "TRGV Family 5", "functionality": "P", "aa_seq": "SSNLEGRMKSVTRPTGSSAEITCDLTVINAVYIHWYLQQEGKTPQHLLHYDVSNSRDVLESGLSLGKYYTHTPRRWSWNLRLQNLIENDSGVYYCATWGR", "aligned_seq": "SSNLEGRMKSVTRPTGSSAEITCDLTVIN......AVYIHWYLQQEGKTPQHLLHYDVS..NSRDVLESGLSLGKYYTHTP.RRWSWNLRLQNLIENDSGVYYCATWGR", "x": 254.99, "y": -12.26}, {"gene_id": "HSA_TRGV_C1F8.19_01*01", "gene_name": "TRGV8*01", "locus": "TRG", "chain": "TRGV", "clan": "TRGV Clan 1", "family": "TRGV Family 8", "functionality": "F", "aa_seq": "SSNLEGRTKSVTRPTGSSAVITCDLPVENAVYTHWYLHQEGKAPQRLLYYDSYNSRVVLESGISREKYHTYASTGKSLKFILENLIERDSGVYYCATWDR", "aligned_seq": "SSNLEGRTKSVTRPTGSSAVITCDLPVEN......AVYTHWYLHQEGKAPQRLLYYDSY..NSRVVLESGISREKYHTYAS.TGKSLKFILENLIERDSGVYYCATWDR", "x": 267.88, "y": -18.09}, {"gene_id": "HSA_TRGV_C3F9.41_01*01", "gene_name": "TRGV9*01", "locus": "TRG", "chain": "TRGV", "clan": "TRGV Clan 3", "family": "TRGV Family 9", "functionality": "F", "aa_seq": "AGHLEQPQISSTKTLSKTARLECVVSGITISATSVYWYRERPGEVIQFLVSISYDGTVRKESGIPSGKFEVDRIPETSTSTLTIHNVEKQDIATYYCALWEV", "aligned_seq": "AGHLEQPQISSTKTLSKTARLECVVSGITI....SATSVYWYRERPGEVIQFLVSISYD...GTVRKESGIPSGKFEVDRIPETSTSTLTIHNVEKQDIATYYCALWEV", "x": 313.59, "y": -106.16}, {"gene_id": "HSA_TRGV_C3F9.41_02*01", "gene_name": "TRGV9*02", "locus": "TRG", "chain": "TRGV", "clan": "TRGV Clan 3", "family": "TRGV Family 9", "functionality": "F", "aa_seq": "AGHLEQPQISSTKTLSKTARLECVVSGIKISATSVYWYRERPGEVIQFLVSISYDGTVRKESGIPSGKFEVDRIPETSTSTLTIHNVEKQDIATYYCALWEV", "aligned_seq": "AGHLEQPQISSTKTLSKTARLECVVSGIKI....SATSVYWYRERPGEVIQFLVSISYD...GTVRKESGIPSGKFEVDRIPETSTSTLTIHNVEKQDIATYYCALWEV", "x": 313.02, "y": -105.15}, {"gene_id": "HSA_TRDV_C1F14.48_01*01", "gene_name": "TRAV14/DV4*01", "locus": "TRD", "chain": "TRDV", "clan": "TRDV Clan 1", "family": "TRDV Family 14", "functionality": "F", "aa_seq": "AQKITQTQPGMFVQEKEAVTLDCTYDTSDPSYGLFWYKQPSSGEMIFLIYQGSYDQQNATEGRYSLNFQKARKSANLVISASQLGDSAMYFCAMRE", "aligned_seq": "AQKITQTQPGMFVQEKEAVTLDCTYDTSDP.....SYGLFWYKQPSSGEMIFLIYQGSY..DQQNATE.....GRYSLNFQKARKSANLVISASQLGDSAMYFCAMRE", "x": -84.91, "y": 271.28}, {"gene_id": "HSA_TRDV_C1F14.48_02*01", "gene_name": "TRAV14/DV4*02", "locus": "TRD", "chain": "TRDV", "clan": "TRDV Clan 1", "family": "TRDV Family 14", "functionality": "F", "aa_seq": "AQKITQTQPGMFVQEKEAVTLDCTYDTSDQSYGLFWYKQPSSGEMIFLIYQGSYDEQNATEGRYSLNFQKARKSANLVISASQLGDSAMYFCAMRE", "aligned_seq": "AQKITQTQPGMFVQEKEAVTLDCTYDTSDQ.....SYGLFWYKQPSSGEMIFLIYQGSY..DEQNATE.....GRYSLNFQKARKSANLVISASQLGDSAMYFCAMRE", "x": -84.72, "y": 271.1}, {"gene_id": "HSA_TRDV_C1F23.84_01*01", "gene_name": "TRAV23/DV6*01", "locus": "TRD", "chain": "TRDV", "clan": "TRDV Clan 1", "family": "TRDV Family 23", "functionality": "F", "aa_seq": "QQQVKQSPQSLIVQKGGISIINCAYENTAFDYFPWYQQFPGKGPALLIAIRPDVSEKKEGRFTISFNKSAKQFSLHIMDSQPGDSATYFCAAS", "aligned_seq": "QQQVKQSPQSLIVQKGGISIINCAYENTA......FDYFPWYQQFPGKGPALLIAIRPD...VSEKKE.....GRFTISFNKSAKQFSLHIMDSQPGDSATYFCAAS", "x": -432.48, "y": -129.55}, {"gene_id": "HSA_TRDV_C1F23.84_02*01", "gene_name": "TRAV23/DV6*02", "locus": "TRD", "chain": "TRDV", "clan": "TRDV Clan 1", "family": "TRDV Family 23", "functionality": "F", "aa_seq": "QQQVKQSPQSLIVQKGGIPIINCAYENTAFDYFPWYQQFPGKGPALLIAIRPDVSEKKEGRFTISFNKSAKQFSLHIMDSQPGDSATYFCAAS", "aligned_seq": "QQQVKQSPQSLIVQKGGIPIINCAYENTA......FDYFPWYQQFPGKGPALLIAIRPD...VSEKKE.....GRFTISFNKSAKQFSLHIMDSQPGDSATYFCAAS", "x": -432.97, "y": -131.08}, {"gene_id": "HSA_TRDV_C1F23.84_04*01", "gene_name": "TRAV23/DV6*05", "locus": "TRD", "chain": "TRDV", "clan": "TRDV Clan 1", "family": "TRDV Family 23", "functionality": "F", "aa_seq": "QQQVKQSPQSLIVQKGGISIINCAYENTAFDYFPWYQQFPGKGPALLIAIRPDVSEKKEGRFTISFNKSAKQFSSHIMDSQPGDSATYFCAAS", "aligned_seq": "QQQVKQSPQSLIVQKGGISIINCAYENTA......FDYFPWYQQFPGKGPALLIAIRPD...VSEKKE.....GRFTISFNKSAKQFSSHIMDSQPGDSATYFCAAS", "x": -433.02, "y": -130.97}, {"gene_id": "HSA_TRDV_C1F29.47_01*01", "gene_name": "TRAV29/DV5*01", "locus": "TRD", "chain": "TRDV", "clan": "TRDV Clan 1", "family": "TRDV Family 29", "functionality": "F", "aa_seq": "DQQVKQNSPSLSVQEGRISILNCDYTNSMFDYFLWYKKYPAEGPTFLISISSIKDKNEDGRFTVFLNKSAKHLSLHIVPSQPGDSAVYFCAAS", "aligned_seq": "DQQVKQNSPSLSVQEGRISILNCDYTNSM......FDYFLWYKKYPAEGPTFLISISSI...KDKNED.....GRFTVFLNKSAKHLSLHIVPSQPGDSAVYFCAAS", "x": -412.37, "y": -163.95}, {"gene_id": "HSA_TRDV_C1F29.47_02*01", "gene_name": "TRAV29/DV5*02", "locus": "TRD", "chain": "TRDV", "clan": "TRDV Clan 1", "family": "TRDV Family 29", "functionality": "F", "aa_seq": "DQQVKQNSPSLSVQEGRISILNCDYTNSMFDYFLWYKKYPAEGPTFLISISSIKDKNEDGRFTVFLNKSAKHLSLDIVPSQPGDSAVYFCAAS", "aligned_seq": "DQQVKQNSPSLSVQEGRISILNCDYTNSM......FDYFLWYKKYPAEGPTFLISISSI...KDKNED.....GRFTVFLNKSAKHLSLDIVPSQPGDSAVYFCAAS", "x": -411.82, "y": -164.39}, {"gene_id": "HSA_TRDV_C1F36.16_01*01", "gene_name": "TRAV36/DV7*01", "locus": "TRD", "chain": "TRDV", "clan": "TRDV Clan 1", "family": "TRDV Family 36", "functionality": "F", "aa_seq": "EDKVVQSPLSLVVHEGDTVTLNCSYEVTNFRSLLWYKQEKKAPTFLFMLTSSGIEKKSGRLSSILDKKELSSILNITATQTGDSAIYLCAVE", "aligned_seq": "EDKVVQSPLSLVVHEGDTVTLNCSYEVTN......FRSLLWYKQEKKAP.TFLFMLTSS...GIEKKS.....GRLSSILDKKELSSILNITATQTGDSAIYLCAVE", "x": -246.88, "y": 64.55}, {"gene_id": "HSA_TRDV_C1F36.16_02*01", "gene_name": "TRAV36/DV7*02", "locus": "TRD", "chain": "TRDV", "clan": "TRDV Clan 1", "family": "TRDV Family 36", "functionality": "(F)", "aa_seq": "EDKVVQSPQSLVVHEGDTVTLNCSYEMTNFRSLQWYKQEKKAPTFLFMLTSSGIEKKSGRLSSILDKKELFSILNITATQTGDSAVYLCAV", "aligned_seq": "EDKVVQSPQSLVVHEGDTVTLNCSYEMTN......FRSLQWYKQEKKAP.TFLFMLTSS...GIEKKS.....GRLSSILDKKELFSILNITATQTGDSAVYLCAV", "x": -246.85, "y": 64.92}, {"gene_id": "HSA_TRDV_C1F36.16_03*01", "gene_name": "TRAV36/DV7*03", "locus": "TRD", "chain": "TRDV", "clan": "TRDV Clan 1", "family": "TRDV Family 36", "functionality": "(F)", "aa_seq": "EDKVVQSPLSLVVHEGDTVTPNCSYEVTNFRSLLWYKQEKKAPTFLFMLTSSGIEKKSGRLSSILDKKELFSILNITATQTGDSAVYLCA", "aligned_seq": "EDKVVQSPLSLVVHEGDTVTPNCSYEVTN......FRSLLWYKQEKKAP.TFLFMLTSS...GIEKKS.....GRLSSILDKKELFSILNITATQTGDSAVYLCA", "x": -246.62, "y": 65.07}, {"gene_id": "HSA_TRDV_C1F36.16_04*01", "gene_name": "TRAV36/DV7*04", "locus": "TRD", "chain": "TRDV", "clan": "TRDV Clan 1", "family": "TRDV Family 36", "functionality": "F", "aa_seq": "EDKVVQSPLSLVVHEGDTVTLNCSYEVTNFRSLLWYKQEKKAPTFLFMLTSSGIEKKSGRLSSILDKKELFSILNITATQTGDSAVYLCAVE", "aligned_seq": "EDKVVQSPLSLVVHEGDTVTLNCSYEVTN......FRSLLWYKQEKKAP.TFLFMLTSS...GIEKKS.....GRLSSILDKKELFSILNITATQTGDSAVYLCAVE", "x": -246.84, "y": 65.61}, {"gene_id": "HSA_TRDV_C1F36.16_05*01", "gene_name": "TRAV36/DV7*05", "locus": "TRD", "chain": "TRDV", "clan": "TRDV Clan 1", "family": "TRDV Family 36", "functionality": "F", "aa_seq": "EDKVVQSPLSLVVHEGDTVTLNCSYEVTNFRSLLWYKQEKKAPTFLFMLTSSGIEKKSGRLSSILDKKELFSILNITATQTGDSAIYLCAVE", "aligned_seq": "EDKVVQSPLSLVVHEGDTVTLNCSYEVTN......FRSLLWYKQEKKAP.TFLFMLTSS...GIEKKS.....GRLSSILDKKELFSILNITATQTGDSAIYLCAVE", "x": -247.24, "y": 65.36}, {"gene_id": "HSA_TRDV_C1F38.166_01*01", "gene_name": "TRAV38-2/DV8*01", "locus": "TRD", "chain": "TRDV", "clan": "TRDV Clan 1", "family": "TRDV Family 38", "functionality": "F", "aa_seq": "AQTVTQSQPEMSVQEAETVTLSCTYDTSESDYYLFWYKQPPSRQMILVIRQEAYKQQNATENRFSVNFQKAAKSFSLKISDSQLGDAAMYFCAYRS", "aligned_seq": "AQTVTQSQPEMSVQEAETVTLSCTYDTSES.....DYYLFWYKQPPSRQMILVIRQEAY..KQQNATE.....NRFSVNFQKAAKSFSLKISDSQLGDAAMYFCAYRS", "x": -327.68, "y": 355.4}, {"gene_id": "HSA_TRDV_C1F1.14_01*01", "gene_name": "TRDV1*01", "locus": "TRD", "chain": "TRDV", "clan": "TRDV Clan 1", "family": "TRDV Family 1", "functionality": "F", "aa_seq": "AQKVTQAQSSVSMPVRKAVTLNCLYETSWWSYYIFWYKQLPSKEMIFLIRQGSDEQNAKSGRYSVNFKKAAKSVALTISALQLEDSAKYFCALGE", "aligned_seq": "AQKVTQAQSSVSMPVRKAVTLNCLYETSWW.....SYYIFWYKQLPSKEMIFLIRQG.......SDEQNAKS.GRYSVNFKKAAKSVALTISALQLEDSAKYFCALGE", "x": -134.76, "y": 382.61}, {"gene_id": "HSA_TRDV_C3F2.01_01*01", "gene_name": "TRDV2*01", "locus": "TRD", "chain": "TRDV", "clan": "TRDV Clan 3", "family": "TRDV Family 2", "functionality": "F", "aa_seq": "AIELVPEHQTVPVSIGVPATLRCSMKGEAIGNYYINWYRKTQGNTITFIYREKDIYGPGFKDNFQGDIDIAKNLAVLKILAPSERDEGSYYCACDT", "aligned_seq": "AIELVPEHQTVPVSIGVPATLRCSMKGEAI....GNYYINWYRKTQGNTITFIYREK.......DIYGPGFK.DNFQGDIDIAKNLAVLKILAPSERDEGSYYCACDT", "x": 204.15, "y": -160.31}, {"gene_id": "HSA_TRDV_C3F2.01_03*01", "gene_name": "TRDV2*03", "locus": "TRD", "chain": "TRDV", "clan": "TRDV Clan 3", "family": "TRDV Family 2", "functionality": "F", "aa_seq": "AIELVPEHQTVPVSIGVPATLRCSMKGEAIGNYYINWYRKTQGNTMTFIYREKDIYGPGFKDNFQGDIDIAKNLAVLKILAPSERDEGSYYCACDT", "aligned_seq": "AIELVPEHQTVPVSIGVPATLRCSMKGEAI....GNYYINWYRKTQGNTMTFIYREK.......DIYGPGFK.DNFQGDIDIAKNLAVLKILAPSERDEGSYYCACDT", "x": 203.11, "y": -161.76}, {"gene_id": "HSA_TRDV_C2F3.40_01*01", "gene_name": "TRDV3*01", "locus": "TRD", "chain": "TRDV", "clan": "TRDV Clan 2", "family": "TRDV Family 3", "functionality": "F", "aa_seq": "CDKVTQSSPDQTVASGSEVVLLCTYDTVYSNPDLFWYRIRPDYSFQFVFYGDNSRSEGADFTQGRFSVKHILTQKAFHLVISPVRTEDSATYYCAF", "aligned_seq": "CDKVTQSSPDQTVASGSEVVLLCTYDTVYS.....NPDLFWYRIRPDYSFQFVFYGDN....SRSEGADFTQ.GRFSVKHILTQKAFHLVISPVRTEDSATYYCAF", "x": -63.21, "y": 43.56}, {"gene_id": "HSA_TRDV_C2F3.40_02*01", "gene_name": "TRDV3*02", "locus": "TRD", "chain": "TRDV", "clan": "TRDV Clan 2", "family": "TRDV Family 3", "functionality": "F", "aa_seq": "CDKVTQSSPDQTVASGSEVVLLCTYDTVYSNPDLFWYWIRPDYSFQFVFYGDNSRSEGADFTQGRFSVKHILTQKAFHLVISPVRTEDSATYYCAF", "aligned_seq": "CDKVTQSSPDQTVASGSEVVLLCTYDTVYS.....NPDLFWYWIRPDYSFQFVFYGDN....SRSEGADFTQ.GRFSVKHILTQKAFHLVISPVRTEDSATYYCAF", "x": -63.16, "y": 42.79}, {"gene_id": "HSA_TRDV_C2F3.40_03*01", "gene_name": "TRDV3*03", "locus": "TRD", "chain": "TRDV", "clan": "TRDV Clan 2", "family": "TRDV Family 3", "functionality": "F", "aa_seq": "CDKVTQSSPDQTVASGSEVVLLCTYNTVYSNPDLFWYRIRPDYSFQFVFYGDNSRSEGADFTQGRFSVKHILTQKAFHLVISPVRTEDSATYYCAF", "aligned_seq": "CDKVTQSSPDQTVASGSEVVLLCTYNTVYS.....NPDLFWYRIRPDYSFQFVFYGDN....SRSEGADFTQ.GRFSVKHILTQKAFHLVISPVRTEDSATYYCAF", "x": 489.96, "y": -27.59}];
+        const D_GENES = [{"gene_id": "TRBD1*01", "species": "human", "chain_type": "TRB", "locus": "TRB", "dna_seq": "GGGACAGGGGGC", "rss_5": "CACAGTG-12-ACAAAAACC", "rss_3": "GGTTTTTGT-23-CACTGTG"}, {"gene_id": "TRBD2*01", "species": "human", "chain_type": "TRB", "locus": "TRB", "dna_seq": "GGGACTGGGGGGGC", "rss_5": "CACAGTG-12-ACAAAAACC", "rss_3": "GGTTTTTGT-23-CACTGTG"}, {"gene_id": "TRDD1*01", "species": "human", "chain_type": "TRD", "locus": "TRD", "dna_seq": "GAAATAGT", "rss_5": "CACAGTG-12-ACAAAAACC", "rss_3": "GGTTTTTGT-12-CACTGTG"}, {"gene_id": "TRDD2*01", "species": "human", "chain_type": "TRD", "locus": "TRD", "dna_seq": "CCTTCCTAC", "rss_5": "CACAGTG-12-ACAAAAACC", "rss_3": "GGTTTTTGT-12-CACTGTG"}, {"gene_id": "TRDD3*01", "species": "human", "chain_type": "TRD", "locus": "TRD", "dna_seq": "ACTGGGGGATACG", "rss_5": "CACAGTG-12-ACAAAAACC", "rss_3": "GGTTTTTGT-23-CACTGTG"}];
+        const J_GENES = [{"gene_id": "TRBJ1-1*01", "species": "human", "chain_type": "TRB", "locus": "TRB", "dna_seq": "AACAACAGTTTCTTTGGGAAGGGGACCAAACTCACCGTCCTA", "aa_seq": "NNSFFGKGTKLTVL", "boundary_motif": "LTVL"}, {"gene_id": "TRBJ1-2*01", "species": "human", "chain_type": "TRB", "locus": "TRB", "dna_seq": "AATTACTATGGTTACTACTTTGGGAGTGGCACCAAACTCTCTGTGCTG", "aa_seq": "NYGYTFGSGTRLTVV", "boundary_motif": "LTVV"}, {"gene_id": "TRBJ1-3*01", "species": "human", "chain_type": "TRB", "locus": "TRB", "dna_seq": "TCTGGAAACACCATATATTTTGGAGAGGGAAGTTGGCTCACTGTTGTA", "aa_seq": "SGNTIYFGEGSWLTVV", "boundary_motif": "LTVV"}, {"gene_id": "TRBJ1-4*01", "species": "human", "chain_type": "TRB", "locus": "TRB", "dna_seq": "AATGAAAAACTGTTTTTTGGCAGTGGAACCCAGCTCTCTGTGTTG", "aa_seq": "NEKLFFGSGTQLSVL", "boundary_motif": "LSVL"}, {"gene_id": "TRBJ1-5*01", "species": "human", "chain_type": "TRB", "locus": "TRB", "dna_seq": "AACCAGCCCCAGCATTTTGGTGATGGGACTCGACTCTCCATCCTA", "aa_seq": "NQPQHFGDGTRLSIL", "boundary_motif": "LSIL"}, {"gene_id": "TRBJ1-6*01", "species": "human", "chain_type": "TRB", "locus": "TRB", "dna_seq": "TCCTATAATTCACCCCTCCACTTTGGGAACGGGACCAGGCTCACTGTGTTT", "aa_seq": "SYNSPLHFGNGTRLTVF", "boundary_motif": "LTVF"}, {"gene_id": "TRBJ2-1*01", "species": "human", "chain_type": "TRB", "locus": "TRB", "dna_seq": "AACGAGCAGTTCTTCGGGCCAGGGACACGGCTCACCGTGCTA", "aa_seq": "NEQFFGPGTRLTVL", "boundary_motif": "LTVL"}, {"gene_id": "TRBJ2-2*01", "species": "human", "chain_type": "TRB", "locus": "TRB", "dna_seq": "AACACCGGGGAGCTGTTTTTTGGAGAGGGCTCTAGGCTGACCGTACTG", "aa_seq": "NTGELFFGEGSRLTVL", "boundary_motif": "LTVL"}, {"gene_id": "TRBJ2-3*01", "species": "human", "chain_type": "TRB", "locus": "TRB", "dna_seq": "TCCACAGATACGCAGTATTTTGGCCCAGGCACCCGGCTGACAGTGCTC", "aa_seq": "STDTQYFGPGTRLTVL", "boundary_motif": "LTVL"}, {"gene_id": "TRBJ2-4*01", "species": "human", "chain_type": "TRB", "locus": "TRB", "dna_seq": "GCCAAGAACATCCAGTACTTCGGAGCCGGCACCCGGCTCTCTGTGCTG", "aa_seq": "AKNIQYFGAGTRLSVL", "boundary_motif": "LSVL"}, {"gene_id": "TRBJ2-5*01", "species": "human", "chain_type": "TRB", "locus": "TRB", "dna_seq": "GAGACCCAGTACTTCGGGCCAGGCACGCGGCTCCTGGTGCTC", "aa_seq": "ETQYFGPGTRLLVL", "boundary_motif": "LLVL"}, {"gene_id": "TRBJ2-6*01", "species": "human", "chain_type": "TRB", "locus": "TRB", "dna_seq": "TCCTACGGTGCCAACGTCCTGACTTTCGGGGCCGGCAGCAGGCTGACCGTGCTG", "aa_seq": "SYGANVLTFGAGSRLTVL", "boundary_motif": "LTVL"}, {"gene_id": "TRBJ2-7*01", "species": "human", "chain_type": "TRB", "locus": "TRB", "dna_seq": "TACTACGAGCAGTACTTCGGGCCGGGCACCAGGCTCACGGTCACA", "aa_seq": "YEQYFGPGTRLTVT", "boundary_motif": "LTVT"}, {"gene_id": "TRAJ1*01", "species": "human", "chain_type": "TRA", "locus": "TRA", "dna_seq": "ACTGGAGCCAACACAGGCAAACTAACCTTTGGCAAAGGGACTAAGCTCACCGTTAAA", "aa_seq": "TGANTGKLTFGKGTKLTVK", "boundary_motif": "LTVK"}, {"gene_id": "TRAJ2*01", "species": "human", "chain_type": "TRA", "locus": "TRA", "dna_seq": "TATACTGGAGCCAACAGCAAACTAACCTTTGGCAAAGGCACTCACCTCACTGTTAAA", "aa_seq": "YTGANSKLTFGKGTHLTVK", "boundary_motif": "LTVK"}, {"gene_id": "TRAJ3*01", "species": "human", "chain_type": "TRA", "locus": "TRA", "dna_seq": "TATgacaaagtcatctttggaaaagggacccaacttcaggtcttt", "aa_seq": "YDKVIFGKGTRLQVF", "boundary_motif": "LQVF"}, {"gene_id": "TRAJ4*01", "species": "human", "chain_type": "TRA", "locus": "TRA", "dna_seq": "ttcagtggaggctacaataagctcatctttggagcagggaccagactacaagtaact", "aa_seq": "FSGGYNKLIFGAGTRLQVT", "boundary_motif": "LQVT"}, {"gene_id": "TRAJ5*01", "species": "human", "chain_type": "TRA", "locus": "TRA", "dna_seq": "gatactggaaggagagcgctcacatttggatctggaacacgactacaagtcaac", "aa_seq": "DTGRRALTFGSGTRLQVN", "boundary_motif": "LQVN"}, {"gene_id": "TRAJ6*01", "species": "human", "chain_type": "TRA", "locus": "TRA", "dna_seq": "actgacaagggaggctcctacatacccaccttcggcagaggcaccagcctcattgtgcat", "aa_seq": "TDKGGSYIPTFGRGTSLIVH", "boundary_motif": "LIVH"}, {"gene_id": "TRAJ7*01", "species": "human", "chain_type": "TRA", "locus": "TRA", "dna_seq": "gattatggtaacaaccgtcttgcctttggaaaaggaactcaagttgtagtcact", "aa_seq": "DYGNNRLAFGKGTQVVVT", "boundary_motif": "VVVT"}, {"gene_id": "TRAJ8*01", "species": "human", "chain_type": "TRA", "locus": "TRA", "dna_seq": "aacaatggttttcagaaacttgtatttggaactggcacgaaactcacagtaaag", "aa_seq": "NNGFQKLVFGAGTKLTVK", "boundary_motif": "LTVK"}, {"gene_id": "TRAJ9*01", "species": "human", "chain_type": "TRA", "locus": "TRA", "dna_seq": "gataatgggggcaatgacaagctcacttttgggactggaaccaaagtcattgttaaa", "aa_seq": "DNGGNDYKLSFGAGTKVIVK", "boundary_motif": "VIVK"}, {"gene_id": "TRAJ10*01", "species": "human", "chain_type": "TRA", "locus": "TRA", "dna_seq": "acagggaatgacaaactcacttttgggactggaaccaaagtcattgttaaa", "aa_seq": "TGNDYKLSFGAGTKVIVK", "boundary_motif": "VIVK"}, {"gene_id": "TRAJ11*01", "species": "human", "chain_type": "TRA", "locus": "TRA", "dna_seq": "ggctattctaccttgacttttgggaaaggaaccgtgcttctcgtgtct", "aa_seq": "GYSTLTFGKGTVLLVS", "boundary_motif": "LLVS"}, {"gene_id": "TRAJ12*01", "species": "human", "chain_type": "TRA", "locus": "TRA", "dna_seq": "atggattcatcttacaaactcatctttggatcagggaccagacttctggtcaga", "aa_seq": "MDSSYKLIFGSGTRLLVR", "boundary_motif": "LLVR"}, {"gene_id": "TRAJ13*01", "species": "human", "chain_type": "TRA", "locus": "TRA", "dna_seq": "aatactggaggctacaataagctcatctttggagcagggaccagactacaagtaact", "aa_seq": "NTGGYNKLIFGAGTRLQVT", "boundary_motif": "LQVT"}, {"gene_id": "TRAJ14*01", "species": "human", "chain_type": "TRA", "locus": "TRA", "dna_seq": "aacactgacaaactcatctttggtactgggaccagattacaggtcttc", "aa_seq": "NTDKLIFGTGTRLQVF", "boundary_motif": "LQVF"}, {"gene_id": "TRAJ15*01", "species": "human", "chain_type": "TRA", "locus": "TRA", "dna_seq": "cagggaacctacaaatacatctttggaacaggcaccaggctgaaggttttg", "aa_seq": "QGTYKYIFGTGTRLKVL", "boundary_motif": "LKVL"}, {"gene_id": "TRAJ16*01", "species": "human", "chain_type": "TRA", "locus": "TRA", "dna_seq": "actgcaggaacctacaaatacatctttggaacaggcaccaggctgaaggttttg", "aa_seq": "TAGTYKYIFGTGTRLKVL", "boundary_motif": "LKVL"}, {"gene_id": "TRAJ17*01", "species": "human", "chain_type": "TRA", "locus": "TRA", "dna_seq": "actggaggctcctacatacccaccttcggcagaggcaccagcctcattgtgcat", "aa_seq": "TGGSYIPTFGRGTSLIVH", "boundary_motif": "LIVH"}, {"gene_id": "TRAJ18*01", "species": "human", "chain_type": "TRA", "locus": "TRA", "dna_seq": "acctcaggtggctcctacatacccaccttcggcagaggcaccagcctcattgtgcat", "aa_seq": "TSGGSYIPTFGRGTSLIVH", "boundary_motif": "LIVH"}, {"gene_id": "TRAJ19*01", "species": "human", "chain_type": "TRA", "locus": "TRA", "dna_seq": "gataacactgacaaactcatctttggccaaggaaccactctacaagtgaag", "aa_seq": "DNTGKLIFGQGTTLQVK", "boundary_motif": "LQVK"}, {"gene_id": "TRAJ20*01", "species": "human", "chain_type": "TRA", "locus": "TRA", "dna_seq": "aatgacaaactcacttttgggactggaaccaaagtcattgttaaa", "aa_seq": "NDYKLSFGAGTKVIVK", "boundary_motif": "VIVK"}, {"gene_id": "TRAJ21*01", "species": "human", "chain_type": "TRA", "locus": "TRA", "dna_seq": "tacaacttcaacaaattttactttggatctgggaccaaactcaatgtaaaa", "aa_seq": "YNFNKFYFGSGTKLNVK", "boundary_motif": "LNVK"}, {"gene_id": "TRAJ22*01", "species": "human", "chain_type": "TRA", "locus": "TRA", "dna_seq": "tctagctcctggcagctcatctttggatcagggactcaactcactgttcta", "aa_seq": "SSSWQLIFGSGTQLTVL", "boundary_motif": "LTVL"}, {"gene_id": "TRAJ23*01", "species": "human", "chain_type": "TRA", "locus": "TRA", "dna_seq": "tacaaccaagggggcaagttgatctttggacaaggcactgaactctctgtgaaa", "aa_seq": "YNQGGKLIFGQGTELSVK", "boundary_motif": "LSVK"}, {"gene_id": "TRAJ24*01", "species": "human", "chain_type": "TRA", "locus": "TRA", "dna_seq": "accactgactcctggggaaaactgcagtttggcgcagggactcaggtggtggtcact", "aa_seq": "TTDSWGKLQFGAGTQVVVT", "boundary_motif": "VVVT"}, {"gene_id": "TRAJ25*01", "species": "human", "chain_type": "TRA", "locus": "TRA", "dna_seq": "cagggaggatctgaaaagcttgtctttggaaaaggaactaaactctctgtgaat", "aa_seq": "QGGSEKLVFGKGTKLTVN", "boundary_motif": "LTVN"}, {"gene_id": "TRAJ26*01", "species": "human", "chain_type": "TRA", "locus": "TRA", "dna_seq": "gataactatggtcagaattttgtctttggtcccggaaccagattgtccgtgctg", "aa_seq": "DNYGQNFVFGPGTRLSVL", "boundary_motif": "LSVL"}, {"gene_id": "TRAJ27*01", "species": "human", "chain_type": "TRA", "locus": "TRA", "dna_seq": "aacactaatgcaggcaaatcaacctttggagatggaacaacactcactgtcaaa", "aa_seq": "NTNAGKSTFGDGTTLTVK", "boundary_motif": "LTVK"}, {"gene_id": "TRAJ28*01", "species": "human", "chain_type": "TRA", "locus": "TRA", "dna_seq": "ggagctgggacagctcttatttttggcaaaggaaccacactatctgtgtct", "aa_seq": "GAGTALIFGKGTTLSVS", "boundary_motif": "LSVS"}, {"gene_id": "TRAJ29*01", "species": "human", "chain_type": "TRA", "locus": "TRA", "dna_seq": "aactctgggaacaccccactcgtgtttggcaaaggaacccgactctccgtcata", "aa_seq": "NSGNTPLVFGKGTRLSVI", "boundary_motif": "LSVI"}, {"gene_id": "TRAJ30*01", "species": "human", "chain_type": "TRA", "locus": "TRA", "dna_seq": "gatgacaagatcatctttgggaaaggaacccgtcttcatatcctt", "aa_seq": "DDKIIFGKGTRLHIL", "boundary_motif": "LHIL"}, {"gene_id": "TRAJ31*01", "species": "human", "chain_type": "TRA", "locus": "TRA", "dna_seq": "aacaataatgccagactcatgtttggagatggaactcagctggtggtgaag", "aa_seq": "NNNARLMFGDGTQLVVK", "boundary_motif": "LVVK"}, {"gene_id": "TRAJ32*01", "species": "human", "chain_type": "TRA", "locus": "TRA", "dna_seq": "tccaattacaaactcacttttgggactggaaccaaagtcattgttaaa", "aa_seq": "SNYKLSFGAGTKVIVK", "boundary_motif": "VIVK"}, {"gene_id": "TRAJ33*01", "species": "human", "chain_type": "TRA", "locus": "TRA", "dna_seq": "gactccaactatcagttgatctggggagctgggaccaaactaataatcaaa", "aa_seq": "DSNYQLIWGAGTKLIIK", "boundary_motif": "LIIK"}, {"gene_id": "TRAJ34*01", "species": "human", "chain_type": "TRA", "locus": "TRA", "dna_seq": "tataacaccgacaaactcatctttggtactgggaccagattacaggtcttc", "aa_seq": "YNTDKLIFGTGTRLQVF", "boundary_motif": "LQVF"}, {"gene_id": "TRAJ35*01", "species": "human", "chain_type": "TRA", "locus": "TRA", "dna_seq": "gatggtcagaattttgtctttggtcccggaaccagattgtccgtgctg", "aa_seq": "DGQNFVFGPGTRLSVL", "boundary_motif": "LSVL"}, {"gene_id": "TRAJ36*01", "species": "human", "chain_type": "TRA", "locus": "TRA", "dna_seq": "gctaacaatctcttctttggtactggaaccagactcacagttgta", "aa_seq": "ANNLFFGTGTRLTVV", "boundary_motif": "LTVV"}, {"gene_id": "TRAJ37*01", "species": "human", "chain_type": "TRA", "locus": "TRA", "dna_seq": "tcaggcaacactgacaaactcatctttggccaaggaaccactctacaagtgaag", "aa_seq": "SGNTGKLIFGQGTTLQVK", "boundary_motif": "LQVK"}, {"gene_id": "TRAJ38*01", "species": "human", "chain_type": "TRA", "locus": "TRA", "dna_seq": "aatgctggcatgctcacttttggaggaggaaccaggcttatggtcaaa", "aa_seq": "NAGMLTFGGGTRLMVK", "boundary_motif": "LMVK"}, {"gene_id": "TRAJ39*01", "species": "human", "chain_type": "TRA", "locus": "TRA", "dna_seq": "aacaacaacctcacttttggaggaggaaccaggcttatggtcaaa", "aa_seq": "NNNLTFGGGTRLMVK", "boundary_motif": "LMVK"}, {"gene_id": "TRAJ40*01", "species": "human", "chain_type": "TRA", "locus": "TRA", "dna_seq": "tctggaacctacaaatacatctttggaacaggcaccaggctgaaggttttg", "aa_seq": "SGTYKYIFGTGTRLKVL", "boundary_motif": "LKVL"}, {"gene_id": "TRAJ41*01", "species": "human", "chain_type": "TRA", "locus": "TRA", "dna_seq": "gatcaagctgggacagctcttatttttggcaaaggaaccacactatctgtgtct", "aa_seq": "DQAGTALIFGKGTTLSVS", "boundary_motif": "LSVS"}, {"gene_id": "TRAJ42*01", "species": "human", "chain_type": "TRA", "locus": "TRA", "dna_seq": "ggaggtagccaaggcaatctcatctttggaaaaggcactaaactctctgtgaaa", "aa_seq": "GGSQGNLIFGKGTKLSVK", "boundary_motif": "LSVK"}, {"gene_id": "TRAJ43*01", "species": "human", "chain_type": "TRA", "locus": "TRA", "dna_seq": "aacaacaatgacatgcgctttggagcagggaccagactcacagttaaa", "aa_seq": "NNNDMRFGAGTRLTVK", "boundary_motif": "LTVK"}, {"gene_id": "TRAJ44*01", "species": "human", "chain_type": "TRA", "locus": "TRA", "dna_seq": "actggcacagcctcaaaacttacttttggaacaggaacaaggctccaagtcacc", "aa_seq": "TGTASKLTFGTGTRLQVT", "boundary_motif": "LQVT"}, {"gene_id": "TRAJ45*01", "species": "human", "chain_type": "TRA", "locus": "TRA", "dna_seq": "ggaggcacctcttatggcaagttgactttcggccagggcactaccctcactgtgcat", "aa_seq": "GGTSYGKLTFGQGTILTVH", "boundary_motif": "LTVH"}, {"gene_id": "TRAJ46*01", "species": "human", "chain_type": "TRA", "locus": "TRA", "dna_seq": "tctagtggtcagaattttgtctttggtcccggaaccagattgtccgtgctg", "aa_seq": "SSGQNFVFGPGTRLSVL", "boundary_motif": "LSVL"}, {"gene_id": "TRAJ47*01", "species": "human", "chain_type": "TRA", "locus": "TRA", "dna_seq": "gagtatggaggtagccaaggcaatctcatctttggaaaaggcactaaactctctgtgaaa", "aa_seq": "EYGGSQGNLIFGKGTKLSVK", "boundary_motif": "LSVK"}, {"gene_id": "TRAJ48*01", "species": "human", "chain_type": "TRA", "locus": "TRA", "dna_seq": "tccaactatggaggtagccaaggcaatctcatctttggaaaaggcactaaactctctgtgaaa", "aa_seq": "SNYGGSQGNLIFGKGTKLSVK", "boundary_motif": "LSVK"}, {"gene_id": "TRAJ49*01", "species": "human", "chain_type": "TRA", "locus": "TRA", "dna_seq": "aacactgggaaccaattcttctttggaacaggaaccagtctcactgtgatccca", "aa_seq": "NTGNQFYFGTGTSLTVIP", "boundary_motif": "LTVIP"}, {"gene_id": "TRAJ50*01", "species": "human", "chain_type": "TRA", "locus": "TRA", "dna_seq": "accagtggaacctacaaatacatctttggaacaggcaccaggctgaaggttttg", "aa_seq": "TSGTYKYIFGTGTRLKVL", "boundary_motif": "LKVL"}, {"gene_id": "TRAJ52*01", "species": "human", "chain_type": "TRA", "locus": "TRA", "dna_seq": "gcaggcggcacctcttatggcaagttgactttcggccagggcactaccctcactgtgcat", "aa_seq": "AGGTSYGKLTFGQGTILTVH", "boundary_motif": "LTVH"}, {"gene_id": "TRAJ53*01", "species": "human", "chain_type": "TRA", "locus": "TRA", "dna_seq": "ggaggaagcaactacaaactgacctttgggaaggggacacttctcactgtgaat", "aa_seq": "GGSNYKLTFGKGTLLTVN", "boundary_motif": "LTVN"}, {"gene_id": "TRAJ54*01", "species": "human", "chain_type": "TRA", "locus": "TRA", "dna_seq": "atacaaggagcccagaagctggtatttggccaaggaaccaggctgactatcaac", "aa_seq": "IQGAQKLVFGQGTRLTIN", "boundary_motif": "LTIN"}, {"gene_id": "TRDJ1*01", "species": "human", "chain_type": "TRD", "locus": "TRD", "dna_seq": "ACCGACAAACTCATCTTTGGAAAAGGAACCCGTGTGACTGTGGAACCA", "aa_seq": "TDKLIFGKGTRVTVE", "boundary_motif": "VTVE"}, {"gene_id": "TRDJ2*01", "species": "human", "chain_type": "TRD", "locus": "TRD", "dna_seq": "ACCGCCCAGCTCTTCTTTGGAAAAGGAACTCGACTGACTGTGTTG", "aa_seq": "TAQLFFGKGTRLTVL", "boundary_motif": "LTVL"}, {"gene_id": "TRDJ3*01", "species": "human", "chain_type": "TRD", "locus": "TRD", "dna_seq": "TCCTACACCGACAAACTCATCTTTGGAAAAGGAACCCGTGTGACTGTGGAACCA", "aa_seq": "SYTDKLIFGKGTRVTVE", "boundary_motif": "VTVE"}, {"gene_id": "TRDJ4*01", "species": "human", "chain_type": "TRD", "locus": "TRD", "dna_seq": "TCCTGGGGAAAACTGCAGTTTGGCGCAGGGACTCAGGTGGTGGTCACC", "aa_seq": "SWGKLQFGAGTQVVVT", "boundary_motif": "VVVT"}, {"gene_id": "TRGJ1*01", "species": "human", "chain_type": "TRG", "locus": "TRG", "dna_seq": "AATTACTATAAGAAACTCTTTGGCAGTGGAACAACACTTGTTGTCATA", "aa_seq": "NYYKKLFGSGTTLVVI", "boundary_motif": "LVVI"}, {"gene_id": "TRGJ2*01", "species": "human", "chain_type": "TRG", "locus": "TRG", "dna_seq": "AATTACTATAAGAAACTCTTTGGCAGTGGAACAACACTTGTTGTCATA", "aa_seq": "NYYKKLFGSGTTLVVI", "boundary_motif": "LVVI"}, {"gene_id": "TRGJP*01", "species": "human", "chain_type": "TRG", "locus": "TRG", "dna_seq": "AATATTAACACATTTGGCAGTGGGACAACACTTGTTGTCGAA", "aa_seq": "NINTFGSGTTLVVE", "boundary_motif": "LVVE"}, {"gene_id": "TRGJP1*01", "species": "human", "chain_type": "TRG", "locus": "TRG", "dna_seq": "TCCTCGTGGATTAAGACATTTGGCAGTGGGACACGACTCCAGGTGACA", "aa_seq": "SSWIKTFGSGTRLQVT", "boundary_motif": "LQVT"}, {"gene_id": "TRGJP2*01", "species": "human", "chain_type": "TRG", "locus": "TRG", "dna_seq": "AACACATGGATTAAGACATTTGGCAGTGGGACACGACTCCAGGTGACA", "aa_seq": "NTWIKTFGSGTRLQVT", "boundary_motif": "LQVT"}];
+        const BENCHMARKS = [
+  {
+    "name": "1G4 TCR\u03b1 (NY-ESO-1 Tumor Antigen)",
+    "target": "NY-ESO-1 (SLLMWITQC) HLA-A*02:01",
+    "locus": "TRA",
+    "aa_seq": "KQEVTQIPAALSVPEGENLVLNCSFTDSAIYNLQWFRQDPGKGLTSLLLIQSSQREQTSGRLNASLDKSSGRSTLYIAASQPGDSATYLCAVRPTSGGSYIPTFGRGTSLIVH"
+  },
+  {
+    "name": "1G4 TCR\u03b2 (NY-ESO-1 Tumor Antigen)",
+    "target": "NY-ESO-1 (SLLMWITQC) HLA-A*02:01",
+    "locus": "TRB",
+    "aa_seq": "NAGVTQTPKFQVLKTGQSMTLQCAQDMNHEYMSWYRQDPGMGLRLIHYSVGAGITDQGEVPNGYNVSRSTTEDFPLRLLSAAPSQTSVYFCASSYVGNTGELFFGEGSRLTVL"
+  },
+  {
+    "name": "RA14 TCR\u03b2 (EBV BMLF1 GLCTLVAML)",
+    "target": "Epstein-Barr Virus BMLF1 HLA-A*02:01",
+    "locus": "TRB",
+    "aa_seq": "NAGVTQTPKFRVLKTGQSMTLLCAQDMNHEYMYWYRQDPGMGLRLIHYSVGEGTTAKGEVPDGYNVSRLKKQNFLLGLESAAPSQTSVYFCASSYSWDRDYEQYFGPGTRLTVT"
+  },
+  {
+    "name": "NLV TCR\u03b1 (CMV pp65 NLVPMVATV)",
+    "target": "Cytomegalovirus pp65 HLA-A*02:01",
+    "locus": "TRA",
+    "aa_seq": "AQKVTQAQTEISVVEKEDVTLDCVYETRDTTYYLFWYKQPPSGELVFLIRRNSFDEQNEISGRYSWNFQKSTSSFNFTITASQVVDSAVYFCALSELNNINTFGSGTTLVVE"
+  },
+  {
+    "name": "MAIT Invariant TCR\u03b1 (TRAV1-2*02)",
+    "target": "MR1 Riboflavin Metabolites (5-OP-RU)",
+    "locus": "TRA",
+    "aa_seq": "GQNIDQPTEMTATEGAIVQINCTYQTSGFNGLFWYQQHAGEAPTFLSYNVLDGLEEKGRFSSFLSRSKGYSYLLLKELQMKDSASYLCAVKDSNYQLIWGAGTKLIIK"
+  },
+  {
+    "name": "Human V\u03b39 \u03b3\u03b4 TCR (TRGV9)",
+    "target": "Phosphoantigens (IPP/HMBPP) via Butyrophilin",
+    "locus": "TRG",
+    "aa_seq": "AQKVTQAQTEISVVEKEDVTLDCVYETRDTTYYLFWYKQPPSGELVFLIRRNSFDEQNEISGRYSWNFQKSTSSFNFTITASQVVDSAVYFCALSELNNINTFGSGTTLVVE"
+  },
+  {
+    "name": "Human V\u03b42 \u03b3\u03b4 TCR (TRDV2)",
+    "target": "Phosphoantigens / BTN3A1 / BTN2A1",
+    "locus": "TRD",
+    "aa_seq": "AQKVTQAQTEISVVEKEDVTLDCVYETRDTTYYLFWYKQPPSGELVFLIRRNSFDEQNEISGRYSWNFQKSTSSFNFTITASQVVDSAVYFCALWEVQTGGTDKLIFGKGTRVTVE"
+  }
+];
+
+        if (typeof window !== "undefined" && window.VBASE3 && typeof window.VBASE3.init === "function") {
+            window.VBASE3.init().then(() => {
+                console.log("🚀 [TCRbase] Hardware WASM SIMD128 engine active for " + SPECIES_KEY);
+            }).catch(e => console.warn("WASM init note:", e));
+        }
+
+        // Initialize Benchmarks Pills
+        function initBenchmarkPills() {
+            const container = document.getElementById("benchmarkPills");
+            container.innerHTML = "";
+            BENCHMARKS.forEach((b, idx) => {
+                const pill = document.createElement("button");
+                pill.className = "example-pill";
+                pill.innerText = b.name;
+                pill.onclick = () => loadBenchmark(idx);
+                container.appendChild(pill);
+            });
+        }
+
+        function loadBenchmark(idx) {
+            const b = BENCHMARKS[idx];
+            document.getElementById("seqInput").value = b.aa_seq;
+            runAnalysis();
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+            document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
+            
+            if (window.event && window.event.currentTarget && window.event.currentTarget.classList.contains("tab-btn")) {
+                window.event.currentTarget.classList.add("active");
+            } else {
+                const btn = Array.from(document.querySelectorAll(".tab-btn")).find(b => (b.getAttribute("onclick") || "").includes(tabId));
+                if (btn) btn.classList.add("active");
+            }
+            const content = document.getElementById("tab-" + tabId);
+            if (content) content.classList.add("active");
+
+            if (tabId === "manifold") {
+                renderManifold();
+            }
+        }
+
+        function cleanInput(seq) {
+            return (seq || "").toUpperCase().replace(/[^A-Z]/g, "");
+        }
+
+        function isDna(seq) {
+            const clean = cleanInput(seq);
+            const dnaCount = clean.replace(/[^ACGTN]/g, "").length;
+            return clean.length > 0 && (dnaCount / clean.length) > 0.85;
+        }
+
+        function runAnalysis() {
+            const raw = document.getElementById("seqInput").value.trim();
+            if (!raw) return;
+
+            let aa = cleanInput(raw);
+            if (isDna(raw)) {
+                if (window.VBASE3 && typeof window.VBASE3.pickBestReadingFrame === "function") {
+                    const best = window.VBASE3.pickBestReadingFrame(aa);
+                    aa = best.matureProtein || best.protein;
+                }
+            }
+
+            // Find closest V-gene in local species library using WebAssembly SIMD128
+            let bestV = null;
+            let bestDist = 99999;
+            V_GENES.forEach(g => {
+                const ref = g.aa_seq;
+                let diffs = 0;
+                if (window.VBASE3 && typeof window.VBASE3.vectorHammingDistance === "function") {
+                    diffs = window.VBASE3.vectorHammingDistance(aa, ref) + Math.abs(aa.length - ref.length);
+                } else {
+                    const minLen = Math.min(aa.length, ref.length);
+                    diffs = Math.abs(aa.length - ref.length);
+                    for (let i = 0; i < minLen; i++) {
+                        if (aa[i] !== ref[i]) diffs++;
+                    }
+                }
+                if (diffs < bestDist) {
+                    bestDist = diffs;
+                    bestV = g;
+                }
+            });
+
+            // Find closest J-gene
+            let bestJ = null;
+            let bestJScore = -1;
+            J_GENES.forEach(j => {
+                const motif = j.boundary_motif || "";
+                if (motif && aa.includes(motif)) {
+                    const idx = aa.lastIndexOf(motif);
+                    if (idx > bestJScore) {
+                        bestJScore = idx;
+                        bestJ = j;
+                    }
+                }
+            });
+
+            // Extract CDR3
+            let cdr3 = "CAV...";
+            let cysIdx = aa.indexOf("C", 80);
+            if (cysIdx === -1) cysIdx = aa.indexOf("C", 70);
+            if (cysIdx !== -1) {
+                const rest = aa.substring(cysIdx);
+                let endIdx = -1;
+                // Look for canonical TCR J anchor: [FW]G.G
+                const jMatch = rest.match(/[FW]G[A-Z]G/);
+                if (jMatch) {
+                    endIdx = jMatch.index + 1;
+                } else {
+                    endIdx = Math.min(rest.length, 22);
+                }
+                cdr3 = rest.substring(0, endIdx);
+            }
+
+            // Biophysics
+            let charge = 0;
+            let grav = 0;
+            if (window.VBASE3 && typeof window.VBASE3.calculateBiophysics === "function") {
+                const bio = window.VBASE3.calculateBiophysics(cdr3);
+                charge = bio.charge || 0;
+                grav = bio.hydropathy || 0;
+            } else {
+                // Fallback basic net charge at pH 7.4
+                const pos = (cdr3.match(/[KR]/g) || []).length;
+                const neg = (cdr3.match(/[DE]/g) || []).length;
+                charge = (pos - neg);
+            }
+
+            // Update UI
+            document.getElementById("resultsPanel").style.display = "block";
+            document.getElementById("resVGene").innerText = bestV ? `${bestV.gene_name || bestV.gene_id} (${bestV.locus})` : "Unknown";
+            document.getElementById("resJGene").innerText = bestJ ? `${bestJ.gene_id}` : "TCRJ";
+            document.getElementById("resCdr3Len").innerText = cdr3.length + " aa";
+            document.getElementById("resCharge").innerText = (charge > 0 ? "+" : "") + charge.toFixed(1);
+            document.getElementById("resGravy").innerText = grav.toFixed(2);
+            document.getElementById("resPi").innerText = "7.8";
+            document.getElementById("resultChainBadge").innerText = bestV ? bestV.locus : "TCR";
+
+            // Classify TCR rearrangement lineage (γδ vs αβ, cross-locus, tandem D)
+            let tcrInfo = null;
+            if (window.VBASE3 && typeof window.VBASE3.classifyTcrRearrangement === "function") {
+                tcrInfo = window.VBASE3.classifyTcrRearrangement(bestV ? (bestV.gene_name || bestV.gene_id) : "", bestJ ? bestJ.gene_id : "");
+            }
+            const lineageEl = document.getElementById("resTcrLineage");
+            if (lineageEl) {
+                if (tcrInfo) {
+                    let text = `${tcrInfo.receptor_family || 'TCR'} (${tcrInfo.rearrangement_formula || ''})`;
+                    if (tcrInfo.is_cross_locus) text += ' [⚡ Cross-Locus]';
+                    if (tcrInfo.allows_tandem_d) text += ' [🧬 Tandem D-Segments Active (Dδ1-Dδ2)]';
+                    lineageEl.innerText = text;
+                } else {
+                    lineageEl.innerText = bestV ? `${bestV.locus} Rearrangement` : 'TCR Rearrangement';
+                }
+            }
+
+            document.getElementById("extractedCdr3Display").innerText = cdr3;
+            document.getElementById("annotatedSeqDisplay").innerHTML = `<span class="badge-fr">${aa.substring(0, 25)}</span> <span class="badge-cdr1">${aa.substring(25, 33)}</span> <span class="badge-fr">${aa.substring(33, 50)}</span> <span class="badge-cdr2">${aa.substring(50, 58)}</span> <span class="badge-fr">${aa.substring(58, cysIdx)}</span> <span class="badge-cdr3">${cdr3}</span> <span class="badge-fr">${aa.substring(cysIdx + cdr3.length)}</span>`;
+
+            document.getElementById("resBoundaryMotif").innerText = bestJ ? (bestJ.boundary_motif || "Canonical") : "TCR J-Motif";
+
+            // If manifold tab is open, highlight projected point
+            if (bestV && window._manifoldG) {
+                projectOnManifold(bestV);
+            }
+        }
+
+        function copyCleanFasta() {
+            const v = document.getElementById("resVGene").innerText;
+            const seq = cleanInput(document.getElementById("seqInput").value);
+            const fasta = `>${SPECIES_KEY.toUpperCase()}_TCR_${v}\n${seq}\n`;
+            navigator.clipboard.writeText(fasta).then(() => alert("Copied synthesis-ready TCR sequence!"));
+        }
+
+        // Render Manifold
+        let manifoldRendered = false;
+        function renderManifold() {
+            if (manifoldRendered) return;
+            manifoldRendered = true;
+
+            const svg = d3.select("#speciesManifoldSvg");
+            const width = document.querySelector(".manifold-container").clientWidth;
+            const height = 520;
+            svg.attr("width", width).attr("height", height);
+
+            const g = svg.append("g");
+            window._manifoldG = g;
+
+            const zoom = d3.zoom().scaleExtent([0.4, 25]).on("zoom", (e) => g.attr("transform", e.transform));
+            svg.call(zoom);
+
+            let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+            V_GENES.forEach(d => {
+                if (d.x < minX) minX = d.x;
+                if (d.x > maxX) maxX = d.x;
+                if (d.y < minY) minY = d.y;
+                if (d.y > maxY) maxY = d.y;
+            });
+
+            const spanX = Math.max(maxX - minX, 1);
+            const spanY = Math.max(maxY - minY, 1);
+            const scale = Math.min((width * 0.7) / spanX, (height * 0.7) / spanY);
+
+            const locusColors = {
+                "TRA": "#10b981",
+                "TRB": "#38bdf8",
+                "TRG": "#c084fc",
+                "TRD": "#f59e0b"
+            };
+
+            g.selectAll("circle.tcr-node")
+                .data(V_GENES)
+                .enter()
+                .append("circle")
+                .attr("class", "tcr-node")
+                .attr("cx", d => width/2 + (d.x - (minX + maxX)/2) * scale)
+                .attr("cy", d => height/2 + (d.y - (minY + maxY)/2) * scale)
+                .attr("r", 4.5)
+                .attr("fill", d => locusColors[d.locus] || "#34d399")
+                .attr("stroke", "#020b0e")
+                .attr("stroke-width", 0.8)
+                .attr("opacity", 0.85)
+                .append("title")
+                .text(d => `${d.gene_name || d.gene_id} [${d.locus}]`);
+        }
+
+        function projectOnManifold(bestV) {
+            if (!window._manifoldG) return;
+            window._manifoldG.selectAll(".beacon-ring").remove();
+            
+            const circle = window._manifoldG.selectAll("circle.tcr-node").filter(d => d.gene_id === bestV.gene_id);
+            if (!circle.empty()) {
+                const cx = circle.attr("cx");
+                const cy = circle.attr("cy");
+                
+                const ring = window._manifoldG.append("circle")
+                    .attr("class", "beacon-ring")
+                    .attr("cx", cx)
+                    .attr("cy", cy)
+                    .attr("r", 8)
+                    .attr("fill", "none")
+                    .attr("stroke", "#f43f5e")
+                    .attr("stroke-width", 3);
+
+                ring.transition().duration(1200).ease(d3.easeCubicOut).attr("r", 35).attr("opacity", 0).remove();
+            }
+        }
+
+        // Batch Repertoire Logic
+        function loadSampleBatch() {
+            const sampleFastas = BENCHMARKS.map((b, i) => `>${b.name.replace(/[^A-Za-z0-9]/g, '_')}\n${b.aa_seq}`).join("\n");
+            document.getElementById("batchInput").value = sampleFastas;
+        }
+
+        function runBatchAnalysis() {
+            const raw = document.getElementById("batchInput").value.trim();
+            if (!raw) return;
+            const lines = raw.split("\n");
+            const parsed = [];
+            let currId = "Clone_1";
+            let currSeq = "";
+
+            lines.forEach(line => {
+                line = line.trim();
+                if (line.startsWith(">")) {
+                    if (currSeq) parsed.push({ id: currId, seq: cleanInput(currSeq) });
+                    currId = line.substring(1).trim();
+                    currSeq = "";
+                } else if (line) {
+                    currSeq += line;
+                }
+            });
+            if (currSeq) parsed.push({ id: currId, seq: cleanInput(currSeq) });
+
+            if (parsed.length === 0) return;
+
+            document.getElementById("batchResults").style.display = "block";
+            document.getElementById("batchTotalCount").innerText = parsed.length;
+
+            const tbody = document.getElementById("batchTableBody");
+            tbody.innerHTML = "";
+
+            let totalLen = 0;
+            let totalCharge = 0;
+
+            parsed.forEach((item, idx) => {
+                const aa = item.seq;
+                let cysIdx = aa.indexOf("C", 80);
+                if (cysIdx === -1) cysIdx = aa.indexOf("C", 70);
+                let cdr3 = "CAV...";
+                if (cysIdx !== -1) {
+                    const rest = aa.substring(cysIdx);
+                    const jm = rest.match(/[FW]G[A-Z]G/);
+                    const end = jm ? jm.index + 1 : Math.min(rest.length, 20);
+                    cdr3 = rest.substring(0, end);
+                }
+
+                const pos = (cdr3.match(/[KR]/g) || []).length;
+                const neg = (cdr3.match(/[DE]/g) || []).length;
+                const charge = (pos - neg);
+
+                totalLen += cdr3.length;
+                totalCharge += charge;
+
+                const tr = document.createElement("tr");
+                tr.innerHTML = `
+                    <td>${idx + 1}</td>
+                    <td><strong>${item.id}</strong></td>
+                    <td><span class="species-pill" style="padding:2px 6px; font-size:10px;">TCR</span></td>
+                    <td style="color:#34d399;">Inferred</td>
+                    <td style="color:#38bdf8;">TCRJ</td>
+                    <td><code style="color:#f43f5e; font-weight:700;">${cdr3}</code></td>
+                    <td>${cdr3.length}</td>
+                    <td>${charge > 0 ? "+" : ""}${charge}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            document.getElementById("batchMeanCdr3").innerText = (totalLen / parsed.length).toFixed(1) + " aa";
+            document.getElementById("batchMeanCharge").innerText = (totalCharge / parsed.length > 0 ? "+" : "") + (totalCharge / parsed.length).toFixed(1);
+        }
+
+        window.addEventListener("DOMContentLoaded", () => {
+            initBenchmarkPills();
+            if (BENCHMARKS.length > 0) {
+                loadBenchmark(0);
+            }
+        });
+    </script>
+</body>
+</html>

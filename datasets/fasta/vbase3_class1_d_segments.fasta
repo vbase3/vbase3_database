@@ -1,0 +1,186 @@
+>Xen-IGHD1-01|species=Xenopus laevis (Chr8.L)|chain=Heavy|locus=Chr8.L:IGH|vbase3_class=Class_I
+ATTACTATGGTG
+>Xen-IGHD2-01|species=Xenopus laevis (Chr8.L)|chain=Heavy|locus=Chr8.L:IGH|vbase3_class=Class_I
+GATCGGGGGTTTGAC
+>Xen-IGHD3-01|species=Xenopus laevis (Chr8.L)|chain=Heavy|locus=Chr8.L:IGH|vbase3_class=Class_I
+TACTATGATTAC
+>Xen-IGHD4-01|species=Xenopus laevis (Chr8.L)|chain=Heavy|locus=Chr8.L:IGH|vbase3_class=Class_I
+GTTACTATGGTG
+>Xen-IGHD5-01|species=Xenopus laevis (Chr8.L)|chain=Heavy|locus=Chr8.L:IGH|vbase3_class=Class_I
+ATTGTAGTAGTTACT
+>Xen-IGHD6-01|species=Xenopus laevis (Chr8.L)|chain=Heavy|locus=Chr8.L:IGH|vbase3_class=Class_I
+TACTACGGTAGT
+>Xen-IGHD7-01|species=Xenopus laevis (Chr8.L)|chain=Heavy|locus=Chr8.L:IGH|vbase3_class=Class_I
+GGGGACTACGTT
+>Xen-IGHD1-02|species=Xenopus laevis (Chr8.S)|chain=Heavy|locus=Chr8.S:IGH|vbase3_class=Class_I
+ATTACTACTGTG
+>Xen-IGHD2-02|species=Xenopus laevis (Chr8.S)|chain=Heavy|locus=Chr8.S:IGH|vbase3_class=Class_I
+GATCGGGGCTTTGAC
+>Xen-IGHD3-02|species=Xenopus laevis (Chr8.S)|chain=Heavy|locus=Chr8.S:IGH|vbase3_class=Class_I
+TACTATGATTACTAC
+>Xen-IGHD4-02|species=Xenopus laevis (Chr8.S)|chain=Heavy|locus=Chr8.S:IGH|vbase3_class=Class_I
+GTTACTACTGTG
+>Xen-IGHD5-02|species=Xenopus laevis (Chr8.S)|chain=Heavy|locus=Chr8.S:IGH|vbase3_class=Class_I
+ATTGTAGTAGTT
+>Xen-IGHD6-02|species=Xenopus laevis (Chr8.S)|chain=Heavy|locus=Chr8.S:IGH|vbase3_class=Class_I
+TACTACGGTAGCTAC
+>Xen-IGHD7-02|species=Xenopus laevis (Chr8.S)|chain=Heavy|locus=Chr8.S:IGH|vbase3_class=Class_I
+GGGGACTACTAT
+>Xen-IGHD1-03|species=Xenopus tropicalis|chain=Heavy|locus=Chr8:IGH|vbase3_class=Class_I
+ACTATGGTG
+>Xen-IGHD2-03|species=Xenopus tropicalis|chain=Heavy|locus=Chr8:IGH|vbase3_class=Class_I
+GATAGGGGTTTTGAC
+>Xen-IGHD3-03|species=Xenopus tropicalis|chain=Heavy|locus=Chr8:IGH|vbase3_class=Class_I
+TACTATGATTACTAC
+>Xen-IGHD4-03|species=Xenopus tropicalis|chain=Heavy|locus=Chr8:IGH|vbase3_class=Class_I
+GTTACTACT
+>Xen-IGHD8-01|species=Xenopus tropicalis|chain=Heavy|locus=Chr8:IGH|vbase3_class=Class_I
+TACTATGGTGTT
+>Xen-IGHD9-01|species=Xenopus tropicalis|chain=Heavy|locus=Chr8:IGH|vbase3_class=Class_I
+TATGATTACTAC
+>vic_IGHD1-01|species=alpaca|chain=Heavy|locus=vic_chr4:IGHD|vbase3_class=Class_I
+GTATTACTATGGTGGTAGCTAC
+>vic_IGHD2-01|species=alpaca|chain=Heavy|locus=vic_chr4:IGHD|vbase3_class=Class_I
+GTAGTACTATGGTGGTAGTAGCTACTAC
+>vic_IGHD3-01|species=alpaca|chain=Heavy|locus=vic_chr4:IGHD|vbase3_class=Class_I
+TTACTATGGTGGTAGCTACTACTAC
+>vic_IGHD4-01|species=alpaca|chain=Heavy|locus=vic_chr4:IGHD|vbase3_class=Class_I
+CTAACTGGGGA
+>gga_IGHD1*01|species=chicken|chain=Heavy|locus=gga_chr31:IGHD|vbase3_class=Class_I
+GGTAGTGGTTACTGTGGTAGTGGTGCTTAT
+>gga_IGHD2*01|species=chicken|chain=Heavy|locus=gga_chr31:IGHD|vbase3_class=Class_I
+GGTAGTGCTTGTTGTGGTCCTTAT
+>gga_IGHD3*01|species=chicken|chain=Heavy|locus=gga_chr31:IGHD|vbase3_class=Class_I
+GGTACTTCTGGTGCCTGCACCTTTTTCTATCCTTCCTGCCCTTAT
+>gga_IGHD4*01|species=chicken|chain=Heavy|locus=gga_chr31:IGHD|vbase3_class=Class_I
+GGTCGTAGTGCTTACAGTTGTGGTGCTTAT
+>bos_IGHD1-01|species=cow|chain=Heavy|locus=bos_chr21:IGHD|vbase3_class=Class_I
+GTATTACTATGGTGGTAGCTAC
+>bos_IGHD2-01|species=cow|chain=Heavy|locus=bos_chr21:IGHD|vbase3_class=Class_I
+TTACTATGGTGGTAGTTGCTACTAC
+>bos_IGHD3-01|species=cow|chain=Heavy|locus=bos_chr21:IGHD|vbase3_class=Class_I
+TTACTACTGTGGTAGTTGCTACTAC
+>can_IGHD1-01|species=dog|chain=Heavy|locus=can_chr8:IGHD|vbase3_class=Class_I
+GTTATTATGGTACTAGCTAC
+>can_IGHD2-01|species=dog|chain=Heavy|locus=can_chr8:IGHD|vbase3_class=Class_I
+GTATTACTATGATGGTAGTAGTTACTAC
+>can_IGHD3-01|species=dog|chain=Heavy|locus=can_chr8:IGHD|vbase3_class=Class_I
+GTAGTATTACTACGGTAGTAGCTAC
+>can_IGHD4-01|species=dog|chain=Heavy|locus=can_chr8:IGHD|vbase3_class=Class_I
+TGACTACGGTGACTAC
+>can_IGHD5-01|species=dog|chain=Heavy|locus=can_chr8:IGHD|vbase3_class=Class_I
+CTAACTGGGGA
+>IGHD1-1*01|species=human|chain=Heavy|locus=hum_chr14:IGHD|vbase3_class=Class_I
+GGTACAACTGGAACGAC
+>IGHD1-14*01|species=human|chain=Heavy|locus=hum_chr14:IGHD|vbase3_class=Class_I
+GGTATAACCGGAACCAC
+>IGHD1-20*01|species=human|chain=Heavy|locus=hum_chr14:IGHD|vbase3_class=Class_I
+GGTATAACTGGAACGAC
+>IGHD1-26*01|species=human|chain=Heavy|locus=hum_chr14:IGHD|vbase3_class=Class_I
+GGTATAGTGGGAGCTACTAC
+>IGHD1-7*01|species=human|chain=Heavy|locus=hum_chr14:IGHD|vbase3_class=Class_I
+GGTATAACTGGAACTAC
+>IGHD2-15*01|species=human|chain=Heavy|locus=hum_chr14:IGHD|vbase3_class=Class_I
+AGGATATTGTAGTGGTGGTAGCTGCTACTCC
+>IGHD2-2*01|species=human|chain=Heavy|locus=hum_chr14:IGHD|vbase3_class=Class_I
+AGGATATTGTAGTAGTACCAGCTGCTATGCC
+>IGHD2-2*02|species=human|chain=Heavy|locus=hum_chr14:IGHD|vbase3_class=Class_I
+AGGATATTGTAGTAGTACCAGCTGCTATACC
+>IGHD2-21*01|species=human|chain=Heavy|locus=hum_chr14:IGHD|vbase3_class=Class_I
+AGCATATTGTGGTGGTGATTGCTATTCC
+>IGHD2-21*02|species=human|chain=Heavy|locus=hum_chr14:IGHD|vbase3_class=Class_I
+AGCATATTGTGGTGGTGACTGCTATTCC
+>IGHD2-8*01|species=human|chain=Heavy|locus=hum_chr14:IGHD|vbase3_class=Class_I
+AGGATATTGTACTAATGGTGTATGCTATACC
+>IGHD2-8*02|species=human|chain=Heavy|locus=hum_chr14:IGHD|vbase3_class=Class_I
+AGGATATTGTACTGGTGGTGTATGCTATACC
+>IGHD3-10*01|species=human|chain=Heavy|locus=hum_chr14:IGHD|vbase3_class=Class_I
+GTATTACTATGGTTCGGGGAGTTATTATAAC
+>IGHD3-10*02|species=human|chain=Heavy|locus=hum_chr14:IGHD|vbase3_class=Class_I
+GTATTACTATGGTTCCGGGAGTTATTATAAC
+>IGHD3-16*01|species=human|chain=Heavy|locus=hum_chr14:IGHD|vbase3_class=Class_I
+GTATTATGATTACGTTTGGGGGAGTTATGCTTATACC
+>IGHD3-16*02|species=human|chain=Heavy|locus=hum_chr14:IGHD|vbase3_class=Class_I
+GTATTATGATTACGTTGGGGGGAGTTATGCTTATACC
+>IGHD3-22*01|species=human|chain=Heavy|locus=hum_chr14:IGHD|vbase3_class=Class_I
+GTATTACTATGATAGTAGTGGTTATTACTAC
+>IGHD3-3*01|species=human|chain=Heavy|locus=hum_chr14:IGHD|vbase3_class=Class_I
+GTATTACGATTTTTGGAGTGGTTATTATACC
+>IGHD3-9*01|species=human|chain=Heavy|locus=hum_chr14:IGHD|vbase3_class=Class_I
+GTATTACGATATTTTGACTGGTTATTATAAC
+>IGHD4-11*01|species=human|chain=Heavy|locus=hum_chr14:IGHD|vbase3_class=Class_I
+TGACTACAGTAACTAC
+>IGHD4-17*01|species=human|chain=Heavy|locus=hum_chr14:IGHD|vbase3_class=Class_I
+TGACTACGGTGACTAC
+>IGHD4-23*01|species=human|chain=Heavy|locus=hum_chr14:IGHD|vbase3_class=Class_I
+TGACTACGGTGGTAACTAC
+>IGHD4-4*01|species=human|chain=Heavy|locus=hum_chr14:IGHD|vbase3_class=Class_I
+TGACTACAGTAACTAC
+>IGHD5-12*01|species=human|chain=Heavy|locus=hum_chr14:IGHD|vbase3_class=Class_I
+GTGGATATAGTGGCTACGATTAC
+>IGHD5-18*01|species=human|chain=Heavy|locus=hum_chr14:IGHD|vbase3_class=Class_I
+GTGGATACAGCTATGGTTAC
+>IGHD5-24*01|species=human|chain=Heavy|locus=hum_chr14:IGHD|vbase3_class=Class_I
+GTAGAGATGGCTACAATTAC
+>IGHD5-5*01|species=human|chain=Heavy|locus=hum_chr14:IGHD|vbase3_class=Class_I
+GTGGATACAGCTATGGTTAC
+>IGHD6-13*01|species=human|chain=Heavy|locus=hum_chr14:IGHD|vbase3_class=Class_I
+GGGTATAGCAGCAGCTGGTACTAC
+>IGHD6-19*01|species=human|chain=Heavy|locus=hum_chr14:IGHD|vbase3_class=Class_I
+GGGTATAGCAGTGGCTGGTAC
+>IGHD6-25*01|species=human|chain=Heavy|locus=hum_chr14:IGHD|vbase3_class=Class_I
+GGGTATAGCAGTGGCTGGTAC
+>IGHD6-6*01|species=human|chain=Heavy|locus=hum_chr14:IGHD|vbase3_class=Class_I
+GAGTATAGCAGCTCGTCC
+>IGHD7-27*01|species=human|chain=Heavy|locus=hum_chr14:IGHD|vbase3_class=Class_I
+CTAACTGGGGA
+>mus_DFL16.1|species=mouse|chain=Heavy|locus=mus_chr12:IGHD|vbase3_class=Class_I
+TTTATTACTACGGTAGTAGCTAC
+>mus_DFL16.2|species=mouse|chain=Heavy|locus=mus_chr12:IGHD|vbase3_class=Class_I
+TTCATTACTACGGCTAC
+>mus_DFL16.3|species=mouse|chain=Heavy|locus=mus_chr12:IGHD|vbase3_class=Class_I
+TATATAACTAAAGTGGTAGCTCA
+>mus_DQ52a.1|species=mouse|chain=Heavy|locus=mus_chr12:IGHD|vbase3_class=Class_I
+CTAACTGGGAC
+>mus_DQ52a.2|species=mouse|chain=Heavy|locus=mus_chr12:IGHD|vbase3_class=Class_I
+CAACTGGGAC
+>mus_DSP2.1|species=mouse|chain=Heavy|locus=mus_chr12:IGHD|vbase3_class=Class_I
+CTACTATGGTAACTAC
+>mus_DSP2.2|species=mouse|chain=Heavy|locus=mus_chr12:IGHD|vbase3_class=Class_I
+CTACTATGGTTACGAC
+>mus_DSP2.3|species=mouse|chain=Heavy|locus=mus_chr12:IGHD|vbase3_class=Class_I
+CCTACTATAGTAACTAC
+>mus_DSP2.4|species=mouse|chain=Heavy|locus=mus_chr12:IGHD|vbase3_class=Class_I
+TCTACTATGATTACGAC
+>mus_DSP2.5|species=mouse|chain=Heavy|locus=mus_chr12:IGHD|vbase3_class=Class_I
+TCTATGATGGTTACTAC
+>mus_DSP2.6|species=mouse|chain=Heavy|locus=mus_chr12:IGHD|vbase3_class=Class_I
+GTAGTACTACGGTAGTAGCTAC
+>mus_DSP2.7|species=mouse|chain=Heavy|locus=mus_chr12:IGHD|vbase3_class=Class_I
+ATTACTACGGTAGTAGCTAC
+>mus_DSP2.8|species=mouse|chain=Heavy|locus=mus_chr12:IGHD|vbase3_class=Class_I
+CTACTATAGTAACTAC
+>mus_DSP2.9|species=mouse|chain=Heavy|locus=mus_chr12:IGHD|vbase3_class=Class_I
+CTACTATGATTACGAC
+>rab_DH1-01|species=rabbit|chain=Heavy|locus=rab_chr20:IGHD|vbase3_class=Class_I
+GCATATACTAGTAGTAGTGGTTATTATATAC
+>rab_DH2-02|species=rabbit|chain=Heavy|locus=rab_chr20:IGHD|vbase3_class=Class_I
+TAGCTACGATGACTATGGTGATTAC
+>rab_DH3-03|species=rabbit|chain=Heavy|locus=rab_chr20:IGHD|vbase3_class=Class_I
+CCTATGGGGTCCTGGTTCCCATGGCTATGGGGTT
+>rab_DH3-04|species=rabbit|chain=Heavy|locus=rab_chr20:IGHD|vbase3_class=Class_I
+CCTATGGGGTCCTGGTTCCCATGGCTATGGGGTT
+>rab_DH3-05|species=rabbit|chain=Heavy|locus=rab_chr20:IGHD|vbase3_class=Class_I
+CCTATGGGGTCCTTGTTCCCATGGCTATGCAGTC
+>rab_DH4-06|species=rabbit|chain=Heavy|locus=rab_chr20:IGHD|vbase3_class=Class_I
+GTTACTATAGTAGTGGCTGGGGTG
+>rab_DH4-07|species=rabbit|chain=Heavy|locus=rab_chr20:IGHD|vbase3_class=Class_I
+GTTATGCTGGTAGTAGCTGGGATG
+>rab_DH5-08|species=rabbit|chain=Heavy|locus=rab_chr20:IGHD|vbase3_class=Class_I
+ATTTGGTGAAGGGCCGACCCACCATGTAGCTATGGTAGTTAC
+>rab_DH6-09|species=rabbit|chain=Heavy|locus=rab_chr20:IGHD|vbase3_class=Class_I
+GTTACTATAGTTATGGTTATGCTTATGCTACC
+>rab_DH7-10|species=rabbit|chain=Heavy|locus=rab_chr20:IGHD|vbase3_class=Class_I
+GTTATCCTGGTTATAGTACTGGTACC
+>rab_DH8-11|species=rabbit|chain=Heavy|locus=rab_chr20:IGHD|vbase3_class=Class_I
+GTTATGCTGGTAGTAGTTATTATACC

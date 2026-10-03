@@ -1,0 +1,350 @@
+ID   J00256; SV 1; linear; gDNA; STD; HUM; 3182 BP.
+XX
+AC   J00256;
+XX
+DT   15-MAY-1995 (Rel. 199520-1, arrived in LIGM-DB)
+DT   04-FEB-2022 (Rel. 202205-5, Last updated, Version 37)
+XX
+DE   Human Ig germline J-mu-delta region: DHQ52, J, pseudo-J genes, J exon.
+XX
+KW   antigen receptor; Immunoglobulin superfamily (IgSF); immunoglobulin (IG);
+KW   IG-Heavy; diversity; joining; pseudogene; IMGT reference sequence; regular;
+KW   gDNA; germline; functional; D-gene; J-gene.
+XX
+OS   Homo sapiens (human)
+OC   cellular organisms; Eukaryota; Opisthokonta; Metazoa; Eumetazoa; Bilateria;
+OC   Deuterostomia; Chordata; Craniata; Vertebrata; Gnathostomata; Teleostomi;
+OC   Euteleostomi; Sarcopterygii; Dipnotetrapodomorpha; Tetrapoda; Amniota;
+OC   Mammalia; Theria; Eutheria; Boreoeutheria; Euarchontoglires; Primates;
+OC   Haplorrhini; Simiiformes; Catarrhini; Hominoidea; Hominidae; Homininae;
+OC   Homo; Homo sapiens.
+XX
+RN   [1]
+RC   (sites)
+RP   1-3182
+RX   DOI; 10.1093/nar/9.18.4509.
+RX   PUBMED; 6795593.
+RA   Rabbitts T.H., Forster A., Milstein C.P.;
+RT   "Human immunoglobulin heavy chain genes: evolutionary comparisons of C mu,
+RT   C delta and C gamma genes and associated switch sequences";
+RL   Nucleic Acids Res. 9(18):4509-4524(1981).
+XX
+RN   [2]
+RP   1-3182
+RX   DOI; 10.1016/0092-8674(81)90400-1.
+RX   PUBMED; 6101209.
+RA   Ravetch J.V., Siebenlist U., Korsmeyer S., Waldmann T., Leder P.;
+RT   "Structure of the human immunoglobulin mu locus: characterization of
+RT   embryonic and rearranged J and D genes";
+RL   Cell 27(3 Pt 2):583-591(1981).
+XX
+RN   [3]
+RP   1498-3011
+RX   PUBMED; 6234164.
+RA   Flanagan J.G., Rabbitts T.H.;
+RT   "The sequence of a human immunoglobulin epsilon heavy chain constant region
+RT   gene, and evidence for three non-allelic genes";
+RL   EMBO J. 1(5):655-660(1982).
+XX
+DR   EMBL-ALIGN; ALIGN_000298.
+DR   EMBL-ALIGN; ALIGN_000300.
+DR   ENA; J00256.
+DR   GDB; 118731.
+DR   GDB; 9953330.
+DR   GDB; 9953332.
+DR   GDB; 9953334.
+DR   GDB; 9953336.
+DR   GDB; 9953338.
+DR   GDB; 9953340.
+DR   GDB; 9953342.
+DR   GDB; 9953344.
+DR   GDB; 9953346.
+DR   GDB; 9953348.
+XX
+CC   IMGT/LIGM-DB annotation level: by annotators
+CC   
+CC   [2]  fragments.
+CC   The J-genes presented here account for all but two (EU and DI) of
+CC   the known human heavy chain amino acid sequences [1]. By sequence
+CC   homology comparison the authors [1] postulate that J1 duplicated
+CC   after human/mouse divergence creating the human J1 and J2 genes,
+CC   and that the J3 gene duplicated to produce J4 and J5. Although the
+CC   three pseudogenes are substantially different from the active
+CC   genes, they have each preserved the 5' putative recombination
+CC   recognition sequence, suggesting that they may undergo V-D-J
+CC   recombination. In addition to the J- and D-regions homologous to
+CC   the mouse locus, there are two other regions of homology 5' to
+CC   DHQ52 in human and DQ52 in mouse [1]. The first is 'at'-rich and
+CC   the second is 'gc'-rich (bases 333-357 and 424-451). They are
+CC   separated by a 60 bp spacer in both mouse and human. [1] also
+CC   reports two recombinant genes involving this region. [2] presents
+CC   active V and epsilon-1 genes. The J-region in [2] was used as a
+CC   probe for locating the epsilon-1 gene.
+CC   The authors [1] have determined a physical map of this multigene
+CC   region which contains (in this order) the J-region genes, the
+CC   mu/alpha switch region, the four mu constant region exons, the mu
+CC   membrane anchor peptide, and the delta constant region. Flanagan
+CC   and Rabbitts (Nature 300, 709-713 (1982)) have determined the order
+CC   of this region relative to two gamma-epsilon-alpha regions.
+XX
+FH   Key                 Location/Qualifiers
+FH   
+FT   D-J-CLUSTER         1..3182
+FT                       /cell_type="lymphocyte"
+FT                       /db_xref="taxon:9606"
+FT                       /dev_stage="foetus"
+FT                       /IMGT_map="14q32.33"
+FT                       /organism="Homo sapiens"
+FT                       /tissue_lib="of Lawn et al."
+FT                       /tissue_type="placenta"
+FT   J-GENE              1..576
+FT                       /IMGT_allele="IGHJ1P*01"
+FT                       /IMGT_gene="IGHJ1P"
+FT   5'UTR               1..503
+FT   J-GENE-UNIT         467..557
+FT                       /IMGT_allele="IGHJ1P*01"
+FT                       /IMGT_gene="IGHJ1P"
+FT   J-RS                467..503
+FT   J-NONAMER           467..475
+FT   J-SPACER            476..496
+FT   J-HEPTAMER          497..503
+FT   J-REGION            504..557
+FT                       /translation="KGAGGPLNPTRPETAATS"
+FT                       /IMGT_allele="IGHJ1P*01"
+FT                       /IMGT_gene="IGHJ1P"
+FT                       /pseudo="J-psi-1"
+FT   D-GENE              577..672
+FT                       /IMGT_allele="IGHD7-27*01"
+FT                       /IMGT_gene="IGHD7-27"
+FT   D-GENE-UNIT         592..659
+FT                       /IMGT_allele="IGHD7-27*01"
+FT                       /IMGT_gene="IGHD7-27"
+FT   5'D-RS              592..620
+FT   5'D-NONAMER         592..600
+FT   5'D-SPACER          601..613
+FT   5'D-HEPTAMER        614..620
+FT   D-REGION            621..631
+FT                       /translation="LTG"
+FT                       /IMGT_allele="IGHD7-27*01"
+FT                       /IMGT_gene="IGHD7-27"
+FT                       /note="D region DHQ52, functional, G00-118-731"
+FT   3'D-RS              632..659
+FT   3'D-HEPTAMER        632..638
+FT   3'D-SPACER          639..650
+FT   3'D-NONAMER         651..659
+FT   J-GENE              673..842
+FT                       /IMGT_allele="IGHJ1*01"
+FT                       /IMGT_gene="IGHJ1"
+FT   5'UTR               673..722
+FT   J-GENE-UNIT         686..774
+FT                       /IMGT_allele="IGHJ1*01"
+FT                       /IMGT_gene="IGHJ1"
+FT   J-RS                686..722
+FT   J-NONAMER           686..694
+FT   J-SPACER            695..715
+FT   J-HEPTAMER          716..722
+FT   J-REGION            723..774
+FT                       /translation="AEYFQHWGQGTLVTVSS"
+FT                       /IMGT_allele="IGHJ1*01"
+FT                       /IMGT_gene="IGHJ1"
+FT                       /note="functional"
+FT                       /protein_id="AAB59411.1"
+FT   J-TRP               741..743
+FT   DONOR-SPLICE        774..776
+FT   J-GENE              843..1140
+FT                       /IMGT_allele="IGHJ2*01"
+FT                       /IMGT_gene="IGHJ2"
+FT   5'UTR               843..931
+FT   J-GENE-UNIT         893..984
+FT                       /IMGT_allele="IGHJ2*01"
+FT                       /IMGT_gene="IGHJ2"
+FT   J-RS                893..931
+FT   J-NONAMER           893..901
+FT   J-SPACER            902..924
+FT   J-HEPTAMER          925..931
+FT   J-REGION            932..984
+FT                       /codon_start=2
+FT                       /translation="YWYFDLWGRGTLVTVSS"
+FT                       /IMGT_allele="IGHJ2*01"
+FT                       /IMGT_gene="IGHJ2"
+FT                       /note="functional"
+FT                       /protein_id="AAB59412.1"
+FT   J-TRP               951..953
+FT   DONOR-SPLICE        984..986
+FT   J-GENE              1141..1447
+FT                       /IMGT_allele="IGHJ2P*01"
+FT                       /IMGT_gene="IGHJ2P"
+FT   5'UTR               1140..1319
+FT   J-GENE-UNIT         1284..1380
+FT                       /IMGT_allele="IGHJ2P*01"
+FT                       /IMGT_gene="IGHJ2P"
+FT   J-RS                1284..1319
+FT   J-NONAMER           1284..1292
+FT   J-SPACER            1293..1312
+FT   J-HEPTAMER          1313..1319
+FT   J-REGION            1320..1380
+FT                       /translation="ATSAWSTGAGQPGHRLPGNV"
+FT                       /db_xref="PSEUDO:CAB23204.1"
+FT                       /IMGT_allele="IGHJ2P*01"
+FT                       /IMGT_gene="IGHJ2P"
+FT                       /pseudo="J-psi-2"
+FT   J-GENE              1448..1822
+FT                       /IMGT_allele="IGHJ3*01"
+FT                       /IMGT_gene="IGHJ3"
+FT   5'UTR               1448..1538
+FT   J-GENE-UNIT         1498..1586
+FT                       /IMGT_allele="IGHJ3*01"
+FT                       /IMGT_gene="IGHJ3"
+FT   J-RS                1498..1536
+FT   J-NONAMER           1498..1506
+FT   J-SPACER            1507..1529
+FT   J-HEPTAMER          1530..1536
+FT   J-REGION            1537..1586
+FT                       /codon_start=2
+FT                       /translation="DAFDVWGQGTMVTVSS"
+FT                       /IMGT_allele="IGHJ3*01"
+FT                       /IMGT_gene="IGHJ3"
+FT                       /note="functional"
+FT                       /protein_id="AAB59413.1"
+FT   J-TRP               1553..1555
+FT   DONOR-SPLICE        1586..1588
+FT   J-GENE              1823..2266
+FT                       /IMGT_allele="IGHJ4*01"
+FT                       /IMGT_gene="IGHJ4"
+FT   5'UTR               1823..1911
+FT   J-GENE-UNIT         1873..1959
+FT                       /IMGT_allele="IGHJ4*01"
+FT                       /IMGT_gene="IGHJ4"
+FT   J-RS                1873..1911
+FT   J-NONAMER           1873..1881
+FT   J-SPACER            1882..1904
+FT   J-HEPTAMER          1905..1911
+FT   CONFLICT            1912
+FT   J-REGION            1912..1959
+FT                       /codon_start=3
+FT                       /translation="YFDYWGQGTLVTVSS"
+FT                       /IMGT_allele="IGHJ4*01"
+FT                       /IMGT_gene="IGHJ4"
+FT                       /note="functional"
+FT                       /protein_id="AAB59414.1"
+FT   J-TRP               1926..1928
+FT   CONFLICT            1937
+FT   DONOR-SPLICE        1959..1961
+FT   J-GENE              2267..2580
+FT                       /IMGT_allele="IGHJ5*01"
+FT                       /IMGT_gene="IGHJ5"
+FT   5'UTR               2267..2353
+FT   J-GENE-UNIT         2317..2404
+FT                       /IMGT_allele="IGHJ5*01"
+FT                       /IMGT_gene="IGHJ5"
+FT   J-RS                2317..2353
+FT   J-NONAMER           2317..2325
+FT   J-SPACER            2326..2346
+FT   J-HEPTAMER          2347..2353
+FT   J-REGION            2354..2404
+FT                       /codon_start=3
+FT                       /translation="NWFDSWGQGTLVTVSS"
+FT                       /IMGT_allele="IGHJ5*01"
+FT                       /IMGT_gene="IGHJ5"
+FT                       /note="functional"
+FT                       /protein_id="AAB59415.1"
+FT   J-TRP               2371..2373
+FT   DONOR-SPLICE        2404..2406
+FT   J-GENE              2581..2858
+FT                       /IMGT_allele="IGHJ3P*01"
+FT                       /IMGT_gene="IGHJ3P"
+FT                       /pseudo="J-psi-3"
+FT   5'UTR               2581..2745
+FT   J-GENE-UNIT         2709..2797
+FT                       /IMGT_allele="IGHJ3P*01"
+FT                       /IMGT_gene="IGHJ3P"
+FT                       /pseudo="J-psi-3"
+FT   J-RS                2709..2745
+FT   J-NONAMER           2709..2717
+FT   J-SPACER            2718..2738
+FT   J-HEPTAMER          2739..2745
+FT   J-REGION            2746..2797
+FT                       /IMGT_allele="IGHJ3P*01"
+FT                       /IMGT_gene="IGHJ3P"
+FT                       /pseudo="J-psi-3"
+FT   J-GENE              2859..3182
+FT                       /IMGT_allele="IGHJ6*01"
+FT                       /IMGT_gene="IGHJ6"
+FT   5'UTR               2859..2946
+FT   J-GENE-UNIT         2909..3009
+FT                       /IMGT_allele="IGHJ6*01"
+FT                       /IMGT_gene="IGHJ6"
+FT   J-RS                2909..2946
+FT   J-NONAMER           2909..2917
+FT   J-SPACER            2918..2939
+FT   CONFLICT            2918
+FT   J-HEPTAMER          2940..2946
+FT   J-REGION            2947..3009
+FT                       /codon_start=3
+FT                       /translation="YYYYYGMDVWGQGTTVTVSS"
+FT                       /IMGT_allele="IGHJ6*01"
+FT                       /IMGT_gene="IGHJ6"
+FT                       /note="functional"
+FT                       /protein_id="AAB59416.1"
+FT   J-TRP               2976..2978
+FT   CONFLICT            2981
+FT                       /note="replace"""
+FT   DONOR-SPLICE        3009..3011
+FT   3'UTR               3010..3182
+XX
+SQ   Sequence 3182 BP; 551 A; 923 C; 1065 G; 640 T; 3 other;
+     cagctgaggc tcagagaagg gacccagcac tggtggacac gcagggagcc cacgccaggg        60
+     cgccgtggtg agtgaggccc agtgccaccc actgaggcct cccgttcagt gggacgacgg       120
+     tgaacaggtg gaaccaacca ggcaaccccg ccgggcccca cagacggatc agagcaggaa       180
+     aggcttcctg ccctgcaggc cagcgaggag cctgcgggcc gtgccctcca gcgaggaggc       240
+     tcccctgcca ccgccacccg ggcctctctg ctgctgggaa aacaagtcag aaagcaagtg       300
+     gatgagaggt ggcgtgacag acccagcttc agatctgctc taatttacaa aagaaaagga       360
+     aaaacacact tggcagcctt cagcactcta atgattctta acagcagcaa attattggca       420
+     caagactcca gagtgactgg cagggttgag ggctggggtc tcccacgtgt tttggggcta       480
+     acagcggaag ggagagcact ggcaaaggtg ctgggggtcc cctgaacccg acccgccctg       540
+     agaccgcagc cacatcagcc cccagcccca caggccccct accagccgca gggtttttgg       600
+     ctgagctgag aaccactgtg ctaactgggg acacagtgat tggcagctct acaaaaacca       660
+     tgctcccccg ggaccccggg ctgtgggttt ctgtgcccct ggctcagggc tgactcaccg       720
+     tggctgaata cttccagcac tggggccagg gcaccctggt caccgtctcc tcaggtgagt       780
+     ctgctgtact ggggatagcg gggagccatg tgtactgggc caagcaaggg ctttggcttc       840
+     agacttgggg acaggtgctc agcaaaggag gtcggcagga gggcggaggg tgtgtttttg       900
+     tatgggagaa gcaggagggc agaggactgt gctactggta cttcgatctc tggggccgtg       960
+     gcaccctggt cactgtctcc tcaggtgagt cccactgcag ccccctccca gtcttctctg      1020
+     tccagcacca gccagtatct ggggtctgca gccggcctgg gtcgcctgag gccacaccca      1080
+     gctgccatcc ctggggtctc cgccatgggc tgcatgccag agccctgctg tcacttgccc      1140
+     tgggccagct ggagccccca aggacaggca gggaccccgc tgggcttcag cccgtcaggt      1200
+     ccctccacag gtagcaagca ggccgagggc agggacggga aggagaagtt gtgggcagag      1260
+     cctgggctgg ggctggcgcc ggctgttcat gtgccgggga caggctgcgc tttagtgtgg      1320
+     ctacaagtgc ttggagcact ggggcagggc agcccggaca ccgtctccct gggaacgtca      1380
+     cccctccctg cctgggtctc agcccggggg tctgtgtggc tggggacagg gacgccggct      1440
+     gcctctgtct ctgtgcttgg gccatgtgac ccatttcgag cgtcctgcac gggcacaggt      1500
+     ttgtgtctgg gtctaggaac ggactgtgtc cctgtgtgat gcttttgatg tctggggcca      1560
+     agggacaatg gtcaccgtct cttcaggtaa gatgggcttt ccttctgcct cctttctctg      1620
+     ggcccagcgt cctctgtcct ggagctggga gataatgtcc gggggcctcc ttggtctgcg      1680
+     ctgggccatg tggggcctcc ggggctcctt ctccggctgt ttggaccacg ttcagcagaa      1740
+     ggcctttctt tgggaactgg gactctgctg ctggggcaaa gggtgggcag agtcatgctt      1800
+     gtgctgggga caaaatgacc ttgggacacg gggcttggct gccacggccg gcccgggaca      1860
+     gtcggagagt caggtttttg tgcacccctt aatggggcct cccacaatgt gactactttg      1920
+     actactgggg ccaaggaacc ctggtcaccg tctcctcagg tgagtcctca caaccnnntc      1980
+     tcctccgtta actcgaggtt tgtgactttt ggggaataag ggtgctgggg gcctgccaag      2040
+     agagccccgg agcagccctg ggggctgcag gaggcctgag gcaacagcgg cacacacaga      2100
+     cgaggggcaa gggtctccag atgctccttc ctcctgagcc cagcagcacg ggttcgtctc      2160
+     ggcgccaggg ccaccctagg cggaggttcg tgtcttctct gagccaggag cacgggttct      2220
+     ctcgcaggca ccctgtgcct ctggggtcca atgcccaaca accccggccc tccccgggct      2280
+     cagtctgaga gggtcccagg gacgtgcggg gcgccggttc tttgtcgggg tctggcattg      2340
+     ttgtcacaat gtgacaactg gttcgactcc tggggccaag gaaccctggt caccgtctcc      2400
+     tcaggtgagt cctcaccacc ccctctctga gtccacttag ggagactcag cttgcagggt      2460
+     ctagggtcag agtcttggag gcattttgga ggtcaggaaa gaaagccggg gagagggacc      2520
+     cttcgaatgg gaaccccgcc tgtcctcccc aagtccggcc acagatgtcg gcagctgggg      2580
+     ggctccttcg gctggtctgg ggtgacctct ctccgcttca ctggagcatt ctcaggggct      2640
+     gtcgtgatga ttgcgtggtg ggactctgtc cgctccaagg cacccgctct ctgggcgggt      2700
+     gcccccgggg tttttggact cctgggggta acttgcggcc gtctgcttgc ggttggactt      2760
+     cccagccgac agtggtggtc tggcttctga ggggtcaggc cagaatgtac tgggaggcca      2820
+     gcagagggtt ccatgagaag ggcaggacag ggccacggac agtcagcttc catgtgacgc      2880
+     ccggagacag aaggtctcgg gtggactggg tttttgtggg gtgaggatgg acattctgcc      2940
+     attgtgatta ctactactac tacggtatgg acgtctgggg gcaagggacc acggtcaccg      3000
+     tctcctcagg taagaatggc cactctaggg cctttgtttt ctgctactgc ctgtggggtt      3060
+     tcctgcgcca ttgcggttgg tgcctcgcgg catgtccatg ggggacctgg cggactggac      3120
+     catgttccga ggggacctgg cggactggcc agaggggacg gcactggggt gccttgagga      3180
+     tc                                                                     3182
+//

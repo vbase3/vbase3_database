@@ -1,0 +1,1654 @@
+{
+  "d_genes": [
+    {
+      "gene_id": "Xen-IGHD1-01",
+      "species": "xenopus",
+      "dna_seq": "ATTACTATGGTG",
+      "rev_dna_seq": "CACCATAGTAAT",
+      "aa_rf1": "ITMV",
+      "aa_rf2": "LLW",
+      "aa_rf3": "YYG",
+      "aa_inv_rf1": "HHSN",
+      "aa_inv_rf2": "TIV",
+      "aa_inv_rf3": "P**"
+    },
+    {
+      "gene_id": "Xen-IGHD2-01",
+      "species": "xenopus",
+      "dna_seq": "GATCGGGGGTTTGAC",
+      "rev_dna_seq": "GTCAAACCCCCGATC",
+      "aa_rf1": "DRGFD",
+      "aa_rf2": "IGGL",
+      "aa_rf3": "SGV*",
+      "aa_inv_rf1": "VKPPI",
+      "aa_inv_rf2": "SNPR",
+      "aa_inv_rf3": "QTPD"
+    },
+    {
+      "gene_id": "Xen-IGHD3-01",
+      "species": "xenopus",
+      "dna_seq": "TACTATGATTAC",
+      "rev_dna_seq": "GTAATCATAGTA",
+      "aa_rf1": "YYDY",
+      "aa_rf2": "TMI",
+      "aa_rf3": "L*L",
+      "aa_inv_rf1": "VIIV",
+      "aa_inv_rf2": "*S*",
+      "aa_inv_rf3": "NHS"
+    },
+    {
+      "gene_id": "Xen-IGHD4-01",
+      "species": "xenopus",
+      "dna_seq": "GTTACTATGGTG",
+      "rev_dna_seq": "CACCATAGTAAC",
+      "aa_rf1": "VTMV",
+      "aa_rf2": "LLW",
+      "aa_rf3": "YYG",
+      "aa_inv_rf1": "HHSN",
+      "aa_inv_rf2": "TIV",
+      "aa_inv_rf3": "P**"
+    },
+    {
+      "gene_id": "Xen-IGHD5-01",
+      "species": "xenopus",
+      "dna_seq": "ATTGTAGTAGTTACT",
+      "rev_dna_seq": "AGTAACTACTACAAT",
+      "aa_rf1": "IVVVT",
+      "aa_rf2": "L**L",
+      "aa_rf3": "CSSY",
+      "aa_inv_rf1": "SNYYN",
+      "aa_inv_rf2": "VTTT",
+      "aa_inv_rf3": "*LLQ"
+    },
+    {
+      "gene_id": "Xen-IGHD6-01",
+      "species": "xenopus",
+      "dna_seq": "TACTACGGTAGT",
+      "rev_dna_seq": "ACTACCGTAGTA",
+      "aa_rf1": "YYGS",
+      "aa_rf2": "TTV",
+      "aa_rf3": "LR*",
+      "aa_inv_rf1": "TTVV",
+      "aa_inv_rf2": "LP*",
+      "aa_inv_rf3": "YRS"
+    },
+    {
+      "gene_id": "Xen-IGHD7-01",
+      "species": "xenopus",
+      "dna_seq": "GGGGACTACGTT",
+      "rev_dna_seq": "AACGTAGTCCCC",
+      "aa_rf1": "GDYV",
+      "aa_rf2": "GTT",
+      "aa_rf3": "GLR",
+      "aa_inv_rf1": "NVVP",
+      "aa_inv_rf2": "T*S",
+      "aa_inv_rf3": "RSP"
+    },
+    {
+      "gene_id": "Xen-IGHD1-02",
+      "species": "xenopus",
+      "dna_seq": "ATTACTACTGTG",
+      "rev_dna_seq": "CACAGTAGTAAT",
+      "aa_rf1": "ITTV",
+      "aa_rf2": "LLL",
+      "aa_rf3": "YYC",
+      "aa_inv_rf1": "HSSN",
+      "aa_inv_rf2": "TVV",
+      "aa_inv_rf3": "Q**"
+    },
+    {
+      "gene_id": "Xen-IGHD2-02",
+      "species": "xenopus",
+      "dna_seq": "GATCGGGGCTTTGAC",
+      "rev_dna_seq": "GTCAAAGCCCCGATC",
+      "aa_rf1": "DRGFD",
+      "aa_rf2": "IGAL",
+      "aa_rf3": "SGL*",
+      "aa_inv_rf1": "VKAPI",
+      "aa_inv_rf2": "SKPR",
+      "aa_inv_rf3": "QSPD"
+    },
+    {
+      "gene_id": "Xen-IGHD3-02",
+      "species": "xenopus",
+      "dna_seq": "TACTATGATTACTAC",
+      "rev_dna_seq": "GTAGTAATCATAGTA",
+      "aa_rf1": "YYDYY",
+      "aa_rf2": "TMIT",
+      "aa_rf3": "L*LL",
+      "aa_inv_rf1": "VVIIV",
+      "aa_inv_rf2": "**S*",
+      "aa_inv_rf3": "SNHS"
+    },
+    {
+      "gene_id": "Xen-IGHD4-02",
+      "species": "xenopus",
+      "dna_seq": "GTTACTACTGTG",
+      "rev_dna_seq": "CACAGTAGTAAC",
+      "aa_rf1": "VTTV",
+      "aa_rf2": "LLL",
+      "aa_rf3": "YYC",
+      "aa_inv_rf1": "HSSN",
+      "aa_inv_rf2": "TVV",
+      "aa_inv_rf3": "Q**"
+    },
+    {
+      "gene_id": "Xen-IGHD5-02",
+      "species": "xenopus",
+      "dna_seq": "ATTGTAGTAGTT",
+      "rev_dna_seq": "AACTACTACAAT",
+      "aa_rf1": "IVVV",
+      "aa_rf2": "L**",
+      "aa_rf3": "CSS",
+      "aa_inv_rf1": "NYYN",
+      "aa_inv_rf2": "TTT",
+      "aa_inv_rf3": "LLQ"
+    },
+    {
+      "gene_id": "Xen-IGHD6-02",
+      "species": "xenopus",
+      "dna_seq": "TACTACGGTAGCTAC",
+      "rev_dna_seq": "GTAGCTACCGTAGTA",
+      "aa_rf1": "YYGSY",
+      "aa_rf2": "TTVA",
+      "aa_rf3": "LR*L",
+      "aa_inv_rf1": "VATVV",
+      "aa_inv_rf2": "*LP*",
+      "aa_inv_rf3": "SYRS"
+    },
+    {
+      "gene_id": "Xen-IGHD7-02",
+      "species": "xenopus",
+      "dna_seq": "GGGGACTACTAT",
+      "rev_dna_seq": "ATAGTAGTCCCC",
+      "aa_rf1": "GDYY",
+      "aa_rf2": "GTT",
+      "aa_rf3": "GLL",
+      "aa_inv_rf1": "IVVP",
+      "aa_inv_rf2": "**S",
+      "aa_inv_rf3": "SSP"
+    },
+    {
+      "gene_id": "Xen-IGHD1-03",
+      "species": "xenopus",
+      "dna_seq": "ACTATGGTG",
+      "rev_dna_seq": "CACCATAGT",
+      "aa_rf1": "TMV",
+      "aa_rf2": "LW",
+      "aa_rf3": "YG",
+      "aa_inv_rf1": "HHS",
+      "aa_inv_rf2": "TI",
+      "aa_inv_rf3": "P*"
+    },
+    {
+      "gene_id": "Xen-IGHD2-03",
+      "species": "xenopus",
+      "dna_seq": "GATAGGGGTTTTGAC",
+      "rev_dna_seq": "GTCAAAACCCCTATC",
+      "aa_rf1": "DRGFD",
+      "aa_rf2": "IGVL",
+      "aa_rf3": "*GF*",
+      "aa_inv_rf1": "VKTPI",
+      "aa_inv_rf2": "SKPL",
+      "aa_inv_rf3": "QNPY"
+    },
+    {
+      "gene_id": "Xen-IGHD3-03",
+      "species": "xenopus",
+      "dna_seq": "TACTATGATTACTAC",
+      "rev_dna_seq": "GTAGTAATCATAGTA",
+      "aa_rf1": "YYDYY",
+      "aa_rf2": "TMIT",
+      "aa_rf3": "L*LL",
+      "aa_inv_rf1": "VVIIV",
+      "aa_inv_rf2": "**S*",
+      "aa_inv_rf3": "SNHS"
+    },
+    {
+      "gene_id": "Xen-IGHD4-03",
+      "species": "xenopus",
+      "dna_seq": "GTTACTACT",
+      "rev_dna_seq": "AGTAGTAAC",
+      "aa_rf1": "VTT",
+      "aa_rf2": "LL",
+      "aa_rf3": "YY",
+      "aa_inv_rf1": "SSN",
+      "aa_inv_rf2": "VV",
+      "aa_inv_rf3": "**"
+    },
+    {
+      "gene_id": "Xen-IGHD8-01",
+      "species": "xenopus",
+      "dna_seq": "TACTATGGTGTT",
+      "rev_dna_seq": "AACACCATAGTA",
+      "aa_rf1": "YYGV",
+      "aa_rf2": "TMV",
+      "aa_rf3": "LWC",
+      "aa_inv_rf1": "NTIV",
+      "aa_inv_rf2": "TP*",
+      "aa_inv_rf3": "HHS"
+    },
+    {
+      "gene_id": "Xen-IGHD9-01",
+      "species": "xenopus",
+      "dna_seq": "TATGATTACTAC",
+      "rev_dna_seq": "GTAGTAATCATA",
+      "aa_rf1": "YDYY",
+      "aa_rf2": "MIT",
+      "aa_rf3": "*LL",
+      "aa_inv_rf1": "VVII",
+      "aa_inv_rf2": "**S",
+      "aa_inv_rf3": "SNH"
+    },
+    {
+      "gene_id": "vic_IGHD4-01",
+      "species": "alpaca",
+      "dna_seq": "CTAACTGGGGA",
+      "rev_dna_seq": "TCCCCAGTTAG",
+      "aa_rf1": "LTG",
+      "aa_rf2": "*LG",
+      "aa_rf3": "NWG",
+      "aa_inv_rf1": "SPV",
+      "aa_inv_rf2": "PQL",
+      "aa_inv_rf3": "PS*"
+    },
+    {
+      "gene_id": "gga_IGHD1*01",
+      "species": "chicken",
+      "dna_seq": "GGTAGTGGTTACTGTGGTAGTGGTGCTTAT",
+      "rev_dna_seq": "ATAAGCACCACTACCACAGTAACCACTACC",
+      "aa_rf1": "GSGYCGSGAY",
+      "aa_rf2": "VVVTVVVVL",
+      "aa_rf3": "*WLLW*WCL",
+      "aa_inv_rf1": "ISTTTTVTTT",
+      "aa_inv_rf2": "*APLPQ*PL",
+      "aa_inv_rf3": "KHHYHSNHY"
+    },
+    {
+      "gene_id": "gga_IGHD2*01",
+      "species": "chicken",
+      "dna_seq": "GGTAGTGCTTGTTGTGGTCCTTAT",
+      "rev_dna_seq": "ATAAGGACCACAACAAGCACTACC",
+      "aa_rf1": "GSACCGPY",
+      "aa_rf2": "VVLVVVL",
+      "aa_rf3": "*CLLWSL",
+      "aa_inv_rf1": "IRTTTSTT",
+      "aa_inv_rf2": "*GPQQAL",
+      "aa_inv_rf3": "KDHNKHY"
+    },
+    {
+      "gene_id": "gga_IGHD3*01",
+      "species": "chicken",
+      "dna_seq": "GGTACTTCTGGTGCCTGCACCTTTTTCTATCCTTCCTGCCCTTAT",
+      "rev_dna_seq": "ATAAGGGCAGGAAGGATAGAAAAAGGTGCAGGCACCAGAAGTACC",
+      "aa_rf1": "GTSGACTFFYPSCPY",
+      "aa_rf2": "VLLVPAPFSILPAL",
+      "aa_rf3": "YFWCLHLFLSFLPL",
+      "aa_inv_rf1": "IRAGRIEKGAGTRST",
+      "aa_inv_rf2": "*GQEG*KKVQAPEV",
+      "aa_inv_rf3": "KGRKDRKRCRHQKY"
+    },
+    {
+      "gene_id": "gga_IGHD4*01",
+      "species": "chicken",
+      "dna_seq": "GGTCGTAGTGCTTACAGTTGTGGTGCTTAT",
+      "rev_dna_seq": "ATAAGCACCACAACTGTAAGCACTACGACC",
+      "aa_rf1": "GRSAYSCGAY",
+      "aa_rf2": "VVVLTVVVL",
+      "aa_rf3": "S*CLQLWCL",
+      "aa_inv_rf1": "ISTTTVSTTT",
+      "aa_inv_rf2": "*APQL*ALR",
+      "aa_inv_rf3": "KHHNCKHYD"
+    },
+    {
+      "gene_id": "can_IGHD1-01",
+      "species": "dog",
+      "dna_seq": "GTTATTATGGTACTAGCTAC",
+      "rev_dna_seq": "GTAGCTAGTACCATAATAAC",
+      "aa_rf1": "VIMVLA",
+      "aa_rf2": "LLWY*L",
+      "aa_rf3": "YYGTSY",
+      "aa_inv_rf1": "VASTII",
+      "aa_inv_rf2": "*LVP**",
+      "aa_inv_rf3": "S*YHNN"
+    },
+    {
+      "gene_id": "can_IGHD5-01",
+      "species": "dog",
+      "dna_seq": "CTAACTGGGGA",
+      "rev_dna_seq": "TCCCCAGTTAG",
+      "aa_rf1": "LTG",
+      "aa_rf2": "*LG",
+      "aa_rf3": "NWG",
+      "aa_inv_rf1": "SPV",
+      "aa_inv_rf2": "PQL",
+      "aa_inv_rf3": "PS*"
+    },
+    {
+      "gene_id": "IGHD1-1*01",
+      "species": "human",
+      "dna_seq": "GGTACAACTGGAACGAC",
+      "rev_dna_seq": "GTCGTTCCAGTTGTACC",
+      "aa_rf1": "GTTGT",
+      "aa_rf2": "VQLER",
+      "aa_rf3": "YNWND",
+      "aa_inv_rf1": "VVPVV",
+      "aa_inv_rf2": "SFQLY",
+      "aa_inv_rf3": "RSSCT"
+    },
+    {
+      "gene_id": "IGHD1-14*01",
+      "species": "human",
+      "dna_seq": "GGTATAACCGGAACCAC",
+      "rev_dna_seq": "GTGGTTCCGGTTATACC",
+      "aa_rf1": "GITGT",
+      "aa_rf2": "V*PEP",
+      "aa_rf3": "YNRNH",
+      "aa_inv_rf1": "VVPVI",
+      "aa_inv_rf2": "WFRLY",
+      "aa_inv_rf3": "GSGYT"
+    },
+    {
+      "gene_id": "IGHD1-20*01",
+      "species": "human",
+      "dna_seq": "GGTATAACTGGAACGAC",
+      "rev_dna_seq": "GTCGTTCCAGTTATACC",
+      "aa_rf1": "GITGT",
+      "aa_rf2": "V*LER",
+      "aa_rf3": "YNWND",
+      "aa_inv_rf1": "VVPVI",
+      "aa_inv_rf2": "SFQLY",
+      "aa_inv_rf3": "RSSYT"
+    },
+    {
+      "gene_id": "IGHD1-26*01",
+      "species": "human",
+      "dna_seq": "GGTATAGTGGGAGCTACTAC",
+      "rev_dna_seq": "GTAGTAGCTCCCACTATACC",
+      "aa_rf1": "GIVGAT",
+      "aa_rf2": "V*WELL",
+      "aa_rf3": "YSGSYY",
+      "aa_inv_rf1": "VVAPTI",
+      "aa_inv_rf2": "**LPLY",
+      "aa_inv_rf3": "SSSHYT"
+    },
+    {
+      "gene_id": "IGHD1-7*01",
+      "species": "human",
+      "dna_seq": "GGTATAACTGGAACTAC",
+      "rev_dna_seq": "GTAGTTCCAGTTATACC",
+      "aa_rf1": "GITGT",
+      "aa_rf2": "V*LEL",
+      "aa_rf3": "YNWNY",
+      "aa_inv_rf1": "VVPVI",
+      "aa_inv_rf2": "*FQLY",
+      "aa_inv_rf3": "SSSYT"
+    },
+    {
+      "gene_id": "IGHD2-8*02",
+      "species": "human",
+      "dna_seq": "AGGATATTGTACTGGTGGTGTATGCTATACC",
+      "rev_dna_seq": "GGTATAGCATACACCACCAGTACAATATCCT",
+      "aa_rf1": "RILYWWCMLY",
+      "aa_rf2": "GYCTGGVCYT",
+      "aa_rf3": "DIVLVVYAI",
+      "aa_inv_rf1": "GIAYTTSTIS",
+      "aa_inv_rf2": "V*HTPPVQYP",
+      "aa_inv_rf3": "YSIHHQYNI"
+    },
+    {
+      "gene_id": "IGHD3-3*01",
+      "species": "human",
+      "dna_seq": "GTATTACGATTTTTGGAGTGGTTATTATACC",
+      "rev_dna_seq": "GGTATAATAACCACTCCAAAAATCGTAATAC",
+      "aa_rf1": "VLRFLEWLLY",
+      "aa_rf2": "YYDFWSGYYT",
+      "aa_rf3": "ITIFGVVII",
+      "aa_inv_rf1": "GIITTPKIVI",
+      "aa_inv_rf2": "V**PLQKS*Y",
+      "aa_inv_rf3": "YNNHSKNRN"
+    },
+    {
+      "gene_id": "IGHD5-12*01",
+      "species": "human",
+      "dna_seq": "GTGGATATAGTGGCTACGATTAC",
+      "rev_dna_seq": "GTAATCGTAGCCACTATATCCAC",
+      "aa_rf1": "VDIVATI",
+      "aa_rf2": "WI*WLRL",
+      "aa_rf3": "GYSGYDY",
+      "aa_inv_rf1": "VIVATIS",
+      "aa_inv_rf2": "*S*PLYP",
+      "aa_inv_rf3": "NRSHYIH"
+    },
+    {
+      "gene_id": "IGHD5-18*01",
+      "species": "human",
+      "dna_seq": "GTGGATACAGCTATGGTTAC",
+      "rev_dna_seq": "GTAACCATAGCTGTATCCAC",
+      "aa_rf1": "VDTAMV",
+      "aa_rf2": "WIQLWL",
+      "aa_rf3": "GYSYGY",
+      "aa_inv_rf1": "VTIAVS",
+      "aa_inv_rf2": "*P*LYP",
+      "aa_inv_rf3": "NHSCIH"
+    },
+    {
+      "gene_id": "IGHD5-24*01",
+      "species": "human",
+      "dna_seq": "GTAGAGATGGCTACAATTAC",
+      "rev_dna_seq": "GTAATTGTAGCCATCTCTAC",
+      "aa_rf1": "VEMATI",
+      "aa_rf2": "*RWLQL",
+      "aa_rf3": "RDGYNY",
+      "aa_inv_rf1": "VIVAIS",
+      "aa_inv_rf2": "*L*PSL",
+      "aa_inv_rf3": "NCSHLY"
+    },
+    {
+      "gene_id": "IGHD5-5*01",
+      "species": "human",
+      "dna_seq": "GTGGATACAGCTATGGTTAC",
+      "rev_dna_seq": "GTAACCATAGCTGTATCCAC",
+      "aa_rf1": "VDTAMV",
+      "aa_rf2": "WIQLWL",
+      "aa_rf3": "GYSYGY",
+      "aa_inv_rf1": "VTIAVS",
+      "aa_inv_rf2": "*P*LYP",
+      "aa_inv_rf3": "NHSCIH"
+    },
+    {
+      "gene_id": "IGHD6-13*01",
+      "species": "human",
+      "dna_seq": "GGGTATAGCAGCAGCTGGTACTAC",
+      "rev_dna_seq": "GTAGTACCAGCTGCTGCTATACCC",
+      "aa_rf1": "GYSSSWYY",
+      "aa_rf2": "GIAAAGT",
+      "aa_rf3": "V*QQLVL",
+      "aa_inv_rf1": "VVPAAAIP",
+      "aa_inv_rf2": "*YQLLLY",
+      "aa_inv_rf3": "STSCCYT"
+    },
+    {
+      "gene_id": "IGHD6-19*01",
+      "species": "human",
+      "dna_seq": "GGGTATAGCAGTGGCTGGTAC",
+      "rev_dna_seq": "GTACCAGCCACTGCTATACCC",
+      "aa_rf1": "GYSSGWY",
+      "aa_rf2": "GIAVAG",
+      "aa_rf3": "V*QWLV",
+      "aa_inv_rf1": "VPATAIP",
+      "aa_inv_rf2": "YQPLLY",
+      "aa_inv_rf3": "TSHCYT"
+    },
+    {
+      "gene_id": "IGHD6-25*01",
+      "species": "human",
+      "dna_seq": "GGGTATAGCAGTGGCTGGTAC",
+      "rev_dna_seq": "GTACCAGCCACTGCTATACCC",
+      "aa_rf1": "GYSSGWY",
+      "aa_rf2": "GIAVAG",
+      "aa_rf3": "V*QWLV",
+      "aa_inv_rf1": "VPATAIP",
+      "aa_inv_rf2": "YQPLLY",
+      "aa_inv_rf3": "TSHCYT"
+    },
+    {
+      "gene_id": "IGHD6-6*01",
+      "species": "human",
+      "dna_seq": "GAGTATAGCAGCTCGTCC",
+      "rev_dna_seq": "GGACGAGCTGCTATACTC",
+      "aa_rf1": "EYSSSS",
+      "aa_rf2": "SIAAR",
+      "aa_rf3": "V*QLV",
+      "aa_inv_rf1": "GRAAIL",
+      "aa_inv_rf2": "DELLY",
+      "aa_inv_rf3": "TSCYT"
+    },
+    {
+      "gene_id": "IGHD7-27*01",
+      "species": "human",
+      "dna_seq": "CTAACTGGGGA",
+      "rev_dna_seq": "TCCCCAGTTAG",
+      "aa_rf1": "LTG",
+      "aa_rf2": "*LG",
+      "aa_rf3": "NWG",
+      "aa_inv_rf1": "SPV",
+      "aa_inv_rf2": "PQL",
+      "aa_inv_rf3": "PS*"
+    },
+    {
+      "gene_id": "mus_DFL16.1",
+      "species": "mouse",
+      "dna_seq": "TTTATTACTACGGTAGTAGCTAC",
+      "rev_dna_seq": "GTAGCTACTACCGTAGTAATAAA",
+      "aa_rf1": "FITTVVA",
+      "aa_rf2": "LLLR**L",
+      "aa_rf3": "YYYGSSY",
+      "aa_inv_rf1": "VATTVVI",
+      "aa_inv_rf2": "*LLP***",
+      "aa_inv_rf3": "SYYRSNK"
+    },
+    {
+      "gene_id": "mus_DFL16.2",
+      "species": "mouse",
+      "dna_seq": "TTCATTACTACGGCTAC",
+      "rev_dna_seq": "GTAGCCGTAGTAATGAA",
+      "aa_rf1": "FITTA",
+      "aa_rf2": "SLLRL",
+      "aa_rf3": "HYYGY",
+      "aa_inv_rf1": "VAVVM",
+      "aa_inv_rf2": "*P***",
+      "aa_inv_rf3": "SRSNE"
+    },
+    {
+      "gene_id": "mus_DFL16.3",
+      "species": "mouse",
+      "dna_seq": "TATATAACTAAAGTGGTAGCTCA",
+      "rev_dna_seq": "TGAGCTACCACTTTAGTTATATA",
+      "aa_rf1": "YITKVVA",
+      "aa_rf2": "I*LKW*L",
+      "aa_rf3": "YN*SGSS",
+      "aa_inv_rf1": "*ATTLVI",
+      "aa_inv_rf2": "ELPL*LY",
+      "aa_inv_rf3": "SYHFSYI"
+    },
+    {
+      "gene_id": "mus_DQ52a.1",
+      "species": "mouse",
+      "dna_seq": "CTAACTGGGAC",
+      "rev_dna_seq": "GTCCCAGTTAG",
+      "aa_rf1": "LTG",
+      "aa_rf2": "*LG",
+      "aa_rf3": "NWD",
+      "aa_inv_rf1": "VPV",
+      "aa_inv_rf2": "SQL",
+      "aa_inv_rf3": "PS*"
+    },
+    {
+      "gene_id": "mus_DQ52a.2",
+      "species": "mouse",
+      "dna_seq": "CAACTGGGAC",
+      "rev_dna_seq": "GTCCCAGTTG",
+      "aa_rf1": "QLG",
+      "aa_rf2": "NWD",
+      "aa_rf3": "TG",
+      "aa_inv_rf1": "VPV",
+      "aa_inv_rf2": "SQL",
+      "aa_inv_rf3": "PS"
+    },
+    {
+      "gene_id": "mus_DSP2.2",
+      "species": "mouse",
+      "dna_seq": "CTACTATGGTTACGAC",
+      "rev_dna_seq": "GTCGTAACCATAGTAG",
+      "aa_rf1": "LLWLR",
+      "aa_rf2": "YYGYD",
+      "aa_rf3": "TMVT",
+      "aa_inv_rf1": "VVTIV",
+      "aa_inv_rf2": "S*P**",
+      "aa_inv_rf3": "RNHS"
+    },
+    {
+      "gene_id": "mus_DSP2.3",
+      "species": "mouse",
+      "dna_seq": "CCTACTATAGTAACTAC",
+      "rev_dna_seq": "GTAGTTACTATAGTAGG",
+      "aa_rf1": "PTIVT",
+      "aa_rf2": "LL**L",
+      "aa_rf3": "YYSNY",
+      "aa_inv_rf1": "VVTIV",
+      "aa_inv_rf2": "*LL**",
+      "aa_inv_rf3": "SYYSR"
+    },
+    {
+      "gene_id": "mus_DSP2.4",
+      "species": "mouse",
+      "dna_seq": "TCTACTATGATTACGAC",
+      "rev_dna_seq": "GTCGTAATCATAGTAGA",
+      "aa_rf1": "STMIT",
+      "aa_rf2": "LL*LR",
+      "aa_rf3": "YYDYD",
+      "aa_inv_rf1": "VVIIV",
+      "aa_inv_rf2": "S*S**",
+      "aa_inv_rf3": "RNHSR"
+    },
+    {
+      "gene_id": "mus_DSP2.5",
+      "species": "mouse",
+      "dna_seq": "TCTATGATGGTTACTAC",
+      "rev_dna_seq": "GTAGTAACCATCATAGA",
+      "aa_rf1": "SMMVT",
+      "aa_rf2": "L*WLL",
+      "aa_rf3": "YDGYY",
+      "aa_inv_rf1": "VVTII",
+      "aa_inv_rf2": "**PS*",
+      "aa_inv_rf3": "SNHHR"
+    },
+    {
+      "gene_id": "mus_DSP2.7",
+      "species": "mouse",
+      "dna_seq": "ATTACTACGGTAGTAGCTAC",
+      "rev_dna_seq": "GTAGCTACTACCGTAGTAAT",
+      "aa_rf1": "ITTVVA",
+      "aa_rf2": "LLR**L",
+      "aa_rf3": "YYGSSY",
+      "aa_inv_rf1": "VATTVV",
+      "aa_inv_rf2": "*LLP**",
+      "aa_inv_rf3": "SYYRSN"
+    },
+    {
+      "gene_id": "rab_DH1-01",
+      "species": "rabbit",
+      "dna_seq": "GCATATACTAGTAGTAGTGGTTATTATATAC",
+      "rev_dna_seq": "GTATATAATAACCACTACTACTAGTATATGC",
+      "aa_rf1": "AYTSSSGYYI",
+      "aa_rf2": "HILVVVVIIY",
+      "aa_rf3": "IY***WLLY",
+      "aa_inv_rf1": "VYNNHYY*YM",
+      "aa_inv_rf2": "YIITTTTSIC",
+      "aa_inv_rf3": "I**PLLLVY"
+    },
+    {
+      "gene_id": "rab_DH3-03",
+      "species": "rabbit",
+      "dna_seq": "CCTATGGGGTCCTGGTTCCCATGGCTATGGGGTT",
+      "rev_dna_seq": "AACCCCATAGCCATGGGAACCAGGACCCCATAGG",
+      "aa_rf1": "PMGSWFPWLWG",
+      "aa_rf2": "LWGPGSHGYGV",
+      "aa_rf3": "YGVLVPMAMG",
+      "aa_inv_rf1": "NPIAMGTRTP*",
+      "aa_inv_rf2": "TP*PWEPGPHR",
+      "aa_inv_rf3": "PHSHGNQDPI"
+    },
+    {
+      "gene_id": "rab_DH3-04",
+      "species": "rabbit",
+      "dna_seq": "CCTATGGGGTCCTGGTTCCCATGGCTATGGGGTT",
+      "rev_dna_seq": "AACCCCATAGCCATGGGAACCAGGACCCCATAGG",
+      "aa_rf1": "PMGSWFPWLWG",
+      "aa_rf2": "LWGPGSHGYGV",
+      "aa_rf3": "YGVLVPMAMG",
+      "aa_inv_rf1": "NPIAMGTRTP*",
+      "aa_inv_rf2": "TP*PWEPGPHR",
+      "aa_inv_rf3": "PHSHGNQDPI"
+    },
+    {
+      "gene_id": "rab_DH3-05",
+      "species": "rabbit",
+      "dna_seq": "CCTATGGGGTCCTTGTTCCCATGGCTATGCAGTC",
+      "rev_dna_seq": "GACTGCATAGCCATGGGAACAAGGACCCCATAGG",
+      "aa_rf1": "PMGSLFPWLCS",
+      "aa_rf2": "LWGPCSHGYAV",
+      "aa_rf3": "YGVLVPMAMQ",
+      "aa_inv_rf1": "DCIAMGTRTP*",
+      "aa_inv_rf2": "TA*PWEQGPHR",
+      "aa_inv_rf3": "LHSHGNKDPI"
+    },
+    {
+      "gene_id": "rab_DH4-06",
+      "species": "rabbit",
+      "dna_seq": "GTTACTATAGTAGTGGCTGGGGTG",
+      "rev_dna_seq": "CACCCCAGCCACTACTATAGTAAC",
+      "aa_rf1": "VTIVVAGV",
+      "aa_rf2": "LL**WLG",
+      "aa_rf3": "YYSSGWG",
+      "aa_inv_rf1": "HPSHYYSN",
+      "aa_inv_rf2": "TPATTIV",
+      "aa_inv_rf3": "PQPLL**"
+    },
+    {
+      "gene_id": "rab_DH4-07",
+      "species": "rabbit",
+      "dna_seq": "GTTATGCTGGTAGTAGCTGGGATG",
+      "rev_dna_seq": "CATCCCAGCTACTACCAGCATAAC",
+      "aa_rf1": "VMLVVAGM",
+      "aa_rf2": "LCW**LG",
+      "aa_rf3": "YAGSSWD",
+      "aa_inv_rf1": "HPSYYQHN",
+      "aa_inv_rf2": "IPATTSI",
+      "aa_inv_rf3": "SQLLPA*"
+    },
+    {
+      "gene_id": "rab_DH6-09",
+      "species": "rabbit",
+      "dna_seq": "GTTACTATAGTTATGGTTATGCTTATGCTACC",
+      "rev_dna_seq": "GGTAGCATAAGCATAACCATAACTATAGTAAC",
+      "aa_rf1": "VTIVMVMLML",
+      "aa_rf2": "LL*LWLCLCY",
+      "aa_rf3": "YYSYGYAYAT",
+      "aa_inv_rf1": "GSISITITIV",
+      "aa_inv_rf2": "VA*A*P*L**",
+      "aa_inv_rf3": "*HKHNHNYSN"
+    },
+    {
+      "gene_id": "rab_DH7-10",
+      "species": "rabbit",
+      "dna_seq": "GTTATCCTGGTTATAGTACTGGTACC",
+      "rev_dna_seq": "GGTACCAGTACTATAACCAGGATAAC",
+      "aa_rf1": "VILVIVLV",
+      "aa_rf2": "LSWL*YWY",
+      "aa_rf3": "YPGYSTGT",
+      "aa_inv_rf1": "GTSTITRI",
+      "aa_inv_rf2": "VPVL*PG*",
+      "aa_inv_rf3": "YQYYNQDN"
+    },
+    {
+      "gene_id": "rab_DH8-11",
+      "species": "rabbit",
+      "dna_seq": "GTTATGCTGGTAGTAGTTATTATACC",
+      "rev_dna_seq": "GGTATAATAACTACTACCAGCATAAC",
+      "aa_rf1": "VMLVVVII",
+      "aa_rf2": "LCW**LLY",
+      "aa_rf3": "YAGSSYYT",
+      "aa_inv_rf1": "GIITTTSI",
+      "aa_inv_rf2": "V**LLPA*",
+      "aa_inv_rf3": "YNNYYQHN"
+    }
+  ],
+  "j_genes": [
+    {
+      "gene_id": "Xen-IGKJ1-02",
+      "species": "xenopus",
+      "chain_type": "Light-Kappa",
+      "dna_seq": "TACACGTTCGGAGGGGGGACCAAGGTGGAGATCAAA",
+      "aa_seq": "YTFGGGTKVEIK",
+      "boundary_motif": "VEIK"
+    },
+    {
+      "gene_id": "Xen-IGLJ1-01",
+      "species": "xenopus",
+      "chain_type": "Light-Lambda",
+      "dna_seq": "GTCACGTTCGGAGGAGGAACCAAGCTGACCGTCCTA",
+      "aa_seq": "VTFGGGTKLTVL",
+      "boundary_motif": "TVL"
+    },
+    {
+      "gene_id": "Xen-IGLJ1-02",
+      "species": "xenopus",
+      "chain_type": "Light-Lambda",
+      "dna_seq": "GTCACGTTCGGAGGAGGAACCAAGCTGACCGTCCTA",
+      "aa_seq": "VTFGGGTKLTVL",
+      "boundary_motif": "TVL"
+    },
+    {
+      "gene_id": "Xen-IGRJ1-01",
+      "species": "xenopus",
+      "chain_type": "Light-Rho",
+      "dna_seq": "TGGACGTTCGGTGGAGGCACCAAGCTGACCGTCCTA",
+      "aa_seq": "WTFGGGTKLTVL",
+      "boundary_motif": "TVL"
+    },
+    {
+      "gene_id": "Xen-IGRJ1-02",
+      "species": "xenopus",
+      "chain_type": "Light-Rho",
+      "dna_seq": "TGGACGTTCGGTGGAGGCACCAAGCTGACCGTCCTA",
+      "aa_seq": "WTFGGGTKLTVL",
+      "boundary_motif": "TVL"
+    },
+    {
+      "gene_id": "Xen-IGSJ1-01",
+      "species": "xenopus",
+      "chain_type": "Light-Sigma",
+      "dna_seq": "CTCACGTTCGGTGCTGGGACCAAGGTGGAGATCAAA",
+      "aa_seq": "LTFGAGTKVEIK",
+      "boundary_motif": "VEIK"
+    },
+    {
+      "gene_id": "Xen-IGSJ1-02",
+      "species": "xenopus",
+      "chain_type": "Light-Sigma",
+      "dna_seq": "CTCACGTTCGGTGCTGGGACCAAGGTGGAGATCAAA",
+      "aa_seq": "LTFGAGTKVEIK",
+      "boundary_motif": "VEIK"
+    },
+    {
+      "gene_id": "Xen-IGHJ1-01",
+      "species": "xenopus",
+      "chain_type": "Heavy",
+      "dna_seq": "ACTACTTGGGGCCAGGGCACTCTGGTCACCGTCTCCTCA",
+      "aa_seq": "TTWGQGTLVTVSS",
+      "boundary_motif": "TVSS"
+    },
+    {
+      "gene_id": "Xen-IGHJ2-01",
+      "species": "xenopus",
+      "chain_type": "Heavy",
+      "dna_seq": "ATTTACTACTGGGGCCAGGGCACCCTGGTGACCGTGTCCGCA",
+      "aa_seq": "IYYWGQGTLVTVSA",
+      "boundary_motif": "TVSA"
+    },
+    {
+      "gene_id": "Xen-IGHJ3-01",
+      "species": "xenopus",
+      "chain_type": "Heavy",
+      "dna_seq": "TTTGACTACTGGGGCCAGGGCACTCTGGTCACCGTCTCCTCA",
+      "aa_seq": "FDYWGQGTLVTVSS",
+      "boundary_motif": "TVSS"
+    },
+    {
+      "gene_id": "Xen-IGHJ6-01",
+      "species": "xenopus",
+      "chain_type": "Heavy",
+      "dna_seq": "TACTACTGGGGCCAGGGCACTCTGGTCACCGTCTCCTCA",
+      "aa_seq": "YYWGQGTLVTVSS",
+      "boundary_motif": "TVSS"
+    },
+    {
+      "gene_id": "Xen-IGHJ1-02",
+      "species": "xenopus",
+      "chain_type": "Heavy",
+      "dna_seq": "ACTACTTGGGGCCAGGGCACCCTGGTCACCGTCTCCTCA",
+      "aa_seq": "TTWGQGTLVTVSS",
+      "boundary_motif": "TVSS"
+    },
+    {
+      "gene_id": "Xen-IGHJ2-02",
+      "species": "xenopus",
+      "chain_type": "Heavy",
+      "dna_seq": "ATTTACTACTGGGGCCAGGGCACCCTGGTGACCGTGTCTGCA",
+      "aa_seq": "IYYWGQGTLVTVSA",
+      "boundary_motif": "TVSA"
+    },
+    {
+      "gene_id": "Xen-IGHJ3-02",
+      "species": "xenopus",
+      "chain_type": "Heavy",
+      "dna_seq": "TTTGACTACTGGGGCCAGGGCACCCTGGTCACCGTCTCCTCA",
+      "aa_seq": "FDYWGQGTLVTVSS",
+      "boundary_motif": "TVSS"
+    },
+    {
+      "gene_id": "Xen-IGHJ7-01",
+      "species": "xenopus",
+      "chain_type": "Heavy",
+      "dna_seq": "GACTACTGGGGCCAGGGCACTCTGGTCACCGTCTCCTCA",
+      "aa_seq": "DYWGQGTLVTVSS",
+      "boundary_motif": "TVSS"
+    },
+    {
+      "gene_id": "Xen-IGHJ4-01",
+      "species": "xenopus",
+      "chain_type": "Heavy",
+      "dna_seq": "GCTTACTGGGGCCAGGGTACTCTGGTCACCGTCTCCTCA",
+      "aa_seq": "AYWGQGTLVTVSS",
+      "boundary_motif": "TVSS"
+    },
+    {
+      "gene_id": "Xen-IGHJ5-01",
+      "species": "xenopus",
+      "chain_type": "Heavy",
+      "dna_seq": "TTTGACCACTGGGGCCAGGGCACCCTGGTCACCGTCTCCTCA",
+      "aa_seq": "FDHWGQGTLVTVSS",
+      "boundary_motif": "TVSS"
+    },
+    {
+      "gene_id": "Xen-IGHJ8-01",
+      "species": "xenopus",
+      "chain_type": "Heavy",
+      "dna_seq": "GCTTACTGGGGCCAGGGCACCCTGGTGACCGTGTCCGCA",
+      "aa_seq": "AYWGQGTLVTVSA",
+      "boundary_motif": "TVSA"
+    },
+    {
+      "gene_id": "Xen-IGHJ9-01",
+      "species": "xenopus",
+      "chain_type": "Heavy",
+      "dna_seq": "TTTGACTACTGGGGCCAGGGCACCCTGGTGACCGTGTCCGCA",
+      "aa_seq": "FDYWGQGTLVTVSA",
+      "boundary_motif": "TVSA"
+    },
+    {
+      "gene_id": "Xen-IGKJ1-01",
+      "species": "xenopus",
+      "chain_type": "Light-Kappa",
+      "dna_seq": "TACACGTTCGGAGGGGGGACCAAGCTGGAAATAAAA",
+      "aa_seq": "YTFGGGTKLEIK",
+      "boundary_motif": "LEIK"
+    },
+    {
+      "gene_id": "vic_IGKJ1",
+      "species": "alpaca",
+      "chain_type": "Kappa",
+      "dna_seq": "TGGACGTTCGGCCAAGGGACCAAGGTGGAAATCAAA",
+      "aa_seq": "WTFGQGTKVEIK",
+      "boundary_motif": "VEIK"
+    },
+    {
+      "gene_id": "vic_IGLJ1",
+      "species": "alpaca",
+      "chain_type": "Lambda",
+      "dna_seq": "GTGGTATTCGGCGGAGGGACCAAGCTGACCGTCCTA",
+      "aa_seq": "VVFGGGTKLTVL",
+      "boundary_motif": "TVL"
+    },
+    {
+      "gene_id": "vic_IGHJ1",
+      "species": "alpaca",
+      "chain_type": "Heavy",
+      "dna_seq": "TACTACTTTGACTACTGGGGCCAGGGAACCCTGGTCACCGTCTCCTCA",
+      "aa_seq": "YYFDYWGQGTLVTVSS",
+      "boundary_motif": "TVSS"
+    },
+    {
+      "gene_id": "vic_IGHJ2",
+      "species": "alpaca",
+      "chain_type": "Heavy",
+      "dna_seq": "GCTGAATACTTCCAGCACTGGGGCCAGGGCACCCTGGTCACCGTCTCCTCA",
+      "aa_seq": "AEYFQHWGQGTLVTVSS",
+      "boundary_motif": "TVSS"
+    },
+    {
+      "gene_id": "gga_IGHJ1",
+      "species": "chicken",
+      "chain_type": "Heavy",
+      "dna_seq": "TACTATGCTATGGACTACTGGGGTCAAGGAACCTCAGTCACCGTCTCCTCA",
+      "aa_seq": "YYAMDYWGQGTSVTVSS",
+      "boundary_motif": "TVSS"
+    },
+    {
+      "gene_id": "gga_IGLJ1",
+      "species": "chicken",
+      "chain_type": "Lambda",
+      "dna_seq": "TTTATTTTCGGCAGTGGAACCAAGGTCACTGTCCTA",
+      "aa_seq": "FIFGSGTKVTVL",
+      "boundary_motif": "TVL"
+    },
+    {
+      "gene_id": "bos_IGLJ1",
+      "species": "cow",
+      "chain_type": "Lambda",
+      "dna_seq": "GTGGTATTCGGCGGAGGGACCAAGCTGACCGTCCTA",
+      "aa_seq": "VVFGGGTKLTVL",
+      "boundary_motif": "TVL"
+    },
+    {
+      "gene_id": "bos_IGLJ2",
+      "species": "cow",
+      "chain_type": "Lambda",
+      "dna_seq": "TGGGTGTTCGGCGGAGGGACCAAGCTGACCGTCCTA",
+      "aa_seq": "WVFGGGTKLTVL",
+      "boundary_motif": "TVL"
+    },
+    {
+      "gene_id": "bos_IGLJ3",
+      "species": "cow",
+      "chain_type": "Lambda",
+      "dna_seq": "TATGTCTTCGGAACTGGGACCAAGGTCACCGTCCTA",
+      "aa_seq": "YVFGTGTKVTVL",
+      "boundary_motif": "TVL"
+    },
+    {
+      "gene_id": "bos_IGHJ1",
+      "species": "cow",
+      "chain_type": "Heavy",
+      "dna_seq": "TACTACTTTGACTACTGGGGCCAGGGAACCCTGGTCACCGTCTCCTCA",
+      "aa_seq": "YYFDYWGQGTLVTVSS",
+      "boundary_motif": "TVSS"
+    },
+    {
+      "gene_id": "bos_IGHJ2",
+      "species": "cow",
+      "chain_type": "Heavy",
+      "dna_seq": "TACTGGTACTTCGATCTCTGGGGCCGTGGCACCCTGGTCACTGTCTCCTCA",
+      "aa_seq": "YWYFDLWGRGTLVTVSS",
+      "boundary_motif": "TVSS"
+    },
+    {
+      "gene_id": "can_IGKJ1",
+      "species": "dog",
+      "chain_type": "Kappa",
+      "dna_seq": "TGGACGTTCGGCCAAGGGACCAAGGTGGAAATCAAA",
+      "aa_seq": "WTFGQGTKVEIK",
+      "boundary_motif": "VEIK"
+    },
+    {
+      "gene_id": "can_IGKJ2",
+      "species": "dog",
+      "chain_type": "Kappa",
+      "dna_seq": "TACACTTTTGGCCAGGGGACCAAGCTGGAGATCAAA",
+      "aa_seq": "YTFGQGTKLEIK",
+      "boundary_motif": "LEIK"
+    },
+    {
+      "gene_id": "can_IGLJ1",
+      "species": "dog",
+      "chain_type": "Lambda",
+      "dna_seq": "GTGGTATTCGGCGGAGGGACCAAGCTGACCGTCCTA",
+      "aa_seq": "VVFGGGTKLTVL",
+      "boundary_motif": "TVL"
+    },
+    {
+      "gene_id": "can_IGHJ1",
+      "species": "dog",
+      "chain_type": "Heavy",
+      "dna_seq": "TACTACTTTGACTACTGGGGCCAGGGAACCCTGGTCACCGTCTCCTCA",
+      "aa_seq": "YYFDYWGQGTLVTVSS",
+      "boundary_motif": "TVSS"
+    },
+    {
+      "gene_id": "can_IGHJ2",
+      "species": "dog",
+      "chain_type": "Heavy",
+      "dna_seq": "TACTGGTACTTCGATCTCTGGGGCCGTGGCACCCTGGTCACTGTCTCCTCA",
+      "aa_seq": "YWYFDLWGRGTLVTVSS",
+      "boundary_motif": "TVSS"
+    },
+    {
+      "gene_id": "eca_IGKJ1",
+      "species": "horse",
+      "chain_type": "Kappa",
+      "dna_seq": "TGGACGTTCGGCCAAGGGACCAAGGTGGAAATCAAA",
+      "aa_seq": "WTFGQGTKVEIK",
+      "boundary_motif": "VEIK"
+    },
+    {
+      "gene_id": "eca_IGLJ1",
+      "species": "horse",
+      "chain_type": "Lambda",
+      "dna_seq": "GTGGTATTCGGCGGAGGGACCAAGCTGACCGTCCTA",
+      "aa_seq": "VVFGGGTKLTVL",
+      "boundary_motif": "TVL"
+    },
+    {
+      "gene_id": "eca_IGHJ1",
+      "species": "horse",
+      "chain_type": "Heavy",
+      "dna_seq": "TACTACTTTGACTACTGGGGCCAGGGAACCCTGGTCACCGTCTCCTCA",
+      "aa_seq": "YYFDYWGQGTLVTVSS",
+      "boundary_motif": "TVSS"
+    },
+    {
+      "gene_id": "eca_IGHJ2",
+      "species": "horse",
+      "chain_type": "Heavy",
+      "dna_seq": "TACTGGTACTTCGATCTCTGGGGCCGTGGCACCCTGGTCACTGTCTCCTCA",
+      "aa_seq": "YWYFDLWGRGTLVTVSS",
+      "boundary_motif": "TVSS"
+    },
+    {
+      "gene_id": "hum_IGHJ1*01",
+      "species": "human",
+      "chain_type": "Heavy",
+      "dna_seq": "GCTGAATACTTCCAGCACTGGGGCCAGGGCACCCTGGTCACCGTCTCCTCA",
+      "aa_seq": "AEYFQHWGQGTLVTVSS",
+      "boundary_motif": "TVSS"
+    },
+    {
+      "gene_id": "hum_IGHJ2*01",
+      "species": "human",
+      "chain_type": "Heavy",
+      "dna_seq": "TACTGGTACTTCGATCTCTGGGGCCGTGGCACCCTGGTCACTGTCTCCTCA",
+      "aa_seq": "YWYFDLWGRGTLVTVSS",
+      "boundary_motif": "TVSS"
+    },
+    {
+      "gene_id": "hum_IGHJ3*01",
+      "species": "human",
+      "chain_type": "Heavy",
+      "dna_seq": "GATGCTTTTGATATCTGGGGCCAAGGGACAATGGTCACCGTCTCTTCA",
+      "aa_seq": "DAFDIWGQGTMVTVSS",
+      "boundary_motif": "TVSS"
+    },
+    {
+      "gene_id": "hum_IGHJ3*02",
+      "species": "human",
+      "chain_type": "Heavy",
+      "dna_seq": "GATGCTTTTGATATCTGGGGCCAAGGGACAATGGTCACCGTCTCTTCA",
+      "aa_seq": "DAFDIWGQGTMVTVSS",
+      "boundary_motif": "TVSS"
+    },
+    {
+      "gene_id": "hum_IGHJ4*01",
+      "species": "human",
+      "chain_type": "Heavy",
+      "dna_seq": "TACTTTGACTACTGGGGCCAGGGAACCCTGGTCACCGTCTCCTCA",
+      "aa_seq": "YFDYWGQGTLVTVSS",
+      "boundary_motif": "TVSS"
+    },
+    {
+      "gene_id": "hum_IGHJ4*02",
+      "species": "human",
+      "chain_type": "Heavy",
+      "dna_seq": "TACTTTGACTACTGGGGCCAGGGAACCCTGGTCACCGTCTCCTCA",
+      "aa_seq": "YFDYWGQGTLVTVSS",
+      "boundary_motif": "TVSS"
+    },
+    {
+      "gene_id": "hum_IGHJ4*03",
+      "species": "human",
+      "chain_type": "Heavy",
+      "dna_seq": "TACTTTGACTACTGGGGCCAAGGAACCCTGGTCACCGTCTCCTCA",
+      "aa_seq": "YFDYWGQGTLVTVSS",
+      "boundary_motif": "TVSS"
+    },
+    {
+      "gene_id": "hum_IGHJ5*01",
+      "species": "human",
+      "chain_type": "Heavy",
+      "dna_seq": "AACTGGTTCGACCCCTGGGGCCAGGGAACCCTGGTCACCGTCTCCTCA",
+      "aa_seq": "NWFDPWGQGTLVTVSS",
+      "boundary_motif": "TVSS"
+    },
+    {
+      "gene_id": "hum_IGHJ5*02",
+      "species": "human",
+      "chain_type": "Heavy",
+      "dna_seq": "AACTGGTTCGACCCCTGGGGCCAGGGAACCCTGGTCACCGTCTCCTCA",
+      "aa_seq": "NWFDPWGQGTLVTVSS",
+      "boundary_motif": "TVSS"
+    },
+    {
+      "gene_id": "hum_IGHJ6*01",
+      "species": "human",
+      "chain_type": "Heavy",
+      "dna_seq": "TACTACTACTACTACGGTATGGACGTCTGGGGCCAAGGGACCACGGTCACCGTCTCCTCA",
+      "aa_seq": "YYYYYGMDVWGQGTTVTVSS",
+      "boundary_motif": "TVSS"
+    },
+    {
+      "gene_id": "hum_IGHJ6*02",
+      "species": "human",
+      "chain_type": "Heavy",
+      "dna_seq": "TACTACTACTACTACGGTATGGACGTCTGGGGCCAAGGGACCACGGTCACCGTCTCCTCA",
+      "aa_seq": "YYYYYGMDVWGQGTTVTVSS",
+      "boundary_motif": "TVSS"
+    },
+    {
+      "gene_id": "hum_IGHJ6*03",
+      "species": "human",
+      "chain_type": "Heavy",
+      "dna_seq": "TACTACTACTACTACTACATGGACGTCTGGGGCAAAGGGACCACGATCACCGTCTCCTCA",
+      "aa_seq": "YYYYYYMDVWGKGTTITVSS",
+      "boundary_motif": "TVSS"
+    },
+    {
+      "gene_id": "hum_IGHJ6*04",
+      "species": "human",
+      "chain_type": "Heavy",
+      "dna_seq": "TACTACTACTACTACGGTATGGACGTCTGGGGCCAAGGGACCACGGTCACCGTCTCCTCA",
+      "aa_seq": "YYYYYGMDVWGQGTTVTVSS",
+      "boundary_motif": "TVSS"
+    },
+    {
+      "gene_id": "hum_IGLJ1*01",
+      "species": "human",
+      "chain_type": "Lambda",
+      "dna_seq": "TATGTCTTCGGAACTGGGACCAAGGTCACCGTCCTA",
+      "aa_seq": "YVFGTGTKVTVL",
+      "boundary_motif": "TVL"
+    },
+    {
+      "gene_id": "hum_IGLJ2*01",
+      "species": "human",
+      "chain_type": "Lambda",
+      "dna_seq": "GTGGTATTCGGCGGAGGGACCAAGCTGACCGTCCTA",
+      "aa_seq": "VVFGGGTKLTVL",
+      "boundary_motif": "TVL"
+    },
+    {
+      "gene_id": "hum_IGLJ3*01",
+      "species": "human",
+      "chain_type": "Lambda",
+      "dna_seq": "GTGGTATTCGGCGGAGGGACCAAGCTGACCGTCCTA",
+      "aa_seq": "VVFGGGTKLTVL",
+      "boundary_motif": "TVL"
+    },
+    {
+      "gene_id": "hum_IGLJ3*02",
+      "species": "human",
+      "chain_type": "Lambda",
+      "dna_seq": "TGGGTGTTCGGCGGAGGGACCAAGCTGACCGTCCTA",
+      "aa_seq": "WVFGGGTKLTVL",
+      "boundary_motif": "TVL"
+    },
+    {
+      "gene_id": "hum_IGLJ6*01",
+      "species": "human",
+      "chain_type": "Lambda",
+      "dna_seq": "AATGTGTTCGGCAGTGGCACCAAGGTGACCGTCCTC",
+      "aa_seq": "NVFGSGTKVTVL",
+      "boundary_motif": "TVL"
+    },
+    {
+      "gene_id": "hum_IGLJ7*01",
+      "species": "human",
+      "chain_type": "Lambda",
+      "dna_seq": "GCTGTGTTCGGAGGAGGCACCCAGCTGACCGTCCTC",
+      "aa_seq": "AVFGGGTQLTVL",
+      "boundary_motif": "TVL"
+    },
+    {
+      "gene_id": "hum_IGLJ7*02",
+      "species": "human",
+      "chain_type": "Lambda",
+      "dna_seq": "GCTGTGTTCGGAGGAGGCACCCAGCTGACCGCCCTC",
+      "aa_seq": "AVFGGGTQLTAL",
+      "boundary_motif": ""
+    },
+    {
+      "gene_id": "hum_IGKJ1*01",
+      "species": "human",
+      "chain_type": "Kappa",
+      "dna_seq": "TGGACGTTCGGCCAAGGGACCAAGGTGGAAATCAAA",
+      "aa_seq": "WTFGQGTKVEIK",
+      "boundary_motif": "VEIK"
+    },
+    {
+      "gene_id": "hum_IGKJ2*01",
+      "species": "human",
+      "chain_type": "Kappa",
+      "dna_seq": "TACACTTTTGGCCAGGGGACCAAGCTGGAGATCAAA",
+      "aa_seq": "YTFGQGTKLEIK",
+      "boundary_motif": "LEIK"
+    },
+    {
+      "gene_id": "hum_IGKJ2*02",
+      "species": "human",
+      "chain_type": "Kappa",
+      "dna_seq": "TACACTTTTGGCCAGGGGACCAAGCTGGAGATCAAA",
+      "aa_seq": "YTFGQGTKLEIK",
+      "boundary_motif": "LEIK"
+    },
+    {
+      "gene_id": "hum_IGKJ2*03",
+      "species": "human",
+      "chain_type": "Kappa",
+      "dna_seq": "TACAGTTTTGGCCAGGGGACCAAGCTGGAGATCAAA",
+      "aa_seq": "YSFGQGTKLEIK",
+      "boundary_motif": "LEIK"
+    },
+    {
+      "gene_id": "hum_IGKJ2*04",
+      "species": "human",
+      "chain_type": "Kappa",
+      "dna_seq": "TGCAGTTTTGGCCAGGGGACCAAGCTGGAGATCAAA",
+      "aa_seq": "CSFGQGTKLEIK",
+      "boundary_motif": "LEIK"
+    },
+    {
+      "gene_id": "hum_IGKJ3*01",
+      "species": "human",
+      "chain_type": "Kappa",
+      "dna_seq": "TTCACTTTCGGCCCTGGGACCAAAGTGGATATCAAA",
+      "aa_seq": "FTFGPGTKVDIK",
+      "boundary_motif": "VDIK"
+    },
+    {
+      "gene_id": "hum_IGKJ4*01",
+      "species": "human",
+      "chain_type": "Kappa",
+      "dna_seq": "CTCACTTTCGGCGGAGGGACCAAGGTGGAGATCAAA",
+      "aa_seq": "LTFGGGTKVEIK",
+      "boundary_motif": "VEIK"
+    },
+    {
+      "gene_id": "hum_IGKJ5*01",
+      "species": "human",
+      "chain_type": "Kappa",
+      "dna_seq": "ATCACCTTCGGCCAAGGGACACGACTGGAGATTAAA",
+      "aa_seq": "ITFGQGTRLEIK",
+      "boundary_motif": "LEIK"
+    },
+    {
+      "gene_id": "mus_JH1",
+      "species": "mouse",
+      "chain_type": "Heavy",
+      "dna_seq": "TACTGGTACTTCGATGTCTGGGGCGCAGGGACCACGGTCACCGTCTCCTCA",
+      "aa_seq": "YWYFDVWGAGTTVTVSS",
+      "boundary_motif": "TVSS"
+    },
+    {
+      "gene_id": "mus_JH1B6",
+      "species": "mouse",
+      "chain_type": "Heavy",
+      "dna_seq": "",
+      "aa_seq": "YWYFDVWGAGTTVTVSS",
+      "boundary_motif": "TVSS"
+    },
+    {
+      "gene_id": "mus_JH2",
+      "species": "mouse",
+      "chain_type": "Heavy",
+      "dna_seq": "TACTTTGACTACTGGGGCCAAGGCACCACTCTCACAGTCTCCTCA",
+      "aa_seq": "YFDYWGQGTTLTVSS",
+      "boundary_motif": "TVSS"
+    },
+    {
+      "gene_id": "mus_JH3",
+      "species": "mouse",
+      "chain_type": "Heavy",
+      "dna_seq": "TGGTTTGCTTACTGGGGCCAAGGGACTCTGGTCACTGTCTCTGCA",
+      "aa_seq": "WFAYWGQGTLVTVSA",
+      "boundary_motif": "TVSA"
+    },
+    {
+      "gene_id": "mus_JH4",
+      "species": "mouse",
+      "chain_type": "Heavy",
+      "dna_seq": "TACTATGCTATGGACTACTGGGGTCAAGGAACCTCAGTCACCGTCTCCTCA",
+      "aa_seq": "YYAMDYWGQGTSVTVSS",
+      "boundary_motif": "TVSS"
+    },
+    {
+      "gene_id": "mus_J00583",
+      "species": "mouse",
+      "chain_type": "Lambda",
+      "dna_seq": "TTTATTTTCGGCAGTGGAACCAAGGTCACTGTCCTA",
+      "aa_seq": "FIFGSGTKVTVL",
+      "boundary_motif": "TVL"
+    },
+    {
+      "gene_id": "mus_J00593",
+      "species": "mouse",
+      "chain_type": "Lambda",
+      "dna_seq": "TATGTCTTCGGCGGTGGAACCAAGGTCACTGTCCTA",
+      "aa_seq": "YVFGGGTKVTVL",
+      "boundary_motif": "TVL"
+    },
+    {
+      "gene_id": "mus_J00596",
+      "species": "mouse",
+      "chain_type": "Lambda",
+      "dna_seq": "TGGGTGTTCGGAGGTGGAACCAGATTGACTGTCCTA",
+      "aa_seq": "WVFGGGTRLTVL",
+      "boundary_motif": "TVL"
+    },
+    {
+      "gene_id": "mus_V00813",
+      "species": "mouse",
+      "chain_type": "Lambda",
+      "dna_seq": "TGGGTGTTCGGTGGAGGAACCAAACTGACTGTCCTA",
+      "aa_seq": "WVFGGGTKLTVL",
+      "boundary_motif": "TVL"
+    },
+    {
+      "gene_id": "mus_jk1",
+      "species": "mouse",
+      "chain_type": "Kappa",
+      "dna_seq": "TGGACGTTCGGTGGAGGCACCAAGCTGGAAATCAAA",
+      "aa_seq": "WTFGGGTKLEIK",
+      "boundary_motif": "LEIK"
+    },
+    {
+      "gene_id": "mus_jk2",
+      "species": "mouse",
+      "chain_type": "Kappa",
+      "dna_seq": "TACACGTTCGGAGGGGGGACCAAGCTGGAAATAAAA",
+      "aa_seq": "YTFGGGTKLEIK",
+      "boundary_motif": "LEIK"
+    },
+    {
+      "gene_id": "mus_jk3",
+      "species": "mouse",
+      "chain_type": "Kappa",
+      "dna_seq": "ATCACATTCAGTGATGGGACCAGACTGGAAATAAAA",
+      "aa_seq": "ITFSDGTRLEIK",
+      "boundary_motif": "LEIK"
+    },
+    {
+      "gene_id": "mus_jk4",
+      "species": "mouse",
+      "chain_type": "Kappa",
+      "dna_seq": "TTCACGTTCGGCTCGGGGACAAAGTTGGAAATAAAA",
+      "aa_seq": "FTFGSGTKLEIK",
+      "boundary_motif": "LEIK"
+    },
+    {
+      "gene_id": "mus_jk5",
+      "species": "mouse",
+      "chain_type": "Kappa",
+      "dna_seq": "CTCACGTTCGGTGCTGGGACCAAGCTGGAGCTGAAA",
+      "aa_seq": "LTFGAGTKLELK",
+      "boundary_motif": ""
+    },
+    {
+      "gene_id": "ssc_IGLJ1",
+      "species": "pig",
+      "chain_type": "Lambda",
+      "dna_seq": "TATGTCTTCGGAACTGGGACCAAGGTCACCGTCCTA",
+      "aa_seq": "YVFGTGTKVTVL",
+      "boundary_motif": "TVL"
+    },
+    {
+      "gene_id": "ssc_IGKJ1",
+      "species": "pig",
+      "chain_type": "Kappa",
+      "dna_seq": "TGGACGTTCGGCCAAGGGACCAAGGTGGAAATCAAA",
+      "aa_seq": "WTFGQGTKVEIK",
+      "boundary_motif": "VEIK"
+    },
+    {
+      "gene_id": "ssc_IGHJ1",
+      "species": "pig",
+      "chain_type": "Heavy",
+      "dna_seq": "TACTACTTTGACTACTGGGGCCAGGGAACCCTGGTCACCGTCTCCTCA",
+      "aa_seq": "YYFDYWGQGTLVTVSS",
+      "boundary_motif": "TVSS"
+    },
+    {
+      "gene_id": "ssc_IGHJ2",
+      "species": "pig",
+      "chain_type": "Heavy",
+      "dna_seq": "TACTGGTACTTCGATCTCTGGGGCCGTGGCACCCTGGTCACTGTCTCCTCA",
+      "aa_seq": "YWYFDLWGRGTLVTVSS",
+      "boundary_motif": "TVSS"
+    },
+    {
+      "gene_id": "ssc_IGHJ3",
+      "species": "pig",
+      "chain_type": "Heavy",
+      "dna_seq": "GCTGAATACTTCCAGCACTGGGGCCAGGGCACCCTGGTCACCGTCTCCTCA",
+      "aa_seq": "AEYFQHWGQGTLVTVSS",
+      "boundary_motif": "TVSS"
+    },
+    {
+      "gene_id": "ssc_IGHJ4",
+      "species": "pig",
+      "chain_type": "Heavy",
+      "dna_seq": "TACTTTGACTACTGGGGCCAGGGAACCCTGGTCACCGTCTCCTCA",
+      "aa_seq": "YFDYWGQGTLVTVSS",
+      "boundary_motif": "TVSS"
+    },
+    {
+      "gene_id": "ocu_IGKJ1",
+      "species": "rabbit",
+      "chain_type": "Kappa",
+      "dna_seq": "",
+      "aa_seq": "FDFGGGTKLEIK",
+      "boundary_motif": "LEIK"
+    },
+    {
+      "gene_id": "ocu_IGKJ2",
+      "species": "rabbit",
+      "chain_type": "Kappa",
+      "dna_seq": "TACACATTCGGCGGAGGGACCAAGCTGGAGATCAAA",
+      "aa_seq": "YTFGGGTKLEIK",
+      "boundary_motif": "LEIK"
+    },
+    {
+      "gene_id": "ocu_IGLJ1",
+      "species": "rabbit",
+      "chain_type": "Lambda",
+      "dna_seq": "TACTATGTCTTCGGCGGAGGGACCAAGCTGACCGTCCTA",
+      "aa_seq": "YYVFGGGTKLTVL",
+      "boundary_motif": "TVL"
+    },
+    {
+      "gene_id": "ocu_IGHJ1",
+      "species": "rabbit",
+      "chain_type": "Heavy",
+      "dna_seq": "TACTACTTTGACTTGTGGGGCCCAGGCACCCTCGTCACCGTCTCCTCA",
+      "aa_seq": "YYFDLWGPGTLVTVSS",
+      "boundary_motif": "TVSS"
+    },
+    {
+      "gene_id": "ocu_IGHJ2",
+      "species": "rabbit",
+      "chain_type": "Heavy",
+      "dna_seq": "TACTACTTTGACTTGTGGGGCCCAGGCACCCTCGTCACCGTCTCCTCA",
+      "aa_seq": "YYFDLWGPGTLVTVSS",
+      "boundary_motif": "TVSS"
+    },
+    {
+      "gene_id": "ocu_IGHJ4",
+      "species": "rabbit",
+      "chain_type": "Heavy",
+      "dna_seq": "TACTACTACTACTACTTCGATCTCTGGGGCCCAGGCACCCTCGTCACCGTCTCCTCA",
+      "aa_seq": "YYYYYFDLWGPGTLVTVSS",
+      "boundary_motif": "TVSS"
+    },
+    {
+      "gene_id": "ocu_IGHJ6",
+      "species": "rabbit",
+      "chain_type": "Heavy",
+      "dna_seq": "TACTATATGGATCTCTGGGGCCCAGGCACCCTCGTCACCGTCTCCTCA",
+      "aa_seq": "YYMDLWGPGTLVTVSS",
+      "boundary_motif": "TVSS"
+    },
+    {
+      "gene_id": "rno_IGKJ1",
+      "species": "rat",
+      "chain_type": "Kappa",
+      "dna_seq": "TGGACGTTCGGTGGAGGCACCAAGCTGGAATTGAAA",
+      "aa_seq": "WTFGGGTKLELK",
+      "boundary_motif": ""
+    },
+    {
+      "gene_id": "rno_IGKJ2",
+      "species": "rat",
+      "chain_type": "Kappa",
+      "dna_seq": "TACACGTTCGGAGGGGGGACCAAGCTGGAAATAAAA",
+      "aa_seq": "YTFGGGTKLEIK",
+      "boundary_motif": "LEIK"
+    },
+    {
+      "gene_id": "rno_IGKJ4",
+      "species": "rat",
+      "chain_type": "Kappa",
+      "dna_seq": "TTCACGTTCGGCTCGGGGACAAAGTTGGAAATAAAA",
+      "aa_seq": "FTFGSGTKLEIK",
+      "boundary_motif": "LEIK"
+    },
+    {
+      "gene_id": "rno_IGHJ1",
+      "species": "rat",
+      "chain_type": "Heavy",
+      "dna_seq": "TACTATTACTTCGATGTCTGGGGCGCAGGGACCACGGTCACCGTCTCCTCA",
+      "aa_seq": "YYYFDVWGAGTTVTVSS",
+      "boundary_motif": "TVSS"
+    },
+    {
+      "gene_id": "rno_IGHJ2",
+      "species": "rat",
+      "chain_type": "Heavy",
+      "dna_seq": "TACTTTGACTACTGGGGCCAAGGAGTCATGGTCACAGTCTCCTCA",
+      "aa_seq": "YFDYWGQGVMVTVSS",
+      "boundary_motif": "TVSS"
+    },
+    {
+      "gene_id": "rno_IGHJ3",
+      "species": "rat",
+      "chain_type": "Heavy",
+      "dna_seq": "TGGTTTGCTTACTGGGGCCAAGGGACTCTGGTCACTGTCTCTGCA",
+      "aa_seq": "WFAYWGQGTLVTVSA",
+      "boundary_motif": "TVSA"
+    },
+    {
+      "gene_id": "rno_IGHJ4",
+      "species": "rat",
+      "chain_type": "Heavy",
+      "dna_seq": "TACTATGCTATGGACTACTGGGGTCAAGGAACCTCAGTCACCGTCTCCTCA",
+      "aa_seq": "YYAMDYWGQGTSVTVSS",
+      "boundary_motif": "TVSS"
+    },
+    {
+      "gene_id": "mmu_IGLJ1",
+      "species": "rhesus",
+      "chain_type": "Lambda",
+      "dna_seq": "TATGTCTTCGGAACTGGGACCAAGGTCACCGTCCTA",
+      "aa_seq": "YVFGTGTKVTVL",
+      "boundary_motif": "TVL"
+    },
+    {
+      "gene_id": "mmu_IGKJ1",
+      "species": "rhesus",
+      "chain_type": "Kappa",
+      "dna_seq": "TGGACGTTCGGCCAAGGGACCAAGGTGGAAATCAAA",
+      "aa_seq": "WTFGQGTKVEIK",
+      "boundary_motif": "VEIK"
+    },
+    {
+      "gene_id": "mmu_IGHJ1",
+      "species": "rhesus",
+      "chain_type": "Heavy",
+      "dna_seq": "GCTGAATACTTCCAGCACTGGGGCCAGGGCACCCTGGTCACCGTCTCCTCA",
+      "aa_seq": "AEYFQHWGQGTLVTVSS",
+      "boundary_motif": "TVSS"
+    },
+    {
+      "gene_id": "mmu_IGHJ2",
+      "species": "rhesus",
+      "chain_type": "Heavy",
+      "dna_seq": "TACTGGTACTTCGATCTCTGGGGCCGTGGCACCCTGGTCACTGTCTCCTCA",
+      "aa_seq": "YWYFDLWGRGTLVTVSS",
+      "boundary_motif": "TVSS"
+    },
+    {
+      "gene_id": "mmu_IGHJ3",
+      "species": "rhesus",
+      "chain_type": "Heavy",
+      "dna_seq": "GATGCTTTTGATGTCTGGGGCCAAGGGACAATGGTCACCGTCTCTTCA",
+      "aa_seq": "DAFDVWGQGTMVTVSS",
+      "boundary_motif": "TVSS"
+    },
+    {
+      "gene_id": "mmu_IGHJ4",
+      "species": "rhesus",
+      "chain_type": "Heavy",
+      "dna_seq": "TACTTTGACTACTGGGGCCAGGGAACCCTGGTCACCGTCTCCTCA",
+      "aa_seq": "YFDYWGQGTLVTVSS",
+      "boundary_motif": "TVSS"
+    },
+    {
+      "gene_id": "mmu_IGHJ5",
+      "species": "rhesus",
+      "chain_type": "Heavy",
+      "dna_seq": "AACTGGTTCGACCCCTGGGGCCAGGGAACCCTGGTCACCGTCTCCTCA",
+      "aa_seq": "NWFDPWGQGTLVTVSS",
+      "boundary_motif": "TVSS"
+    },
+    {
+      "gene_id": "mmu_IGHJ6",
+      "species": "rhesus",
+      "chain_type": "Heavy",
+      "dna_seq": "TACTACTACTACTACGGTATGGACGTCTGGGGCCAAGGGACCACGGTCACCGTCTCCTCA",
+      "aa_seq": "YYYYYGMDVWGQGTTVTVSS",
+      "boundary_motif": "TVSS"
+    },
+    {
+      "gene_id": "oar_IGLJ1",
+      "species": "sheep",
+      "chain_type": "Lambda",
+      "dna_seq": "GTGGTATTCGGCGGAGGGACCAAGCTGACCGTCCTA",
+      "aa_seq": "VVFGGGTKLTVL",
+      "boundary_motif": "TVL"
+    },
+    {
+      "gene_id": "oar_IGHJ1",
+      "species": "sheep",
+      "chain_type": "Heavy",
+      "dna_seq": "TACTACTTTGACTACTGGGGCCAGGGAACCCTGGTCACCGTCTCCTCA",
+      "aa_seq": "YYFDYWGQGTLVTVSS",
+      "boundary_motif": "TVSS"
+    },
+    {
+      "gene_id": "oar_IGHJ2",
+      "species": "sheep",
+      "chain_type": "Heavy",
+      "dna_seq": "TACTGGTACTTCGATCTCTGGGGCCGTGGCACCCTGGTCACTGTCTCCTCA",
+      "aa_seq": "YWYFDLWGRGTLVTVSS",
+      "boundary_motif": "TVSS"
+    }
+  ]
+}

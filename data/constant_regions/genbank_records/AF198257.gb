@@ -1,0 +1,55 @@
+LOCUS       AF198257                 954 bp    mRNA    linear   MAM 21-NOV-1999
+DEFINITION  Felis catus immunoglobulin kappa light chain mRNA, complete cds.
+ACCESSION   AF198257
+VERSION     AF198257.1
+KEYWORDS    .
+SOURCE      Felis catus (domestic cat)
+  ORGANISM  Felis catus
+            Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi;
+            Mammalia; Eutheria; Laurasiatheria; Carnivora; Feliformia; Felidae;
+            Felinae; Felis.
+REFERENCE   1  (bases 1 to 954)
+  AUTHORS   Weber,E.R., Helps,C.R., Foster,A.P., Perry,A.F.,
+            Gruffydd-Jones,T.J., Hall,L., Harbour,D.A. and Dufus,W.H.
+  TITLE     Complete Sequence of the Feline Immunoglobulin Epsilon Constant
+            Region
+  JOURNAL   Unpublished
+REFERENCE   2  (bases 1 to 954)
+  AUTHORS   Weber,E.R., Helps,C.R., Foster,A.P., Perry,A.F.,
+            Gruffydd-Jones,T.J., Hall,L., Harbour,D.A. and Dufus,W.H.
+  TITLE     Direct Submission
+  JOURNAL   Submitted (25-OCT-1999) Molecular Diagnostics, Heska Corporation,
+            1613 Prospect Parkway, Fort Collins, CO 80525, USA
+FEATURES             Location/Qualifiers
+     source          1..954
+                     /organism="Felis catus"
+                     /mol_type="mRNA"
+                     /db_xref="taxon:9685"
+     CDS             7..735
+                     /codon_start=1
+                     /product="immunoglobulin kappa light chain"
+                     /protein_id="AAF09245.1"
+                     /translation="MRFPAQLLGLIMLWIPGSSGDIVMTQTPLSLSVTPGEPASISCR
+                     ASQSLLYSDGNTYLNWYLQKPGQSPRRLIYLVSNRDSGVPDRFSGSGSGTDFTLRISR
+                     VEADDVGVYYCGQGLQHPLTFGPGTKLEIKRSDAQPSVFLFQPSLDELHTGSASIVCI
+                     LNDFYPKEVNVKWKVDGVVQNKGIQESTTEQNSKDSTYSLSSTLTMSSTEYQSHEKFS
+                     CEVTHKSLASTLVKSFNRSECQRE"
+ORIGIN      
+        1 ctcaaaatga ggttccctgc tcagctcctg ggactcatca tgctctggat cccaggatcc
+       61 agtggggata ttgtgatgac gcagacccct ctgtccctgt ccgtcacccc tggagagcca
+      121 gcctcaatct cctgcagggc cagtcagagc ctcctgtaca gtgatggaaa tacttatctg
+      181 aattggtacc tgcagaagcc aggccagtct ccacggcgct tgatctatct tgtttccaac
+      241 cgggactctg gggtcccaga caggttcagt ggcagtgggt cagggacaga tttcaccctg
+      301 agaatcagca gggtggaggc tgacgacgtc ggtgtttatt actgcggtca aggtttacag
+      361 catcctctca ctttcggccc aggtaccaag ctggagatca aacggagtga tgctcagcca
+      421 tctgtctttc tcttccaacc atctctggac gagttacata caggaagtgc ctctatcgtg
+      481 tgcatattga atgacttcta ccccaaagag gtcaatgtca agtggaaagt ggatggcgta
+      541 gtccaaaaca aaggcatcca ggagagcacc acagagcaga acagcaagga cagcacctac
+      601 agcctcagca gcaccctgac gatgtccagt acggagtacc aaagtcatga aaagttctcc
+      661 tgcgaggtca ctcacaagag cctggcctcc accctcgtca agagcttcaa caggagcgag
+      721 tgtcagagag agtagcctag caggcctcat cacctgtgcc tcagtcccag actctctgtc
+      781 tccctcctca ggcctccgga cctttcccca tcggagaccc acacctattg caggcccttg
+      841 tccccacctt actgcctccc cctctttggc tttaatcatg ctaataatat atggggggga
+      901 aatgaataaa taaagtgaat ctttgcacca gtgaaaaaaa aaaaaaaaaa aaaa
+//
+

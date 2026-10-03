@@ -1,0 +1,129 @@
+ID   M13824; SV 1; linear; gDNA; STD; HUM; 598 BP.
+XX
+AC   M13824; X03437;
+XX
+DT   15-MAY-1995 (Rel. 199520-1, arrived in LIGM-DB)
+DT   17-JAN-2013 (Rel. 201303-4, Last updated, Version 13)
+XX
+DE   Homo sapiens T cell receptor gamma chain variable region (TCRG) gene,
+DE   partial cds.
+XX
+KW   antigen receptor; Immunoglobulin superfamily (IgSF); T cell receptor (TR);
+KW   TR-Gamma-TRG; variable; joining; regular; gDNA; rearranged; productive;
+KW   V-J-gene.
+XX
+OS   Homo sapiens (human)
+OC   cellular organisms; Eukaryota; Opisthokonta; Metazoa; Eumetazoa; Bilateria;
+OC   Deuterostomia; Chordata; Craniata; Vertebrata; Gnathostomata; Teleostomi;
+OC   Euteleostomi; Sarcopterygii; Dipnotetrapodomorpha; Tetrapoda; Amniota;
+OC   Mammalia; Theria; Eutheria; Boreoeutheria; Euarchontoglires; Primates;
+OC   Haplorrhini; Simiiformes; Catarrhini; Hominoidea; Hominidae; Homininae;
+OC   Homo; Homo sapiens.
+XX
+RN   [1]
+RP   1-598
+RA   Shinohara S., Satorius C.;
+RT   ;
+RL   Submitted (14-FEB-2005) to the INSDC.
+RL   Contact:Satoshi Shinohara National Institute of Arthritis and
+RL   Musculoskeletal and Skin Diseases, Autoimmunity Branch; 9000 Rockville Pike
+RL   Bldg10/6D44, Bethesda, Maryland 20892-1592, USA
+XX
+DR   ENA; M13824.
+XX
+CC   IMGT/LIGM-DB annotation level: by annotators
+CC   
+CC   On Feb 26, 2002 this sequence version replaced gi:37379.
+CC   Draft entry of the sequence was kindly provided by M.-P.Lefranc,
+CC   01-AUG-1986.
+XX
+FH   Key                 Location/Qualifiers
+FH   
+FT   V-J-GENE            1..598
+FT                       /cell_line="SUP-TI"
+FT                       /chromosome="7"
+FT                       /clone="lambda-S-gamma-12"
+FT                       /db_xref="taxon:9606"
+FT                       /map="7p15-p14"
+FT                       /mol_type="genomic DNA"
+FT                       /organism="Homo sapiens"
+FT   5'UTR               1..8
+FT   L-PART1             9..51
+FT                       /translation="MRWALLVLLAFLSP"
+FT                       /protein_id="AAA61047.1"
+FT   INIT-CODON          9..11
+FT   DONOR-SPLICE        51..53
+FT   V-INTRON            52..165
+FT   ACCEPTOR-SPLICE     163..167
+FT   V-J-EXON            166..525
+FT                       /codon_start=3
+FT                       /translation="SQKSSNLEGRTKSVTRQTGSSAEITCDLTVTNTFYIHWYLH
+FT                       QEGKAPQRLLYYDVSTARDVLESGLSPGKYYTHTPRRWSWILRLQNLIENDSGVY
+FT                       YCATWRTNYYKKLFGSGTTLVVT"
+FT                       /protein_id="AAA61047.1"
+FT   V-EXON              166..470
+FT                       /codon_start=3
+FT                       /translation="SQKSSNLEGRTKSVTRQTGSSAEITCDLTVTNTFYIHWYLH
+FT                       QEGKAPQRLLYYDVSTARDVLESGLSPGKYYTHTPRRWSWILRLQNLIENDSGVY
+FT                       YCATW"
+FT   L-PART2             166..176
+FT                       /codon_start=3
+FT                       /translation="SQK"
+FT   V-J-REGION          177..525
+FT                       /translation="SSNLEGRTKSVTRQTGSSAEITCDLTVTNTFYIHWYLHQEG
+FT                       KAPQRLLYYDVSTARDVLESGLSPGKYYTHTPRRWSWILRLQNLIENDSGVYYCA
+FT                       TWRTNYYKKLFGSGTTLVVT"
+FT   V-REGION            177..470
+FT                       /translation="SSNLEGRTKSVTRQTGSSAEITCDLTVTNTFYIHWYLHQEG
+FT                       KAPQRLLYYDVSTARDVLESGLSPGKYYTHTPRRWSWILRLQNLIENDSGVYYCA
+FT                       TW"
+FT                       /CDR_length="[6.8.11]"
+FT                       /IMGT_allele="TRGV3*01"
+FT                       /IMGT_gene="TRGV3"
+FT   FR1-IMGT            177..254
+FT                       /translation="SSNLEGRTKSVTRQTGSSAEITCDLT"
+FT                       /AA_IMGT="1 to 26"
+FT   1st-CYS             243..245
+FT   CDR1-IMGT           255..272
+FT                       /translation="VTNTFY"
+FT                       /AA_IMGT="AA 27 to 38, AA 30, 31, 32, 33, 34 and 35 
+FT                       are missing"
+FT   FR2-IMGT            273..323
+FT                       /translation="IHWYLHQEGKAPQRLLY"
+FT                       /AA_IMGT="39 to 55"
+FT   CONSERVED-TRP       279..281
+FT   CDR2-IMGT           324..347
+FT                       /translation="YDVSTARD"
+FT                       /AA_IMGT="AA 56 to 65, AA 60 and 61 are missing"
+FT   FR3-IMGT            348..461
+FT                       /translation="VLESGLSPGKYYTHTPRRWSWILRLQNLIENDSGVYYC"
+FT                       /AA_IMGT="66 to 104, AA 82 missing"
+FT   2nd-CYS             459..461
+FT   CDR3-IMGT           462..494
+FT                       /translation="ATWRTNYYKKL"
+FT                       /AA_IMGT="AA 105 to 117, AA 111 and 112 are missing"
+FT   JUNCTION            459..497
+FT                       /translation="CATWRTNYYKKLF"
+FT                       /in_frame
+FT   N-REGION            471..476
+FT                       /translation="RT"
+FT   J-REGION            477..525
+FT                       /translation="NYYKKLFGSGTTLVVT"
+FT                       /IMGT_allele="TRGJ2*01"
+FT                       /IMGT_gene="TRGJ2"
+FT   J-PHE               495..497
+FT   DONOR-SPLICE        525..527
+FT   3'UTR               526..598
+XX
+SQ   Sequence 598 BP; 165 A; 124 C; 150 G; 159 T; 0 other;
+     aggaaggcat gcggtgggcc ctactggtgc ttctagcttt cctgtctcct ggtgagtacg        60
+     ctgcctacag agaggctcac aggttgggtt ttgttttgtt ttcttcttga aaggggtgcc       120
+     atacaaagga atacctcatt gtattttgtg ttgttcccat tgcagccagt cagaaatctt       180
+     ccaacttgga agggagaacg aagtcagtca ccaggcagac tgggtcatct gctgaaatca       240
+     cttgcgatct tactgtaaca aataccttct acatccactg gtacctacac caggagggga       300
+     aggccccaca gcgtcttctg tactatgacg tctccaccgc aagggatgtg ttggaatcag       360
+     gactcagtcc aggaaagtat tatactcata cacccaggag gtggagctgg atattgagac       420
+     tgcaaaatct aattgaaaat gattctgggg tctattactg tgccacctgg cggacgaatt       480
+     attataagaa actctttggc agtggaacaa cacttgttgt cacaggtaag tatcggaaga       540
+     atacaacatt tccaaggtaa tagagggaag gcaggaaatg attaaactgg aataatgt         598
+//

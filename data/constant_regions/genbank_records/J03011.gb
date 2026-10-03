@@ -1,0 +1,77 @@
+ID   J03011; SV 1; linear; gDNA; STD; HUM; 321 BP.
+XX
+AC   J03011;
+XX
+DT   15-MAY-1995 (Rel. 199520-1, arrived in LIGM-DB)
+DT   17-JAN-2013 (Rel. 201303-4, Last updated, Version 11)
+XX
+DE   Homo sapiens immunoglobulin lambda light chain C6 region (IGLC6) gene,
+DE   partial cds.
+XX
+KW   antigen receptor; Immunoglobulin superfamily (IgSF); immunoglobulin (IG);
+KW   IG-Light; IG-Light-Lambda-IGL; constant; IMGT reference sequence; regular;
+KW   gDNA; undefined; functional; C-gene.
+XX
+OS   Homo sapiens (human)
+OC   cellular organisms; Eukaryota; Opisthokonta; Metazoa; Eumetazoa; Bilateria;
+OC   Deuterostomia; Chordata; Craniata; Vertebrata; Gnathostomata; Teleostomi;
+OC   Euteleostomi; Sarcopterygii; Dipnotetrapodomorpha; Tetrapoda; Amniota;
+OC   Mammalia; Theria; Eutheria; Boreoeutheria; Euarchontoglires; Primates;
+OC   Haplorrhini; Simiiformes; Catarrhini; Hominoidea; Hominidae; Homininae;
+OC   Homo; Homo sapiens.
+XX
+RN   [1]
+RP   1-321
+RA   ;
+RT   "HUMANIZED INTERLEUKIN-2 RECEPTORS ANTIBODIES";
+RL   Patent number WO9301289-A/1, 21-JAN-1993.
+XX
+RN   [2]
+RP   1-321
+RA   Rousselot P., Mappus E., Blachere T., Rolland de Ravel M., Grenot C.,
+RA   Tonnelle C., Cuilleron C.Y.;
+RT   ;
+RL   Submitted (01-MAY-1997) to the INSDC.
+RL   INSERM U329, 29 Rue Soeur Bouvier-Hopital Debrousse, Lyon Cedex 05 69322,
+RL   France
+XX
+DR   ENA; J03011.
+DR   GDB; 120524.
+XX
+CC   IMGT/LIGM-DB annotation level: by annotators
+CC   
+CC   Draft entry and printed copy of sequence for [1] kindly provided by
+CC   M.-P.Lefranc, 25-NOV-1987.
+XX
+FH   Key                 Location/Qualifiers
+FH   
+FT   C-GENE              1..321
+FT                       /chromosome="22"
+FT                       /db_xref="taxon:9606"
+FT                       /dev_stage="fetus"
+FT                       /functional
+FT                       /IMGT_allele="IGLC6*01"
+FT                       /IMGT_gene="IGLC6"
+FT                       /IMGT_map="22q11.2"
+FT                       /mol_type="genomic DNA"
+FT                       /organism="Homo sapiens"
+FT                       /tissue_lib="lambda of T. Maniatis"
+FT                       /tissue_type="liver"
+FT   ACCEPTOR-SPLICE     <1..3
+FT                       /partial
+FT   C-REGION            2..318
+FT                       /codon_start=3
+FT                       /translation="QPKAAPSVTLFPPSSEELQANKATLVCLISDFYPGAVKVAW
+FT                       KADGSPVNTGVETTTPSKQSNNKYAASSYLSLTPEQWKSHRSYSCQVTHEGSTVE
+FT                       KTVAPAECS"
+FT                       /protein_id="AAA59111.1"
+FT   STOP-CODON          319..321
+XX
+SQ   Sequence 321 BP; 81 A; 101 C; 91 G; 48 T; 0 other;
+     ggtcagccca aggctgcccc atcggtcact ctgttcccgc cctcctctga ggagcttcaa        60
+     gccaacaagg ccacactggt gtgcctgatc agtgacttct acccgggagc tgtgaaagtg       120
+     gcctggaagg cagatggcag ccccgtcaac acgggagtgg agaccaccac accctccaaa       180
+     cagagcaaca acaagtacgc ggccagcagc tacctgagcc tgacgcctga gcagtggaag       240
+     tcccacagaa gctacagctg ccaggtcacg catgaaggga gcaccgtgga gaagacagtg       300
+     gcccctgcag aatgttcata g                                                 321
+//

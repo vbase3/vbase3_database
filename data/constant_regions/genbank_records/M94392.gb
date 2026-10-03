@@ -1,0 +1,141 @@
+ID   M94392; SV 1; linear; gDNA; STD; VRT; 4332 BP.
+XX
+AC   M94392;
+XX
+DT   15-MAY-1995 (Rel. 199520-1, arrived in LIGM-DB)
+DT   18-JAN-2013 (Rel. 201303-5, Last updated, Version 7)
+XX
+DE   Xenopus laevis germline immunoglobulin light chain, JC region, clone lambda
+DE   R14.
+XX
+KW   antigen receptor; Immunoglobulin superfamily (IgSF); immunoglobulin (IG);
+KW   IG-Light; IG-Light-Lambda-IGL; constant; joining; regular; gDNA; germline;
+KW   undefined; functional; J-gene; C-gene.
+XX
+OS   Xenopus laevis (African clawed frog)
+OC   Chordata; Craniata; Vertebrata; Gnathostomata; Teleostomi; Euteleostomi;
+OC   Sarcopterygii; Dipnotetrapodomorpha; Tetrapoda; Amphibia; Batrachia; Anura;
+OC   Pipoidea; Pipidae; Xenopodinae; Xenopus; Xenopus; Xenopus laevis.
+XX
+RN   [1]
+RP   1-4332
+RX   PUBMED; 1460285.
+RA   Zezza D.J., Stewart S.E., Steiner L.A.;
+RT   "Genes encoding Xenopus laevis Ig L chains. Implications for the evolution
+RT   of kappa and lambda chains";
+RL   J. Immunol. 149(12):3968-3977(1992).
+XX
+DR   ENA; M94392.
+XX
+CC   IMGT/LIGM-DB annotation level: by annotators
+XX
+FH   Key                 Location/Qualifiers
+FH   
+FT   J-C-CLUSTER         <1..>4332
+FT                       /partial
+FT                       /cell_type="erythrocyte"
+FT                       /db_xref="taxon:8355"
+FT                       /dev_stage="Adult"
+FT                       /mol_type="genomic DNA"
+FT                       /organism="Xenopus laevis"
+FT   J-GENE              469..2100
+FT   5'UTR               <1..468
+FT                       /partial
+FT   J-RS                431..469
+FT   J-NONAMER           431..439
+FT   J-SPACER            440..462
+FT   J-HEPTAMER          463..469
+FT   J-REGION            470..507
+FT                       /codon_start=2
+FT                       /translation="FTFGKGTRVELK"
+FT                       /protein_id="AAA51397.1"
+FT   J-PHE               477..479
+FT   DONOR-SPLICE        507..509
+FT   3'UTR               4095..>4332
+FT                       /partial
+FT   J-C-INTRON          510..3771
+FT   C-GENE              2101..4332
+FT   ACCEPTOR-SPLICE     3892..3896
+FT   C-REGION            3895..4211
+FT                       /codon_start=3
+FT                       /translation="NDAKPAVFIFKPSDEQVKEGNPTAVCLINNFFPRDLTVTWK
+FT                       VDSQDVSSSDVKTSDFMQESDSTYSQSSMLTLTKDKWDKADKFECLVKHKTAQLT
+FT                       QSFSKSQCS"
+FT                       /protein_id="AAA51397.1"
+FT   STOP-CODON          4092..4094
+XX
+SQ   Sequence 4332 BP; 1507 A; 635 C; 610 G; 1580 T; 0 other;
+     gatcttatag tcgctcttat gactccgtaa atctgtaaat gcaaaatatc ttcataaaat        60
+     aatatattct tttggtcttt tcagtccttt ttgttacagc gacaatgcaa ctgcaataat       120
+     atatacaata ggcatattct actaactaac tgctaaattt cagagtctca gattatacca       180
+     aaaatataat tatcacattt ttaaacaata ttttatattt aattagattt gccctttagt       240
+     acttaatcgt caaagcctaa aaatatacca aaaatataat tataaaattt tgaaataata       300
+     ttttatatta aattagattt gccctttagt actaaatcga caaagtctca aagtatacca       360
+     aaagtataac attttacatg tatttagatg atggcttata atagtgttgc aatatactta       420
+     cagtagagta ggtttttgta taggttgtat atagtaagta gtcacagtgg ttcacttttg       480
+     gtaaaggaac cagggtagag cttaaacgta agtattcctt tatgagactt attttatcac       540
+     ggttattcac tttttttcag taaatgtaat ggtagtttga cataagaatt tatgtgtttt       600
+     attgaatctt acagttgctc ctgaaggtta ataaatctaa taaatacact aaaactgtaa       660
+     aaataccttc ttaaaatatt tttttttaat tttacaatgc caaactgtaa taataagtga       720
+     tataagcatg cattataaca attaatagat actaagtagt tactacctta atatggacca       780
+     aaactttaaa catatatatc ttttctctgt aatttctcat ggttttcctt tagtacttaa       840
+     tcagcggagc cacaaatgta aacctttcat ggataaataa tattttaaac atttcttttg       900
+     tatactcaca ttaagtttat gtatagtatg tgagtgggaa gtagccaggg tagagactaa       960
+     gaggcacatt tattaaaggt cgaatttcaa attcatgagg tttttttttt tactctatta      1020
+     aattataata tactcgaaat tcgattgggg ggttatttat taaaaaacat cttaataaat      1080
+     ctgcccctaa atgtaagtaa ctaatagaaa tctttttttc agtcaatgta tatataaatt      1140
+     gtcatattta ctagtttgta ccaatgctcc ttaagctata actaaattaa taaatcagta      1200
+     aaattcacta atactgttaa aaaaattact tgttcaaata attttgtatt ttttattcag      1260
+     gattataatt tttaccctaa tgcctcagta gtgttgaaat aaaaaccctt tgtctataga      1320
+     cacaagtatt aatattagta ctctgtgtag tgactagata tagtgataac ggcaaagttg      1380
+     aaacgtaagt attgtcgcat ttgagttatc ttatcagaac ttgttttctt ttaagagttg      1440
+     gtgcatgaaa ttcatcaaaa ctataatacg attatttaaa aaaaaaaaaa ataacattac      1500
+     agtatgtata tagtaatgtg ctcttactct ttataatagt aacactcctt ttggattata      1560
+     attattagat aaaatttata tatagaattc ctgtcccctg tttagacata tactatgtaa      1620
+     acttgtttta cactttaata acgtcagcaa taacattaat attacagcca ctttcattgg      1680
+     ctatagaaac tgtaggcact ataggttttt gtactgtgtg tatatgggtc ttaaatgcag      1740
+     tggtacagga accagggtat aggttaaatg taagtaactt tgttttctta ttttatcttt      1800
+     attattaatc ttttttatac aattgcaata ataattaggt attaggtgtt agttatcctt      1860
+     tggtaatgta ttaaataatt agtatagcaa ttttattttt tttccaattg ccttgttttt      1920
+     aaaaataatt tcacaaaaat cggtatatga gtggaatgca tgtttttgta atccttttac      1980
+     cgccttgata agaaaataat ttttttttaa gaaagcttgt caatataaca taaccatgtc      2040
+     cagtttgtta ttaacttacc ttgaaattga tttaacatat aaaatagaat tataataata      2100
+     atttaattta aattcaaaga ctgaacactt ctcagagtaa cttcatgtaa tttaattttg      2160
+     taaaattaaa aataaactgt aaaaactatt ttatactatt gcatgtatat tgatttaaat      2220
+     ttaccaaaaa aaaaatactc cacgagatta caataactaa ccttagagtg tcaatggtac      2280
+     acttttttat taaaggaacc aggctagaga aaaacaggtg cctcttaatt agccaagata      2340
+     attgttttta tttttttaat aactattgtt attatttaag acgaagatat aaaatataat      2400
+     aaaattagga aatactaatc attaggtaaa atatttattt catatttttt tcatacaggc      2460
+     atgttcttat caggaagagt tctgaatagt tacagtggaa caaacatgcc atgtaaatga      2520
+     ttaattcaac aacaaaaaaa ataataataa taattaatct gtaaggagta tgcttgaaaa      2580
+     tattttaata taccacattg atacttctca aatgatatgc tcacatttaa caaagagtgc      2640
+     tgatatgttt cttaaaagct tataaaatat taatgtagtt gttcaggcaa caaccagaaa      2700
+     agacaacaaa tgtctttgtt ttagatatca ccagcttact atttagaagg caataccaaa      2760
+     ccctgttgca ctcaatataa ttcagttttc tatcttgata catgtattct gccatgtttt      2820
+     cagtagatgt catttggctt tataaatgtc ttgcaataaa acccttcttt aaaaaaaata      2880
+     ttaaaaatgt tacaccctat atttgtagta ctaggggtca ggaaatatac atttttggtt      2940
+     ctttaatctt aatatggtcc tctagaagca tcctgtaatg catacatata ctacatgtat      3000
+     ccatttctca aactctgcta atatacatag cagacttacc attgaaaatg tatacctgcc      3060
+     caataaaata agaaacttga tataattatt taatctttgt atttatttgt aagtttataa      3120
+     gaccttgtag ggtctcaatg ttcccaggta cccacagaag catttttctt aatgctctat      3180
+     aactggattt cagtaaatac atacataacc tgtttctatt tagaattccc taactcaaga      3240
+     ctaaagtgta tccagcacat aataaaaggt ccttgtaatt attttagttt tatataaagt      3300
+     aacatgtcat cattaaaagg gcattaaagc tagtcaagca taaagattat agtgctctct      3360
+     atcaagctcc cctcctttta taagtgttat gttatggtat ttaattctca taggaaggtt      3420
+     gattgtgtac aaagtgctgc tttcacatgg tgtgaatact tatccatatc catatgaatg      3480
+     tgaggtctcc ataaatcacc actattccaa gcttactgtt caactttgga atagtatgag      3540
+     ttacatttct acaatacaac ttaagggata tatttctcac tttagttcaa aaagtgtaac      3600
+     agttgcagga tctcattgtc aaccatttta ttcagtgttt tccatatgtt tatgtaaaaa      3660
+     ggtataaaat gtttattctt cggagtacaa agtaaatatg aggtctccct aaatcatcac      3720
+     tatcccaagc tctttgtcct atattaggtt aaggtaaatt agtttcctac aatgtaaggg      3780
+     gatcttttct caagtacaag ttgcaggaca tcttgttggt actgttttat atgtatatgt      3840
+     tttcattttt ataaagtaag tggtgtaaca ttttttattt tctacttata acaggaaacg      3900
+     atgccaaacc ggcagtattc atcttcaaac cttcagacga acaggttaag gaaggaaacc      3960
+     caacagcagt ctgtttgata aacaacttct ttccaaggga tttgacagtc acgtggaagg      4020
+     ttgacagtca ggatgtcagt tcctccgacg ttaagaccag tgattttatg caggaaagtg      4080
+     atagcacgta cagccaaagc agcatgttga cacttaccaa ggacaagtgg gataaagctg      4140
+     ataaatttga gtgtttagtt aaacacaaaa cagcacaact gacacagagc tttagtaaat      4200
+     cacagtgctc ataataatag ggcttaggaa gcctaatgta accctatttt aacttttttt      4260
+     ttttgtcttc tcttgcaata ttaatctttc tgtgccacaa tgtcttgcat cacgatgcaa      4320
+     cgcaatcctc ga                                                          4332
+//

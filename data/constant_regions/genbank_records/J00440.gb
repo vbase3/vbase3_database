@@ -1,0 +1,458 @@
+ID   J00440; SV 1; linear; gDNA; STD; MUS; 5556 BP.
+XX
+AC   J00440; J00480;
+XX
+DT   15-MAY-1995 (Rel. 199520-1, arrived in LIGM-DB)
+DT   10-OCT-2019 (Rel. 201941-4, Last updated, Version 33)
+XX
+DE   Mouse germline IgM chain gene, D region; D-q52, mu switch region (part a).
+XX
+KW   antigen receptor; Immunoglobulin superfamily (IgSF); immunoglobulin (IG);
+KW   IG-Heavy; IG-Heavy-Mu; constant; diversity; joining;
+KW   IMGT reference sequence; regular; gDNA; germline; undefined; functional;
+KW   D-gene; J-gene.
+XX
+OS   Mus musculus (house mouse)
+OC   Sarcopterygii; Dipnotetrapodomorpha; Tetrapoda; Amniota; Mammalia; Theria;
+OC   Eutheria; Boreoeutheria; Euarchontoglires; Glires; Rodentia; Myomorpha;
+OC   Muroidea; Muridae; Murinae; Mus; Mus; Mus musculus.
+XX
+RN   [1]
+RP   856-1389
+RX   DOI; 10.1016/0092-8674(80)90089-6.
+RX   PUBMED; 6769593.
+RA   Early P., Huang H., Davis M., Calame K., Hood L.;
+RT   "An immunoglobulin heavy chain variable region gene is generated from three
+RT   segments of DNA: VH, D and JH";
+RL   Cell 19(4):981-992(1980).
+XX
+RN   [2]
+RP   4676-4995
+RX   DOI; 10.1016/0378-1119(80)90092-X.
+RX   PUBMED; 7439686.
+RA   Takahashi N., Kataoka T., Honjo T.;
+RT   "Nucleotide sequences of class-switch recombination region of the mouse
+RT   immunoglobulin gamma 2b-chain gene";
+RL   Gene 11(1-2):117-127(1980).
+XX
+RN   [3]
+RP   955-2394
+RX   DOI; 10.1038/286676a0.
+RX   PUBMED; 6774258.
+RA   Sakano H., Maki R., Kurosawa Y., Roeder W., Tonegawa S.;
+RT   "Two types of somatic recombination are necessary for the generation of
+RT   complete immunoglobulin heavy-chain genes";
+RL   Nature 286(5774):676-683(1980).
+XX
+RN   [3]
+RP   3868-5432
+RX   DOI; 10.1038/286676a0.
+RX   PUBMED; 6774258.
+RA   Sakano H., Maki R., Kurosawa Y., Roeder W., Tonegawa S.;
+RT   "Two types of somatic recombination are necessary for the generation of
+RT   complete immunoglobulin heavy-chain genes";
+RL   Nature 286(5774):676-683(1980).
+XX
+RN   [4]
+RP   577-1970
+RX   PUBMED; 6250219.
+RA   Newell N., Richards J.E., Tucker P.W., Blattner F.R.;
+RT   "J genes for heavy chain immunoglobulins of mouse";
+RL   Science 209(4461):1128-1132(1980).
+XX
+RN   [5]
+RP   4779-4838
+RX   DOI; 10.1126/science.6774415.
+RX   PUBMED; 6774415.
+RA   Davis M.M., Kim S.K., Hood L.E.;
+RT   "DNA sequences mediating class switching in alpha-immunoglobulins";
+RL   Science 209(4463):1360-1365(1980).
+XX
+RN   [5]
+RP   5009-5058
+RX   DOI; 10.1126/science.6774415.
+RX   PUBMED; 6774415.
+RA   Davis M.M., Kim S.K., Hood L.E.;
+RT   "DNA sequences mediating class switching in alpha-immunoglobulins";
+RL   Science 209(4463):1360-1365(1980).
+XX
+RN   [5]
+RP   5094-5143
+RX   DOI; 10.1126/science.6774415.
+RX   PUBMED; 6774415.
+RA   Davis M.M., Kim S.K., Hood L.E.;
+RT   "DNA sequences mediating class switching in alpha-immunoglobulins";
+RL   Science 209(4463):1360-1365(1980).
+XX
+RN   [6]
+RP   1022-1586
+RX   DOI; 10.1016/0092-8674(81)90399-8.
+RX   PUBMED; 6101208.
+RA   Kim S.K., Davis M.M., Sinn E., Patten P., Hood L.E.;
+RT   "Antibody diversity: somatic hypermutation of rearranged VH genes";
+RL   Cell 27(3 Pt 2):573-581(1981).
+XX
+RN   [7]
+RP   1-1080
+RX   DOI; 10.1038/290562a0.
+RX   PUBMED; 6783961.
+RA   Sakano H., Kurosawa Y., Weigert M., Tonegawa S.;
+RT   "Identification and nucleotide sequence of a diversity DNA segment (D) of
+RT   immunoglobulin heavy-chain genes";
+RL   Nature 290(5807):562-565(1981).
+XX
+RN   [8]
+RP   5305-5556
+RX   DOI; 10.1038/292845a0.
+RX   PUBMED; 6791031.
+RA   Nikaido T., Nakai S., Honjo T.;
+RT   "Switch region of immunoglobulin Cmu gene is composed of simple tandem
+RT   repetitive sequences";
+RL   Nature 292(5826):845-848(1981).
+XX
+RN   [9]
+RP   1345-2180
+RX   PUBMED; 6787590.
+RA   Gough N.M., Bernard O.;
+RT   "Sequences of the joining region genes for immunoglobulin heavy chains and
+RT   their role in generation of antibody diversity";
+RL   Proc. Natl. Acad. Sci. U.S.A. 78(1):509-513(1981).
+XX
+RN   [9]
+RP   2241-3066
+RX   PUBMED; 6787590.
+RA   Gough N.M., Bernard O.;
+RT   "Sequences of the joining region genes for immunoglobulin heavy chains and
+RT   their role in generation of antibody diversity";
+RL   Proc. Natl. Acad. Sci. U.S.A. 78(1):509-513(1981).
+XX
+RN   [9]
+RP   3101-3222
+RX   PUBMED; 6787590.
+RA   Gough N.M., Bernard O.;
+RT   "Sequences of the joining region genes for immunoglobulin heavy chains and
+RT   their role in generation of antibody diversity";
+RL   Proc. Natl. Acad. Sci. U.S.A. 78(1):509-513(1981).
+XX
+RN   [9]
+RP   3318-3564
+RX   PUBMED; 6787590.
+RA   Gough N.M., Bernard O.;
+RT   "Sequences of the joining region genes for immunoglobulin heavy chains and
+RT   their role in generation of antibody diversity";
+RL   Proc. Natl. Acad. Sci. U.S.A. 78(1):509-513(1981).
+XX
+RN   [10]
+RP   5034-5143
+RX   DOI; 10.1073/pnas.78.4.2437.
+RX   PUBMED; 6787603.
+RA   Obata M., Kataoka T., Nakai S., Yamagishi H., Takahashi N.,
+RA   Yamawaki-Kataoka Y., Nikaido T., Shimizu A., Honjo T.;
+RT   "Structure of a rearranged gamma 1 chain gene and its implication to
+RT   immunoglobulin class-switch mechanism";
+RL   Proc. Natl. Acad. Sci. U.S.A. 78(4):2437-2441(1981).
+XX
+RN   [11]
+RP   2470-2882
+RA   Kallen R.;
+RT   ;
+RL   Unpublished.
+XX
+RN   [12]
+RP   2877-3873
+RX   DOI; 10.1016/0092-8674(83)90014-4.
+RX   PUBMED; 6409417.
+RA   Gillies S.D., Morrison S.L., Oi V.T., Tonegawa S.;
+RT   "A tissue-specific transcription enhancer element is located in the major
+RT   intron of a rearranged immunoglobulin heavy chain gene";
+RL   Cell 33(3):717-728(1983).
+XX
+RN   [13]
+RP   3252-3564
+RX   DOI; 10.1016/0092-8674(83)90015-6.
+RX   PUBMED; 6409418.
+RA   Banerji J., Olson L., Schaffner W.;
+RT   "A lymphocyte-specific cellular enhancer is located downstream of the
+RT   joining region in immunoglobulin heavy chain genes";
+RL   Cell 33(3):729-740(1983).
+XX
+RN   [14]
+RP   4729-5427
+RX   PUBMED; 6429663.
+RA   Gilliam A.C., Shen A., Richards J.E., Blattner F.R., Mushinski J.F.,
+RA   Tucker P.W.;
+RT   "Illegitimate recombination generates a class switch from C mu to C delta
+RT   in an IgD-secreting plasmacytoma";
+RL   Proc. Natl. Acad. Sci. U.S.A. 81(13):4164-4168(1984).
+XX
+DR   EMBL-ALIGN; ALIGN_000433.
+DR   EMBL-JOIN; J00444.
+DR   ENA; J00440.
+DR   TRANSFAC; R00860; MOUSE$IGH_26.
+DR   TRANSFAC; R00861; MOUSE$IGH_27.
+DR   TRANSFAC; R00862; MOUSE$IGH_28.
+DR   TRANSFAC; R00863; MOUSE$IGH_29.
+DR   TRANSFAC; R00864; MOUSE$IGH_30.
+DR   TRANSFAC; R00866; MOUSE$IGH_32.
+DR   TRANSFAC; R00867; MOUSE$IGH_33.
+DR   TRANSFAC; R00870; MOUSE$IGH_36.
+DR   TRANSFAC; R00872; MOUSE$IGH_38.
+DR   TRANSFAC; R03633; MOUSE$IGH_50.
+DR   TRANSFAC; R03634; MOUSE$IGH_51.
+DR   TRANSFAC; R03635; MOUSE$IGH_52.
+DR   TRANSFAC; R03636; MOUSE$IGH_53.
+DR   TRANSFAC; R04065; MOUSE$IGH_58.
+DR   TRANSFAC; R04332; MOUSE$IGH_60.
+DR   TRANSFAC; R04333; MOUSE$IGH_61.
+XX
+CC   IMGT/LIGM-DB annotation level: by annotators
+CC   
+CC   For an overview of the D-J-C region entries see the first paragraph
+CC   of the comment in segment 1.
+CC       Diversity segments code for the third hypervariable or
+CC   complementarity determining region of the variable region.  They
+CC   are divided into 3 families by sequence homology, D-FL16, D-SP2 and
+CC   D-Q.  It is believed that there are 12 D segments, although there
+CC   may be some segments 5' to D-FL16.1 which have not been discovered.
+CC   Known sequences of rearranged D segments suggest that greater
+CC   variability may be generated by D-D recombination.  The putative
+CC   recombination recognition sequences noted in the Sites table
+CC   consist of a nonamer-12bp spacer-palindromic heptamer 5' to the D
+CC   sequence and a palindromic heptamer-12bp spacer-nonamer 3' to the D
+CC   sequence.
+CC       [9] sequenced a rearranged gene, but since the area reported is
+CC   3' to the rearrangements, it is presumed to correspond to the
+CC   germline sequence.  However, the conflicts in the sites table
+CC   involving [9] may be due to the known high rate of somatic mutation
+CC   in recombined variable regions.
+CC       The J-H sequences encode the C-terminus of the third
+CC   hypervariable region and the C-terminus of the variable region. The
+CC   putative recombination recognition sequences 5' to the coding
+CC   sequences are found before all J sequences, light- and heavy-chain.
+CC   [9] identifies a putative pseudo-J-H sequence within bases
+CC   2016-2088, which contains termination codons in all reading frames.
+CC       The experimentally verified enhancer region noted in the Sites
+CC   table has only been localized to within the PstI-EcoRI fragment
+CC   (bases 3247-3559) [12],[13].
+CC       Only the germline S-mu region is reported with these entries.
+CC   For rearranged S-mu regions see the rearranged heavy chain entries.
+CC       The clone used by [3] contains a 2.8kb deletion which is a
+CC   cloning artifact.  [8] has identified the extent of this deletion
+CC   (from base 5427 in this entry to base 773 in <MUSIGCD09>), but
+CC   there is some uncertainty (+-5bp) due to the highly repetitive
+CC   nature of the S-mu region.  The S-mu region covers over 3kb and is
+CC   primarily made up of two repeating pentamers (gagct)n (ggggt),
+CC   which are believed to act as recognition sequences for S-S
+CC   recombination.
+CC      Figures 2 and 4 of [3] report different bases for bases 2373 and
+CC   2392.  We have used the bases from figure 4 because they agree with
+CC   those in [9].
+CC      For rearranged D and J segments see the rearranged heavy chain
+CC   entries.  Data from [13] kindly reviewed (23-AUG-1983) by W.
+CC   Schaffner.
+CC   Complete source information:
+CC   Mouse BALB/c liver DNA [4],[14]; embryo DNA [3],[7]; BALB/c newborn
+CC   DNA [2],[10],[8]; BALB/c sperm DNA [1],[5],[6]; myeloma HPC76 DNA
+CC   [9],[13]; BALB/c hybridoma 24.13 DNA [11]; myeloma MOPC 141 DNA
+CC   [12].
+XX
+FH   Key                 Location/Qualifiers
+FH   
+FT   D-J-CLUSTER         1..5556
+FT                       /cell_line="J606; 2PK-3; IGE-53-569"
+FT                       /db_xref="taxon:10090"
+FT                       /dev_stage="newborn; embryo"
+FT                       /IMGT_map="12F2 (58.0 cM)"
+FT                       /IMGT_note="This sequence has been artificially 
+FT                       constructed by junction of the sequences from 19 
+FT                       overlapping clones."
+FT                       /mol_type="genomic DNA"
+FT                       /organism="Mus musculus"
+FT                       /strain="BALB/c"
+FT                       /sub_species="domesticus"
+FT                       /tissue_lib="EcoRI"
+FT                       /tissue_type="myeloma; liver; B-cell lymphoma; 
+FT                       hybridoma"
+FT   D-GENE              1..954
+FT                       /functional
+FT                       /IMGT_allele="IGHD4-1*02"
+FT                       /IMGT_gene="IGHD4-1"
+FT   5'D-RS              285..312
+FT   5'D-NONAMER         285..293
+FT   5'D-SPACER          294..305
+FT   5'D-HEPTAMER        306..312
+FT   D-REGION            313..322
+FT                       /translation="QLG"
+FT                       /IMGT_allele="IGHD4-1*02"
+FT                       /IMGT_gene="IGHD4-1"
+FT                       /IMGT_note="Functional"
+FT                       /protein_id="AAB59645.1"
+FT   3'D-RS              323..350
+FT   3'D-HEPTAMER        323..329
+FT   3'D-SPACER          330..341
+FT   3'D-NONAMER         342..350
+FT   J-GENE              955..1247
+FT                       /IMGT_allele="IGHJ1*01"
+FT                       /IMGT_gene="IGHJ1"
+FT   5'UTR               955..1018
+FT   J-RS                980..1018
+FT   J-NONAMER           980..988
+FT   J-SPACER            989..1011
+FT   J-HEPTAMER          1012..1018
+FT   J-REGION            1019..1071
+FT                       /codon_start=2
+FT                       /translation="YWYFDVWGAGTTVTVSS"
+FT                       /IMGT_allele="IGHJ1*01"
+FT                       /IMGT_gene="IGHJ1"
+FT                       /IMGT_note="Functional"
+FT                       /protein_id="AAB59646.1"
+FT   J-TRP               1038..1040
+FT   DONOR-SPLICE        1071..1073
+FT   J-GENE              1248..1630
+FT                       /IMGT_allele="IGHJ2*01"
+FT                       /IMGT_gene="IGHJ2"
+FT   5'UTR               1248..1336
+FT   J-RS                1298..1336
+FT   J-NONAMER           1298..1306
+FT   J-SPACER            1307..1329
+FT   J-HEPTAMER          1330..1336
+FT   J-REGION            1337..1384
+FT                       /codon_start=3
+FT                       /translation="YFDYWGQGTTLTVSS"
+FT                       /IMGT_allele="IGHJ2*01"
+FT                       /IMGT_gene="IGHJ2"
+FT                       /IMGT_note="Functional"
+FT   J-TRP               1351..1353
+FT   DONOR-SPLICE        1384..1386
+FT   J-GENE              1631..2198
+FT                       /IMGT_allele="IGHJ3*01"
+FT                       /IMGT_gene="IGHJ3"
+FT   5'UTR               1631..1719
+FT   J-RS                1681..1719
+FT   J-NONAMER           1681..1689
+FT   J-SPACER            1690..1712
+FT   J-HEPTAMER          1713..1719
+FT   J-REGION            1720..1767
+FT                       /codon_start=3
+FT                       /translation="WFAYWGQGTLVTVSA"
+FT                       /IMGT_allele="IGHJ3*01"
+FT                       /IMGT_gene="IGHJ3"
+FT                       /IMGT_note="Functional"
+FT   J-TRP               1734..1736
+FT   DONOR-SPLICE        1767..1769
+FT   J-GENE              2199..2394
+FT                       /IMGT_allele="IGHJ4*01"
+FT                       /IMGT_gene="IGHJ4"
+FT   5'UTR               2199..2286
+FT   5'D-RS              2248..2286
+FT   J-NONAMER           2248..2256
+FT   J-SPACER            2257..2279
+FT   J-HEPTAMER          2280..2286
+FT   J-REGION            2287..2340
+FT                       /codon_start=3
+FT                       /translation="YYAMDYWGQGTSVTVSS"
+FT                       /IMGT_allele="IGHJ4*01"
+FT                       /IMGT_gene="IGHJ4"
+FT                       /IMGT_note="Functional"
+FT   J-TRP               2307..2309
+FT   DONOR-SPLICE        2340..2342
+FT   ENHANCER            3252..3564
+FT                       /note="Ig enhancer region; putative"
+FT   J-C-INTRON          2341..>5556
+FT                       /partial
+XX
+SQ   Sequence 5556 BP; 1471 A; 1067 C; 1461 G; 1557 T; 0 other;
+     ggtaccccca tggcttcccg gaggcactgc cccaccccca ccatcacaga cctttctcca        60
+     tagttgatag ctcagcagag tgaatgacag atggacctcc atctgctctt attttaaaaa       120
+     gaagacaaac cccacaggct cgagaacttt agcgactgtt ttgagagaaa tcattggtcc       180
+     ctgactcaag agatgactgg cagtttgggg atcaagaata cccatactct gtggctagtg       240
+     tgaggtttaa gcctcagagt ccctgtggtc tctgactggt gcaaggtttt gactaagcgg       300
+     agcaccacag tgcaactggg accacggtga cgcgtggctc aacaaaaacc ctctgtttgg       360
+     agctctccag gggcagcctg agctatgagg aagtagagag gcttgagaaa tctgaggaag       420
+     aaaagagtag atctgagagg aaaggtagct ttctggaggt caggagacag tgcagagaag       480
+     aacgagttac tgtggacagg tcttagatgg ggaaagaatg agcaaatgca agcatcagaa       540
+     ggatagatgc aatgtcctgc caaggactta ccaagaggat cccggacaga gcaggcaggt       600
+     ggagttgact gagaggacag ggtaggtgca ggttcctctc tcgtttcctt tctccttctc       660
+     ctgtttcctt cctctcttgt cacaggtctc actatgctag ccaaggctag cctgaaagat       720
+     taccatccta cagatgggcc catccagttg agttaaggtg gaaagatctc tccaaacatc       780
+     tgagtttctg aggcttggat gccactgggg acgccaaggg actttgggct gggtttggtt       840
+     ggccccacat gtagggctac ttcactgggt ctataattac tctgatgtgc taggaccagg       900
+     gggctcaggt cactcaggtc aggtgagtcc tgcatctggg gactgtgggg ttcaggtgtc       960
+     ctaaggcagg atgtggagag agttttagta taggaacaga ggcagaacag agactgtgct      1020
+     actggtactt cgatgtctgg ggcgcaggga ccacggtcac cgtctcctca ggtaagctgg      1080
+     cttttttctt tctgcacatt ccattctgaa acgggaaaag atattctcag atctccccat      1140
+     gtcaggccat ctgccacact ctgcatgctg cagaagcttt tctgtaagga tagggtcttc      1200
+     actcccagga aaagaggcag tcagaggcta gctgcctgtg gaacagtgac aatcatggaa      1260
+     aataggcatt tacattgtta ggctacatgg gtagatgggt ttttgtacac ccactaaagg      1320
+     ggtctatgat agtgtgacta ctttgactac tggggccaag gcaccactct cacagtctcc      1380
+     tcaggtgagt ccttaaaacc tctctcttct attcagctta gatagatttt actgcatttg      1440
+     ttggggggga aatgtgtgta tctgaatttc aggtcatgaa ggactaggga caccttggga      1500
+     gtcagaaagg gtcattggga gccctggctg atgcagacag acatcctcag ctcccagact      1560
+     tcatggccag agatttatag ggatcctggc cagcattgcc gctaggtccc tctcttctat      1620
+     gctttctttg tccctcactg gcctccatct gagataatcc tggagcccta gccaaggatc      1680
+     atttattgtc aggggtctaa tcattgttgt cacaatgtgc ctggtttgct tactggggcc      1740
+     aagggactct ggtcactgtc tctgcaggtg agtcctaact tctcccattc taaatgcatg      1800
+     ttggggggat tctgagcctt caggaccaag attctctgca aacgggaatc aagattcaac      1860
+     ccctttgtcc caaagttgag acatgggtct gggtcaggga ctctctgcct gctggtctgt      1920
+     ggtgacatta gaactgaagt atgatgaagg atctgccaga actgaagctt gaagtctgag      1980
+     gcagaatctt gtccagggtc tatcggactc ttgtgagaat taggggctga cagttgatgg      2040
+     tgacaatttc agggtcagtg actgtcaggt ttctctgagg tgaggctgga atataggtca      2100
+     ccttgaagac taaagagggg tccaggggct tttctgcaca ggcagggaac agaatgtgga      2160
+     acaatgactt gaatggttga ttcttgtgtg acaccaagaa ttggcataat gtctgagttg      2220
+     cccaagggtg atcttagcta gactctgggg tttttgtcgg gtacagagga aaaacccact      2280
+     attgtgatta ctatgctatg gactactggg gtcaaggaac ctcagtcacc gtctcctcag      2340
+     gtaagaatgg cctctccagg tctttatttt taacctttgt tatggagttt tctgagcatt      2400
+     gcagactaat cttggatatt tgccctgagg gagccggctg agagaagttg ggaaataaat      2460
+     ctgtctaggg atctcagagc ctttaggaca gattatctcc acatctttga aaaactaaga      2520
+     atctgtgtga tggtgttggt ggagtccctg gatgatggga tagggacttt ggaggctcat      2580
+     ttgagggaga tgctaaaaca atcctatggc tggagggata gttggggctg tagttggaga      2640
+     ttttcagttt ttagaatgaa gtattagctg caatacttca aggaccacct ctgtgacaac      2700
+     cattttatac agtatccagg catagggaca aaaagtggag tggggcactt tctttagatt      2760
+     tgtgaggaat gttccacact agattgttta aaacttcatt tgttggaagg agctgtctta      2820
+     gtgattgagt caagggagaa aggcatctag cctcggtctc aaaagggtag ttgctgtcta      2880
+     gagaggtctg gtggagcctg caaaagtcca gctttcaaag gaacacagaa gtatgtgtat      2940
+     ggaatattag aagatgttgc ttttactctt aagttggttc ctaggaaaaa tagttaaata      3000
+     ctgtgacttt aaaatgtgag agggttttca agtactcatt tttttaaatg tccaaaattt      3060
+     ttgtcaatca atttgaggtc ttgtttgtgt agaactgaca ttacttaaag tttaaccgag      3120
+     gaatgggagt gaggctctct cataccctat tcagaactga cttttaacaa taataaatta      3180
+     agtttaaaat atttttaaat gaattgagca atgttgagtt gagtcaagat ggccgatcag      3240
+     aaccggaaca cctgcagcag ctggcaggaa gcaggtcatg tggcaaggct atttggggaa      3300
+     gggaaaataa aaccactagg taaacttgta gctgtggttt gaagaagtgg ttttgaaaca      3360
+     ctctgtccag ccccaccaaa ccgaaagtcc aggctgagca aaacaccacc tgggtaattt      3420
+     gcatttctaa aataagttga ggattcagcc gaaactggag aggtcctctt ttaacttatt      3480
+     gagttcaacc ttttaatttt agcttgagta gttctagttt ccccaaactt aagtttatcg      3540
+     acttctaaaa tgtatttaga attcattttc aaaattaggt tatgtaagaa attgaaggac      3600
+     tttagtgtct ttaatttcta atatatttag aaaacttctt aaaattactc tattattctt      3660
+     ccctctgatt attggtctcc attcaattat tttccaatac ccgaagtctt tacagtgact      3720
+     ttgttcatga tcttttttag ttgtttgttt tgccttacta ttaagacttt gacattctgg      3780
+     tcaaaacggc ttcacaaatc tttttcaaga ccactttctg agtattcatt ttaggagaaa      3840
+     tatttttttt ttaaatgaat gcaattatct agacttattt cggttgaaca tgctggttgg      3900
+     tggttgagag gacactcagt cagtcagtgg cgtgaagggc ttctaagcca gtccacatgc      3960
+     tctgtgtgaa ctccctctgg ccctgcttat tgttgaatgg gccaaaggtc tgagaccagg      4020
+     ctgctgctgg gtaggcctgg actttgggtc tcccacccag acctgggaat gtatggttgt      4080
+     ggcttctgcc acccatccac ttggctgctc atggaccagc cagcctcggt ggctttgaag      4140
+     gaacaattcc acacaaagac tctggacctc tccgaaacca ggcaccgcaa atggtaagcc      4200
+     agaggcagcc acagctgtgg ctgctcttaa agcttgtaaa ctgtttctgc ttaagaggga      4260
+     ctgagtcttc agtcattgct ttagggggag aaagagacat ttgtgtgtct ttgagtaccg      4320
+     ttgtctgggt cactcacatt taactttcct tgaaaaacta gtaaaagaaa aatgttgcct      4380
+     gttaaccaat aatcatagag ctcatggtat tttgaggaaa tcttagaaaa cgtgtataca      4440
+     attgtctgga attatttcag ttaagtgtat tagttgaggt actgatgctg tctctacttc      4500
+     agttatacat gtgggtttga attttgaatc tattctggct cttcttaagc agaaaattta      4560
+     gataaaatgg atacctcagt ggtttttaat ggtgggttta atatagaagg aatttaaatt      4620
+     ggaagctaat ttagaatcaa gtaaggaggg acccaggcta agaaggcaat cctgggattc      4680
+     tggaagaaaa gatgttttta gtttttatag aaaacactac tacattcttg atctacaact      4740
+     caatgtggtt taatgaattt gaagttgcca gtaaatgtac ttcctggttg ttaaagaatg      4800
+     gtatcaaagg acagtgctta gatccaaggt gagtgtgaga ggacaggggc tggggtatgg      4860
+     atacgcagaa ggaaggccac agctgtacag aattgagaaa gaatagagac ctgcagttga      4920
+     ggccagcagg tcggctggac taactctcca gccacagtaa tgacccagac agagaaggcc      4980
+     agactcataa agcttgctga gcaaaattaa gggaacaagg ttgagagccc tagtaagcga      5040
+     ggctctaaaa agcatggctg agctgagatg ggtgggcttc tctgagcgct tctaaaatgc      5100
+     gctaaactga ggtgattact ctgaggtaag caaagctggg cttgagccaa aatgaagtag      5160
+     actgtaatga actggaatga gctgggccgc taagctaaac taggctggct taaccgagat      5220
+     gagccaaact ggaatgaact tcattaatct aggttgaata gagctaaact ctactgccta      5280
+     cactggactg ttctgagctg agatgagctg gggtgagctc agctatgcta cgcgtgttgg      5340
+     ggtgagctga tctgaaatga gctactctgg agtagctgag atggggtgag atggggtgag      5400
+     ctgagctggg ctgagctgga ctgagctgag ctagggtgag ctgagctggg tgagctgagc      5460
+     tgagctgggg tgagctgagc tgagctgagc tgagctgggg tgagctgagc tgagctgggg      5520
+     tgagctgagc tgagctgggg tgagctgagc tgagct                                5556
+//

@@ -1,0 +1,52 @@
+LOCUS       KY795178                 381 bp    mRNA    linear   MAM 16-OCT-2017
+DEFINITION  Felis catus clone cat 2-IGLC-1 IgG lambda chain constant region
+            mRNA, partial cds.
+ACCESSION   KY795178
+VERSION     KY795178.1
+KEYWORDS    .
+SOURCE      Felis catus (domestic cat)
+  ORGANISM  Felis catus
+            Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi;
+            Mammalia; Eutheria; Laurasiatheria; Carnivora; Feliformia; Felidae;
+            Felinae; Felis.
+REFERENCE   1  (bases 1 to 381)
+  AUTHORS   Lu,Z., Tallmadge,R.L., Callaway,H.M., Felippe,M.J.B. and
+            Parker,J.S.L.
+  TITLE     Sequence analysis of feline immunoglobulin mRNAs and the
+            development of a felinized monoclonal antibody specific to feline
+            panleukopenia virus
+  JOURNAL   Sci Rep 7 (1), 12713 (2017)
+   PUBMED   28983085
+REFERENCE   2  (bases 1 to 381)
+  AUTHORS   Lu,Z., Tallmadge,R.L., Callaway,H.M., Felippe,J.B. and
+            Parker,J.S.L.
+  TITLE     Direct Submission
+  JOURNAL   Submitted (17-MAR-2017) Baker Institute for Animal Health and
+            Equine Immunology Laboratory, Department of Clinical Sciences,
+            College of Veterinary Medicine, Cornell University, Ithaca, NY
+            14853, USA
+COMMENT     ##Assembly-Data-START##
+            Sequencing Technology :: Sanger dideoxy sequencing
+            ##Assembly-Data-END##
+FEATURES             Location/Qualifiers
+     source          1..381
+                     /organism="Felis catus"
+                     /mol_type="mRNA"
+                     /db_xref="taxon:9685"
+                     /clone="cat 2-IGLC-1"
+     CDS             <1..217
+                     /codon_start=2
+                     /product="IgG lambda chain constant region"
+                     /protein_id="ATI97475.1"
+                     /translation="SGLTVAWKADGTPVTQGVETTKPSKQSNNKYAASSYLSLSPNEW
+                     KSHSRFTCQVTHEGSTVEKSVVPAECS"
+ORIGIN      
+        1 cagcggtttg acggtggcct ggaaggcaga cggcaccccc gtcacccagg gcgtggagac
+       61 caccaagccc tccaaacaga gcaacaacaa gtacgcggcc agcagctacc tgagcctgtc
+      121 accgaacgag tggaaatctc atagcagatt cacctgccag gtcacgcacg aggggagcac
+      181 tgtggagaag agtgtggtcc ccgcagagtg ttcttaggtc cccgagactg tcagggatgg
+      241 aggccttcct cacccagata ctccttcccc agttcatcat gtacccctga gagccaactc
+      301 ctggatcagc tcagaccagg aaggtcacac accctcccgg tttctatttg tgctcaataa
+      361 agaacttatc gtttatcatc c
+//
+

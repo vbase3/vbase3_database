@@ -1,0 +1,54 @@
+species_taxon	scientific_name	common_name	stratum_level	total_class1_genes	v_genes	d_genes	j_genes	heavy_v_genes	light_v_genes
+human	Homo sapiens	Human	Stratum 3 (Class I Master Release)	441	381	32	28	222	159
+mouse	Mus musculus	House mouse	Stratum 3 (Class I Master Release)	416	388	14	14	298	90
+alpaca	Vicugna pacos	Alpaca	Stratum 3 (Class I Master Release)	223	215	4	4	215	0
+Xenopus laevis	Xenopus laevis	African clawed frog	Stratum 3 (Class I Master Release)	184	155	14	15	147	8
+rabbit	Oryctolagus cuniculus	European rabbit	Stratum 3 (Class I Master Release)	135	117	11	7	117	0
+rhesus	Macaca mulatta	Rhesus macaque	Stratum 3 (Class I Master Release)	135	127	0	8	127	0
+cynomolgus	Macaca fascicularis	Crab-eating cynomolgus macaque	Stratum 3 (Class I Master Release)	125	125	0	0	85	40
+zebrafish	Danio rerio	Zebrafish	Stratum 3 (Class I Master Release)	122	122	0	0	122	0
+chimpanzee	Pan troglodytes	Chimpanzee	Stratum 3 (Class I Master Release)	106	106	0	0	95	11
+marmoset	Callithrix jacchus	Common marmoset	Stratum 3 (Class I Master Release)	91	91	0	0	91	0
+guineapig	Cavia porcellus	Domestic guinea pig	Stratum 3 (Class I Master Release)	82	82	0	0	48	34
+pig	Sus scrofa	Domestic pig	Stratum 3 (Class I Master Release)	80	74	0	6	74	0
+ferret	Mustela putorius furo	Domestic ferret	Stratum 3 (Class I Master Release)	76	76	0	0	39	37
+cat	Felis catus	Domestic cat	Stratum 3 (Class I Master Release)	73	73	0	0	33	40
+rat	Rattus norvegicus	Brown Norway rat	Stratum 3 (Class I Master Release)	73	66	0	7	66	0
+bat	Myotis lucifugus	Little brown bat	Stratum 3 (Class I Master Release)	72	72	0	0	72	0
+horse	Equus caballus	Domestic horse	Stratum 3 (Class I Master Release)	67	63	0	4	63	0
+cow	Bos taurus	Domestic cow	Stratum 3 (Class I Master Release)	41	33	3	5	33	0
+dog	Canis lupus familiaris	Domestic dog	Stratum 3 (Class I Master Release)	39	29	5	5	29	0
+salmon	Salmo salar	Atlantic salmon	Stratum 3 (Class I Master Release)	36	36	0	0	36	0
+goat	Capra hircus	Domestic goat	Stratum 3 (Class I Master Release)	32	32	0	0	28	4
+Xenopus tropicalis	Xenopus tropicalis	Western tropical clawed frog	Stratum 3 (Class I Master Release)	31	20	6	5	15	5
+shark	Ginglymostoma cirratum	Nurse shark	Stratum 3 (Class I Master Release)	31	31	0	0	31	0
+platypus	Ornithorhynchus anatinus	Duck-billed platypus	Stratum 3 (Class I Master Release)	26	26	0	0	26	0
+baboon	Papio anubis	Olive baboon	Stratum 3 (Class I Master Release)	22	22	0	0	22	0
+opossum	Monodelphis domestica	Gray short-tailed opossum	Stratum 3 (Class I Master Release)	19	19	0	0	19	0
+trout	Oncorhynchus mykiss	Rainbow trout	Stratum 3 (Class I Master Release)	18	18	0	0	1	17
+camel	Camelus dromedarius	Dromedary Arabian camel	Stratum 3 (Class I Master Release)	13	13	0	0	11	2
+dogfish	Squalus acanthias	Spiny dogfish shark	Stratum 3 (Class I Master Release)	13	13	0	0	13	0
+dolphin	Tursiops truncatus	Common bottlenose dolphin	Stratum 3 (Class I Master Release)	13	13	0	0	13	0
+sheep	Ovis aries	Domestic sheep	Stratum 3 (Class I Master Release)	8	5	0	3	5	0
+chicken	Gallus gallus	Domestic chicken	Stratum 3 (Class I Master Release)	7	1	4	2	1	0
+anole	Anolis carolinensis	Green anole lizard	Stratum 3 (Class I Master Release)	3	3	0	0	0	3
+axolotl	Ambystoma mexicanum	Mexican axolotl	Stratum 3 (Class I Master Release)	1	1	0	0	1	0
+duck	Anas platyrhynchos	Mallard duck	Stratum 3 (Class I Master Release)	1	1	0	0	1	0
+gorilla	Gorilla gorilla	Western gorilla	Stratum 3 (Class I Master Release)	1	1	0	0	1	0
+orangutan	Pongo abelii	Bornean orangutan	Stratum 1/2 (Genomic Screening Pool)	0	0	0	0	0	0
+gibbon	Nomascus leucogenys	Northern white-cheeked gibbon	Stratum 1/2 (Genomic Screening Pool)	0	0	0	0	0	0
+cast_mouse	Mus musculus castaneus	Castaneus mouse	Stratum 1/2 (Genomic Screening Pool)	0	0	0	0	0	0
+spret_mouse	Mus spretus	Western Mediterranean mouse	Stratum 1/2 (Genomic Screening Pool)	0	0	0	0	0	0
+hamster	Mesocricetus auratus	Golden hamster	Stratum 1/2 (Genomic Screening Pool)	0	0	0	0	0	0
+nakedmolerat	Heterocephalus glaber	Naked mole-rat	Stratum 1/2 (Genomic Screening Pool)	0	0	0	0	0	0
+water buffalo	Bubalus bubalis	Asian water buffalo	Stratum 1/2 (Genomic Screening Pool)	0	0	0	0	0	0
+llama	Lama glama	Llama	Stratum 1/2 (Genomic Screening Pool)	0	0	0	0	0	0
+bactrian camel	Camelus bactrianus	Bactrian camel	Stratum 1/2 (Genomic Screening Pool)	0	0	0	0	0	0
+orca	Orcinus orca	Killer whale orca	Stratum 1/2 (Genomic Screening Pool)	0	0	0	0	0	0
+elephant	Loxodonta africana	African bush elephant	Stratum 1/2 (Genomic Screening Pool)	0	0	0	0	0	0
+hedgehog	Erinaceus europaeus	European hedgehog	Stratum 1/2 (Genomic Screening Pool)	0	0	0	0	0	0
+tasmaniandevil	Sarcophilus harrisii	Tasmanian devil	Stratum 1/2 (Genomic Screening Pool)	0	0	0	0	0	0
+zebrafinch	Taeniopygia guttata	Zebra finch	Stratum 1/2 (Genomic Screening Pool)	0	0	0	0	0	0
+alligator	Alligator mississippiensis	American alligator	Stratum 1/2 (Genomic Screening Pool)	0	0	0	0	0	0
+turtle	Chrysemys picta bellii	Western painted turtle	Stratum 1/2 (Genomic Screening Pool)	0	0	0	0	0	0
+elephantshark	Callorhinchus milii	Australian elephant shark	Stratum 1/2 (Genomic Screening Pool)	0	0	0	0	0	0

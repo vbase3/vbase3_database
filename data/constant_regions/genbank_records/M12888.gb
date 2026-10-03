@@ -1,0 +1,124 @@
+ID   M12888; SV 1; linear; gDNA; STD; HUM; 2008 BP.
+XX
+AC   M12888;
+XX
+DT   15-MAY-1995 (Rel. 199520-1, arrived in LIGM-DB)
+DT   22-JAN-2020 (Rel. 202004-3, Last updated, Version 16)
+XX
+DE   Human T-cell receptor germline beta-chain gene C-region C-beta-2.
+XX
+KW   antigen receptor; Immunoglobulin superfamily (IgSF); T cell receptor (TR);
+KW   TR-Beta-TRB; constant; TR-Beta-2-TRBC2; IMGT reference sequence; regular;
+KW   gDNA; undefined; functional; C-gene.
+XX
+OS   Homo sapiens (human)
+OC   cellular organisms; Eukaryota; Opisthokonta; Metazoa; Eumetazoa; Bilateria;
+OC   Deuterostomia; Chordata; Craniata; Vertebrata; Gnathostomata; Teleostomi;
+OC   Euteleostomi; Sarcopterygii; Dipnotetrapodomorpha; Tetrapoda; Amniota;
+OC   Mammalia; Theria; Eutheria; Boreoeutheria; Euarchontoglires; Primates;
+OC   Haplorrhini; Simiiformes; Catarrhini; Hominoidea; Hominidae; Homininae;
+OC   Homo; Homo sapiens.
+XX
+RN   [1]
+RP   1-2008
+RX   DOI; 10.1002/1521-4141(200208)32:8<2145::AID-IMMU2145>3.0.CO;2-I.
+RX   PUBMED; 12209626.
+RA   Vernersson M., Aveskogh M., Munday B., Hellman L.;
+RT   "Evidence for an early appearance of modern post-switch immunoglobulin
+RT   isotypes in mammalian evolution (II); cloning of IgE, IgG1 and IgG2 from a
+RT   monotreme, the duck-billed platypus, Ornithorhynchus anatinus";
+RL   Eur. J. Immunol. 32(8):2145-2155(2002).
+XX
+DR   ENA; M12888.
+DR   GDB; 9954031.
+XX
+CC   IMGT/LIGM-DB annotation level: by annotators
+XX
+FH   Key                 Location/Qualifiers
+FH   
+FT   C-GENE              1..2008
+FT                       /chromosome="7q34"
+FT                       /db_xref="taxon:9606"
+FT                       /functional
+FT                       /IMGT_allele="TRBC2*01"
+FT                       /IMGT_gene="TRBC2"
+FT                       /mol_type="genomic DNA"
+FT                       /note="G00-120-405"
+FT                       /organism="Homo sapiens"
+FT                       /protein_id="AAA60662.1"
+FT   J-C-INTRON          1..153
+FT   5'UTR               1..153
+FT   ACCEPTOR-SPLICE     151..155
+FT   C-GENE-UNIT         154..1642
+FT                       /functional
+FT                       /IMGT_allele="TRBC2*01"
+FT                       /IMGT_gene="TRBC2"
+FT   EX1                 154..540
+FT                       /codon_start=3
+FT                       /translation="DLKNVFPPEVAVFEPSEAEISHTQKATLVCLATGFYPDHVE
+FT                       LSWWVNGKEVHSGVSTDPQPLKEQPALNDSRYCLSSRLRVSATFWQNPRNHFRCQ
+FT                       VQFYGLSENDEWTQDRAKPVTQIVSAEAWGRA"
+FT                       /splice-expected-nt="g"
+FT                       /splice-expectedcodon="gag [E]"
+FT                       /splicing-frame="sf1"
+FT   DONOR-SPLICE        540..542
+FT   ACCEPTOR-SPLICE     1054..1058
+FT   EX2                 1057..1074
+FT                       /codon_start=3
+FT                       /translation="CGFTS"
+FT                       /splice-expected-nt="g"
+FT                       /splice-expectedcodon="gac [D]"
+FT                       /splicing-frame="sf1"
+FT   DONOR-SPLICE        1074..1076
+FT   ACCEPTOR-SPLICE     1215..1219
+FT   EX3                 1218..1324
+FT                       /codon_start=3
+FT                       /translation="SYQQGVLSATILYEILLGKATLYAVLVSALVLMAM"
+FT                       /splice-expected-nt="g"
+FT                       /splice-expectedcodon="gag [E]"
+FT                       /splicing-frame="sf1"
+FT   DONOR-SPLICE        1324..1326
+FT   ACCEPTOR-SPLICE     1613..1617
+FT   EX4                 1616..1639
+FT                       /translation="VKRKDSRG"
+FT                       /splicing-frame="sf0"
+FT   STOP-CODON          1640..1642
+FT   3'UTR               1640..2008
+FT   POLYA_SIGNAL        1828..1833
+XX
+SQ   Sequence 2008 BP; 487 A; 562 C; 495 G; 464 T; 0 other;
+     atggcgtagt ccccaaagaa cgaggaccta gtaacataat tgtgcttcat tatggtcctt        60
+     tcccggcctt ctctctcaca catacacaga gcccctacca ggaccagaca gctctcagag       120
+     caaccctagc cccattacct cttccctttc cagaggacct gaaaaacgtg ttcccacccg       180
+     aggtcgctgt gtttgagcca tcagaagcag agatctccca cacccaaaag gccacactgg       240
+     tgtgcctggc cacaggcttc taccccgacc acgtggagct gagctggtgg gtgaatggga       300
+     aggaggtgca cagtggggtc agcacagacc cgcagcccct caaggagcag cccgccctca       360
+     atgactccag atactgcctg agcagccgcc tgagggtctc ggccaccttc tggcagaacc       420
+     cccgcaacca cttccgctgt caagtccagt tctacgggct ctcggagaat gacgagtgga       480
+     cccaggatag ggccaaacct gtcacccaga tcgtcagcgc cgaggcctgg ggtagagcag       540
+     gtgagtgggg cctggggaga tgcctggagg agattaggtg agaccagcta ccagggaaaa       600
+     tggaaagatc caggtagcgg acaagactag atccagaaga aagccagagt ggacaaggtg       660
+     ggatgatcaa ggttcacagg gtcagcaaag cacggtgtgc acttccccca ccaagaagca       720
+     tagaggctga atggagcacc tcaagctcat tcttccttca gatcctgaca ccttagagct       780
+     aagctttcaa gtctccctga ggaccagcca tacagctcag catctgagtg gtgtgcatcc       840
+     cattctcttc tggggtcctg gtttcctaag atcatagtga ccacttcgct ggcactggag       900
+     cagcatgagg gagacagaac cagggctatc aaaggaggct gactttgtac tatctgatat       960
+     gcatgtgttt gtggcctgtg agtctgtgat gtaaggctca atgtccttac aaagcagcat      1020
+     tctctcatcc atttttcttc ccctgttttc tttcagactg tggcttcacc tccggtaagt      1080
+     gagtctctcc tttttctctc tatctttcgc cgtctctgct ctcgaaccag ggcatggaga      1140
+     atccacggac acaggggcgt gagggaggcc agagccacct gtgcacaggt acctacatgc      1200
+     tctgttcttg tcaacagagt cttaccagca aggggtcctg tctgccacca tcctctatga      1260
+     gatcttgcta gggaaggcca ccttgtatgc cgtgctggtc agtgccctcg tgctgatggc      1320
+     catggtaagg aggagggtgg gatagggcag atgatggggg caggggatgg aacatcacac      1380
+     atgggcataa aggaatctca gagccagagc acagcctaat atatcctatc acctcaatga      1440
+     aaccataatg aagccagact ggggagaaaa tgcagggaat atcacagaat gcatcatggg      1500
+     aggatggaga caaccagcga gccctactca aattaggcct cagagcccgc ctcccctgcc      1560
+     ctactcctgc tgtgccatag cccctgaaac cctgaaaatg ttctctcttc cacaggtcaa      1620
+     gagaaaggat tccagaggct agctccaaaa ccatcccagg tcattcttca tcctcaccca      1680
+     ggattctcct gtacctgctc ccaatctgtg ttcctaaaag tgattctcac tctgcttctc      1740
+     atctcctact tacatgaata cttctctctt ttttctgttt ccctgaagat tgagctccca      1800
+     acccccaagt acgaaatagg ctaaaccaat aaaaaattgt gtgttgggcc tggttgcatt      1860
+     tcaggagtgt ctgtggagtt ctgctcatca ctgacctatc ttctgattta gggaaagcag      1920
+     cattcgcttg gacatctgaa gtgacagccc tctttctctc cacccaatgc tgctttctcc      1980
+     tgttcatcct gatggaagtc tcaacaca                                         2008
+//

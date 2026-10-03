@@ -1,0 +1,158 @@
+ID   M21624; SV 1; linear; cDNA; STD; HUM; 1186 BP.
+XX
+AC   M21624;
+XX
+DT   15-MAY-1995 (Rel. 199520-1, arrived in LIGM-DB)
+DT   22-MAY-2013 (Rel. 201321-3, Last updated, Version 14)
+XX
+DE   Human T-cell receptor delta chain mRNA (VJC-region), complete cds.
+XX
+KW   antigen receptor; Immunoglobulin superfamily (IgSF); T cell receptor (TR);
+KW   TR-Alpha-TRA; TR-Delta-TRD; constant; variable; joining;
+KW   IMGT reference sequence; regular; cDNA; undefined; rearranged; productive.
+XX
+OS   Homo sapiens (human)
+OC   cellular organisms; Eukaryota; Opisthokonta; Metazoa; Eumetazoa; Bilateria;
+OC   Deuterostomia; Chordata; Craniata; Vertebrata; Gnathostomata; Teleostomi;
+OC   Euteleostomi; Sarcopterygii; Dipnotetrapodomorpha; Tetrapoda; Amniota;
+OC   Mammalia; Theria; Eutheria; Boreoeutheria; Euarchontoglires; Primates;
+OC   Haplorrhini; Simiiformes; Catarrhini; Hominoidea; Hominidae; Homininae;
+OC   Homo; Homo sapiens.
+XX
+RN   [1]
+RP   1-1186
+RX   DOI; 10.1073/pnas.85.15.5634.
+RX   PUBMED; 2456576.
+RA   Guglielmi P., Davi F., d'Auriol L., Bories J.C., Dausset J., Bensussan A.;
+RT   "Use of a variable alpha region to create a functional T-cell receptor
+RT   delta chain";
+RL   Proc. Natl. Acad. Sci. U.S.A. 85(15):5634-5638(1988).
+XX
+DR   EMBL-ALIGN; ALIGN_000306.
+DR   ENA; M21624.
+DR   Ensembl-Gn; ENSDARG00000071376; Danio_rerio.
+DR   Ensembl-Tr; ENSDART00000105479; Danio_rerio.
+DR   Ensembl-Tr; ENSDART00000105480; Danio_rerio.
+DR   Ensembl-Tr; ENSDART00000105481; Danio_rerio.
+DR   GDB; 120406.
+DR   H-InvDB; HIT000194799.
+XX
+CC   IMGT/LIGM-DB annotation level: by annotators
+XX
+FH   Key                 Location/Qualifiers
+FH   
+FT   L-V-D-J-C-SEQUENCE  1..1186
+FT                       /cell_line="DS6"
+FT                       /cell_type="lymphocyte"
+FT                       /db_xref="taxon:9606"
+FT                       /gdb_xref="G00-120-406"
+FT                       /IMGT_map="14q11.2"
+FT                       /mol_type="mRNA"
+FT                       /organism="Homo sapiens"
+FT   5'UTR               1..70
+FT   L-V-D-J-C-REGION    71..934
+FT                       /translation="MSLSSLLKVVTASLWLGPGIAQKITQTQPGMFVQEKEAVTL
+FT                       DCTYDTSDPSYGLFWYKQPSSGEMIFLIYQGSYDQQNATEGRYSLNFQKARKSAN
+FT                       LVISASQLGDSAMYFCAMRAVYTDKLIFGKGTRVTVEPRSQPHTKPSVFVMKNGT
+FT                       NVACLVKEFYPKDIRINLVSSKKITEFDPAIVISPSGKYNAVKLGKYEDSNSVTC
+FT                       SVQHDNKTVHSTDFEVKTDSTDHVKPKETENTKQPSKSCHKPKAIVHTEKVNMMS
+FT                       LTVLGLRMLFAKTVAVNFLLTAKLFFL"
+FT                       /protein_id="AAA61125.1"
+FT   L-V-D-J-REGION      71..472
+FT                       /translation="MSLSSLLKVVTASLWLGPGIAQKITQTQPGMFVQEKEAVTL
+FT                       DCTYDTSDPSYGLFWYKQPSSGEMIFLIYQGSYDQQNATEGRYSLNFQKARKSAN
+FT                       LVISASQLGDSAMYFCAMRAVYTDKLIFGKGTRVTVEP"
+FT   L-V-D-REGION        71..424
+FT                       /translation="MSLSSLLKVVTASLWLGPGIAQKITQTQPGMFVQEKEAVTL
+FT                       DCTYDTSDPSYGLFWYKQPSSGEMIFLIYQGSYDQQNATEGRYSLNFQKARKSAN
+FT                       LVISASQLGDSAMYFCAMRAVY"
+FT   L-V-REGION          71..412
+FT                       /translation="MSLSSLLKVVTASLWLGPGIAQKITQTQPGMFVQEKEAVTL
+FT                       DCTYDTSDPSYGLFWYKQPSSGEMIFLIYQGSYDQQNATEGRYSLNFQKARKSAN
+FT                       LVISASQLGDSAMYFCAM"
+FT   L-REGION            71..130
+FT                       /translation="MSLSSLLKVVTASLWLGPGI"
+FT   INIT-CODON          71..73
+FT   V-D-J-C-REGION      131..934
+FT                       /translation="AQKITQTQPGMFVQEKEAVTLDCTYDTSDPSYGLFWYKQPS
+FT                       SGEMIFLIYQGSYDQQNATEGRYSLNFQKARKSANLVISASQLGDSAMYFCAMRA
+FT                       VYTDKLIFGKGTRVTVEPRSQPHTKPSVFVMKNGTNVACLVKEFYPKDIRINLVS
+FT                       SKKITEFDPAIVISPSGKYNAVKLGKYEDSNSVTCSVQHDNKTVHSTDFEVKTDS
+FT                       TDHVKPKETENTKQPSKSCHKPKAIVHTEKVNMMSLTVLGLRMLFAKTVAVNFLL
+FT                       TAKLFFL"
+FT   V-D-J-REGION        131..472
+FT                       /translation="AQKITQTQPGMFVQEKEAVTLDCTYDTSDPSYGLFWYKQPS
+FT                       SGEMIFLIYQGSYDQQNATEGRYSLNFQKARKSANLVISASQLGDSAMYFCAMRA
+FT                       VYTDKLIFGKGTRVTVEP"
+FT                       /CDR_length="[7.8.11]"
+FT                       /FR_length="[26.17.34.X]"
+FT   V-REGION            131..412
+FT                       /translation="AQKITQTQPGMFVQEKEAVTLDCTYDTSDPSYGLFWYKQPS
+FT                       SGEMIFLIYQGSYDQQNATEGRYSLNFQKARKSANLVISASQLGDSAMYFCAM"
+FT                       /CDR_length="[7.8.11]"
+FT                       /FR_length="[26.17.34.X]"
+FT                       /IMGT_allele="TRAV14/DV4*03"
+FT                       /IMGT_gene="TRAV14/DV4"
+FT   FR1-IMGT            131..208
+FT                       /translation="AQKITQTQPGMFVQEKEAVTLDCTYD"
+FT                       /AA_IMGT="1 to 26"
+FT   1st-CYS             197..199
+FT   CDR1-IMGT           209..229
+FT                       /translation="TSDPSYG"
+FT                       /AA_IMGT="AA 27 to 38, AA 31, 32, 33, 34 and 35 are 
+FT                       missing"
+FT   FR2-IMGT            230..280
+FT                       /translation="LFWYKQPSSGEMIFLIY"
+FT                       /AA_IMGT="39 to 55"
+FT   CONSERVED-TRP       236..238
+FT   CDR2-IMGT           281..304
+FT                       /translation="QGSYDQQN"
+FT                       /AA_IMGT="AA 56 to 65, AA 60 and 61 are missing"
+FT   FR3-IMGT            305..406
+FT                       /translation="ATEGRYSLNFQKARKSANLVISASQLGDSAMYFC"
+FT                       /AA_IMGT="66 to 104,AA 73 missing"
+FT   2nd-CYS             404..406
+FT   CDR3-IMGT           407..439
+FT                       /translation="AMRAVYTDKLI"
+FT                       /AA_IMGT="AA 105 to 117, AA 111 and 112 are missing"
+FT   JUNCTION            404..442
+FT                       /translation="CAMRAVYTDKLIF"
+FT                       /in_frame
+FT   D-J-REGION          407..472
+FT                       /translation="AMRAVYTDKLIFGKGTRVTVEP"
+FT   (N-D)-REGION        407..424
+FT                       /translation="AMRAVY"
+FT   J-REGION            425..472
+FT                       /translation="TDKLIFGKGTRVTVEP"
+FT                       /IMGT_gene="TRDJ1"
+FT   J-PHE               440..442
+FT   C-REGION            473..934
+FT                       /translation="RSQPHTKPSVFVMKNGTNVACLVKEFYPKDIRINLVSSKKI
+FT                       TEFDPAIVISPSGKYNAVKLGKYEDSNSVTCSVQHDNKTVHSTDFEVKTDSTDHV
+FT                       KPKETENTKQPSKSCHKPKAIVHTEKVNMMSLTVLGLRMLFAKTVAVNFLLTAKL
+FT                       FFL"
+FT   STOP-CODON          935..937
+FT   3'UTR               935..1186
+XX
+SQ   Sequence 1186 BP; 369 A; 259 C; 249 G; 309 T; 0 other;
+     gttcacttca cagtacagag tcctgaaaat aaagaagaaa attttttttt atctagaaaa        60
+     agaaccaaac atgtcacttt ctagcctgct gaaggtggtc acagcttcac tgtggctagg       120
+     acctggcatt gcccagaaga taactcaaac ccaaccagga atgttcgtgc aggaaaagga       180
+     ggctgtgact ctggactgca catatgacac cagtgatcca agttatggtc tattctggta       240
+     caagcagccc agcagtgggg aaatgatttt tcttatttat caggggtctt atgaccagca       300
+     aaatgcaaca gaaggtcgct actcattgaa tttccagaag gcaagaaaat ccgccaacct       360
+     tgtcatctcc gcttcacaac tgggggactc agcaatgtat ttctgtgcaa tgagagcggt       420
+     gtacaccgat aaactcatct ttggaaaagg aacccgtgtg actgtggaac caagaagtca       480
+     gcctcatacc aaaccatccg tttttgtcat gaaaaatgga acaaatgtcg cttgtctggt       540
+     gaaggaattc taccccaagg atataagaat aaatctcgtg tcatccaaga agataacaga       600
+     gtttgatcct gctattgtca tctctcccag tgggaagtac aatgctgtca agcttggtaa       660
+     atatgaagat tcaaattcag tgacatgttc agttcaacac gacaataaaa ctgtgcactc       720
+     cactgacttt gaagtgaaga cagattctac agatcacgta aaaccaaagg aaactgaaaa       780
+     cacaaagcaa ccttcaaaga gctgccataa acccaaagcc atagttcata ccgagaaggt       840
+     gaacatgatg tccctcacag tgcttgggct acgaatgctg tttgcaaaga ctgttgccgt       900
+     caattttctc ttgactgcca agttattttt cttgtaaggc tgactggcat gaggaagcta       960
+     cactcctgaa gaaaccaaag gcttacaaaa atgcatctcc ttggcttctg acttctttgt      1020
+     gattcaagtt gacctgtcat agccttgtta aaatggctgc tagccaaacc actttttctt      1080
+     caaagacaac aaacccagct catcctccag cttgatggga agacaaaagt cctggggaag      1140
+     gggggtttat gtcctaactg ctttgtatgc tgttttataa agggat                     1186
+//

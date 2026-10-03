@@ -1,0 +1,89 @@
+ID   KM455557; SV 1; linear; gDNA; STD; HUM; 320 BP.
+XX
+AC   KM455557;
+XX
+DT   06-JAN-2015 (Rel. 201502-2, arrived in LIGM-DB)
+DT   22-MAR-2018 (Rel. 201812-4, Last updated, Version 3)
+XX
+DE   UNVERIFIED: Homo sapiens immunoglobulin lamda chain constant region-like
+DE   (IGLC7) gene, IGLC7-*03 allele, partial sequence.
+XX
+KW   antigen receptor; Immunoglobulin superfamily (IgSF); immunoglobulin (IG);
+KW   IG-Light; IG-Light-Lambda-IGL; constant; IMGT reference sequence; regular;
+KW   gDNA; undefined; functional; C-gene.
+XX
+OS   Homo sapiens (human)
+OC   cellular organisms; Eukaryota; Opisthokonta; Metazoa; Eumetazoa; Bilateria;
+OC   Deuterostomia; Chordata; Craniata; Vertebrata; Gnathostomata; Teleostomi;
+OC   Euteleostomi; Sarcopterygii; Dipnotetrapodomorpha; Tetrapoda; Amniota;
+OC   Mammalia; Theria; Eutheria; Boreoeutheria; Euarchontoglires; Primates;
+OC   Haplorrhini; Simiiformes; Catarrhini; Hominoidea; Hominidae; Homininae;
+OC   Homo; Homo sapiens.
+XX
+RN   [1]
+RC   Contact ncbi-contacts@bcm.tmc.edu for more information.
+RP   1-320
+RA   Rat Genome Sequencing Consortium;
+RT   ;
+RL   Submitted (11-JUL-2003) to the INSDC.
+RL   Human Genome Sequencing Center, Department of Molecular and Human Genetics,
+RL   Baylor College of Medicine, One Baylor Plaza, Houston, TX 77030, USA
+XX
+RN   [2]
+RP   1-320
+RA   Mage R.G., Sehgal D., Schiaffella E.;
+RT   ;
+RL   Submitted (18-JUL-1997) to the INSDC.
+RL   Laboratory of Immunology, National Institute of Allergy and Infectious
+RL   Disease, 10 Center Drive - MSC 1892, Bethesda, MD 20892, USA
+XX
+DR   MD5; f78369c4fff68a6c66a9022ef58ffc8a.
+XX
+CC   IMGT/LIGM-DB annotation level: by annotators
+CC   
+CC   GenBank staff is unable to verify sequence and/or annotation
+CC   provided by the submitter.
+CC   ##Assembly-Data-START##
+CC   Sequencing Technology :: Sanger dideoxy sequencing
+CC   ##Assembly-Data-END##
+XX
+FH   Key                 Location/Qualifiers
+FH   
+FT   C-GENE              <1..>320
+FT                       /partial
+FT                       /clone="AC245054.3"
+FT                       /db_xref="taxon:9606"
+FT                       /functional
+FT                       /germline
+FT                       /IMGT_allele="IGLC7*03"
+FT                       /IMGT_gene="IGLC7"
+FT                       /mol_type="genomic DNA"
+FT                       /organism="Homo sapiens"
+FT   ACCEPTOR-SPLICE     <1..2
+FT                       /partial
+FT   C-GENE-UNIT         1..320
+FT   C-REGION            1..317
+FT                       /codon_start=3
+FT                       /translation="QPKAAPSVTLFPPSSEELQANKATLVCLVSDFNPGAVTVAW
+FT                       KADGSPVKVGVETTKPSKQSNNKYAASSYLSLTPEQWKSHRSYSCRVTHEGSTVE
+FT                       KTVAPAECS"
+FT                       /functional
+FT                       /IMGT_allele="IGLC7*03"
+FT                       /IMGT_gene="IGLC7"
+FT   CL                  1..317
+FT                       /codon_start=3
+FT                       /translation="QPKAAPSVTLFPPSSEELQANKATLVCLVSDFNPGAVTVAW
+FT                       KADGSPVKVGVETTKPSKQSNNKYAASSYLSLTPEQWKSHRSYSCRVTHEGSTVE
+FT                       KTVAPAECS"
+FT   3'UTR               318..>320
+FT                       /partial
+FT   STOP-CODON          318..320
+XX
+SQ   Sequence 320 BP; 80 A; 101 C; 91 G; 48 T; 0 other;
+     gtcagcccaa ggctgccccc tcggtcactc tgttcccacc ctcctctgag gagcttcaag        60
+     ccaacaaggc cacactggtg tgtctcgtaa gtgacttcaa cccgggagcc gtgacagtgg       120
+     cctggaaggc agatggcagc cccgtcaagg tgggagtgga gaccaccaaa ccctccaaac       180
+     aaagcaacaa caagtatgcg gccagcagct acctgagcct gacgcccgag cagtggaagt       240
+     cccacagaag ctacagctgc cgggtcacgc atgaagggag caccgtggag aagacagtgg       300
+     cccctgcaga atgctcttag                                                   320
+//

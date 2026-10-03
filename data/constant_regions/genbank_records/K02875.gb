@@ -1,0 +1,77 @@
+ID   K02875; SV 1; linear; gDNA; STD; HUM; 495 BP.
+XX
+AC   K02875;
+XX
+DT   15-MAY-1995 (Rel. 199520-1, arrived in LIGM-DB)
+DT   11-JAN-2023 (Rel. 202302-3, Last updated, Version 19)
+XX
+DE   Human germline IgD chain gene, C-region, C-delta-1 domain.
+XX
+KW   antigen receptor; Immunoglobulin superfamily (IgSF); immunoglobulin (IG);
+KW   IG-Heavy; IG-Heavy-Delta; constant; leukemia; IMGT reference sequence;
+KW   regular; gDNA; undefined; functional; C-gene.
+XX
+OS   Homo sapiens (human)
+OC   cellular organisms; Eukaryota; Opisthokonta; Metazoa; Eumetazoa; Bilateria;
+OC   Deuterostomia; Chordata; Craniata; Vertebrata; Gnathostomata; Teleostomi;
+OC   Euteleostomi; Sarcopterygii; Dipnotetrapodomorpha; Tetrapoda; Amniota;
+OC   Mammalia; Theria; Eutheria; Boreoeutheria; Euarchontoglires; Primates;
+OC   Haplorrhini; Simiiformes; Catarrhini; Hominoidea; Hominidae; Homininae;
+OC   Homo; Homo sapiens.
+XX
+RN   [1]
+RC   Contact ncbi-contacts@bcm.tmc.edu for more information.
+RP   1-495
+RA   Rat Genome Sequencing Consortium;
+RT   ;
+RL   Submitted (11-JUL-2003) to the INSDC.
+RL   Human Genome Sequencing Center, Department of Molecular and Human Genetics,
+RL   Baylor College of Medicine, One Baylor Plaza, Houston, TX 77030, USA
+XX
+DR   EMBL-JOIN; K02880.
+DR   EMBL-JOIN; K02882.
+DR   ENA; K02875.
+XX
+CC   IMGT/LIGM-DB annotation level: by annotators
+CC   
+CC   Sequence in computer readable form and draft entry for [1] were
+CC   kindly provided by M.B.White, 06-AUG-1985.
+CC   The C-delta and delta-s exon boundaries were located by comparing
+CC   the translated sequences with known AA sequences [1].
+XX
+FH   Key                 Location/Qualifiers
+FH   
+FT   C-GENE              1..>495
+FT                       /partial
+FT                       /cell_type="lymphocyte"
+FT                       /db_xref="taxon:9606"
+FT                       /functional
+FT                       /IMGT_allele="IGHD*01"
+FT                       /IMGT_gene="IGHD"
+FT                       /IMGT_isolate="Chronic lymphotic leukemia (CLL) 
+FT                       patient"
+FT                       /IMGT_map="14q32.33"
+FT                       /mol_type="genomic DNA"
+FT                       /organism="Homo sapiens"
+FT   5'UTR               1..100
+FT   ACCEPTOR-SPLICE     98..102
+FT   CH1                 101..403
+FT                       /codon_start=3
+FT                       /translation="PTKAPDVFPIISGCRHPKDNSPVVLACLITGYHPTSVTVTW
+FT                       YMGTQSQPQRTFPEIQRRDSYYMTSSQLSTPLQQWRQGEYKCVVQHTASKSKKEI
+FT                       FRWP"
+FT   DONOR-SPLICE        403..405
+FT   INTRON              404..>495
+FT                       /partial
+XX
+SQ   Sequence 495 BP; 114 A; 179 C; 120 G; 82 T; 0 other;
+     tttccctgcc tcccgtcacc ctgccgccag ggcctctgcc ctgccctgcc ccttgtcctc        60
+     aggtttccag cctcagactc ccactgtgtc tgtcttccag cacccaccaa ggctccggat       120
+     gtgttcccca tcatatcagg gtgcagacac ccaaaggata acagccctgt ggtcctggca       180
+     tgcttgataa ctgggtacca cccaacgtcc gtgactgtca cctggtacat ggggacacag       240
+     agccagcccc agagaacctt ccctgagata caaagacggg acagctacta catgacaagc       300
+     agccagctct ccacccccct ccagcagtgg cgccaaggcg agtacaaatg cgtggtccag       360
+     cacaccgcca gcaagagtaa gaaggagatc ttccgctggc caggtaggtc gcaccggaga       420
+     tcacccagaa gggcccccca ggacccccag caccttccac tcagggcctg accacaaaga       480
+     cagaagcaag ggctg                                                        495
+//

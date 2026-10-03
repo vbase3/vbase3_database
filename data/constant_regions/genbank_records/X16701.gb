@@ -1,0 +1,134 @@
+ID   X16701; SV 1; linear; gDNA; STD; MAM; 1830 BP.
+XX
+AC   X16701; M25278;
+XX
+DT   15-MAY-1995 (Rel. 199520-1, arrived in LIGM-DB)
+DT   09-MAR-2018 (Rel. 201810-5, Last updated, Version 14)
+XX
+DE   Bovine Ig germline heavy chain gamma-1-chain gene C-region, 3' end
+XX
+KW   antigen receptor; Immunoglobulin superfamily (IgSF); immunoglobulin (IG);
+KW   IG-Heavy; constant; IG-Heavy-Gamma-1-IGHG1; IMGT reference sequence;
+KW   regular; gDNA; undefined; functional; C-gene.
+XX
+OS   Bos taurus (bovine)
+OC   Teleostomi; Euteleostomi; Sarcopterygii; Dipnotetrapodomorpha; Tetrapoda;
+OC   Amniota; Mammalia; Theria; Eutheria; Boreoeutheria; Laurasiatheria;
+OC   Artiodactyla; Ruminantia; Pecora; Bovidae; Bovinae; Bos; Bos taurus.
+XX
+RN   [1]
+RC   Contact ncbi-contacts@bcm.tmc.edu for more information.
+RP   1-1830
+RA   Rat Genome Sequencing Consortium;
+RT   ;
+RL   Submitted (11-JUL-2003) to the INSDC.
+RL   Human Genome Sequencing Center, Department of Molecular and Human Genetics,
+RL   Baylor College of Medicine, One Baylor Plaza, Houston, TX 77030, USA
+XX
+DR   ENA; X16701.
+XX
+CC   IMGT/LIGM-DB annotation level: by annotators
+CC   
+CC   Draft entry and computer-readable sequence for [1] kindly provided
+CC   by D.B.A.Symons 30-MAY-1989.
+CC   
+CC   Data kindly reviewed (08-DEC-1989) by Symons D.B.A.
+XX
+FH   Key                 Location/Qualifiers
+FH   
+FT   C-GENE              1..>1830
+FT                       /partial
+FT                       /clone_lib="lambda2001."
+FT                       /db_xref="taxon:9913"
+FT                       /functional
+FT                       /IMGT_allele="IGHG1*01"
+FT                       /IMGT_gene="IGHG1"
+FT                       /mol_type="genomic DNA"
+FT                       /organism="Bos taurus"
+FT   5'UTR               1..169
+FT   ACCEPTOR-SPLICE     167..171
+FT   CH1                 170..460
+FT                       /codon_start=3
+FT                       /translation="STTAPKVYPLSSCCGDKSSSTVTLGCLVSSYMPEPVTVTWN
+FT                       SGALKSGVHTFPAVLQSSGLYSLSSMVTVPGSTSGQTFTCNVAHPASSTKVDKAV
+FT                       "
+FT                       /IMGT_note="deletion in CH1 (AA 99 is missing)"
+FT   DONOR-SPLICE        460..462
+FT   INTRON              461..788
+FT   ACCEPTOR-SPLICE     786..790
+FT   H                   789..827
+FT                       /codon_start=3
+FT                       /translation="PTCKPSPCDCCP"
+FT                       /splice-expected-nt="g"
+FT                       /splice-expectedcodon="gat [D]"
+FT                       /splicing-frame="sf1"
+FT   DONOR-SPLICE        827..829
+FT   INTRON              828..953
+FT   ACCEPTOR-SPLICE     951..955
+FT   CH2                 954..1283
+FT                       /codon_start=3
+FT                       /translation="PELPGGPSVFIFPPKPKDTLTISGTPEVTCVVVDVGHDDPE
+FT                       VKFSWFVDDVEVNTATTKPREEQFNSTYRVVSALRIQHQDWTGGKEFKCKVHNEG
+FT                       LPAPIVRTISRTK"
+FT                       /splice-expected-nt="c"
+FT                       /splice-expectedcodon="ccc [P]"
+FT                       /splicing-frame="sf1"
+FT   DONOR-SPLICE        1283..1285
+FT   INTRON              1284..1363
+FT   ACCEPTOR-SPLICE     1361..1365
+FT   CH3-CHS             1364..1689
+FT                       /codon_start=3
+FT                       /translation="PAREPQVYVLAPPQEELSKSTVSLTCMVTSFYPDYIAVEWQ
+FT                       RNGQPESEDKYGTTPPQLDADSSYFLYSKLRVDRNSWQEGDTYTCVVMHEALHNH
+FT                       YTQKSTSKSAGK"
+FT   CH3                 1364..1684
+FT                       /codon_start=3
+FT                       /translation="PAREPQVYVLAPPQEELSKSTVSLTCMVTSFYPDYIAVEWQ
+FT                       RNGQPESEDKYGTTPPQLDADSSYFLYSKLRVDRNSWQEGDTYTCVVMHEALHNH
+FT                       YTQKSTSKSA"
+FT                       /splice-expected-nt="g"
+FT                       /splice-expectedcodon="ggg [G]"
+FT                       /splicing-frame="sf1"
+FT   INT-DONOR-SPLICE    1684..1686
+FT   CHS                 1684..1689
+FT                       /translation="GK"
+FT                       /IMGT_note="For complete translation nucleotide G at 
+FT                       position 1684 has been included in CH-S."
+FT   STOP-CODON          1690..1692
+FT   INTRON              1690..>1830
+FT                       /partial
+FT   POLYA_SIGNAL        1804..1809
+XX
+SQ   Sequence 1830 BP; 372 A; 637 C; 527 G; 294 T; 0 other;
+     aagctgtgtc cagacacccc aactgcagta cagtacagag agccgggtgg ccaccatgcc        60
+     ggccggtcat cagaccctgg aagcaggtgg tggctgggct cagaggtgcc ccaggcctgg       120
+     ctcctgaggt cctgctggac ccacattcac ccagcctcct ctctcacagc ctccaccaca       180
+     gccccgaaag tctaccctct gagttcttgc tgcggggaca agtccagctc caccgtgacc       240
+     ctgggctgcc tggtctccag ctacatgccc gagccggtga ccgtgacctg gaactcgggt       300
+     gccctgaaga gcggcgtgca caccttcccg gccgtccttc agtcctccgg gctgtactct       360
+     ctcagcagca tggtgaccgt gcccggcagc acctcaggac agaccttcac ctgcaacgta       420
+     gcccacccgg ccagcagcac caaggtggac aaggctgttg gtgagaagat ggtccccggg       480
+     gaggtgtcca ctccaggaga ccagggtcag ccccactgcc tgcaggggcc ccacccccgg       540
+     ggtgctgtga accaggccca gtgtgtcagg ggaggccctg tctgtctctc tcctacagtc       600
+     ttgcaggctt ggggaggggg ttgtctggag tttccgccag gtccacggtg ggcaggcagg       660
+     gtcaacgtcc acacagcctg gacccacaga gacgggccct gggctcagac ctgctaaaac       720
+     ccgtccctgc cctaagccca gcccatggct tcctgcccct ggtaaccccc agtctgctct       780
+     ctctgcagat cccacatgca aaccatcacc ctgtgactgt tgcccacgta agtcacccag       840
+     tctccccatc acaccccaga tgtggacagg gcccaggagg gccacaggtg aggctgtggg       900
+     ggcccaagag tgagtctgcc caggggctga caactgttat gtcttcccca aagcccctga       960
+     gctccccgga ggaccctctg tcttcatctt cccaccgaaa cccaaggaca ccctcacaat      1020
+     ctcgggaacg cccgaggtca cgtgtgtggt ggtggacgtg ggccacgatg accccgaggt      1080
+     gaagttctcc tggttcgtgg acgacgtgga ggtaaacaca gccacgacga agccgagaga      1140
+     ggagcagttc aacagcacct accgcgtggt cagcgccctg cgcatccagc accaggactg      1200
+     gactggagga aaggagttca agtgcaaggt ccacaacgaa ggcctcccgg cccccatcgt      1260
+     gaggaccatc tccaggacca aaggtgggcc aggtggacgg gaccgggagg cccatgggcc      1320
+     aatcagagtg accgctgtgc taacagcctt cctgtcccca cagggccggc ccgggagccg      1380
+     caggtgtatg tcctggcccc accccaggaa gagctcagca aaagcacggt cagcctcacc      1440
+     tgcatggtca ccagcttcta cccagactac atcgccgtgg agtggcagag aaacgggcag      1500
+     cctgagtcgg aggacaagta cggcacgacc ccgccccagc tggacgccga cagctcctac      1560
+     ttcctgtaca gcaagctcag ggtggacagg aacagctggc aggaaggaga cacctacacg      1620
+     tgtgtggtga tgcacgaggc cctgcacaat cactacacgc agaagtccac ctctaagtct      1680
+     gcgggtaaat gagcctcacg tccctgcacc agcaagccct cacccagccc accctccccg      1740
+     ggctccaggt ccagccagga cgccctagcc cctccctgtg tgcattcctc ctgggccgcc      1800
+     gtgaataaag cacccaggcc gccctggacc                                       1830
+//

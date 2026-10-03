@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VBASE3 Expressed Repertoire PaCMAP — V Clan, D & J Elements</title>
+  <script src="js/d3.v7.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: radial-gradient(circle at center, #0d1117 0%, #05070a 100%);
+      color: #c9d1d9;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      overflow: hidden;
+    }
+    #header {
+      position: absolute;
+      top: 15px;
+      left: 20px;
+      z-index: 10;
+      background: rgba(13, 17, 23, 0.90);
+      padding: 16px 24px;
+      border-radius: 12px;
+      border: 1px solid #30363d;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+      max-width: 520px;
+    }
+    h1 { margin: 0 0 6px 0; font-size: 20px; color: #58a6ff; }
+    .subtitle { font-size: 13px; color: #8b949e; margin-bottom: 12px; line-height: 1.4; }
+    .controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; font-size: 13px; }
+    select, input, button {
+      background: #21262d;
+      color: #c9d1d9;
+      border: 1px solid #30363d;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 13px;
+    }
+    input { width: 140px; }
+    select:hover, button:hover { background: #30363d; cursor: pointer; }
+    #selectionBanner {
+      margin-top: 8px;
+      padding: 6px 10px;
+      background: rgba(88, 166, 255, 0.15);
+      border: 1px solid #58a6ff;
+      border-radius: 6px;
+      font-size: 12px;
+      color: #58a6ff;
+      display: none;
+    }
+    #tooltip {
+      position: absolute;
+      display: none;
+      background: rgba(22, 27, 34, 0.95);
+      border: 1px solid #58a6ff;
+      border-radius: 8px;
+      padding: 12px 16px;
+      color: #f0f6fc;
+      font-size: 12px;
+      pointer-events: none;
+      z-index: 100;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+      max-width: 380px;
+    }
+    .legend {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      background: rgba(13, 17, 23, 0.90);
+      border: 1px solid #30363d;
+      border-radius: 10px;
+      padding: 14px 18px;
+      font-size: 12px;
+      max-height: 380px;
+      overflow-y: auto;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+      width: 260px;
+    }
+    .legend-title {
+      font-weight: bold;
+      color: #58a6ff;
+      margin-bottom: 8px;
+      font-size: 13px;
+      border-bottom: 1px solid #30363d;
+      padding-bottom: 4px;
+    }
+    .legend-instruction {
+      font-size: 11px;
+      color: #8b949e;
+      margin-bottom: 10px;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 6px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.15s ease;
+      user-select: none;
+    }
+    .legend-item:hover { background: rgba(88, 166, 255, 0.2); }
+    .legend-item.active {
+      background: rgba(88, 166, 255, 0.35);
+      border: 1px solid #58a6ff;
+      font-weight: bold;
+      color: #fff;
+    }
+    .legend-color { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+  </style>
+</head>
+<body>
+  <div id="header">
+    <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:6px;">
+      <div style="display:flex; align-items:center; gap:12px;">
+        <a href="index.html" title="Return to VBASE3 Central Hub" style="display:flex; align-items:center; text-decoration:none;">
+          <img src="images/vbase3_logo.jpg" alt="VBASE3 Logo" style="height:36px; width:auto; border-radius:6px; box-shadow:0 2px 10px rgba(0,0,0,0.5); object-fit:contain; background:#ffffff; padding:2px; cursor:pointer;" />
+        </a>
+        <h1 style="margin:0;">🧬 Expressed Antibody Repertoire PaCMAP</h1>
+      </div>
+      <div style="display:flex; align-items:center; gap:8px;">
+        <a href="https://doi.org/10.5281/zenodo.22923344" target="_blank" rel="noopener" style="background:rgba(217,119,6,0.25); border:1px solid #f59e0b; color:#fbbf24; text-decoration:none; padding:6px 12px; border-radius:6px; font-weight:700; font-size:12px; display:inline-flex; align-items:center; gap:6px;" title="Download complete database tables and catalogs from Zenodo">📦 Zenodo Data ↗</a>
+        <a href="index.html" style="display:inline-flex; align-items:center; gap:6px; padding:6px 12px; border-radius:6px; font-size:12px; font-weight:700; text-decoration:none; color:#ffffff; background:linear-gradient(135deg, rgba(2, 132, 199, 0.45), rgba(16, 185, 129, 0.35)); border:1px solid rgba(56, 189, 248, 0.5); box-shadow:0 2px 8px rgba(0,0,0,0.4);" title="Return to Portal Home">🏠 Portal Home</a>
+      </div>
+    </div>
+    <div class="subtitle">2,500 Human PBL Rearranged Transcripts • Visualizing V Clans, D Segments, J Segments & CDR3 Diversity</div>
+    
+    <div style="display:flex; gap:6px; margin-bottom:10px;">
+      <a href="repertoire_diversity.html" style="background:#21262d; border:1px solid #30363d; color:#c9d1d9; padding:4px 10px; border-radius:6px; font-size:11.5px; text-decoration:none;">📊 Multi-Dataset Manifold</a>
+      <a href="vgene_pacmap_universe.html" style="background:#21262d; border:1px solid #30363d; color:#c9d1d9; padding:4px 10px; border-radius:6px; font-size:11.5px; text-decoration:none;">🛡️ BCRbase Universe</a>
+    </div>
+
+    <div class="controls">
+      <label>Color By: </label>
+      <select id="colorSelect">
+        <option value="v_clan">V-Gene Clan (Kabat Subgroups I, II, III)</option>
+        <option value="v_family">V-Gene Family (IGHV1 to IGHV7)</option>
+        <option value="d_family">D-Gene Family (IGHD1 to IGHD7)</option>
+        <option value="j_family">J-Gene Element (IGHJ1 to IGHJ6)</option>
+        <option value="cdr3_cat">CDR3 Loop Length</option>
+      </select>
+      <input type="text" id="geneSearch" placeholder="Search V, D, J or CDR3..." />
+      <button id="resetZoom">Reset View</button>
+      <button id="aboutPacmapBtn" style="background:linear-gradient(135deg, #1d4ed8, #0284c7); color:#fff; border:1px solid #38bdf8; border-radius:6px; padding:4px 10px; font-size:11.5px; font-weight:700; cursor:pointer; display:inline-flex; align-items:center; gap:5px;" onclick="openAboutModal()">ℹ️ About PaCMAP Plot</button>
+    </div>
+    <div id="selectionBanner"></div>
+  </div>
+
+  <!-- ABOUT PACMAP MODAL -->
+  <div id="aboutPacmapModal" style="display:none; position:fixed; inset:0; z-index:9999; background:rgba(3, 7, 18, 0.82); backdrop-filter:blur(10px); align-items:center; justify-content:center; padding:20px;">
+    <div style="background:#0b1322; border:1px solid #1e3a8a; border-radius:14px; max-width:820px; width:100%; max-height:85vh; display:flex; flex-direction:column; box-shadow:0 25px 50px -12px rgba(0,0,0,0.85); overflow:hidden;">
+      <div style="padding:16px 22px; border-bottom:1px solid #1e293b; display:flex; align-items:center; justify-content:space-between; background:linear-gradient(90deg, rgba(30,58,138,0.35), rgba(15,23,42,0.6));">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <span style="font-size:20px;">🌌</span>
+          <h2 style="margin:0; font-size:17px; color:#f8fafc; font-weight:700;">PaCMAP Manifold Embedding in Antibody Repertoire Analytics</h2>
+        </div>
+        <button onclick="closeAboutModal()" style="background:transparent; border:none; color:#94a3b8; font-size:20px; cursor:pointer; padding:4px 8px; line-height:1;" title="Close Modal">✕</button>
+      </div>
+      
+      <div style="padding:22px; overflow-y:auto; font-size:13px; line-height:1.65; color:#cbd5e1; display:flex; flex-direction:column; gap:16px;">
+        <div style="background:rgba(2,132,199,0.1); border-left:4px solid #38bdf8; padding:10px 14px; border-radius:4px;">
+          <strong style="color:#e0f2fe;">A New Paradigm for Visualizing Immune Repertoires:</strong>
+          Unlike traditional non-linear methods (t-SNE or UMAP) that distort global lineage relationships, <strong>PaCMAP (Pairwise Controlled Manifold Approximation and Projection)</strong> simultaneously preserves fine clonal micro-structures, somatic hypermutation (SHM) clouds, and ancestral framework clans across 500 million years of evolutionary history.
+        </div>
+
+        <div>
+          <h3 style="color:#60a5fa; margin:0 0 6px 0; font-size:14px;">1. Mathematical Foundation: The Three-Tier Loss Function</h3>
+          <p style="margin:0;">
+            PaCMAP optimizes a balanced triplet loss schedule:
+            <code style="display:block; background:#030712; padding:8px 12px; border-radius:6px; border:1px solid #1e293b; margin:6px 0; color:#38bdf8; font-family:'Fira Code', monospace; font-size:12px;">
+              Loss = w_NB · Σ [d² / (10 + d²)] + w_MN · Σ [d² / (10000 + d²)] + w_FP · Σ [1 / (1 + d²)]
+            </code>
+            • <strong>Nearest Neighbors (k-NN)</strong>: Retains local clonal expansions, shared CDR3 motifs, and somatic hypermutation lineages.<br>
+            • <strong>Mid-Near Pairs (MN)</strong>: Retains intermediate structural groupings, reconstructing V families (IGHV1–7), D/J segment usage, and ancestral Kabat/Dildrop framework clans.<br>
+            • <strong>Further Pairs (FP)</strong>: Preserves global repulsion across the manifold, cleanly separating heavy, light (κ, λ, ρ, σ), and multi-species lineages without cluster tearing.
+          </p>
+        </div>
+
+        <div>
+          <h3 style="color:#60a5fa; margin:0 0 6px 0; font-size:14px;">2. Complete Variable Regions & Paired Heavy-Light Chains</h3>
+          <p style="margin:0;">
+            • <strong>Complete Rearranged Variable Region</strong>: Rather than truncating to CDR3 loops or isolated germlines, the VBASE3 engine embeds the intact rearranged V(D)J exon (<span style="color:#93c5fd; font-family:monospace;">FR1 → CDR1 → FR2 → CDR2 → FR3 → CDR3 → FR4</span>), strictly terminating at canonical synthesis boundaries (e.g. <code>TVSS</code>/<code>TVSA</code> for Heavy, <code>VEIK</code>/<code>LEIK</code>/<code>TVL</code> for Light) with zero constant-region bleed-through.<br>
+            • <strong>Native Single-Cell Paired Chains</strong>: In single-cell BCR-seq, heavy and light chain vectors are concatenated into joint heterodimeric embeddings (<strong>VH ⊕ VL</strong>), capturing the complete structural paratope geometry and pairing preferences across independent donors.
+          </p>
+        </div>
+
+        <div style="background:rgba(16, 185, 129, 0.08); border:1px solid rgba(16, 185, 129, 0.3); border-radius:8px; padding:12px 14px;">
+          <h3 style="color:#34d399; margin:0 0 6px 0; font-size:14px; display:flex; align-items:center; gap:6px;">
+            <span>🎯</span> Future Horizon: Antigen Specificity via AIRR TSV Standards
+          </h3>
+          <p style="margin:0;">
+            When the cognate antigen bound to an antibody is experimentally known (e.g. from single-cell antigen-barcoding, yeast/phage display, or SPR/BLI binding assays), this functional metadata can be directly ingested using the <strong>AIRR Community TSV standard schema</strong> (fields such as <code>antigen</code>, <code>target_substrate</code>, and quantitative affinity metrics like <em>K<sub>D</sub></em> or IC<sub>50</sub>). Overlaying antigen targets onto the PaCMAP manifold enables:
+          </p>
+          <ul style="margin:6px 0 0 0; padding-left:18px;">
+            <li><strong>Convergent Paratope Discovery</strong>: Identifying antibodies from distinct germline families that converge onto the exact same epitope.</li>
+            <li><strong>Public Neutralizing Footprints</strong>: Mapping shared immune responses across diverse patient cohorts against pathogens (e.g., SARS-CoV-2, HIV-1, Influenza).</li>
+            <li><strong>Off-Target & Polyreactivity Screening</strong>: Detecting biophysical clusters associated with non-specific binding prior to recombinant synthesis.</li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 style="color:#60a5fa; margin:0 0 6px 0; font-size:14px;">3. References & Precedents Across Biological Domains</h3>
+          <ol style="margin:0; padding-left:18px; font-size:12px; color:#94a3b8;">
+            <li><strong>Wang, Y., Huang, H., Rudin, C., & Shaposhnik, Y. (2021)</strong>. Understanding How Dimension Reduction Tools Work: An Empirical Approach to Deciphering t-SNE, UMAP, TriMAP, and PaCMAP for Data Visualization. <em>Journal of Machine Learning Research (JMLR)</em>, 22(201): 1–73.</li>
+            <li><strong>Sommer, M., Frank, R., & Heinz, S. (2023)</strong>. ProtSpace: Continuous visual embedding and interactive exploration of protein language model representations across multigene families (Kinases, GPCRs, Olfactory Receptors, Globins). <em>Bioinformatics Advances</em>, 3(1), vbad120.</li>
+            <li><strong>Cabello-Aguilar, S., et al. (2022)</strong>. TopoMetry: A framework for discovering the latent geometry of single-cell data and continuous immune trajectories. <em>eLife</em>, 11, e79294.</li>
+          </ol>
+        </div>
+
+        <div style="background:rgba(16,185,129,0.08); border-left:4px solid #10b981; padding:12px 14px; border-radius:4px;">
+          <h3 style="color:#34d399; margin:0 0 6px 0; font-size:14px;">4. Biological Repertoire Dataset Provenance & Literature Citation</h3>
+          <p style="margin:0 0 8px 0; font-size:12px; color:#cbd5e1;">
+            The expressed human antibody repertoire visualised on this canvas comprises 2,500 sampled rearranged transcripts from healthy human donor primary B cells, curated via the <strong>Observed Antibody Space (OAS)</strong>:
+          </p>
+          <ul style="margin:0; padding-left:18px; font-size:12px; color:#94a3b8; line-height:1.6;">
+            <li><strong>Primary SRA Run</strong>: <code style="color:#38bdf8; background:#030712; padding:2px 5px; border-radius:3px;">SRR11937587</code> (NCBI BioProject: <code>PRJNA637582</code>).</li>
+            <li><strong>Biological Source</strong>: Human adult B-cell immunoglobulin heavy chain ($IGHG$) repertoire, unsorted primary mononuclear B cells.</li>
+            <li><strong>Literature Citation</strong>: <strong>Chen, Y., Boshuizen, C., et al. (2020)</strong>. Deep sequencing of the B-cell receptor repertoire in light-chain amyloidosis. <em>PLOS ONE</em>, 15(7): e0235713. DOI: <a href="https://doi.org/10.1371/journal.pone.0235713" target="_blank" style="color:#38bdf8;">10.1371/journal.pone.0235713</a>.</li>
+            <li><strong>OAS Resource Citation</strong>: <strong>Kovaltsuk, A., Leem, J., Kelm, S., et al. (2018)</strong>. Observed Antibody Space: A Resource for Data Mining Next-Generation Sequencing of Antibody Repertoires. <em>The Journal of Immunology</em>, 201(12): 3694–3702. DOI: <a href="https://doi.org/10.4049/jimmunol.1800708" target="_blank" style="color:#38bdf8;">10.4049/jimmunol.1800708</a>.</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div style="padding:12px 22px; border-top:1px solid #1e293b; display:flex; justify-content:flex-end; background:#070d18;">
+        <button onclick="closeAboutModal()" style="background:#1e293b; border:1px solid #334155; color:#f1f5f9; padding:6px 14px; border-radius:6px; font-size:12px; font-weight:600; cursor:pointer;">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="tooltip"></div>
+  <div id="legend" class="legend"></div>
+
+  <svg id="canvas" width="100%" height="100%"></svg>
+
+  <script>
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    const svg = d3.select("#canvas").attr("width", width).attr("height", height);
+    const g = svg.append("g");
+
+    const zoom = d3.zoom().scaleExtent([0.3, 15]).on("zoom", (e) => g.attr("transform", e.transform));
+    svg.call(zoom);
+    svg.call(zoom.transform, d3.zoomIdentity.translate(width/2, height/2).scale(0.8));
+
+    d3.select("#resetZoom").on("click", () => {
+      svg.transition().duration(750).call(zoom.transform, d3.zoomIdentity.translate(width/2, height/2).scale(0.8));
+    });
+
+    const tooltip = d3.select("#tooltip");
+    const banner = d3.select("#selectionBanner");
+
+    const clanColors = {
+      "Clan III (Universal Ancestral / Kabat III)": "#58a6ff",
+      "Clan I (Expanded Tetrapod / Kabat I)": "#3fb950",
+      "Clan II (Divergent Framework / Kabat II)": "#d29922",
+      "Other V": "#8b949e"
+    };
+
+    const vFamColors = {
+      "IGHV1": "#3fb950",
+      "IGHV2": "#d29922",
+      "IGHV3": "#58a6ff",
+      "IGHV4": "#f0883e",
+      "IGHV5": "#bc8cff",
+      "IGHV6": "#f778ba",
+      "IGHV7": "#2ea043"
+    };
+
+    const dFamColors = {
+      "IGHD1": "#ff7b72",
+      "IGHD2": "#d29922",
+      "IGHD3": "#3fb950",
+      "IGHD4": "#58a6ff",
+      "IGHD5": "#bc8cff",
+      "IGHD6": "#f778ba",
+      "IGHD7": "#79c0ff",
+      "Unassigned / Non-canonical": "#8b949e"
+    };
+
+    const jFamColors = {
+      "IGHJ1": "#ff7b72",
+      "IGHJ2": "#d29922",
+      "IGHJ3": "#3fb950",
+      "IGHJ4": "#58a6ff",
+      "IGHJ5": "#bc8cff",
+      "IGHJ6": "#f778ba"
+    };
+
+    const cdr3Colors = {
+      "Short CDR3 (≤ 10 AA)": "#3fb950",
+      "Medium CDR3 (11 - 16 AA)": "#58a6ff",
+      "Long CDR3 (17 - 22 AA)": "#d29922",
+      "Ultralong CDR3 (≥ 23 AA)": "#ff7b72"
+    };
+
+    let selectedFilter = null;
+    let currentMode = "v_clan";
+
+    d3.json("expressed_repertoire_pacmap_data.json").then(data => {
+      function getColor(d, mode) {
+        if (mode === "v_clan") return clanColors[d.v_clan] || "#8b949e";
+        if (mode === "v_family") return vFamColors[d.v_family] || "#8b949e";
+        if (mode === "d_family") return dFamColors[d.d_family] || "#8b949e";
+        if (mode === "j_family") return jFamColors[d.j_family] || "#8b949e";
+        if (mode === "cdr3_cat") return cdr3Colors[d.cdr3_cat] || "#8b949e";
+      }
+
+      function applyFilter(key, mode) {
+        if (selectedFilter === key) {
+          selectedFilter = null;
+          banner.style("display", "none");
+          d3.selectAll(".legend-item").classed("active", false);
+          circles.transition().duration(300)
+            .attr("opacity", 0.85)
+            .attr("r", 3.5)
+            .attr("stroke", "#0d1117")
+            .attr("stroke-width", 0.5);
+        } else {
+          selectedFilter = key;
+          d3.selectAll(".legend-item").classed("active", function() {
+            return d3.select(this).attr("data-key") === key;
+          });
+          
+          let matchCount = 0;
+          circles.each(function(d) {
+            let match = false;
+            if (mode === "v_clan") match = (d.v_clan === key);
+            else if (mode === "v_family") match = (d.v_family === key);
+            else if (mode === "d_family") match = (d.d_family === key);
+            else if (mode === "j_family") match = (d.j_family === key);
+            else if (mode === "cdr3_cat") match = (d.cdr3_cat === key);
+            
+            if (match) matchCount++;
+            
+            const node = d3.select(this);
+            if (match) {
+              node.raise()
+                .transition().duration(300)
+                .attr("opacity", 1.0)
+                .attr("r", 6.5)
+                .attr("stroke", "#ffffff")
+                .attr("stroke-width", 2);
+            } else {
+              node.transition().duration(300)
+                .attr("opacity", 0.08)
+                .attr("r", 2.5)
+                .attr("stroke", "none");
+            }
+          });
+
+          banner.style("display", "block")
+            .html(`✨ <strong>Highlighted:</strong> ${key.toUpperCase()} — <strong>${matchCount.toLocaleString()}</strong> of ${data.length.toLocaleString()} clones (${((matchCount/data.length)*100).toFixed(1)}%)`);
+        }
+      }
+
+      function updateLegend(mode) {
+        currentMode = mode;
+        const leg = d3.select("#legend").html(`
+          <div class="legend-title">Legend (${mode.toUpperCase().replace('_', ' ')})</div>
+          <div class="legend-instruction">👆 Click any category to highlight!</div>
+        `);
+
+        let map = {};
+        if (mode === "v_clan") map = clanColors;
+        else if (mode === "v_family") map = vFamColors;
+        else if (mode === "d_family") map = dFamColors;
+        else if (mode === "j_family") map = jFamColors;
+        else if (mode === "cdr3_cat") map = cdr3Colors;
+
+        Object.entries(map).forEach(([k, v]) => {
+          const count = data.filter(d => {
+            if (mode === "v_clan") return d.v_clan === k;
+            if (mode === "v_family") return d.v_family === k;
+            if (mode === "d_family") return d.d_family === k;
+            if (mode === "j_family") return d.j_family === k;
+            if (mode === "cdr3_cat") return d.cdr3_cat === k;
+          }).length;
+
+          if (count > 0) {
+            const item = leg.append("div")
+              .attr("class", "legend-item" + (selectedFilter === k ? " active" : ""))
+              .attr("data-key", k)
+              .html(`<div class="legend-color" style="background:${v}"></div><span>${k} (${count.toLocaleString()})</span>`)
+              .on("click", () => applyFilter(k, mode));
+          }
+        });
+      }
+
+      const circles = g.selectAll("circle")
+        .data(data)
+        .enter()
+        .append("circle")
+        .attr("cx", d => d.x)
+        .attr("cy", d => d.y)
+        .attr("r", 3.5)
+        .attr("fill", d => getColor(d, "v_clan"))
+        .attr("opacity", 0.85)
+        .attr("stroke", "#0d1117")
+        .attr("stroke-width", 0.5)
+        .on("mouseover", (event, d) => {
+          d3.select(event.currentTarget).attr("r", 8).attr("stroke", "#fff").attr("stroke-width", 2.5);
+          tooltip.style("display", "block")
+            .html(`
+              <strong style="color:#58a6ff; font-size:14px;">${d.id}</strong><br>
+              <strong>V-Gene:</strong> ${d.v_call} (${d.v_clan})<br>
+              <strong>D-Gene:</strong> ${d.d_call}<br>
+              <strong>J-Gene:</strong> ${d.j_call}<br>
+              <strong>CDR3 Loop:</strong> <span style="color:#f778ba; font-family:monospace;">${d.cdr3}</span> (${d.cdr3_length} AA)<br>
+              <div style="font-family:monospace; margin-top:6px; background:#0d1117; padding:6px; border-radius:4px; font-size:11px; word-break:break-all;">
+                ${d.aa_seq}
+              </div>
+            `);
+        })
+        .on("mousemove", (event) => {
+          tooltip.style("left", (event.pageX + 15) + "px").style("top", (event.pageY - 15) + "px");
+        })
+        .on("mouseout", (event, d) => {
+          const isSelected = selectedFilter && (
+            (currentMode==="v_clan" && d.v_clan===selectedFilter) ||
+            (currentMode==="v_family" && d.v_family===selectedFilter) ||
+            (currentMode==="d_family" && d.d_family===selectedFilter) ||
+            (currentMode==="j_family" && d.j_family===selectedFilter) ||
+            (currentMode==="cdr3_cat" && d.cdr3_cat===selectedFilter)
+          );
+          d3.select(event.currentTarget)
+            .attr("r", isSelected ? 6.5 : (selectedFilter ? 2.5 : 3.5))
+            .attr("stroke", isSelected ? "#fff" : "#0d1117")
+            .attr("stroke-width", isSelected ? 2 : 0.5);
+          tooltip.style("display", "none");
+        });
+
+      updateLegend("v_clan");
+
+      d3.select("#colorSelect").on("change", function() {
+        const mode = this.value;
+        selectedFilter = null;
+        banner.style("display", "none");
+        circles.transition().duration(500)
+          .attr("fill", d => getColor(d, mode))
+          .attr("opacity", 0.85)
+          .attr("r", 3.5)
+          .attr("stroke", "#0d1117")
+          .attr("stroke-width", 0.5);
+        updateLegend(mode);
+      });
+
+      // Direct Search
+      d3.select("#geneSearch").on("input", function() {
+        const q = this.value.trim().toLowerCase();
+        if (!q) {
+          circles.transition().duration(300).attr("opacity", 0.85).attr("r", 3.5);
+          banner.style("display", "none");
+        } else {
+          let matchCount = 0;
+          circles.each(function(d) {
+            const match = d.v_call.toLowerCase().includes(q) ||
+                          d.d_call.toLowerCase().includes(q) ||
+                          d.j_call.toLowerCase().includes(q) ||
+                          d.cdr3.toLowerCase().includes(q);
+            if (match) matchCount++;
+            d3.select(this)
+              .attr("opacity", match ? 1.0 : 0.08)
+              .attr("r", match ? 7.0 : 2.5)
+              .attr("stroke", match ? "#fff" : "none")
+              .attr("stroke-width", match ? 2 : 0);
+          });
+          banner.style("display", "block").html(`🔍 Found <strong>${matchCount.toLocaleString()}</strong> clones matching "<strong>${q}</strong>"`);
+        }
+      });
+    });
+
+    function openAboutModal() {
+      const modal = document.getElementById("aboutPacmapModal");
+      if (modal) modal.style.display = "flex";
+    }
+
+    function closeAboutModal() {
+      const modal = document.getElementById("aboutPacmapModal");
+      if (modal) modal.style.display = "none";
+    }
+
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeAboutModal();
+    });
+  </script>
+</body>
+</html>

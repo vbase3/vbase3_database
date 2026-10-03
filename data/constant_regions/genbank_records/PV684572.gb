@@ -1,0 +1,51 @@
+LOCUS       PV684572                 572 bp    mRNA    linear   MAM 28-MAY-2025
+DEFINITION  Canis lupus familiaris T cell receptor beta constant region 1
+            (TRBC1) mRNA, partial cds.
+ACCESSION   PV684572
+VERSION     PV684572.1
+KEYWORDS    .
+SOURCE      Canis lupus familiaris (dog)
+  ORGANISM  Canis lupus familiaris
+            Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi;
+            Mammalia; Eutheria; Laurasiatheria; Carnivora; Caniformia; Canidae;
+            Canis.
+REFERENCE   1  (bases 1 to 572)
+  AUTHORS   Pieczka,M., Miazek,A. and Kubiak-Nowak,D.
+  TITLE     Direct Submission
+  JOURNAL   Submitted (22-MAY-2025) Department of Biochemistry and Molecular
+            Biology, Wroclaw University of Environmental and Life Sciences,
+            Cypriana Kamila Norwida 25, Wroclaw 50-375, Poland
+COMMENT     ##Assembly-Data-START##
+            Sequencing Technology :: Sanger dideoxy sequencing
+            ##Assembly-Data-END##
+FEATURES             Location/Qualifiers
+     source          1..572
+                     /organism="Canis lupus familiaris"
+                     /mol_type="mRNA"
+                     /db_xref="taxon:9615"
+                     /geo_loc_name="Poland: Wroclaw"
+                     /collection_date="Jan-2024"
+     gene            <1..572
+                     /gene="TRBC1"
+     CDS             <1..537
+                     /gene="TRBC1"
+                     /codon_start=1
+                     /product="T cell receptor beta constant region 1"
+                     /protein_id="XUD99378.1"
+                     /translation="AEDLQKVTPPTVTVFEPSEAEISRTQKATLVCLATGFYPDHVEL
+                     SWWVNGKEVTSGFSTDPQPYKERPSENDSSYCLSSRLRVSASFWHNPRNHFRCQVQFY
+                     GLGDDDEWKYDRVKPITQNISAEAWGRADCGFTSVSYHQGVLSATILYEILLGKATLY
+                     AVLVSVLVLMAKVKRKGS"
+ORIGIN      
+        1 gcagaggatc tgcagaaggt cacccctccc acggtcacag tgtttgaacc atcagaagca
+       61 gagatctcgc ggacccagaa ggccacgctc gtgtgcctgg ccacgggctt ctaccccgac
+      121 cacgtggagc tgagctggtg ggtgaacggg aaggaggtca cgagtgggtt cagcaccgac
+      181 ccgcagccct acaaggagag gcccagcgag aatgactcca gctactgtct gagcagccgg
+      241 ctgagggtct ctgcctcctt ctggcacaac ccgcgcaacc acttccgctg ccaagtccag
+      301 ttctatgggc tcggggacga cgatgagtgg aaatacgata gagtcaaacc catcacccag
+      361 aacatcagtg ctgaggcctg gggcagagca gactgtggct tcacctcggt gtcctaccat
+      421 cagggcgtcc tgtctgccac catcctctat gagatcctgc tgggcaaggc cacgctgtat
+      481 gctgtgctgg tcagcgtcct ggtgctgatg gccaaggtca agagaaaggg ttcctgaaac
+      541 tagttcagag gcagagccag cagctttcca ga
+//
+

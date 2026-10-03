@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="vbase3-agent-api" content="vbase3_sdk.js:window.VBASE3">
+    <title>Rabbit (Oryctolagus cuniculus) Antibody Analyzer — VBASE3</title>
+    <link rel="stylesheet" href="css/fonts.css">
+    <script src="js/vbase3_sdk.js"></script>
+    <style>
+        :root {
+            --bg-base: #060d17;
+            --bg-card: rgba(13, 27, 42, 0.85);
+            --bg-card-hover: rgba(20, 39, 61, 0.95);
+            --border-glass: rgba(56, 189, 248, 0.22);
+            --border-glow: rgba(56, 189, 248, 0.45);
+            
+            --accent-emerald: #10b981;
+            --accent-teal: #14b8a6;
+            --accent-cyan: #06b6d4;
+            --accent-blue: #38bdf8;
+            --accent-amber: #f59e0b;
+            --accent-purple: #a855f7;
+            --accent-rose: #f43f5e;
+            
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            
+            --cdr1-color: #38bdf8;
+            --cdr2-color: #4ade80;
+            --cdr3-color: #f43f5e;
+            --fr-color: #94a3b8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: var(--bg-base);
+            color: var(--text-primary);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            min-height: 100vh;
+            line-height: 1.5;
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(56, 189, 248, 0.12) 0%, transparent 45%),
+                radial-gradient(circle at 85% 85%, rgba(2, 132, 199, 0.10) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(56, 189, 248, 0.05) 0%, transparent 65%);
+            background-attachment: fixed;
+        }
+
+        header {
+            background: rgba(6, 13, 23, 0.90);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border-glass);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 14px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 14px;
+        }
+
+        .logo-group {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .logo-badge {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            box-shadow: 0 4px 16px rgba(56, 189, 248, 0.35);
+        }
+
+        .logo-text h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: -0.02em;
+        }
+
+        .logo-text p {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .species-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            background: rgba(56, 189, 248, 0.12);
+            border: 1px solid rgba(56, 189, 248, 0.35);
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--accent-blue);
+        }
+
+        .nav-portal-links {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .portal-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 12px;
+            padding: 6px 12px;
+            border-radius: 8px;
+            border: 1px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .portal-link:hover {
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--border-glass);
+        }
+
+        .portal-link.active {
+            color: #ffffff;
+            background: rgba(56, 189, 248, 0.2);
+            border-color: var(--accent-blue);
+            font-weight: 600;
+        }
+
+        main {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+
+        .hero-banner {
+            background: linear-gradient(135deg, rgba(13, 27, 42, 0.95), rgba(20, 39, 61, 0.75));
+            border: 1px solid var(--border-glass);
+            border-radius: 16px;
+            padding: 24px 32px;
+            margin-bottom: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #ffffff, var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-desc {
+            color: var(--text-secondary);
+            font-size: 14px;
+            max-width: 750px;
+            line-height: 1.6;
+        }
+
+        .kpi-row {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .kpi-card {
+            background: rgba(6, 13, 23, 0.6);
+            border: 1px solid var(--border-glass);
+            border-radius: 12px;
+            padding: 12px 18px;
+            text-align: center;
+            min-width: 100px;
+        }
+
+        .kpi-num {
+            font-family: 'Outfit', sans-serif;
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--accent-blue);
+        }
+
+        .kpi-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-top: 2px;
+        }
+
+        .tabs-header {
+            display: flex;
+            gap: 10px;
+            border-bottom: 1px solid var(--border-glass);
+            margin-bottom: 24px;
+            overflow-x: auto;
+            padding-bottom: 4px;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-family: 'Outfit', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            padding: 10px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .tab-btn.active {
+            color: #ffffff;
+            background: rgba(56, 189, 248, 0.2);
+            box-shadow: inset 0 -2px 0 var(--accent-blue);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.25s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        @media (max-width: 1024px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            border-radius: 14px;
+            padding: 22px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 12px;
+        }
+
+        .card-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        textarea {
+            width: 100%;
+            background: rgba(6, 13, 23, 0.85);
+            border: 1px solid var(--border-glass);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-family: 'Fira Code', monospace;
+            font-size: 13px;
+            padding: 12px;
+            resize: vertical;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        textarea:focus {
+            border-color: var(--accent-blue);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, var(--accent-blue), #0284c7);
+            border: none;
+            color: #ffffff;
+            font-family: 'Outfit', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 8px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 2px 10px rgba(56, 189, 248, 0.25);
+        }
+
+        .btn:hover {
+            filter: brightness(1.1);
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--border-glass);
+            color: var(--text-secondary);
+            box-shadow: none;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+        }
+
+        .example-pill {
+            background: rgba(56, 189, 248, 0.12);
+            border: 1px solid rgba(56, 189, 248, 0.35);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-size: 11.5px;
+            font-weight: 500;
+            padding: 4px 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .example-pill:hover {
+            background: rgba(56, 189, 248, 0.25);
+            border-color: var(--accent-blue);
+        }
+
+        .results-box {
+            background: rgba(6, 13, 23, 0.7);
+            border: 1px solid var(--border-glass);
+            border-radius: 10px;
+            padding: 16px;
+            margin-top: 14px;
+        }
+
+        .match-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 700;
+            font-family: 'Fira Code', monospace;
+            background: rgba(56, 189, 248, 0.15);
+            border: 1px solid var(--accent-blue);
+            color: var(--accent-blue);
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 13px;
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+        }
+
+        .result-label {
+            color: var(--text-secondary);
+        }
+
+        .result-val {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-family: 'Fira Code', monospace;
+        }
+
+        .badge-functional {
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid var(--accent-emerald);
+            color: var(--accent-emerald);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .badge-boundary {
+            background: rgba(56, 189, 248, 0.15);
+            border: 1px solid var(--accent-blue);
+            color: var(--accent-blue);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .badge-hallmark {
+            background: rgba(245, 158, 11, 0.15);
+            border: 1px solid var(--accent-amber);
+            color: var(--accent-amber);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            border: 1px solid var(--border-glass);
+            border-radius: 12px;
+            background: var(--bg-card);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            text-align: left;
+        }
+
+        th {
+            background: rgba(6, 13, 23, 0.95);
+            padding: 12px 16px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            color: var(--text-secondary);
+            border-bottom: 1px solid var(--border-glass);
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 12px 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        tr:hover td {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .seq-font {
+            font-family: 'Fira Code', monospace;
+            font-size: 12px;
+            word-break: break-all;
+        }
+
+        .search-bar {
+            width: 100%;
+            max-width: 400px;
+            background: rgba(6, 13, 23, 0.85);
+            border: 1px solid var(--border-glass);
+            border-radius: 8px;
+            color: var(--text-primary);
+            padding: 8px 14px;
+            font-size: 13px;
+            outline: none;
+            margin-bottom: 14px;
+        }
+
+        .search-bar:focus {
+            border-color: var(--accent-blue);
+        }
+
+        .filter-btn-group {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 14px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-glass);
+            color: var(--text-secondary);
+            font-size: 12px;
+            padding: 5px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .filter-btn.active {
+            background: rgba(56, 189, 248, 0.2);
+            border-color: var(--accent-blue);
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        .domain-track-wrapper {
+            overflow-x: auto;
+            padding-bottom: 6px;
+            margin-top: 10px;
+        }
+
+        .color-cdr1 { color: var(--cdr1-color); font-weight: 600; }
+        .color-cdr2 { color: var(--cdr2-color); font-weight: 600; }
+        .color-cdr3 { color: var(--cdr3-color); font-weight: 600; }
+        .color-fr   { color: var(--fr-color); }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo-group">
+                <div class="logo-badge" style="background:linear-gradient(135deg, #38bdf8, #0284c7);">
+                    🐇
+                </div>
+                <div class="logo-text">
+                    <h1>Rabbit Variable Domain Analyzer</h1>
+                    <p>VBASE3 Pan-Vertebrate Synthesis & Repertoire Platform — <em>Oryctolagus cuniculus</em></p>
+                </div>
+            </div>
+            <div class="species-pill">
+                🐇 Oryctolagus cuniculus: RabMAb & Cys21-Cys79 Disulfide
+            </div>
+            <div class="nav-portal-links"><a href="index.html" class="portal-link">🏠 Portal Home</a><a href="dnaplot.html" class="portal-link">🧬 DNAPLOT</a><a href="repertoire_analysis.html" class="portal-link">📊 Repertoire Analysis</a><a href="human_vbase3_analyzer.html" class="portal-link">👤 Human</a><a href="mouse_vbase3_analyzer.html" class="portal-link">🐭 Mouse</a><a href="rabbit_vbase3_analyzer.html" class="portal-link active">🐇 Rabbit</a><a href="camelid_vbase3_analyzer.html" class="portal-link">🦙 Camelid (VHH)</a><a href="dog_vbase3_analyzer.html" class="portal-link">🐕 Dog</a><a href="chicken_vbase3_analyzer.html" class="portal-link">🐔 Chicken</a><a href="xenopus_du_pasquier_hsu.html" class="portal-link">🐸 Xenopus</a></div>
+        </div>
+    </header>
+
+    <main>
+        <div class="hero-banner">
+            <div>
+                <div class="hero-title">Rabbit Antibody & RabMAb Diagnostic Repertoire Portal</div>
+                <div class="hero-desc">Curated database of 117 Class I rabbit V-genes, picomolar RabMAb benchmarks (4B5, SP1, EP241Y), and structural inspection of the inter-CDR Cys21-Cys79 disulfide bridge.</div>
+            </div>
+            <div class="kpi-row">
+                <div class="kpi-card">
+                    <div class="kpi-num" id="kpi-vgenes">117</div>
+                    <div class="kpi-label">Class I V-Genes</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-num" style="color:#10b981;">7</div>
+                    <div class="kpi-label">J-Segments</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-num" style="color:#38bdf8;">11</div>
+                    <div class="kpi-label">D-Elements</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-num" style="color:#a855f7;">3</div>
+                    <div class="kpi-label">Benchmark RabMAbs</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tabs-header">
+            <button class="tab-btn active" onclick="switchTab('analyzer')">⚡ 1. Quick V(D)J Analyzer</button>
+            <button class="tab-btn" onclick="switchTab('catalog')">📖 2. Germline Catalog (117 V-Genes)</button>
+            <button class="tab-btn" onclick="switchTab('benchmarks')">🔬 3. Landmark Diagnostic RabMAbs</button>
+            <button class="tab-btn" onclick="switchTab('biology')">🏛️ 4. Engineering & Biological Context</button>
+        </div>
+
+        <!-- TAB 1: ANALYZER -->
+        <div id="tab-analyzer" class="tab-content active">
+            <div class="grid-2">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">📥 Input Rabbit Antibody Sequence</div>
+                        <span style="font-size:12px; color:var(--text-secondary);">DNA or Amino Acid</span>
+                    </div>
+                    <div style="margin-bottom:12px;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; flex-wrap:wrap; gap:6px;">
+                            <span style="font-size:12px; color:var(--text-secondary); margin-right:8px;">Load Landmark Preset:</span>
+                        </div>
+                        <div class="btn-group" id="benchmarkPills" style="margin-top:6px;">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+                    <textarea id="seqInput" rows="7" placeholder="Paste Rabbit nucleotide or amino acid sequence (FASTA format supported)..."></textarea>
+                    <div class="btn-group" style="margin-top:12px;">
+                        <button class="btn" onclick="runAnalysis()">⚡ Analyze Sequence</button>
+                        <button class="btn btn-secondary" onclick="clearInput()">Clear</button>
+                        <button class="btn btn-secondary" id="btnExportAirr" style="display:none;" onclick="exportAirrTsv()">📥 Export AIRR TSV</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">📊 Analysis Results</div>
+                        <div id="matchScoreBadge" class="match-badge" style="display:none;"></div>
+                    </div>
+                    <div id="analysisEmpty" style="text-align:center; padding:40px 20px; color:var(--text-muted);">
+                        <div style="font-size:36px; margin-bottom:10px;">🐇</div>
+                        <div>Enter a Rabbit nucleotide or amino acid sequence, or click a landmark preset above to begin.</div>
+                    </div>
+                    <div id="analysisResults" style="display:none;">
+                        <div class="results-box">
+                            <div class="result-item">
+                                <span class="result-label">Closest Functional V-Gene:</span>
+                                <span class="result-val" id="resVGene">-</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Closest Functional D-Gene:</span>
+                                <span class="result-val" id="resDGene">-</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Closest Functional J-Gene:</span>
+                                <span class="result-val" id="resJGene">-</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">C-Terminal Synthesis Boundary:</span>
+                                <span class="result-val" id="resBoundary">-</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Somatic Hypermutation (SHM):</span>
+                                <span class="result-val" id="resShm">-</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Structural / Chain Hallmark:</span>
+                                <span class="result-val" id="resHallmark">-</span>
+                            </div>
+                        </div>
+
+                        <div style="margin-top:16px;">
+                            <div style="font-family:'Outfit',sans-serif; font-size:13px; font-weight:700; margin-bottom:6px; color:var(--text-secondary);">
+                                IMGT DOMAIN ARCHITECTURE & CDR ANNOTATION
+                            </div>
+                            <div class="domain-track-wrapper">
+                                <div id="domainAreaTrack" style="display:flex; gap:3px; min-width:max-content;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 2: GERMLINE CATALOG -->
+        <div id="tab-catalog" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">📚 Rabbit Class I Functional Repertoire Catalog</div>
+                    <span style="font-size:12px; color:var(--text-secondary);">Sourced from Stratum 3 Master Catalog (Cys104 Anchored)</span>
+                </div>
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+                    <input type="text" id="catalogSearch" class="search-bar" placeholder="Filter by gene name, chain, or sequence motif..." oninput="filterCatalog()">
+                    <div class="filter-btn-group" id="locusFilterGroup">
+                        <button class="filter-btn active" id="btn-loc-all" onclick="setLocusFilter('')">All Chains</button>
+                        <button class="filter-btn" id="btn-loc-igh" onclick="setLocusFilter('IGH')">Heavy (IGH)</button>
+                        <button class="filter-btn" id="btn-loc-igk" onclick="setLocusFilter('IGK')">Kappa (IGK)</button>
+                        <button class="filter-btn" id="btn-loc-igl" onclick="setLocusFilter('IGL')">Lambda (IGL)</button>
+                    </div>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Gene ID</th>
+                                <th>Locus</th>
+                                <th>Chain</th>
+                                <th>Classification</th>
+                                <th>Mature V-Exon (to Cys104)</th>
+                                <th>RSS / Evidence</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="catalogTbody">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3: LANDMARK RABMABS -->
+        <div id="tab-benchmarks" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🔬 Benchmark Diagnostic Rabbit Monoclonal Antibodies (RabMAbs)</div>
+                    <span style="font-size:12px; color:var(--text-secondary);">High-Affinity Pathology & Research Leads</span>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Clone / Diagnostic</th>
+                                <th>Clinical Target</th>
+                                <th>V / J Assignment</th>
+                                <th>Boundary</th>
+                                <th>Diagnostic Application & Significance</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="benchmarksTbody">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 4: BIOLOGY & ENGINEERING -->
+        <div id="tab-biology" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🏛️ RabMAb Structural Biology & Somatic Diversification</div>
+                    <span style="font-size:12px; color:var(--text-secondary);">Cys21-Cys79 Disulfide Bridge & Gene Conversion</span>
+                </div>
+                <div style="font-size:14px; color:var(--text-primary); line-height:1.7;">
+                    
+<p><strong>The High-Affinity RabMAb Revolution:</strong></p>
+<p>Rabbits (<em>Oryctolagus cuniculus</em>) produce antibodies of exceptional affinity (frequently in the low picomolar to sub-picomolar range) and exquisite specificity. Developed by Katherine Spieker-Polet, Weimin Zhu, and colleagues (Epitomics/Abcam), rabbit monoclonal antibodies (RabMAbs) transformed clinical diagnostic pathology, immunohistochemistry (IHC), and biotherapeutic lead discovery.</p>
+
+<p style="margin-top:12px;"><strong>Key Structural & Immunogenetic Hallmarks in VBASE3:</strong></p>
+<ul style="margin-left:20px; margin-top:8px; line-height:1.7;">
+    <li><strong>Inter-CDR Disulfide Bond (Cys21–Cys79):</strong> Unlike human and mouse antibodies that possess only the canonical intra-domain Cys23–Cys104 disulfide bond, rabbit heavy chains feature an additional, highly conserved disulfide bridge between <strong>Cys21 in FR1 and Cys79 in FR3</strong>. This covalent tether stabilizes the variable domain and enables ultra-rigid CDR presentations.</li>
+    <li><strong>Extra Intra-CDR3 Cysteines:</strong> Rabbit CDR3 loops frequently contain paired cysteines forming internal disulfide knots that lock extended loop conformations.</li>
+    <li><strong>Somatic Gene Conversion:</strong> Rabbits utilize a restricted pool of rearranging VH genes (predominantly <em>IGHV1</em>) which is diversified through massive somatic gene conversion from upstream pseudogenes, followed by extensive somatic hypermutation.</li>
+    <li><strong>Strict Synthesis Invariants:</strong> Canonical synthesis endpoints (<code>TVSS</code> for heavy, <code>TVL</code> for lambda, and <code>LEIK</code> for kappa) ensure zero constant region bleed-through in recombinant RabMAb synthesis.</li>
+    <li><strong>100% Stratum 3 Class I Verified:</strong> All 117 rabbit V-genes represent confirmed functional segments with physiological rearranged repertoire evidence, trimmed strictly to Cys104.</li>
+</ul>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const V_GENES = [{"gene_id": "OCU_IGHV_C1F1.153_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "QVTVTQTPAVKTVLPGQKVSMICKASSNVHSNCHNGQSWGHQCLSWYQQKPGEKPKLMMLPGNTLRSGTPSRFSGSGSGSDFTLTISGVQAEDAGDYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "SNVHSNCHNG", "cdr2_seq": "KPKLMMLPGNTLRSGTPSRFS", "repertoire_evidence_count": 37}, {"gene_id": "OCU_IGHV_C1F1.369_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "QIQVLCVLLWTSYAQAQKPVISPTVEVSFGQRTTIGCEAGVKDGNAVLFFRQIPREIPELILYHHHSWSDPRYGPGMSSAHFTATVNSAGTGFQLIIKDAQITDAAHYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "", "cdr2_seq": "VEVSFGQRTTIGCEAGVKDGNAVLFFRQIPREIPELILYHHHSWSDP", "repertoire_evidence_count": 29}, {"gene_id": "OCU_IGHV_C1F1.388_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "EVTQRVEDGKSCDRNRKKHRNGLNGGSHMFAAGTNDLLFTSQRMYQHHVCFRNQRRRRHSVLQIRKCQSALCSFWLHINYMELQRFKHNTGWCRETEQHRTETEC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "RKKHRNGLNGGSHMFAAGTNDLLFTSQRMYQHHVCFRNQRRRRHSVLQIRKCQSALC", "cdr2_seq": "", "repertoire_evidence_count": 2}, {"gene_id": "OCU_IGHV_C1F1.450_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "GCLHQGCGGYERRAAGPSASEDCALLEPAPCPALSSLSCLPSSAHVLWLRFPLRSPLPLPQDRLNPAPGVGAQLAATMSIGTRRSPALLRNLSCISLVADHRGC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "GCGGYERRAAGPSASEDCALLEPAPCPALSSLSCLPSSAH", "cdr2_seq": "RLN", "repertoire_evidence_count": 62}, {"gene_id": "OCU_IGHV_C1F1.564_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "QILLTQPISEILKPGQDVSLRCTASGYTLSDHHMHWMAQTVGEGLRWIGAYRHDTTYVADIFKGRGSFSLQASTFVLRISGMTPADTAMYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "GYTLSDHH", "cdr2_seq": "YRH", "repertoire_evidence_count": 9}, {"gene_id": "OCU_IGHV_C1F1.564_02*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "QILLTQPISEILKPGQDVSLRCTASGYTLSDHHIHWMAQTVGEGLRWIGAYRHDTTYVADIFKGRASFSLQASTFVLRISGMTPADTAMYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "GYTLSDHH", "cdr2_seq": "YRH", "repertoire_evidence_count": 6}, {"gene_id": "OCU_IGHV_C1F2.1019_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "AVVMTQTPSSVSAAVGGTVTINCQASQNIYSNLAWYQQKPGQRPKLLIYGASTLESGVPSRFKGSGSGTEYTLTISDLECDDAATYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "QNIYSN", "cdr2_seq": "GASTLESGVPSRFK", "repertoire_evidence_count": 83}, {"gene_id": "OCU_IGHV_C1F2.1041_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "DIVMTQTPASVEAAVGGTVTIKCQASQNIYSLVAWYQQKPGQRPKLLIYDAADLASGVPSRFSGSGYGTDFTLTISSVQCADAATYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "QNIYSL", "cdr2_seq": "DAADLASGVPSRFS", "repertoire_evidence_count": 9}, {"gene_id": "OCU_IGHV_C1F2.1134_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "QVLTQTPSPVSAAVGGTVTISCQSIQSVYNNNYLAWYQQKPGQPPKLLIYRASNLASGVPSRFSGSGSGTQFTLTISEVQCDDAATYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "QSVYNNNY", "cdr2_seq": "RASNLASGVPSRFS", "repertoire_evidence_count": 20}, {"gene_id": "OCU_IGHV_C1F2.146_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "QVTVTQTPAVKAVSVGHSVSLSCKTSSAVYSDSNGHYLHWYQQKPGGAPKLLIYWAKTLQSGTPSRFSGSGSGSDFTLTISGVQTEDAGDYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "SAVYSDSNGHYLHWYQQKPGGAPKLL", "cdr2_seq": "", "repertoire_evidence_count": 7}, {"gene_id": "OCU_IGHV_C1F2.146_02*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "QVTVTQTPAVKAVSVGHSVSLSCKTSSAVYSDSSGHFLQWYQQKPGGAPKLLIYWAKTLQSGTPSRFSGSGSGSDFTLTISGVQAEDAGDYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "SAVYSDSSGHFLQWYQQKPGGAPKLL", "cdr2_seq": "", "repertoire_evidence_count": 2}, {"gene_id": "OCU_IGHV_C1F2.146_03*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "QVTVTQTPAVKAVSVGHSVSLSCKTSSAVYSNSNGHFLHWYQQKPGGAPKLLIYWAKTLQSGTPSRFSGSGSGSDFTLTISGVQVEDVGAYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "SAVYSNSNGHFLHWYQQKPGGAPKLL", "cdr2_seq": "", "repertoire_evidence_count": 21}, {"gene_id": "OCU_IGHV_C1F2.146_04*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "QVTVTQTPAVKAVSVGHSVSLSCKTSSAVHSNSNGHYLHWYQQKPGGAPKLLIYWAKTLQSGTPSRFSGSGSGSDFTLTISGVQTEDAGDYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "SAVHSNSNGHYLHWYQQKPGGAPKLL", "cdr2_seq": "", "repertoire_evidence_count": 10}, {"gene_id": "OCU_IGHV_C1F2.188_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "QISLERLSCLFLSLSLWTLVVIVSIERLVHIYCTFLTFYLFWRQLLGFFTTWLRHWTESWHHGPQSIRGTLYLADCFISTPPPSRRRDLGPRTSGIHDQDQWCGGTWSDSGVWPHVTC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "SLSLWTLVVIVSIERLVHIYCTFLTFY", "cdr2_seq": "TESWHHGPQSIRGTLYLADCFIS", "repertoire_evidence_count": 70}, {"gene_id": "OCU_IGHV_C1F2.237_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "QYVVTQTPVVKVVLPEQTVSLNCKTSSDVNNNNYLAWYQHKPGGAPKLLIYYATTLQSGTPSRFSGSGSGSDFTLTISGVKVEDAGDYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "SDVNNNNY", "cdr2_seq": "YATTLQSGTPSRFS", "repertoire_evidence_count": 28}, {"gene_id": "OCU_IGHV_C1F2.274_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "ELDMTQTPPSLSASVGETVRIRCLASEDIYGGISWYQQKPGKPPTLLIYGASNLESGVPPRFSGSGSGTDYTLTIGGVQAEDAATYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "EDIYGG", "cdr2_seq": "", "repertoire_evidence_count": 19}, {"gene_id": "OCU_IGHV_C1F2.274_02*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "ELDMTQTPPSLSASVGETVRIRCLASEDIYGGISWYQHKPGKPPTLLIYGASKLESGVPPRFSGSGSGTDYTLTIGGVQAEDAATYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "EDIYGG", "cdr2_seq": "", "repertoire_evidence_count": 2}, {"gene_id": "OCU_IGHV_C1F2.274_03*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "ELVLTQTPPSLSASVGETVRIRCLASEDIYGGISWYQHKPGKLPTLLIYGASKLESGVPPRFSGSGSGTDYTLTIGGVQAEDAATYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "EDIYGG", "cdr2_seq": "", "repertoire_evidence_count": 2}, {"gene_id": "OCU_IGHV_C1F2.288_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "QVTVTQTPAVKAVSVGHSVIFSCKTSSAVHSNSNGHYLHWYQQKPGGAPKLLIYYAKTLQSGTPSRFSGSGSGSDFTLTISGVQAEDAGDYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "SAVHSNSNGHY", "cdr2_seq": "YAKTLQSGTPSRFS", "repertoire_evidence_count": 19}, {"gene_id": "OCU_IGHV_C1F2.347_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "DPVLTQTASPVSAAVGGTVTISCQSSQNIYNNNYLAWYQQKPGQPPKLLIYAASKLATGVPSRFKGSGSGTQFTLTISGVQCDDAATYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "QNIYNNNY", "cdr2_seq": "AASKLATGVPSRFK", "repertoire_evidence_count": 32}, {"gene_id": "OCU_IGHV_C1F2.362_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "ALVMTQTPASVEAAVGGTVTIKCQASQNIYSNLAWYQQKPGQPPKLLIYGASTPESGVPSRFKGSGSGTEYTLTISDLECADAATYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "QNIYSN", "cdr2_seq": "GASTPESGVPSRFK", "repertoire_evidence_count": 23}, {"gene_id": "OCU_IGHV_C1F2.377_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "DIVMTQTPSSVSAGVGGTVTINCQASQNIYSNLAWYQQKPGQPPKLLIYYGMNLESGVSSRFSPSASGTDYTLTISDLECADAATYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "QNIYSN", "cdr2_seq": "YGMNLESGVSSRFS", "repertoire_evidence_count": 4}, {"gene_id": "OCU_IGHV_C1F2.411_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "DIVMTQTPASVSESVGGTVTINCQASQSIGSDLSWYQQKPGQPPKPLIYEASRLASGVPSRFKGSGSGTQFSLTISGVQCDDAATYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "QSIGSD", "cdr2_seq": "EASRLASGVPSRFK", "repertoire_evidence_count": 62}, {"gene_id": "OCU_IGHV_C1F2.438_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "DPVLTQTPSSVSAAVGGTVTINCQSSQSVANNDDLAWYQQKPGQPPKRLIYYASTLTSGVPSRFKGSGSGTQFTLTISDLECDDAATYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "QSVANNDD", "cdr2_seq": "YASTLTSGVPSRFK", "repertoire_evidence_count": 32}, {"gene_id": "OCU_IGHV_C1F2.45_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "QYTLTQTPAVKADGNGETVNIGCKLSSGIYSNYLHWYQQRPGEAPKLLIYQINNKFTGTPSRFSGSGSGTDFTLTISGVQAEDAGDYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "SGIYSNY", "cdr2_seq": "QINNKFTGTPSRFS", "repertoire_evidence_count": 23}, {"gene_id": "OCU_IGHV_C1F2.45_02*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "QYTLTQTPAAKADGNGETVNIGCKLSSDIYSNYLHWYQQRPGEAPKLLIYKINNKFTGTPSRFSGSGSGTDFTLTISGVQAEDAGDYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "SDIYSNY", "cdr2_seq": "KINNKFTGTPSRFS", "repertoire_evidence_count": 110}, {"gene_id": "OCU_IGHV_C1F2.464_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "DPVLTQTASPVSAAVGGTVTISCQSSQSVYNNNYLSWYQQKPGQPPKLLIYDASTLASGVPSRFKGSGSGTEFTLTISDLECDDAATYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "QSVYNNNY", "cdr2_seq": "DASTLASGVPSRFK", "repertoire_evidence_count": 41}, {"gene_id": "OCU_IGHV_C1F2.486_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "QKAVTQTPSVLTVSTKGTATFHCDITKDESNYVNWYKQVPGGAPQYVLRYHYALDSPDEYGSGFSSDRFTSKATSDKDYQFLISNVEETDSAVYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "KDESNY", "cdr2_seq": "YHYALDSP", "repertoire_evidence_count": 9}, {"gene_id": "OCU_IGHV_C1F2.486_02*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "QKAVTQTPSVLTVSTKGTAVFHCDITKDESNVVNWYKQVPGGAPQYVLRYHYTLDSPDEYGSGFSSDRFTSKATSDKDYQFIISNVEETDSAVYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "KDESNV", "cdr2_seq": "YHYTLDSP", "repertoire_evidence_count": 8}, {"gene_id": "OCU_IGHV_C1F2.486_03*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "QKAVTQTPSVLTVSTKGTATFHCDITKDERNYVNWYKQVPGGAPQYVLRYHYALDSPDEYGSGFSSDRFTSKAPSDKDYQFIISNVEETDSAVYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "KDERNY", "cdr2_seq": "YHYALDSP", "repertoire_evidence_count": 31}, {"gene_id": "OCU_IGHV_C1F2.486_04*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "EVTQTPSVLTVSTKGTATFHCDITKDESNYVNWYKQVPGGAPQYVLRYHYALDSPDEYGSGFSSDRFTSKAPSDKDYQFIISNVEETDSAVYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "KDESNY", "cdr2_seq": "YHYALDSP", "repertoire_evidence_count": 5}, {"gene_id": "OCU_IGHV_C1F2.732_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "AIEMTQTPSSVSAAVGGTVTISCQASESVANNNRLSWYQQKPGQPPKLLIYYASTLPSGVPSRFKGSGSGTQFTLTISDVVCDDAATYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "ESVANNNR", "cdr2_seq": "YASTLPSGVPSRFK", "repertoire_evidence_count": 31}, {"gene_id": "OCU_IGHV_C1F2.83_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "DVVMTQTPSSVSAAVGGTVTIKCQASQSISNALAWYQQKPGQPPKLLIYDTSNLASGVPSRFKGSRSGTEFTLTISDLECADAATYYCQC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "QSISNA", "cdr2_seq": "DTSNLASGVPSRFK", "repertoire_evidence_count": 40}, {"gene_id": "OCU_IGHV_C1F2.83_02*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "DVVMTQTPSSVSAAVGGTVTIKCQASQSISSWLSWYQQKPGQPPKLLIYQASNLASGVPSRFRGSRSGTEFTLTISDLECADAATYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "QSI", "cdr2_seq": "LIYQASNLASGVPSRFR", "repertoire_evidence_count": 48}, {"gene_id": "OCU_IGHV_C1F2.876_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "EVVMTQTPASVEVAVGGTVTINCQASQSISSRYLSWYQQKPGQPPKLLIYRTSTLASGVPSRFKGSGSGTQFTLTISDLECADAATYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "QSISSRY", "cdr2_seq": "RTSTLASGVPSRFK", "repertoire_evidence_count": 17}, {"gene_id": "OCU_IGHV_C1F2.904_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "QVLTQTPSSVSAAVGGTVTINCQSSPSVVNNNYLAWYQQRPGQPPKLLIYLASTLASGVPSRFSGSGSGTQFTLTISGVQCDDAATYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "PSVVNNNY", "cdr2_seq": "LASTLASGVPSRFS", "repertoire_evidence_count": 30}, {"gene_id": "OCU_IGHV_C1F3.132_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "QKAVTQTPSVLTVSTKGTATFHCDITKDERNYVIWYKQVPGGAPQYVLRFHRTDASPDEYGSGFSSDRFTSKATSDKDYQFTISNVVETDSAVYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "KDERNY", "cdr2_seq": "FHRTDASP", "repertoire_evidence_count": 41}, {"gene_id": "OCU_IGHV_C1F3.132_02*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "EVTQTPSVLTVSTKGTATFHCDITKDEGNYVIWYKQVPGGAPQYVLRFHRTDASPDEYGSGFSSDRFTSKATSDKDYQFIISNVVETDSAVYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "KDEGNY", "cdr2_seq": "FHRTDASP", "repertoire_evidence_count": 32}, {"gene_id": "OCU_IGHV_C1F3.14_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "QYVVTQTPVVKAVLPEQTVSLNCKTSSNVYNNDFLAWYQQKPGGAPQLLIYRATALQSGTPSRFSGSGSGSDFTLTISRVMAEDAGDYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "SNVYNNDF", "cdr2_seq": "RATALQSGTPSRFS", "repertoire_evidence_count": 31}, {"gene_id": "OCU_IGHV_C1F3.14_02*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "QYVVTQTPVVKAVLPEQTVSLNCKTSSNVYNNNFLAWYQQKPGGAPQLLIYYATTLQSGTPSRFSGSGSGSDFTLTISGVKVEDAGDYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "SNVYNNNF", "cdr2_seq": "YATTLQSGTPSRFS", "repertoire_evidence_count": 88}, {"gene_id": "OCU_IGHV_C1F3.160_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "QVTVTQTPAVKAVSVGHSVSLSCKTSSAVYSDTHGQRLAWYQQKLGESPKLLTYFISTRNSGIPSRFSGSGSGSDFTLTISGVQTEDAGDYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "SAVYSDTHGQR", "cdr2_seq": "FISTRNSGIPSRFS", "repertoire_evidence_count": 40}, {"gene_id": "OCU_IGHV_C1F3.160_02*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "QVTVTQTPAVKAVSVGHSVSLSCKTSSAVYSDTHGQRLAWYQQKLGESPKLLTYFISTRNSGTPSRFSGSGSGSDFTLTISGVQAEDAGDYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "SAVYSDTHGQR", "cdr2_seq": "FISTRNSGTPSRFS", "repertoire_evidence_count": 17}, {"gene_id": "OCU_IGHV_C1F3.160_03*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "QVTVTQTPAVNAVSMGHSVSLSCKTSSAVYSDTHGQRLAWYQQKLGESPKLLTYFISTRNSGIPPRFSGSGSGSDFTLTISGVQAEDAGDYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "SAVYSDTHGQR", "cdr2_seq": "FISTRNSGIPPRFS", "repertoire_evidence_count": 83}, {"gene_id": "OCU_IGHV_C1F3.160_04*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "QVTVTQTPAVKAVSVGHSVSLSCKTSSAVYSDTHGQRLAWYQQKLGESPKLLTYFINTRNSGTPSRFSGSGSGVDFTLTISGVQAEDVGDYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "SAVYSDTHGQR", "cdr2_seq": "FINTRNSGTPSRFS", "repertoire_evidence_count": 6}, {"gene_id": "OCU_IGHV_C1F3.174_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "QVTVTQTPAVKSVLPEQTVIINCKTSADVADACSGDYTCMAWYHQKPGGAPKLLIYYATRLQSGTPSRFSGSGSHSDFTLTISGVQAEDAGDYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "ADVADACSGDYTC", "cdr2_seq": "YATRLQSGTPSRFS", "repertoire_evidence_count": 17}, {"gene_id": "OCU_IGHV_C1F3.174_02*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "QVTVTQTPAVKTVLPEQTVIINCKTSADVADACPGDYTCMAWYHQKPGGAPKLLIYFAEELESGTPSRFSGSGSHSDFTLTISGVQAEDAGDYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "ADVADACPGDYTC", "cdr2_seq": "FAEELESGTPSRFS", "repertoire_evidence_count": 264}, {"gene_id": "OCU_IGHV_C1F3.225_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "QITVTQTPEMKAFQTGDAVTLRCRFNKPPACSPPCVAWYQQKPGGAPQLLIYYATTLQSGTPSRFSGSGSGSDFTLTISGVQAEDAGDYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "KPPACSPPC", "cdr2_seq": "YATTLQSGTPSRFS", "repertoire_evidence_count": 48}, {"gene_id": "OCU_IGHV_C1F3.336_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "QITVTQTPTVKTVLPGQPVSMNCKASSDVYPDCWSSGKPCLAWYQQKPGGAPKLLVYYGSTLFSGTPSRFSGTGSGSDFTLTISGVQAEDAGYYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "SDVYP", "cdr2_seq": "GGAPKLLVYYGSTLFSGTPSRFS", "repertoire_evidence_count": 15}, {"gene_id": "OCU_IGHV_C1F3.378_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "QYVVTQTPSVEAALPGQTVSLNCKTSSDVYNTNLLAWYQHKPGGAPKLLIYDATTLQSGTPSRFSGSGSGSDFTLTISGVQAEDAGDYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "SDVYNTNL", "cdr2_seq": "DATTLQSGTPSRFS", "repertoire_evidence_count": 35}, {"gene_id": "OCU_IGHV_C1F3.453_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "QYVVTQTPAVKAVLPEQTVSLNCKTSSDVYNNNYLAWYQQKPGGAPKLLIYYATTLQSGTPSRFSGSGSGSDFTLTISGVQAEDAGDYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "SDVYNNNY", "cdr2_seq": "YATTLQSGTPSRFS", "repertoire_evidence_count": 61}, {"gene_id": "OCU_IGHV_C1F3.490_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "VTVVTQKPPVVTVRKGDTATMDCNLGTVQNSAARWYKQVPGGVPQFVLYLYHDNSAPTYGSGFSSPKFTSNHQSKSDYRLIINNVEEEDSAVYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "TVQNSA", "cdr2_seq": "LYHDNSAPTYGSGFSSPKFTS", "repertoire_evidence_count": 2}, {"gene_id": "OCU_IGHV_C1F3.497_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "QHIVTQTPAVKAVLPGQSVSLNCKTSSNVHGNNHLAWYQHKPGGAPKLLIYYATTLQSGTPSRFSGSGSGSDFTLTISGVQAEDAGDYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "SNVHGNNH", "cdr2_seq": "YATTLQSGTPSRFS", "repertoire_evidence_count": 2}, {"gene_id": "OCU_IGHV_C1F3.553_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "QYVVTQTPVVKAVLPEQTVSLNCKTSSDVHGGYYLAWYQQKPGGAPKLLIYDATTLQSGTPSRFSGSGSGSDFTLTISGVQAEDAGDYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "SDVHGGYY", "cdr2_seq": "DATTLQSGTPSRFS", "repertoire_evidence_count": 15}, {"gene_id": "OCU_IGHV_C1F3.555_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "VTVVTQKPPVVTVRKGETATMDCNLGTVQDSAARWYKQVPGGIPQYVIRFYHGNSAPTYGSGFSSPKFTSDHQSKSDYRLIINTVEETDSAVYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "TVQDSA", "cdr2_seq": "FYHGNSAPTYGSGFSSPKFTS", "repertoire_evidence_count": 5}, {"gene_id": "OCU_IGHV_C1F3.572_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "QVTVTQTPAVKAVSVGHSVSFSCKTSSAVHSDKHGQRLAWYQQKLGESPKLLTYFISTRNSGIPPRFSGSGSGSDFTLTISGVQAEDTGDYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "SAVHSDKHGQR", "cdr2_seq": "FISTRNSGIPPRFS", "repertoire_evidence_count": 2}, {"gene_id": "OCU_IGHV_C1F3.580_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "KRPLGSSTESVTALDTTRWLMSCAPWDRTPRTRRLQRSWENHPPMIWPTRGWPSPISCPWKKSIKRVHLMTTLRVSASSTRRATAPCLGLSCASCWAHWVRRC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "DRTPRTRRLQRSWENHPPMIWPTRGWPSPIS", "cdr2_seq": "", "repertoire_evidence_count": 13}, {"gene_id": "OCU_IGHV_C1F3.63_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "QVIVTQTPAVKAVSVGHSVSLSCKTSSAVYSNSNGHFLHWYQQKLGESPKLLTYFISTRNSGIPSRFSGSGSGSDFTLTISGVQAEDAGDYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "SAVYSNSNGHF", "cdr2_seq": "FISTRNSGIPSRFS", "repertoire_evidence_count": 32}, {"gene_id": "OCU_IGHV_C1F3.63_02*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "QVTVTQTPAVKAVSVGHSVSLSCKTSSAVHSNSNGHYLHWYQQKLGESPKLLTYFISTRNSGTPSRFSGSGSGVDFTLTISGVQAEDAGDYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "SAVHSNSNGHY", "cdr2_seq": "FISTRNSGTPSRFS", "repertoire_evidence_count": 3}, {"gene_id": "OCU_IGHV_C1F3.658_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "DVLRRRSDYVQGCIPPLPQRRWPDPVQPVRGRHAGLGPKPHKCRGSGAGEPQIRGAEHQDAWLRVLAHVADHRKEQGPGKLRLCRGFEGLRQRSWLC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "LPQRRWPDPVQPVRGRHAGLGPKPHKCRGSGAGEPQIRGAEHQ", "cdr2_seq": "", "repertoire_evidence_count": 121}, {"gene_id": "OCU_IGHV_C1F3.67_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "QYVVTQTPVVKAVVPEQTVSLNCKTSSNVYSNNRLAWYQQKPGGAPKLLIYYATTLQSGTPSRFSGSGSGSDFTLTISGVQAEDAGDYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "SNVYSNNR", "cdr2_seq": "YATTLQSGTPSRFS", "repertoire_evidence_count": 32}, {"gene_id": "OCU_IGHV_C1F4.351_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "QLLGLLLLWLPGARGAIQMTQSPSSLAASVGDTVTITCKASEDIGYGLNWYQQKLGIAPKLLIYGANTLESGVPSRFSGSGSETDYTLTISSVQAEDAGIYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "QLLGLL", "cdr2_seq": "S", "repertoire_evidence_count": 5}, {"gene_id": "OCU_IGHV_C1F4.909_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "QLLGLLLLWLPGARCADIVMTQTPASVEAAVGGTVTIKCQASQSISSYLAWYQQKPGQPPKLLIYRASTLASGVPSRFKGSGSGTQFTLTISDLECADAATFYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "QLLGLL", "cdr2_seq": "PASVEAAVGGTVTIKCQASQSISSYLAWYQQKPGQPPKLLIYRASTLASGVPSRFK", "repertoire_evidence_count": 88}, {"gene_id": "OCU_IGHV_C1F5.547_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "QIQVFCVLVWRSYSQAQKPVISPTVEVSLGQRTTISCEVGVKDGNAVPFYRQIPGEAPELILYHYHSWSNPTYGPGMSSAHFTATVNSAGTGYQLIIKAAQITDAAHYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "", "cdr2_seq": "VEVSLGQRTTISCEVGVKDGNAVPFYRQIPGEAPELILYHYHSWSNP", "repertoire_evidence_count": 38}, {"gene_id": "OCU_IGHV_C1F6.697_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "EQVIPAMSPILATYCVLLWISCAESQTLSLAPSNNAVNLGERATFSCNVGAKDGDWVRLLKQIPGNAPQLIIYHHHSFTSPKYGPGISTDRYTATINSAATEYQFIIKKAETADTAHYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "WISCAESQTLSLAPSNNAVNLGERATFSCNVGAKD", "cdr2_seq": "IIYHHHSFTSP", "repertoire_evidence_count": 12}, {"gene_id": "OCU_IGHV_C1F7.941_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "GAQQTWPWKENHFHSLKRLPSSTKWRQQKIPAPALELPPSLLAAAPSQTYHRGLCVRAKGGQWSYPEETPSATSTFHSPERTPSQCPWASGSPWVRGC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "SLKRLPSS", "cdr2_seq": "SLLAAAPSQTYHRGLCVRAK", "repertoire_evidence_count": 4}, {"gene_id": "OCU_IGHV_C2F2.573_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "DIELIQSGPVVIEPGVSFSISCKFSGFSISSYCLGWIRQAEGKALEHVGVTCSSSTYTVDSLKSKITSRYDSSSSTVFLQGNNFQTEDTAVYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "GFSISSYC", "cdr2_seq": "TCSSS", "repertoire_evidence_count": 19}, {"gene_id": "OCU_IGHV_C2F3.109_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "QITLTQSGSEIRKPGESVKLKCLVSGFNINSYWMNWIRQAPGRGLEWVARYNSGSSPPHYSSDAVKGRFTASTDSSSLYLQMNNLKTEDTGVYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "GFNINSYW", "cdr2_seq": "YNSGSS", "repertoire_evidence_count": 110}, {"gene_id": "OCU_IGHV_C2F3.109_02*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "QITLTQSGSEIRKPGESVKLKCLVSGFNINSYWMSWVRQAPGRGPEWVARYHSGSNPPHYSSDAVKGRFTASTDSSSLYLQMNSLKTEDTGVYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "GFNINSYW", "cdr2_seq": "YHSGSN", "repertoire_evidence_count": 4}, {"gene_id": "OCU_IGHV_C2F3.392_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "DVVTKPGGSHELSCRGSGFNFGSYHITWIRQSPGKGLEWVAIIWYDNTQKYYSPSVQGRFIISRDNGASTASLHMSNLKTEDTANYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "GFNFGSYH", "cdr2_seq": "IWYDNTQK", "repertoire_evidence_count": 16}, {"gene_id": "OCU_IGHV_C2F4.144_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "SYELTQPASLTVQPGQPLTISCKVSYSVSSYYTAWIRQPAGKTLEWIGYISSGGGTAYKDSLKNKFSITRDTSSNTLFLKGQSLQTEDTAVYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "YSVSSYY", "cdr2_seq": "ISSGGGT", "repertoire_evidence_count": 20}, {"gene_id": "OCU_IGHV_C2F4.295_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "EELTQPASMTVQSGQPLTISCKVSYSVGTYYTAWIRQPAPKTLEWIGMKYTGGTHHKDSLKNKFSLTVDSSSNTVTLTGQSLQTEDTAVYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "YSVGTYY", "cdr2_seq": "KYTGGT", "repertoire_evidence_count": 3}, {"gene_id": "OCU_IGHV_C2F4.461_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "QVVLTQAEQSVQGTPAGSLKLTCACSGFTLSSSYMHWIRQAPGKGLEWIIYYYSDSNKSNAPVVQGRFTGSKDSSNFYLHMSQLKPEDSAVYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "GFTLSSSY", "cdr2_seq": "YYSD", "repertoire_evidence_count": 30}, {"gene_id": "OCU_IGHV_C2F4.836_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "ELLTVWSLVVMVMSIHSVCCDEMDQSPSQVKRPGDKFKLSCKISGFDMTNYYMHWIRQKPGKALEWIGVINSGSTDAPVYSDSLKGQFTLTEDVSTSTQFLEAKSLSSEDSAVYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "MDQSPSQVKRPGDKFKLSCKISGFDMTNYY", "cdr2_seq": "INSGSTDA", "repertoire_evidence_count": 124}, {"gene_id": "OCU_IGHV_C2F6.64_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "QVTLHESGPGTLRPSETLTLICKVSTSLSGYYWDWVRQHPGRGLEWLGRIHFSGSPTHYATSLQNRITITLDSSKNDYFLRLTTMRPEDSAKYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "TSLSGYY", "cdr2_seq": "IHFSGSP", "repertoire_evidence_count": 2}, {"gene_id": "OCU_IGHV_C2F6.64_02*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "QVTLQESGPGTLRPSETLTLTCKVSTSLSGYYWDWVRQHPGRGLEWLGRIHFSGSPTHYATSLQSRVTITLDSSKNEYFLRLTSMRPEDSAKYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "TSLSGYY", "cdr2_seq": "IHFSGSPT", "repertoire_evidence_count": 65}, {"gene_id": "OCU_IGHV_C3F2.951_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "QSVKESEGGLFKPTDTLTLTCTVSGFSLSSYGVSWVRQAPGNGLEWIGVINLDGYTYYASWAKSRSTITRNTNENTVTLKMTGLTAADTATYLC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "GFSLSSYG", "cdr2_seq": "INLDGY", "repertoire_evidence_count": 17}, {"gene_id": "OCU_IGHV_C3F3.101_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "EQSGGGAGGGLVKPGGSLELCCKASGFSLSSSYWICWVRQAPGKGLEWIGCIYAGSSGSTYYASWVNGRFTLSRDIDQSTGCLQLNSLTAADTAMYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "SGFSLSSSYW", "cdr2_seq": "IYAGSSGST", "repertoire_evidence_count": 6}, {"gene_id": "OCU_IGHV_C3F3.101_02*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "QQLEQSGGGAGGGLVKPGGSLELCCKASGFSLSSYYMCWVRQAPGKGLEWIGCIYAGSSGSTYYASWVNGRFTLSRDIDQSTGCLQLNSLTVADTAMYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "SGFSLSSYY", "cdr2_seq": "IYAGSSGST", "repertoire_evidence_count": 29}, {"gene_id": "OCU_IGHV_C3F3.101_03*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "QQLEQSGGGAGGGLVKPGGSLELCCKASGFSLSSSYWICWVRQAPGKGLEWIGCIYAGSSGSTYYASWVNGRFTLSRDIDQSTGCLQLNSLTAADTAMYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "SGFSLSSSYW", "cdr2_seq": "IYAGSSGST", "repertoire_evidence_count": 65}, {"gene_id": "OCU_IGHV_C3F3.1026_01*0001", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "LVESGGGLVQPGGSLKLSCEASGFTFSSYGISWVRQAPGKGLEWIANIYPVFGIRNYANSVKGRFTISSDNAQKTVALQMTSLTASDTATYFC", "v_dna_seq": "CTGGTGGAGTCCGGGGGAGGCCTGGTCCAGCCTGGGGGATCCCTGAAACTCTCCTGCGAAGCCTCTGGATTCACCTTCAGTAGCTATGGCATTAGCTGGGTCCGTCAGGCTCCAGGGAAGGGGCTGGAGTGGATCGCAAATATTTATCCTGTTTTTGGTATCAGAAACTACGCGAACTCTGTGAAGGGCCGATTCACCATCTCCAGCGACAACGCCCAGAAGACGGTGGCTCTGCAAATGACCAGTCTGACAGCCTCGGACACGGCCACCTATTTCTGT", "rss_heptamer": "nan", "cdr1_seq": "GFTFSSYG", "cdr2_seq": "IYPVFGIR", "repertoire_evidence_count": 88}, {"gene_id": "OCU_IGHV_C3F3.118_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "DLVKPGASLTLTCTASGFSFSSSYYMCWVRQAPGKGLEWIACIYAGSSGSTYYASWAKGRFTISKTSSTTVTLQMTSLTAADTATYFC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "GFSFSSSYY", "cdr2_seq": "IYAGSSGST", "repertoire_evidence_count": 110}, {"gene_id": "OCU_IGHV_C3F3.118_02*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "GVQCQSLEESGGDLVKPGASLTLTCTASGFSFSSSYYMCWVRQAPGKGLEWIACIYAGSSGSTYYASWAKGRFTISKTSSTTVTLQMTSLTAADTATYFC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "EESGGDLVKPGASLTLTCTASGFSFSSSYY", "cdr2_seq": "IYAGSSGST", "repertoire_evidence_count": 38}, {"gene_id": "OCU_IGHV_C3F3.118_03*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "DLVKPGASLTLTCTASGFSFSSSYWILWVRQAPGKGLEWIACIYAGSSGSTYYASWAKGRFTISKTSSTTVTLQMTSLTAADTATYFC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "GFSFSSSYW", "cdr2_seq": "IYAGSSGST", "repertoire_evidence_count": 28}, {"gene_id": "OCU_IGHV_C3F3.118_04*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "DLVKPGASLTLTCTASGFSFSSSYYMCWVRQAPGKGLEWIGCINTGSSGSTYYASWAKGRFTISKTSSTTVTLQMTSLTAADTATYFC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "GFSFSSSYY", "cdr2_seq": "INTGSSGST", "repertoire_evidence_count": 5}, {"gene_id": "OCU_IGHV_C3F3.226_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "GVQCQEQLKESGGGLVQPGGSLKLSCKASGFDFSSYGVSWVRQAPGKGLEWIGYIDPVFGSTYYASWVNDRFTISSHNAQNTLYLQLNSLTPADTATYFC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "LKESGGGLVQPGGSLKLSCKASGFDFSSYG", "cdr2_seq": "IDPVFGST", "repertoire_evidence_count": 12}, {"gene_id": "OCU_IGHV_C3F3.226_02*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "EQLKESGGGLVQPGGSLKPSCKASGFDFSSYGVSWVRQAPGKGLEWIGYIDPVFGSTYYASWVNDRFTISSHNAQNTLYLQLNSLTPADTATYFC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "GFDFSSYG", "cdr2_seq": "IDPVFGST", "repertoire_evidence_count": 70}, {"gene_id": "OCU_IGHV_C3F3.226_03*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "EQLKESGGGLVQPGGSLKLSCKASGFDFSSYYMSWVRQAPGKGLEWIGYIDPVFGSTYYASWVNGRFTISSHNAQNTLYLQLNSLTAADTATYFC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "GFDFSSYY", "cdr2_seq": "IDPVFGST", "repertoire_evidence_count": 15}, {"gene_id": "OCU_IGHV_C3F3.226_04*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "EQLVESGGGLVQPGGSLKLSCKASGFDFSSYGVSWVRQAPGKGLEWIGYIDPVFGSTYYASWVNGRFTISSHNAQNTLYLQLNSLTAADTATYFC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "GFDFSSYG", "cdr2_seq": "IDPVFGST", "repertoire_evidence_count": 8}, {"gene_id": "OCU_IGHV_C3F3.226_05*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "VQPGGSLKLSCKASGFDFSSYGVCWVRQAPGKGLEWIGYIDPVFGSTYYASWVNDRFTISSHNAQNTLYLQLNSLTPADTATYFC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "GFDFSSYG", "cdr2_seq": "IDPVFGST", "repertoire_evidence_count": 3}, {"gene_id": "OCU_IGHV_C3F3.282_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "QCQSVEESGGRLVTPGTPLTLTCTVSGFSLSSYAMSWVRQAPGKGLEWIGIISSSGSTYYASWAKGRFTISKTSTTVDLKITSPTTEDTATYFC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "EESGGRLVTPGTPLTLTCTVSGFSLSSYA", "cdr2_seq": "ISSSGST", "repertoire_evidence_count": 19}, {"gene_id": "OCU_IGHV_C3F3.282_02*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "QSVEESGGRLVTPGTPLTLTCTVSGFSLSSYAMSWVRQAPGKGLEWIGIISSSGSTYYASWAKGRFTISKTSTTVDLKITSPTTEDTATYFC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "GFSLSSYA", "cdr2_seq": "ISSSGST", "repertoire_evidence_count": 104}, {"gene_id": "OCU_IGHV_C3F3.282_03*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "GVQCQSVEESGGRLVTPGTPLTLTCTVSGFSLSSYAMSWVRQAPGKGLEWIGIISSSGSTYYASWAKGRFTISKTSTTVDLKITSPTTEDTATYFC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "EESGGRLVTPGTPLTLTCTVSGFSLSSYA", "cdr2_seq": "ISSSGST", "repertoire_evidence_count": 264}, {"gene_id": "OCU_IGHV_C3F3.300_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "EQLLESGGGLVQPGGTLKLSCKGSGFDLSSNAMCWVRQAPGKGLEWIGCIIYGSTDYASWVNGRFTISSDTAQSSVDLQLNSLTAADTATYFC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "GFDLSSNA", "cdr2_seq": "IIYGST", "repertoire_evidence_count": 9}, {"gene_id": "OCU_IGHV_C3F3.304_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "HSISLTSSPAQLKPPGDSVKLSCQVSGYVLTDYGTGWIRQQPGKTLEWIGIIWGGGSINSGASFKSRFTISRDSSNVLYLDISSLQAEDTAVYYC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "GYVLTDYG", "cdr2_seq": "IWGGGSI", "repertoire_evidence_count": 104}, {"gene_id": "OCU_IGHV_C3F3.320_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "GVQCQEQLVESGGGLVQPEGSLTLTCKASGFSFSSGYYMCWVRQAPGKGLEWIACISVGVATTYYANWAKGRFTVSKTSSTTVTLQMTSLTAAHTATYFC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "LVESGGGLVQPEGSLTLTCKASGFSFSSGYY", "cdr2_seq": "ISVGVATT", "repertoire_evidence_count": 16}, {"gene_id": "OCU_IGHV_C3F3.569_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "GVQCQSVEESGGRLVTPGTPLTLTCTVSGFSLSSFTMSWVRQAPGKGLEWIGILVLCGSTSSPTWAKGRFTISKTSTTVDLKITSPTTEDTATYFC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "EESGGRLVTPGTPLTLTCTVSGFSLSSFT", "cdr2_seq": "LVLCGST", "repertoire_evidence_count": 2}, {"gene_id": "OCU_IGHV_C3F3.612_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "EQLKDSGGGLVQPGGSLKLSCKASGFDFSSYYMSWVRQAPGKGLEWIGYISTGDGRTYYASWVNGRFSISRENTQNTVSLQLNSLTPADTATYFC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "GFDFSSYY", "cdr2_seq": "ISTGDGRT", "repertoire_evidence_count": 2}, {"gene_id": "OCU_IGHV_C3F3.651_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "EQLVESGGGLVTPGGTLTLTCTASGFTISSYYMSWVRQAPGKGLEYIGLIKTDGTTYYANWAKGRVTISRTSTTVDLKMTSLTTEDTATYFC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "GFTISSYY", "cdr2_seq": "IKTDGTT", "repertoire_evidence_count": 7}, {"gene_id": "OCU_IGHV_C3F4.25_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "VDVKESEGGLFKPTDTLTLTCTVSGFSLSSNAISWVRQAPGNGLEWIGAIGSSGSAYYASWAKSRSTITRNTNLNTVTLKMTSLTAADTATYFC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "GFSLSSNA", "cdr2_seq": "IGSSGS", "repertoire_evidence_count": 2}, {"gene_id": "OCU_IGHV_C3F4.25_02*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "GVQCQSVKESEGGLFKPTDTLTLTCTVSGFSLSSNAISWVRQAPGNGLEWIGAIGSSGSAYYASWAKSRSTITRNTNLNTVTLKMTSLTAADTATYFC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "KESEGGLFKPTDTLTLTCTVSGFSLSSNA", "cdr2_seq": "IGSSGS", "repertoire_evidence_count": 121}, {"gene_id": "OCU_IGHV_C3F4.25_03*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "QCQSVKESEGGLFKPTDTLTLTCTVSGFSLSSNAISWVRQAPGNGLEWIGAIGSSGSAYYASWAKSRSTITRNTNLNTVTLKMTSLTAADTATYFC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "KESEGGLFKPTDTLTLTCTVSGFSLSSNA", "cdr2_seq": "IGSSGS", "repertoire_evidence_count": 32}, {"gene_id": "OCU_IGHV_C3F4.25_04*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "GVQCQSVKESEGGLFKPTDTLTLTCTVSGFSLSSNAISWVRQAPGNGLEWIGTIGISGSAYYASWAKSRSTITRNTNLNTVTLKMTSLTAADTATYFC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "KESEGGLFKPTDTLTLTCTVSGFSLSSNA", "cdr2_seq": "IGISGS", "repertoire_evidence_count": 4}, {"gene_id": "OCU_IGHV_C3F4.25_05*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "QSVKESEGGLFKPTDTLTLTCTASGFTISSYGVSWVRQAPGNGLEWIGAIGSSGSTYYASWAKNRSTITRNTNLNTVTLKMTSLTAADTATYFC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "GFTISSYG", "cdr2_seq": "IGSSGS", "repertoire_evidence_count": 37}, {"gene_id": "OCU_IGHV_C3F4.25_06*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "QSVKESEGGLFKPTDTLTLTCTVSGFSLSSYAISWVRQAPGNGLEWIGAIGSSGSAYYASWAKSRSTITRNTNLNTVTLKMTSLTVADTATYFC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "GFSLSSYA", "cdr2_seq": "IGSSGS", "repertoire_evidence_count": 110}, {"gene_id": "OCU_IGHV_C3F4.25_07*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "QSVKESEGGLFKPTDTLTLTCTVSGFSLSSYGVSWVRQAPGNGLEWIGAIGSSGSAYYAYWAKSRSTITRNTNLNTVTLKMTSLTAADTATYFC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "GFSLSSYG", "cdr2_seq": "IGSSGS", "repertoire_evidence_count": 35}, {"gene_id": "OCU_IGHV_C3F4.25_08*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "QSVKESEGGLFKPTDTLTLTCTVSGFSLSSYGVSWVRQAPGNGLEYIGAIGVIDDTYYASWAKSRSTITRNTNLNTVTLKMTSLTAADTATYFC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "GFSLSSYG", "cdr2_seq": "IGVIDD", "repertoire_evidence_count": 5}, {"gene_id": "OCU_IGHV_C3F4.25_09*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "QSVKESEGGLFKPTDTLTLTCTVSGFSLSSNAISWVRQAPGNGLEWIGAIGSSGSAYYASWAKSRSTITRNTNLNTVTLKMTSPTAADTATYFC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "GFSLSSNA", "cdr2_seq": "IGSSGS", "repertoire_evidence_count": 124}, {"gene_id": "OCU_IGHV_C3F4.25_10*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "QSVKESEGGLFKPTDTLTLTCTVSGFSLSSNAISWVRQAPGNGLEWIGAISSGGSAYYASWVNSRSTITRNTNLNTVTLKMTSLTAADTATYFC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "GFSLSSNA", "cdr2_seq": "ISSGGS", "repertoire_evidence_count": 15}, {"gene_id": "OCU_IGHV_C3F4.25_11*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "QSVKESEGGLFKPTDTLTLTCTVSGFSLSSNTISWVRQAPGNGLEWIGAIGSSGSAYYASWAKSRSTITRNTNLNTVTLKMTSLTAADTATYFC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "GFSLSSNT", "cdr2_seq": "IGSSGS", "repertoire_evidence_count": 31}, {"gene_id": "OCU_IGHV_C3F4.25_12*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "QSVKESEGGLFKPTDTLTLTCTVSGFSLSSYGVSWVRQAPGNGLEYIGFISSGGSTYYASWAKSRSTITRNTNLNTVTLKMTSLTAADTATYFC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "GFSLSSYG", "cdr2_seq": "ISSGGS", "repertoire_evidence_count": 61}, {"gene_id": "OCU_IGHV_C3F4.25_13*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "QSVKESEGGLFKPTDTLTLTCTVSGFSLSSNAISWVRQAPGNGLEWIGAIGSSGSVYYASWAKSRSTITRNTNLNTVTLKMTSLTAADTATYFC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "GFSLSSNA", "cdr2_seq": "IGSSGS", "repertoire_evidence_count": 21}, {"gene_id": "OCU_IGHV_C3F4.25_14*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "QSVKESEGGLFKPTDTLTLTCTVSGFSLSSNAISWVRQAPGNGLEWIGIINSYGTTYYASWAKSRSTITRNTNLNTVTLTMTSLTDADTATYFC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "GFSLSSNA", "cdr2_seq": "INSYGTTYYASWAKSRST", "repertoire_evidence_count": 11}, {"gene_id": "OCU_IGHV_C3F4.25_15*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "QSVKESEGGLFKPTDTLTLTCTVSGFALSSNAISWVRQAPGNGLEWIGAIGSSGSTYYASWAKSRSTITRNTNLNTVTLKMTSLTAADTATYFC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "GFALSSNA", "cdr2_seq": "IGSSGS", "repertoire_evidence_count": 6}, {"gene_id": "OCU_IGHV_C3F4.431_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "DVEESRGGLIKPTDTLTLTCTVSGFSLSSYGVIWVRQAPGNGLEYIGTIGSSGSAYYASWAKSRSTITRNTNLNTVTLKMTSLTAADTATYFC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "GFSLSSYG", "cdr2_seq": "IGSSGS", "repertoire_evidence_count": 10}, {"gene_id": "OCU_IGHV_C3F4.506_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "GVQCQSVKESEGGLFKPTDTLTLTCTVSGFSLSSNAISWVRQAPGKELEWIGTISYGSTYYASRAKSRSTITRNTNENTVTLKMTSLTAADTATYFC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "KESEGGLFKPTDTLTLTCTVSGFSLSSNA", "cdr2_seq": "ISYGS", "repertoire_evidence_count": 4}, {"gene_id": "OCU_IGHV_C3F4.550_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "QSVKESEGGLFKPTDTLTLTCTVSGIPLRNNVISWVRQAPGKGLEWIGFIARDGMTYLSDWARSRSTITRNTNENTVTLKMTSLTVADTATYFC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "GIPLRNNV", "cdr2_seq": "IARDGM", "repertoire_evidence_count": 2}, {"gene_id": "OCU_IGHV_C3F4.554_01*01", "locus": "IGH", "chain_type": "Heavy", "vbase3_class": "Class I (Confirmed Functional)", "v_aa_seq": "QSVKESEGGLFKPTDTLTLTCTVSGFSLSSYAISWVRQAPGNGLEWIGAINTFDNTYYASWAKSRSTITRDTNENTVTLKMTSLTAADTATYFC", "v_dna_seq": "", "rss_heptamer": "Inferred_from_repertoire", "cdr1_seq": "GFSLSSYA", "cdr2_seq": "INTFDN", "repertoire_evidence_count": 13}];
+        const J_GENES = [{"gene_id": "ocu_IGKJ1", "species": "rabbit", "chain_type": "Kappa", "dna_seq": "TTCGACGTTCGGCGGAGGGACCAAGCTGGAGATCAAA", "aa_seq": "FDFGGGTKLEIK", "boundary_motif": "LEIK"}, {"gene_id": "ocu_IGKJ2", "species": "rabbit", "chain_type": "Kappa", "dna_seq": "TACACATTCGGCGGAGGGACCAAGCTGGAGATCAAA", "aa_seq": "YTFGGGTKLEIK", "boundary_motif": "LEIK"}, {"gene_id": "ocu_IGLJ1", "species": "rabbit", "chain_type": "Lambda", "dna_seq": "TACTATGTCTTCGGCGGAGGGACCAAGCTGACCGTCCTA", "aa_seq": "YYVFGGGTKLTVL", "boundary_motif": "TVL"}, {"gene_id": "ocu_IGHJ1", "species": "rabbit", "chain_type": "Heavy", "dna_seq": "TACTACTTTGACTTGTGGGGCCCAGGCACCCTCGTCACCGTCTCCTCA", "aa_seq": "YYFDLWGPGTLVTVSS", "boundary_motif": "TVSS"}, {"gene_id": "ocu_IGHJ2", "species": "rabbit", "chain_type": "Heavy", "dna_seq": "TACTACTTTGACTTGTGGGGCCCAGGCACCCTCGTCACCGTCTCCTCA", "aa_seq": "YYFDLWGPGTLVTVSS", "boundary_motif": "TVSS"}, {"gene_id": "ocu_IGHJ4", "species": "rabbit", "chain_type": "Heavy", "dna_seq": "TACTACTACTACTACTTCGATCTCTGGGGCCCAGGCACCCTCGTCACCGTCTCCTCA", "aa_seq": "YYYYYFDLWGPGTLVTVSS", "boundary_motif": "TVSS"}, {"gene_id": "ocu_IGHJ6", "species": "rabbit", "chain_type": "Heavy", "dna_seq": "TACTATATGGATCTCTGGGGCCCAGGCACCCTCGTCACCGTCTCCTCA", "aa_seq": "YYMDLWGPGTLVTVSS", "boundary_motif": "TVSS"}];
+        const D_GENES = [{"gene_id": "rab_DH1-01", "species": "rabbit", "dna_seq": "GCATATACTAGTAGTAGTGGTTATTATATAC", "rev_dna_seq": "GTATATAATAACCACTACTACTAGTATATGC", "aa_rf1": "AYTSSSGYYI", "aa_rf2": "HILVVVVIIY", "aa_rf3": "IY***WLLY", "aa_inv_rf1": "VYNNHYY*YM", "aa_inv_rf2": "YIITTTTSIC", "aa_inv_rf3": "I**PLLLVY"}, {"gene_id": "rab_DH2-02", "species": "rabbit", "dna_seq": "TAGCTACGATGACTATGGTGATTAC", "rev_dna_seq": "GTAATCACCATAGTCATCGTAGCTA", "aa_rf1": "*LR*LW*L", "aa_rf2": "SYDDYGDY", "aa_rf3": "ATMTMVI", "aa_inv_rf1": "VITIVIVA", "aa_inv_rf2": "*SP*SS*L", "aa_inv_rf3": "NHHSHRS"}, {"gene_id": "rab_DH3-03", "species": "rabbit", "dna_seq": "CCTATGGGGTCCTGGTTCCCATGGCTATGGGGTT", "rev_dna_seq": "AACCCCATAGCCATGGGAACCAGGACCCCATAGG", "aa_rf1": "PMGSWFPWLWG", "aa_rf2": "LWGPGSHGYGV", "aa_rf3": "YGVLVPMAMG", "aa_inv_rf1": "NPIAMGTRTP*", "aa_inv_rf2": "TP*PWEPGPHR", "aa_inv_rf3": "PHSHGNQDPI"}, {"gene_id": "rab_DH3-04", "species": "rabbit", "dna_seq": "CCTATGGGGTCCTGGTTCCCATGGCTATGGGGTT", "rev_dna_seq": "AACCCCATAGCCATGGGAACCAGGACCCCATAGG", "aa_rf1": "PMGSWFPWLWG", "aa_rf2": "LWGPGSHGYGV", "aa_rf3": "YGVLVPMAMG", "aa_inv_rf1": "NPIAMGTRTP*", "aa_inv_rf2": "TP*PWEPGPHR", "aa_inv_rf3": "PHSHGNQDPI"}, {"gene_id": "rab_DH3-05", "species": "rabbit", "dna_seq": "CCTATGGGGTCCTTGTTCCCATGGCTATGCAGTC", "rev_dna_seq": "GACTGCATAGCCATGGGAACAAGGACCCCATAGG", "aa_rf1": "PMGSLFPWLCS", "aa_rf2": "LWGPCSHGYAV", "aa_rf3": "YGVLVPMAMQ", "aa_inv_rf1": "DCIAMGTRTP*", "aa_inv_rf2": "TA*PWEQGPHR", "aa_inv_rf3": "LHSHGNKDPI"}, {"gene_id": "rab_DH4-06", "species": "rabbit", "dna_seq": "GTTACTATAGTAGTGGCTGGGGTG", "rev_dna_seq": "CACCCCAGCCACTACTATAGTAAC", "aa_rf1": "VTIVVAGV", "aa_rf2": "LL**WLG", "aa_rf3": "YYSSGWG", "aa_inv_rf1": "HPSHYYSN", "aa_inv_rf2": "TPATTIV", "aa_inv_rf3": "PQPLL**"}, {"gene_id": "rab_DH4-07", "species": "rabbit", "dna_seq": "GTTATGCTGGTAGTAGCTGGGATG", "rev_dna_seq": "CATCCCAGCTACTACCAGCATAAC", "aa_rf1": "VMLVVAGM", "aa_rf2": "LCW**LG", "aa_rf3": "YAGSSWD", "aa_inv_rf1": "HPSYYQHN", "aa_inv_rf2": "IPATTSI", "aa_inv_rf3": "SQLLPA*"}, {"gene_id": "rab_DH5-08", "species": "rabbit", "dna_seq": "ATTTGGTGAAGGGCCGACCCACCATGTAGCTATGGTAGTTAC", "rev_dna_seq": "GTAACTACCATAGCTACATGGTGGGTCGGCCCTTCACCAAAT", "aa_rf1": "IW*RADPPCSYGSY", "aa_rf2": "FGEGPTHHVAMVV", "aa_rf3": "LVKGRPTM*LW*L", "aa_inv_rf1": "VTTIATWWVGPSPN", "aa_inv_rf2": "*LP*LHGGSALHQ", "aa_inv_rf3": "NYHSYMVGRPFTK"}, {"gene_id": "rab_DH6-09", "species": "rabbit", "dna_seq": "GTTACTATAGTTATGGTTATGCTTATGCTACC", "rev_dna_seq": "GGTAGCATAAGCATAACCATAACTATAGTAAC", "aa_rf1": "VTIVMVMLML", "aa_rf2": "LL*LWLCLCY", "aa_rf3": "YYSYGYAYAT", "aa_inv_rf1": "GSISITITIV", "aa_inv_rf2": "VA*A*P*L**", "aa_inv_rf3": "*HKHNHNYSN"}, {"gene_id": "rab_DH7-10", "species": "rabbit", "dna_seq": "GTTATCCTGGTTATAGTACTGGTACC", "rev_dna_seq": "GGTACCAGTACTATAACCAGGATAAC", "aa_rf1": "VILVIVLV", "aa_rf2": "LSWL*YWY", "aa_rf3": "YPGYSTGT", "aa_inv_rf1": "GTSTITRI", "aa_inv_rf2": "VPVL*PG*", "aa_inv_rf3": "YQYYNQDN"}, {"gene_id": "rab_DH8-11", "species": "rabbit", "dna_seq": "GTTATGCTGGTAGTAGTTATTATACC", "rev_dna_seq": "GGTATAATAACTACTACCAGCATAAC", "aa_rf1": "VMLVVVII", "aa_rf2": "LCW**LLY", "aa_rf3": "YAGSSYYT", "aa_inv_rf1": "GIITTTSI", "aa_inv_rf2": "V**LLPA*", "aa_inv_rf3": "YNNYYQHN"}];
+        const BENCHMARKS = [{"name": "Rabbit 4B5 (Anti-HER2 RabMAb)", "target": "HER2 Extracellular Domain IV", "v_gene": "Rab_IGHV1-1 (Clan III)", "j_gene": "OCU_IGHJ1", "boundary": "TVSS", "desc": "The global gold standard immunohistochemistry diagnostic monoclonal antibody for breast cancer staging.", "aa_seq": "QSVEESGGRLVTPGTPLTLTCTVSGFSLSNDAMTWVRQAPGKGLEWIGFIGFNGGTYYATWAKGRFTISRTSTTVDLKMTSLTTEDTATYFCARDGVTTGYALDYWGQGTLVTVSS"}, {"name": "Rabbit SP1 (Anti-Estrogen Receptor)", "target": "Estrogen Receptor Alpha", "v_gene": "Rab_IGHV1-1", "j_gene": "OCU_IGHJ2", "boundary": "TVSS", "desc": "High-affinity diagnostic RabMAb for nuclear hormone receptor detection in pathology biopsies.", "aa_seq": "QSLEESGGRLVTPGTPLTLTCTASGFSLSSYNMIWVRQAPGEGLEWIGVITSSGITYYANWAKGRFTISKTSSTTVDLKMTSLTTEDTATYFCARGGAAYTYALDYWGQGTLVTVSS"}, {"name": "Rabbit EP241Y (Anti-PD-L1)", "target": "Programmed Death-Ligand 1 (CD274)", "v_gene": "Rab_IGHV1-1", "j_gene": "OCU_IGHJ1", "boundary": "TVSS", "desc": "Ultra-high affinity diagnostic antibody for tumor immune microenvironment profiling.", "aa_seq": "QSVEESGGRLVTPGTPLTLTCTVSGFSLSNYAMTWVRQAPGKGLEWIGYIWSGGSTYYATWAKGRFTISRTSTTVDLKMTSLTTEDTATYFCARSYVGGWGGYALDYWGQGTLVTVSS"}];
+
+        let lastAnalysisResult = null;
+
+        function cleanSeq(s) {
+            return (s || '').toUpperCase().replace(/[^ACDEFGHIKLMNPQRSTVWYACGTN]/g, '');
+        }
+
+        function isDna(s) {
+            const clean = (s || '').toUpperCase().replace(/[^A-Z]/g, '');
+            const dnaChars = clean.replace(/[^ACGTN]/g, '').length;
+            return clean.length > 0 && (dnaChars / clean.length) > 0.85;
+        }
+
+        function translateDna(dna) {
+            if (typeof window !== 'undefined' && window.VBASE3 && typeof window.VBASE3.pickBestReadingFrame === 'function') {
+                const best = window.VBASE3.pickBestReadingFrame(dna);
+                return best.matureProtein || best.protein;
+            }
+            return '';
+        }
+
+        function alignHamming(q, ref) {
+            if (typeof window !== 'undefined' && window.VBASE3 && typeof window.VBASE3.alignHamming === 'function') {
+                return window.VBASE3.alignHamming(q, ref);
+            }
+            if (!q || !ref) return 0;
+            const len = Math.min(q.length, ref.length);
+            if (len === 0) return 0;
+            let matches = 0;
+            for (let i = 0; i < len; i++) {
+                if (q[i] === ref[i]) matches++;
+            }
+            return (matches / len) * 100;
+        }
+
+        function annotateVariableDomain(aa) {
+            const cys1Idx = aa.indexOf('C');
+            let cys2Idx = -1;
+            for (let i = Math.max(cys1Idx + 45, 70); i <= Math.min(aa.length - 12, 115); i++) {
+                if (aa[i] === 'C') {
+                    cys2Idx = i;
+                    if (i >= 2 && /[YFHTS][YF]C|[A-Z]FC/.test(aa.substring(i - 2, i + 1))) {
+                        break;
+                    }
+                }
+            }
+            if (cys2Idx === -1) {
+                cys2Idx = aa.lastIndexOf('C', aa.length - 12);
+            }
+            let cdr1 = '', cdr2 = '', cdr3 = '', fr1 = '', fr2 = '', fr3 = '', fr4 = '';
+            
+            if (cys1Idx >= 15 && cys2Idx > cys1Idx + 45) {
+                fr1 = aa.substring(0, cys1Idx + 1);
+                const restAfterCys1 = aa.substring(cys1Idx + 1, cys2Idx);
+                const trpIdx = restAfterCys1.indexOf('W');
+                if (trpIdx > 3 && trpIdx < 20) {
+                    cdr1 = restAfterCys1.substring(0, trpIdx);
+                    const afterTrp = restAfterCys1.substring(trpIdx);
+                    fr2 = afterTrp.substring(0, 14);
+                    const afterFr2 = afterTrp.substring(14);
+                    cdr2 = afterFr2.substring(0, Math.min(10, afterFr2.length));
+                    fr3 = afterFr2.substring(cdr2.length);
+                } else {
+                    cdr1 = restAfterCys1.substring(0, 10);
+                    fr2 = restAfterCys1.substring(10, 24);
+                    cdr2 = restAfterCys1.substring(24, 34);
+                    fr3 = restAfterCys1.substring(34);
+                }
+                const pastCys2 = aa.substring(cys2Idx + 1);
+                const jMotifs = ['WGQG', 'WGRG', 'WGLG', 'WGPQ', 'FGAG', 'FGQG', 'FGGG', 'FGSG'];
+                let jStart = -1;
+                for (const m of jMotifs) {
+                    const idx = pastCys2.indexOf(m);
+                    if (idx !== -1 && (jStart === -1 || idx < jStart)) {
+                        jStart = idx;
+                    }
+                }
+                if (jStart !== -1) {
+                    cdr3 = pastCys2.substring(0, jStart);
+                    fr4 = pastCys2.substring(jStart);
+                } else {
+                    cdr3 = pastCys2.substring(0, Math.min(18, pastCys2.length));
+                    fr4 = pastCys2.substring(cdr3.length);
+                }
+            } else {
+                fr1 = aa.substring(0, 25);
+                cdr1 = aa.substring(25, 33);
+                fr2 = aa.substring(33, 50);
+                cdr2 = aa.substring(50, 58);
+                fr3 = aa.substring(58, 95);
+                cdr3 = aa.substring(95, 108);
+                fr4 = aa.substring(108);
+            }
+            return { fr1, cdr1, fr2, cdr2, fr3, cdr3, fr4 };
+        }
+
+        function detectBoundary(aa) {
+            if (typeof window !== 'undefined' && window.VBASE3 && typeof window.VBASE3.detectBoundaryMotif === 'function') {
+                const res = window.VBASE3.detectBoundaryMotif(aa);
+                if (res && res.motif) {
+                    return { motif: res.motif, desc: res.description || 'Synthesis Boundary' };
+                }
+            }
+            if (aa.endsWith('TVSS') || aa.includes('TVSS')) return { motif: 'TVSS', desc: 'Canonical Heavy Chain (IMGT 122)' };
+            if (aa.endsWith('TVSA') || aa.includes('TVSA')) return { motif: 'TVSA', desc: 'Heavy Chain Variant (IMGT 122)' };
+            if (aa.endsWith('TVL') || aa.includes('TVL')) return { motif: 'TVL', desc: 'Canonical Lambda Light Chain (IMGT 117)' };
+            if (aa.endsWith('VEIK') || aa.includes('VEIK')) return { motif: 'VEIK', desc: 'Canonical Kappa Light Chain (IMGT 117)' };
+            if (aa.endsWith('LEIK') || aa.includes('LEIK')) return { motif: 'LEIK', desc: 'Rabbit Kappa Light Variant (IMGT 117)' };
+            if (aa.endsWith('VDIK') || aa.includes('VDIK')) return { motif: 'VDIK', desc: 'Kappa Light Variant (IMGT 117)' };
+            if (aa.endsWith('LDIK') || aa.includes('LDIK')) return { motif: 'LDIK', desc: 'Kappa Light Variant (IMGT 117)' };
+            return { motif: 'Non-standard', desc: 'Atypical or Truncated Boundary' };
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            if (window.event && window.event.currentTarget && window.event.currentTarget.classList.contains('tab-btn')) {
+                window.event.currentTarget.classList.add('active');
+            } else {
+                const btn = Array.from(document.querySelectorAll('.tab-btn')).find(b => (b.getAttribute('onclick') || '').includes(tabId));
+                if (btn) btn.classList.add('active');
+            }
+            const targetContent = document.getElementById('tab-' + tabId);
+            if (targetContent) targetContent.classList.add('active');
+        }
+
+        function initPills() {
+            const container = document.getElementById('benchmarkPills');
+            container.innerHTML = '';
+            BENCHMARKS.forEach((b, idx) => {
+                const pill = document.createElement('button');
+                pill.className = 'example-pill';
+                pill.innerText = b.name;
+                pill.onclick = () => loadBenchmark(idx);
+                container.appendChild(pill);
+            });
+        }
+
+        function loadBenchmark(idx) {
+            switchTab('analyzer');
+            const b = BENCHMARKS[idx];
+            if (b) {
+                document.getElementById('seqInput').value = b.aa_seq || b.dna_seq;
+                runAnalysis();
+                setTimeout(() => {
+                    const resCard = document.getElementById('analysisResults');
+                    if (resCard) {
+                        resCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    }
+                }, 80);
+            }
+        }
+
+        function clearInput() {
+            document.getElementById('seqInput').value = '';
+            document.getElementById('analysisEmpty').style.display = 'block';
+            document.getElementById('analysisResults').style.display = 'none';
+            document.getElementById('matchScoreBadge').style.display = 'none';
+            document.getElementById('btnExportAirr').style.display = 'none';
+        }
+
+        function runAnalysis() {
+            let raw = document.getElementById('seqInput').value.trim();
+            if (!raw) return;
+            
+            const lines = raw.split('\n');
+            let seq = '';
+            for (const l of lines) {
+                if (l.startsWith('>')) continue;
+                seq += l.trim();
+            }
+            seq = cleanSeq(seq);
+            
+            let queryAa = seq;
+            if (isDna(seq)) {
+                queryAa = translateDna(seq);
+            }
+
+            if (queryAa.length < 30) {
+                alert('Sequence is too short for variable domain alignment (minimum 30 amino acids).');
+                return;
+            }
+
+            // 1. Align against V-genes
+            let bestV = null;
+            let bestScore = -1;
+            for (const v of V_GENES) {
+                const targetAa = v.v_aa_seq;
+                const score = alignHamming(queryAa, targetAa);
+                if (score > bestScore) {
+                    bestScore = score;
+                    bestV = v;
+                }
+            }
+
+            // 2. Align against J-genes
+            let bestJ = null;
+            let bestJScore = -1;
+            for (const j of J_GENES) {
+                const targetAa = j.aa_seq || j.mature_aa || '';
+                if (!targetAa) continue;
+                const queryTail = queryAa.slice(-targetAa.length);
+                const score = alignHamming(queryTail, targetAa);
+                if (score > bestJScore) {
+                    bestJScore = score;
+                    bestJ = j;
+                }
+            }
+
+            // 3. Structural domain annotation
+            const domain = annotateVariableDomain(queryAa);
+            const boundary = detectBoundary(queryAa);
+
+            // 3b. Align against D-genes
+            let bestD = null;
+            let bestDScore = -1;
+            const cdr3Aa = domain.cdr3 || '';
+            if (D_GENES && D_GENES.length > 0 && cdr3Aa.length >= 3) {
+                for (const d of D_GENES) {
+                    const candidates = [d.aa_rf1, d.aa_rf2, d.aa_rf3, d.aa_inv_rf1, d.aa_inv_rf2, d.aa_inv_rf3];
+                    for (const cand of candidates) {
+                        if (!cand) continue;
+                        const cleanCand = cand.replace(/\*/g, '');
+                        if (cleanCand.length < 3) continue;
+                        if (cdr3Aa.includes(cleanCand)) {
+                            const sc = cleanCand.length * 10;
+                            if (sc > bestDScore) {
+                                bestDScore = sc;
+                                bestD = d;
+                            }
+                        } else {
+                            for (let k = 0; k <= cdr3Aa.length - 3; k++) {
+                                const sub = cdr3Aa.substring(k, k + Math.min(cleanCand.length, cdr3Aa.length - k));
+                                if (sub.length >= 3) {
+                                    const sc = alignHamming(sub, cleanCand.substring(0, sub.length));
+                                    if (sc >= 60 && sc > bestDScore) {
+                                        bestDScore = sc;
+                                        bestD = d;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            // 4. Special hallmark detection: Cys21-Cys79 disulfide bridge
+            let hallmark = 'Standard 2-Cysteine RabMAb Domain';
+            const cysMatches = (queryAa.match(/C/g) || []).length;
+            if (cysMatches >= 4) {
+                hallmark = `<span class="badge-hallmark">✨ Inter-CDR Disulfide Active (${cysMatches} Cysteines: Cys21-Cys79 loop detected)</span>`;
+            } else if (queryAa.includes('TVL')) {
+                hallmark = '<span class="badge-functional">Rabbit Lambda Light Chain (IGL)</span>';
+            } else if (queryAa.includes('LEIK') || queryAa.includes('VEIK')) {
+                hallmark = '<span class="badge-boundary">Rabbit Kappa Light Chain (IGK)</span>';
+            } else {
+                hallmark = '<span class="badge-functional">Rabbit Variable Domain</span>';
+            }
+
+            lastAnalysisResult = {
+                queryAa,
+                bestV,
+                bestScore,
+                bestD,
+                bestJ,
+                boundary,
+                domain,
+                hallmark
+            };
+
+            // Render results
+            document.getElementById('analysisEmpty').style.display = 'none';
+            document.getElementById('analysisResults').style.display = 'block';
+            document.getElementById('matchScoreBadge').style.display = 'inline-block';
+            document.getElementById('matchScoreBadge').innerText = `${bestScore.toFixed(1)}% V-Identity`;
+
+            document.getElementById('resVGene').innerText = bestV ? `${bestV.gene_id} (${bestV.chain_type})` : 'No match';
+            const resDEl = document.getElementById('resDGene');
+            if (resDEl) {
+                resDEl.innerText = bestD ? `${bestD.gene_id}` : (D_GENES && D_GENES.length > 0 ? 'Undetermined junction / N-diversity' : 'None (Light chain / No D-cluster)');
+            }
+            document.getElementById('resJGene').innerText = bestJ ? `${bestJ.gene_id} (${bestJ.aa_seq || bestJ.mature_aa})` : 'No match';
+            document.getElementById('resBoundary').innerText = `${boundary.motif} — ${boundary.desc}`;
+            
+            const shmCount = Math.round((100 - bestScore) * (queryAa.length / 100));
+            document.getElementById('resShm').innerText = `${shmCount} mutations from germline (${(100 - bestScore).toFixed(1)}% divergence)`;
+            document.getElementById('resHallmark').innerHTML = hallmark;
+
+            const lFr1 = (domain.fr1 || '').length;
+            const lCdr1 = (domain.cdr1 || '').length;
+            const lFr2 = (domain.fr2 || '').length;
+            const lCdr2 = (domain.cdr2 || '').length;
+            const lFr3 = (domain.fr3 || '').length;
+            const lCdr3 = (domain.cdr3 || '').length;
+            const lFr4 = (domain.fr4 || '').length;
+
+            const areaTrackEl = document.getElementById('domainAreaTrack');
+            if (areaTrackEl) {
+                const regions = [
+                    { name: 'FR1', len: lFr1, aa: domain.fr1 || '', isCdr: false, color: '#94a3b8', headerBg: 'rgba(148,163,184,0.18)', borderColor: '#64748b', seqBg: 'rgba(148,163,184,0.06)' },
+                    { name: 'CDR1', len: lCdr1, aa: domain.cdr1 || '', isCdr: true, color: '#38bdf8', headerBg: 'rgba(56,189,248,0.22)', borderColor: '#38bdf8', seqBg: 'rgba(56,189,248,0.14)' },
+                    { name: 'FR2', len: lFr2, aa: domain.fr2 || '', isCdr: false, color: '#94a3b8', headerBg: 'rgba(148,163,184,0.18)', borderColor: '#64748b', seqBg: 'rgba(148,163,184,0.06)' },
+                    { name: 'CDR2', len: lCdr2, aa: domain.cdr2 || '', isCdr: true, color: '#4ade80', headerBg: 'rgba(74,222,128,0.22)', borderColor: '#4ade80', seqBg: 'rgba(74,222,128,0.14)' },
+                    { name: 'FR3', len: lFr3, aa: domain.fr3 || '', isCdr: false, color: '#94a3b8', headerBg: 'rgba(148,163,184,0.18)', borderColor: '#64748b', seqBg: 'rgba(148,163,184,0.06)' },
+                    { name: 'CDR3', len: lCdr3, aa: domain.cdr3 || '', isCdr: true, color: '#f43f5e', headerBg: 'rgba(244,63,94,0.22)', borderColor: '#f43f5e', seqBg: 'rgba(244,63,94,0.16)' },
+                    { name: 'FR4', len: lFr4, aa: domain.fr4 || '', isCdr: false, color: '#94a3b8', headerBg: 'rgba(148,163,184,0.18)', borderColor: '#64748b', seqBg: 'rgba(148,163,184,0.06)' }
+                ];
+                let trackHtml = '';
+                for (const r of regions) {
+                    if (r.len === 0 && !r.aa) continue;
+                    trackHtml += `
+                        <div class="domain-region-block" style="display:flex; flex-direction:column; flex:0 0 auto; align-items:stretch; margin-right:2px; min-width:max-content;">
+                            <div style="background:${r.headerBg}; border:1px solid ${r.borderColor}; color:${r.color}; font-family:monospace; font-size:11px; font-weight:700; text-align:center; padding:3px 6px; border-radius:4px 4px 0 0; white-space:nowrap;" title="${r.name}: ${r.len} AA">
+                                ${r.name} (${r.len})
+                            </div>
+                            <div style="background:${r.seqBg}; border:1px solid ${r.borderColor}; border-top:none; color:${r.color}; font-family:monospace; font-size:12.5px; font-weight:${r.isCdr ? '700' : '500'}; letter-spacing:1.5px; text-align:center; padding:5px 8px; border-radius:0 0 4px 4px; white-space:nowrap;">
+                                ${r.aa}
+                            </div>
+                        </div>
+                    `;
+                }
+                areaTrackEl.innerHTML = trackHtml;
+            }
+
+            document.getElementById('btnExportAirr').style.display = 'inline-flex';
+        }
+
+        function exportAirrTsv() {
+            if (!lastAnalysisResult) return;
+            const r = lastAnalysisResult;
+            const tsvHeaders = [
+                'sequence_id', 'sequence', 'v_call', 'j_call', 'v_identity',
+                'cdr1_aa', 'cdr2_aa', 'cdr3_aa', 'synthesis_boundary', 'hallmark'
+            ].join('\t');
+            const row = [
+                'query_seq_01',
+                r.queryAa,
+                r.bestV ? r.bestV.gene_id : '',
+                r.bestJ ? r.bestJ.gene_id : '',
+                r.bestScore.toFixed(2),
+                r.domain.cdr1,
+                r.domain.cdr2,
+                r.domain.cdr3,
+                r.boundary.motif,
+                r.hallmark.replace(/<[^>]*>?/gm, '')
+            ].join('\t');
+
+            const blob = new Blob([tsvHeaders + '\n' + row + '\n'], { type: 'text/tab-separated-values' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'rabbit_antibody_airr_export.tsv';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+
+        function populateCatalog() {
+            const tbody = document.getElementById('catalogTbody');
+            tbody.innerHTML = '';
+            V_GENES.forEach(v => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td style="font-weight:600; color:#38bdf8;">${v.gene_id}</td>
+                    <td>${v.locus}</td>
+                    <td>${v.chain_type}</td>
+                    <td><span class="badge-functional">${v.vbase3_class}</span></td>
+                    <td class="seq-font" style="max-width:350px;">${v.v_aa_seq}</td>
+                    <td class="seq-font">${v.rss_heptamer || 'CACAGTG'}</td>
+                    <td><button class="btn btn-secondary" style="padding:4px 8px; font-size:11px;" onclick="copySeq('${v.v_aa_seq}')">Copy AA</button></td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        let currentLocusFilter = '';
+        function setLocusFilter(loc) {
+            currentLocusFilter = loc;
+            document.querySelectorAll('#locusFilterGroup button').forEach(b => b.classList.remove('active'));
+            const btnId = loc ? 'btn-loc-' + loc.toLowerCase() : 'btn-loc-all';
+            const btn = document.getElementById(btnId);
+            if (btn) btn.classList.add('active');
+            filterCatalog();
+        }
+
+        function filterCatalog() {
+            const q = document.getElementById('catalogSearch').value.toLowerCase();
+            const tbody = document.getElementById('catalogTbody');
+            tbody.innerHTML = '';
+            const filtered = V_GENES.filter(v => {
+                if (currentLocusFilter && v.locus !== currentLocusFilter) return false;
+                return v.gene_id.toLowerCase().includes(q) ||
+                    v.locus.toLowerCase().includes(q) ||
+                    v.chain_type.toLowerCase().includes(q) ||
+                    v.v_aa_seq.toLowerCase().includes(q);
+            });
+
+            filtered.forEach(v => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td style="font-weight:600; color:#38bdf8;">${v.gene_id}</td>
+                    <td>${v.locus}</td>
+                    <td>${v.chain_type}</td>
+                    <td><span class="badge-functional">${v.vbase3_class}</span></td>
+                    <td class="seq-font" style="max-width:350px;">${v.v_aa_seq}</td>
+                    <td class="seq-font">${v.rss_heptamer || 'CACAGTG'}</td>
+                    <td><button class="btn btn-secondary" style="padding:4px 8px; font-size:11px;" onclick="copySeq('${v.v_aa_seq}')">Copy AA</button></td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function populateBenchmarks() {
+            const tbody = document.getElementById('benchmarksTbody');
+            tbody.innerHTML = '';
+            BENCHMARKS.forEach((b, idx) => {
+                const tr = document.createElement('tr');
+                tr.style.cursor = 'pointer';
+                tr.title = `Click to load and analyze ${b.name} in V(D)J Analyzer`;
+                tr.onclick = () => loadBenchmark(idx);
+                tr.innerHTML = `
+                    <td style="font-weight:600; color:#38bdf8;">${b.name}</td>
+                    <td>${b.target}</td>
+                    <td><span class="badge-boundary">${b.v_gene || '-'} / ${b.j_gene || '-'}</span></td>
+                    <td><span class="badge-functional">${b.boundary || 'TVSS'}</span></td>
+                    <td style="font-size:12.5px; color:var(--text-secondary); max-width:400px;">${b.desc}</td>
+                    <td><button class="btn" style="padding:4px 10px; font-size:11.5px;" onclick="event.stopPropagation(); loadBenchmark(${idx})">⚡ Analyze</button></td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function copySeq(s) {
+            navigator.clipboard.writeText(s).then(() => alert('Sequence copied to clipboard!'));
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            initPills();
+            populateCatalog();
+            populateBenchmarks();
+            if (BENCHMARKS.length > 0) {
+                loadBenchmark(0);
+            }
+        });
+    </script>
+</body>
+</html>
