@@ -33,25 +33,26 @@ A comprehensive intellectual property and licensing audit was conducted across a
 
 | Component | Files / Location | Origin & Author | Upstream License | CC-BY-4.0 Compatibility |
 | :--- | :--- | :--- | :--- | :---: |
-| **Core Software (`dnaplot_lib`)** | `crates/dnaplot_lib/` | Werner Müller & Antigravity (refactored from original C DNAPLOT) | Original Author Work | **COMPATIBLE** |
-| **CLI Tools (`dnaplot_cli`)** | `crates/dnaplot_cli/` | Werner Müller & Antigravity | Original Author Work | **COMPATIBLE** |
-| **WebAssembly Engine (`pkg/`)** | `zenodo_submission/gh_pages/pkg/` | Compiled from `crates/dnaplot_wasm/` | Original Author Work | **COMPATIBLE** |
-| **Web Applications & Scripts** | `zenodo_submission/gh_pages/*.html`, `js/*.js` | Original scripts created for VBASE3 | Original Author Work | **COMPATIBLE** |
-| **D3.js Visualization Engine** | `zenodo_submission/gh_pages/js/d3.v7.min.js` (Self-Hosted) | Mike Bostock | **ISC License** (permissive, BSD-compatible) | **COMPATIBLE** |
-| **Typography: Inter Font** | `zenodo_submission/gh_pages/fonts/inter-*.woff2` (Self-Hosted) | Rasmus Andersson | **SIL Open Font License 1.1 (OFL)** | **COMPATIBLE** |
-| **Typography: Outfit Font** | `zenodo_submission/gh_pages/fonts/outfit-*.woff2` (Self-Hosted) | Rodrigo Fuenzalida | **SIL Open Font License 1.1 (OFL)** | **COMPATIBLE** |
-| **Typography: Fira Code** | `zenodo_submission/gh_pages/fonts/fira-code-*.woff2` (Self-Hosted) | Nikita Prokopov | **SIL Open Font License 1.1 (OFL)** | **COMPATIBLE** |
-| **Typography: JetBrains Mono** | `zenodo_submission/gh_pages/fonts/jetbrains-mono-*.woff2` (Self-Hosted) | JetBrains | **Apache License 2.0 / OFL** | **COMPATIBLE** |
-| **Rust Crates Dependencies** | `serde`, `serde_json`, `clap`, `rust_xlsxwriter`, `calamine`, `flate2`, `wasm-bindgen` | Open-Source Rust Community | **MIT / Apache-2.0** (Permissive) | **COMPATIBLE** |
+| **WebAssembly Engine (`pkg/`)** | `pkg/dnaplot_wasm_bg.wasm`, `node_tools/pkg/` | Werner Müller & Antigravity (refactored from original C DNAPLOT) | Original Author Work | **COMPATIBLE (MIT)** |
+| **Web Applications & Scripts** | `*.html`, `js/*.js` | Original scripts created for VBASE3 | Original Author Work | **COMPATIBLE** |
+| **Node.js MCP Server & CLI Runner** | `node_tools/vbase3_mcp_server.mjs`, `node_tools/vbase3_wasm_cli.mjs` | Werner Müller & Antigravity | Original Author Work | **COMPATIBLE (MIT)** |
+| **Benchmarking Suite** | `benchmarks/*.py` | Werner Müller & Antigravity | Original Author Work | **COMPATIBLE (MIT)** |
+| **Open Dataset Catalogs** | `datasets/*.tsv`, `datasets/fasta/*.fasta` | VBASE3 Initiative | Creative Commons Attribution 4.0 | **COMPATIBLE (CC-BY-4.0)** |
+| **D3.js Visualization Engine** | `js/d3.v7.min.js` (Self-Hosted) | Mike Bostock | **ISC License** (permissive, BSD-compatible) | **COMPATIBLE** |
+| **Typography: Inter Font** | `fonts/inter-*.woff2` (Self-Hosted) | Rasmus Andersson | **SIL Open Font License 1.1 (OFL)** | **COMPATIBLE** |
+| **Typography: Outfit Font** | `fonts/outfit-*.woff2` (Self-Hosted) | Rodrigo Fuenzalida | **SIL Open Font License 1.1 (OFL)** | **COMPATIBLE** |
+| **Typography: Fira Code** | `fonts/fira-code-*.woff2` (Self-Hosted) | Nikita Prokopov | **SIL Open Font License 1.1 (OFL)** | **COMPATIBLE** |
+| **Typography: JetBrains Mono** | `fonts/jetbrains-mono-*.woff2` (Self-Hosted) | JetBrains | **Apache License 2.0 / OFL** | **COMPATIBLE** |
 
 ---
 
 ## 3. Figures, Logos & Manuscripts
 
 | Item | Location | Authorship | Status |
-| :--- | :--- | :--- | :---: |
+| :--- | :--- | :--- | :--- | :---: |
 | **Manuscript Preprint** | `manuscript_vbase3.pdf` | Werner Müller | Original Work (CC-BY-4.0) |
-| **Figures & Logos** | Embedded in `manuscript_vbase3.pdf`, `gh_pages/images/` | Werner Müller & Antigravity | Original Work (CC-BY-4.0) |
+| **Advisory Notices & Guides** | `MUST_READ_BEFORE_USING.md`, `TRUST.md`, `AGENTS.md` | Werner Müller & Antigravity | Original Work (CC-BY-4.0) |
+| **Figures & Logos** | Embedded in `manuscript_vbase3.pdf`, `images/` | Werner Müller & Antigravity | Original Work (CC-BY-4.0) |
 
 ---
 

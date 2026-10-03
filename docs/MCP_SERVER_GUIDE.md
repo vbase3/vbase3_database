@@ -110,8 +110,8 @@ Add to your project or user MCP configuration (`.gemini/config/mcp_config.json`)
 ## Embedding Interactive Webviews in AI Environments
 
 Because all VBASE3 web applications execute client-side WebAssembly, AI assistants can also serve and embed the interactive web applications directly within IDE panels, sidecars, or webviews:
-- **Collier de Perles 2D Modal**: `http://localhost:8000/dnaplot.html`
-- **Single-Cell Repertoire Studio**: `http://localhost:8000/single_cell_repertoire_studio.html`
-- **Universal PaCMAP Manifold**: `http://localhost:8000/vgene_pacmap_universe.html`
+- **Collier de Perles 2D Modal**: `https://vbase3.github.io/vbase3_database/dnaplot.html`
+- **Single-Cell Repertoire Studio**: `https://vbase3.github.io/vbase3_database/single_cell_repertoire_studio.html`
+- **Universal PaCMAP Manifold**: `https://vbase3.github.io/vbase3_database/vgene_pacmap_universe.html`
 
 This architecture allows the LLM to perform deep sequence reasoning while embedding publication-ready interactive visualizations right in the developer's workspace.

@@ -6,7 +6,7 @@ The **VBASE3 Immunogenomic Database** provides a verified, comparative, and synt
 To guarantee complete reproducibility, biological integrity, and academic neutrality:
 1. **100% Open Data Provenance**: Every entry in VBASE3 originates strictly from public international nucleotide sequence databases (INSDC: NCBI GenBank, ENA, DDBJ), official IMGT releases, the peer-reviewed VBASE2 relational database, chromosome-level reference genome assemblies, or experimentally solved macromolecular structures (RCSB PDB / AlphaFold DB).
 2. **Complete Repository Decoupling**: VBASE3 is a public reference repository. No internal campaign identifiers, proprietary modeling toolnames, or wet-lab project identifiers exist within this repository. Any cross-project validation or benchmarking against private datasets is conducted exclusively from within external project workspaces.
-3. **Formal Two-Tier Storage Hierarchy**: Heavy raw sequencing archives and whole-chromosome assembly files reside on external storage media (`/Volumes/big apple`), while canonical, curated germline catalogs and client-side WebAssembly distribution artifacts are tracked within the repository.
+3. **Formal Two-Tier Storage Hierarchy**: Heavy raw sequencing archives and whole-chromosome assembly files reside on external storage media (configured via `$VBASE3_EXTERNAL_STORAGE`), while canonical, curated germline catalogs and client-side WebAssembly distribution artifacts are tracked within the repository.
 
 ---
 
@@ -43,7 +43,7 @@ graph TD
         T1_D["Web Portals & Wasm (web/static/, zenodo_submission/)"]
     end
 
-    subgraph Tier2["Tier 2: External Storage Volume (/Volumes/big apple)"]
+    subgraph Tier2["Tier 2: External Storage Volume ($VBASE3_EXTERNAL_STORAGE)"]
         direction TB
         T2_A["Genomic Assemblies (vbase_rust_data/genomes/)<br/>GRCh38, GRCm39, VicPac3.1, CamDro2 .fna"]
         T2_B["Rearranged Repertoires (human_pbl_repertoire/)<br/>Million-clone FASTQ / raw_dataset.csv.gz"]
@@ -67,7 +67,7 @@ graph TD
 - **Version Control Policy**: Fully committed to Git and deposited in Zenodo.
 
 ### 3.2 Tier 2: External High-Volume Storage (> 100 GB)
-- **Location**: Mounted at `/Volumes/big apple` or configured via the environment variable `VBASE3_EXTERNAL_STORAGE`.
+- **Location**: Configured via the environment variable `$VBASE3_EXTERNAL_STORAGE` (e.g. external SSD or high-capacity network mount).
 - **Contents**:
   - `vbase_rust_data/genomes/`: Complete chromosome-level FASTA files (e.g., `Horse_genomic.fna`, `Alpaca_genomic.fna`, `GRCh38_latest_genomic.fna`).
   - `human_pbl_repertoire/`: Million-clone deep rearranged repertoires (`raw_dataset.csv.gz`, `human_pbl_aminoacids.fasta`).
@@ -102,7 +102,7 @@ To enforce open provenance and prevent data regression:
 
 ## 5. Benchmark & Expressed Repertoire Example Datasets: Provenance & Literature Citations
 
-To enable reproducible exploration and benchmarking without requiring users to upload private data, VBASE3 embeds standardized reference datasets across its single-cell, repertoire, and alignment studios. The exact biological provenance, SRA accessions, and peer-reviewed literature citations for all embedded datasets are detailed below. For the exhaustive master audit across all 26 browser portals, see [WEB_PORTAL_DATASET_PROVENANCE.md](file:///Users/wmueller/vbase3_database/docs/WEB_PORTAL_DATASET_PROVENANCE.md).
+To enable reproducible exploration and benchmarking without requiring users to upload private data, VBASE3 embeds standardized reference datasets across its single-cell, repertoire, and alignment studios. The exact biological provenance, SRA accessions, and peer-reviewed literature citations for all embedded datasets are detailed below. For the exhaustive master audit across all 26 browser portals, see [WEB_PORTAL_DATASET_PROVENANCE.md](WEB_PORTAL_DATASET_PROVENANCE.md).
 
 ### 5.1 Expressed Antibody Repertoire Datasets (`repertoire_pacmap_universe.html`, `repertoire_diversity.html`)
 | Repertoire Cohort | Organism & Source | Primary Accession / SRA Run | Key Immunological Feature | Literature Citation & DOI |
