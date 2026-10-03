@@ -618,15 +618,15 @@
       <div class="metadata-grid">
         <div class="meta-field">
           <label>Sample Identifier</label>
-          <input type="text" id="sampleIdInput" value="DONOR_HER2_PBL_EXP01" oninput="updateAuditBadges()" />
+          <input type="text" id="sampleIdInput" value="SAMPLE_OAS_HEALTHY_DONOR" oninput="updateAuditBadges()" />
         </div>
         <div class="meta-field">
           <label>Donor / Patient ID</label>
-          <input type="text" id="donorIdInput" value="PATIENT_D044" oninput="updateAuditBadges()" />
+          <input type="text" id="donorIdInput" value="DONOR_PBMC_01" oninput="updateAuditBadges()" />
         </div>
         <div class="meta-field">
-          <label>Campaign / Study Name</label>
-          <input type="text" id="projectInput" value="CONVERGENT_NEUTRALIZER_CAMPAIGN" oninput="updateAuditBadges()" />
+          <label>Study / Dataset Name</label>
+          <input type="text" id="projectInput" value="AIRR_COMMUNITY_BENCHMARK" oninput="updateAuditBadges()" />
         </div>
         <div class="meta-field">
           <label>Sequencing Platform</label>
@@ -650,7 +650,6 @@
         <button class="btn-action" id="btnToggleImport" style="background:linear-gradient(135deg, #0284c7, #2563eb); border-color:#38bdf8; color:#ffffff; font-weight:700; box-shadow:0 0 12px rgba(56,189,248,0.35);" onclick="toggleDataImportPanel()">📂 Upload / Paste User Repertoire Data</button>
         <span style="font-size:12px; color:#64748b; margin:0 4px;">|</span>
         <span style="font-size:12px; color:#94a3b8; font-weight:700;">Benchmark Presets:</span>
-        <button class="btn-action" onclick="loadPreset('her2')">🎯 HER2 Single-Cell (320 pairs)</button>
         <button class="btn-action" onclick="loadPreset('viral')">🦠 Viral S2 Convalescent (185 pairs)</button>
         <button class="btn-action" onclick="loadPreset('flu')">🦆 Influenza HA Stem (140 pairs)</button>
         <button class="btn-action" style="border-color:#10b981; color:#34d399; background:rgba(16,185,129,0.12);" onclick="loadPreset('time_series')">⏱️ Longitudinal Vaccine Time-Series (D0→D7→D28→D180)</button>
@@ -709,8 +708,8 @@
             <strong>AIRR Community standard:</strong> Tab-delimited file with one record per contig. Rows sharing the same <code>sequence_id</code> or cell barcode are automatically paired across heavy (<code>IGH</code>/<code>TRB</code>) and light (<code>IGK</code>/<code>IGL</code>/<code>TRA</code>) chains.
           </p>
           <pre class="format-code">sequence_id	v_call	j_call	junction_aa	duplicate_count	locus	timepoint	target
-donor_cell_01_H	humIGHV3-23*01	humIGHJ4*02	CSRWGGDGFYAMDYW	112	IGH	Day 0	HER2 Domain IV
-donor_cell_01_L	humIGKV1-39*01	humIGKJ1*01	CQQHYTTPPTF	112	IGK	Day 0	HER2 Domain IV
+donor_cell_01_H	humIGHV1-69*01	humIGHJ4*01	CARDGYYDILTGYYFDYW	112	IGH	Day 0	Healthy Baseline
+donor_cell_01_L	humIGKV1-39*01	humIGKJ1*01	CQQSYSTPPTF	112	IGK	Day 0	Healthy Baseline
 donor_cell_02_H	humIGHV1-69*01	humIGHJ6*01	CARDKGYSYGYW	94	IGH	Day 28	SARS-CoV-2 S2
 donor_cell_02_L	humIGKV3-20*01	humIGKJ2*01	CQQYGSSPLTF	94	IGK	Day 28	SARS-CoV-2 S2</pre>
           <div style="display:flex; gap:8px; margin-top:8px; align-items:center;">
@@ -725,8 +724,8 @@ donor_cell_02_L	humIGKV3-20*01	humIGKJ2*01	CQQYGSSPLTF	94	IGK	Day 28	SARS-CoV-2 
             <strong>10x Genomics CellRanger:</strong> Directly drag-and-drop your <code>filtered_contig_annotations.csv</code> file. Contigs sharing the identical <code>barcode</code> are paired into heterodimers.
           </p>
           <pre class="format-code">barcode,chain,v_gene,j_gene,cdr3,reads,productive,is_cell
-AAACCTGAGAAACCGA-1,IGH,IGHV3-23,IGHJ4,CSRWGGDGFYAMDYW,42,True,True
-AAACCTGAGAAACCGA-1,IGK,IGKV1-39,IGKJ1,CQQHYTTPPTF,38,True,True
+AAACCTGAGAAACCGA-1,IGH,IGHV1-69,IGHJ4,CARDGYYDILTGYYFDYW,42,True,True
+AAACCTGAGAAACCGA-1,IGK,IGKV1-39,IGKJ1,CQQSYSTPPTF,38,True,True
 AAACCTGAGAAACCGT-1,IGH,IGHV1-69,IGHJ6,CARDKGYSYGYW,55,True,True
 AAACCTGAGAAACCGT-1,IGK,IGKV3-20,IGKJ2,CQQYGSSPLTF,49,True,True</pre>
           <div style="display:flex; gap:8px; margin-top:8px; align-items:center;">
@@ -741,7 +740,7 @@ AAACCTGAGAAACCGT-1,IGK,IGKV3-20,IGKJ2,CQQYGSSPLTF,49,True,True</pre>
             <strong>Simple Paired Table:</strong> Exactly one line per single-cell heterodimer. Perfect for copying and pasting columns from Microsoft Excel, Apple Numbers, or Google Sheets.
           </p>
           <pre class="format-code">cell_id	heavy_v	light_v	heavy_cdr3	light_cdr3	freq	timepoint	target
-clone_1	humIGHV3-23*01	humIGKV1-39*01	CSRWGGDGFYAMDYW	CQQHYTTPPTF	120	Pre-Bleed	HER2 Domain IV
+clone_1	humIGHV1-69*01	humIGKV1-39*01	CARDGYYDILTGYYFDYW	CQQSYSTPPTF	120	Pre-Bleed	Healthy Baseline
 clone_2	humIGHV1-69*01	humIGKV3-20*01	CARDKGYSYGYW	CQQYGSSPLTF	85	Day 28	Spike S2 Stem
 clone_3	humIGHV3-53*01	humIGKV1-9*01	CARDLDYFDFW	CQQYDTYPLTF	64	Day 7	RBD Class 1
 clone_4	humTRBV6-5*01	humTRAV8-4*01	CASSIYSGNTIYF	CAVSDGGSQGNLIF	45	Post-Tx	MAGE-A3 / HLA-A*01</pre>
@@ -788,7 +787,7 @@ DIQMTQSPSSLSASVGDRVTITCRASQDVNTAVAWYQQKPGKAPKLLIYSASFLYSGVPSRFSGSRSGTDFTLTISSLQP
             <span style="font-size:12px; font-weight:700; color:#cbd5e1;">Or Paste Raw Table / FASTA Content:</span>
             <button class="btn-action" style="font-size:10.5px; padding:2px 6px;" onclick="clearImportTextarea()">🧹 Clear</button>
           </div>
-          <textarea id="rawRepertoireInput" class="workbench-import-textarea" placeholder="Paste your AIRR TSV, 10x CSV, or Simple TSV text here...&#10;e.g.&#10;cell_id&#9;heavy_v&#9;light_v&#9;heavy_cdr3&#9;light_cdr3&#9;freq&#9;timepoint&#9;target&#10;clone_01&#9;humIGHV3-23*01&#9;humIGKV1-39*01&#9;CSRWGGDGFYAMDYW&#9;CQQHYTTPPTF&#9;112&#9;Day 0&#9;HER2"></textarea>
+          <textarea id="rawRepertoireInput" class="workbench-import-textarea" placeholder="Paste your AIRR TSV, 10x CSV, or Simple TSV text here...&#10;e.g.&#10;cell_id&#9;heavy_v&#9;light_v&#9;heavy_cdr3&#9;light_cdr3&#9;freq&#9;timepoint&#9;target&#10;clone_01&#9;humIGHV1-69*01&#9;humIGKV1-39*01&#9;CARDGYYDILTGYYFDYW&#9;CQQSYSTPPTF&#9;112&#9;Day 0&#9;Healthy Baseline"></textarea>
         </div>
       </div>
 
@@ -1047,14 +1046,6 @@ DIQMTQSPSSLSASVGDRVTITCRASQDVNTAVAWYQQKPGKAPKLLIYSASFLYSGVPSRFSGSRSGTDFTLTISSLQP
     // VBASE3 Benchmark Datasets (Human Paired Single-Cell Repertoires)
     // -------------------------------------------------------------
     const SAMPLE_DATASETS = {
-      her2: [
-        { rank: 1, cohort: "HER2 Cohort", timepoint: "Baseline (Biopsy)", day: 0, freq: 112, target: "HER2 / ERBB2 Domain IV", v_h: "humIGHV3-23*01", j_h: "humIGHJ4*02", cdr3_h: "CSRWGGDGFYAMDYW", v_l: "humIGKV1-39*01", j_l: "humIGKJ1*01", cdr3_l: "CQQHYTTPPTF", shm_h: 12, shm_l: 6, boundary_h: "TVSS", boundary_l: "VEIK", px: -12.4, py: 8.2, seq_h: "EVQLVESGGGLVQPGGSLRLSCAASGFNIKDTYIHWVRQAPGKGLEWVARIYPTNGYTRYADSVKGRFTISADTSKNTAYLQMNSLRAEDTAVYYCSRWGGDGFYAMDYWGQGTLVTVSS", seq_l: "DIQMTQSPSSLSASVGDRVTITCRASQDVNTAVAWYQQKPGKAPKLLIYSASFLYSGVPSRFSGSRSGTDFTLTISSLQPEDFATYYCQQHYTTPPTFGQGTKVEIK" },
-        { rank: 2, cohort: "HER2 Cohort", timepoint: "Baseline (Biopsy)", day: 0, freq: 84, target: "HER2 / ERBB2 Domain II", v_h: "humIGHV3-66*01", j_h: "humIGHJ6*01", cdr3_h: "CARNLGPSFYFDYW", v_l: "humIGKV1-33*01", j_l: "humIGKJ1*01", cdr3_l: "CQQYYIYPYTF", shm_h: 9, shm_l: 5, boundary_h: "TVSS", boundary_l: "VEIK", px: -10.8, py: 9.1, seq_h: "EVQLVESGGGLVQPGGSLRLSCAASGFTFTDYTMDWVRQAPGKGLEWVADVNPNSGGSIYNQRFKGRFTLSVDRSKNTLYLQMNSLRAEDTAVYYCARNLGPSFYFDYWGQGTTVTVSS", seq_l: "DIQMTQSPSSLSASVGDRVTITCKASQDVSIGVAWYQQKPGKAPKLLIYSASYRYTGVPSRFSGSGSGTDFTLTISSLQPEDFATYYCQQYYIYPYTFGQGTKVEIK" },
-        { rank: 3, cohort: "HER2 Cohort", timepoint: "Baseline (Biopsy)", day: 0, freq: 46, target: "HER2 / ERBB2 Subdomain I", v_h: "humIGHV1-69*01", j_h: "humIGHJ4*02", cdr3_h: "CARDKGYSYGYW", v_l: "humIGKV3-20*01", j_l: "humIGKJ2*01", cdr3_l: "CQQYGSSPLTF", shm_h: 14, shm_l: 7, boundary_h: "TVSS", boundary_l: "VEIK", px: 14.2, py: -6.5 },
-        { rank: 4, cohort: "HER2 Cohort", timepoint: "Baseline (Biopsy)", day: 0, freq: 38, target: "HER2 / ERBB2 Domain IV", v_h: "humIGHV3-23*04", j_h: "humIGHJ4*02", cdr3_h: "CSRWGGDGFYGLDYW", v_l: "humIGKV1-39*01", j_l: "humIGKJ1*01", cdr3_l: "CQQHYTTPPTF", shm_h: 11, shm_l: 6, boundary_h: "TVSS", boundary_l: "VEIK", px: -11.9, py: 8.6 },
-        { rank: 5, cohort: "HER2 Cohort", timepoint: "Baseline (Biopsy)", day: 0, freq: 24, target: "HER2 / ERBB2 Subdomain III", v_h: "humIGHV4-34*01", j_h: "humIGHJ5*02", cdr3_h: "CARGQWLYFDLW", v_l: "humIGLV2-14*01", j_l: "humIGLJ1*01", cdr3_l: "CSSYTSSSTLVF", shm_h: 15, shm_l: 8, boundary_h: "TVSS", boundary_l: "TVL", px: 4.8, py: 15.3 },
-        { rank: 6, cohort: "HER2 Cohort", timepoint: "Baseline (Biopsy)", day: 0, freq: 16, target: "HER2 / ERBB2 Domain IV", v_h: "humIGHV3-21*01", j_h: "humIGHJ3*01", cdr3_h: "CARERVGATAYAFDIW", v_l: "humIGKV1-5*01", j_l: "humIGKJ4*01", cdr3_l: "CQHYNTYSWTF", shm_h: 7, shm_l: 4, boundary_h: "TVSS", boundary_l: "VEIK", px: -8.5, py: 11.2 }
-      ],
       viral: [
         { rank: 1, cohort: "SARS-CoV-2 Cohort", timepoint: "Convalescent D28", day: 28, freq: 94, target: "SARS-CoV-2 S2 Stem", v_h: "humIGHV1-69*01", j_h: "humIGHJ6*01", cdr3_h: "CARDKGYSYGYW", v_l: "humIGKV3-20*01", j_l: "humIGKJ2*01", cdr3_l: "CQQYGSSPLTF", shm_h: 8, shm_l: 4, boundary_h: "TVSS", boundary_l: "VEIK", px: 15.1, py: -7.2 },
         { rank: 2, cohort: "SARS-CoV-2 Cohort", timepoint: "Convalescent D28", day: 28, freq: 52, target: "SARS-CoV-2 RBD Class 1", v_h: "humIGHV3-53*01", j_h: "humIGHJ4*02", cdr3_h: "CARDLDYFDFW", v_l: "humIGKV1-9*01", j_l: "humIGKJ3*01", cdr3_l: "CQQYDTYPLTF", shm_h: 4, shm_l: 2, boundary_h: "TVSS", boundary_l: "VEIK", px: -14.2, py: 4.8 },
@@ -1083,8 +1074,8 @@ DIQMTQSPSSLSASVGDRVTITCRASQDVNTAVAWYQQKPGKAPKLLIYSASFLYSGVPSRFSGSRSGTDFTLTISSLQP
         { rank: 10, cohort: "Vaccine Time-Series", timepoint: "Day 180 (Booster Recall)", day: 180, lineage_id: "Lineage-3 (NTD Broad)", freq: 82, target: "SARS-CoV-2 NTD", v_h: "humIGHV1-24*01", j_h: "humIGHJ3*01", cdr3_h: "CAREGPTGTYAFDIW", v_l: "humIGKV3-11*01", j_l: "humIGKJ1*01", cdr3_l: "CQQRSNWPPITF", shm_h: 17, shm_l: 8, boundary_h: "TVSS", boundary_l: "VEIK", px: 9.6, py: -11.2 }
       ],
       multi_cohort: [
-        { rank: 1, cohort: "HER2 Breast Cancer", timepoint: "Pre-Treatment", day: 0, freq: 112, target: "HER2 Domain IV", v_h: "humIGHV3-23*01", j_h: "humIGHJ4*02", cdr3_h: "CSRWGGDGFYAMDYW", v_l: "humIGKV1-39*01", j_l: "humIGKJ1*01", cdr3_l: "CQQHYTTPPTF", shm_h: 12, shm_l: 6, boundary_h: "TVSS", boundary_l: "VEIK", px: -12.4, py: 8.2 },
-        { rank: 2, cohort: "HER2 Breast Cancer", timepoint: "Pre-Treatment", day: 0, freq: 84, target: "HER2 Domain II", v_h: "humIGHV3-66*01", j_h: "humIGHJ6*01", cdr3_h: "CARNLGPSFYFDYW", v_l: "humIGKV1-33*01", j_l: "humIGKJ1*01", cdr3_l: "CQQYYIYPYTF", shm_h: 9, shm_l: 5, boundary_h: "TVSS", boundary_l: "VEIK", px: -10.8, py: 9.1 },
+        { rank: 1, cohort: "Healthy Donor (OAS)", timepoint: "Baseline (Day 0)", day: 0, freq: 112, target: "Naive Primary B-Cell", v_h: "humIGHV1-69*01", j_h: "humIGHJ4*01", cdr3_h: "CARDGYYDILTGYYFDYW", v_l: "humIGKV1-39*01", j_l: "humIGKJ1*01", cdr3_l: "CQQSYSTPPTF", shm_h: 0, shm_l: 0, boundary_h: "TVSS", boundary_l: "VEIK", px: -12.4, py: 8.2 },
+        { rank: 2, cohort: "Healthy Donor (OAS)", timepoint: "Baseline (Day 0)", day: 0, freq: 84, target: "Memory B-Cell", v_h: "humIGHV3-23*01", j_h: "humIGHJ6*01", cdr3_h: "CAKDFWSGYDYW", v_l: "humIGKV1-33*01", j_l: "humIGKJ1*01", cdr3_l: "CQQYYIYPYTF", shm_h: 6, shm_l: 3, boundary_h: "TVSS", boundary_l: "VEIK", px: -10.8, py: 9.1 },
         { rank: 3, cohort: "SARS-CoV-2 Convalescent", timepoint: "Convalescent D28", day: 28, freq: 94, target: "SARS-CoV-2 S2 Stem", v_h: "humIGHV1-69*01", j_h: "humIGHJ6*01", cdr3_h: "CARDKGYSYGYW", v_l: "humIGKV3-20*01", j_l: "humIGKJ2*01", cdr3_l: "CQQYGSSPLTF", shm_h: 8, shm_l: 4, boundary_h: "TVSS", boundary_l: "VEIK", px: 15.1, py: -7.2 },
         { rank: 4, cohort: "SARS-CoV-2 Convalescent", timepoint: "Convalescent D28", day: 28, freq: 52, target: "SARS-CoV-2 RBD Class 1", v_h: "humIGHV3-53*01", j_h: "humIGHJ4*02", cdr3_h: "CARDLDYFDFW", v_l: "humIGKV1-9*01", j_l: "humIGKJ3*01", cdr3_l: "CQQYDTYPLTF", shm_h: 4, shm_l: 2, boundary_h: "TVSS", boundary_l: "VEIK", px: -14.2, py: 4.8 },
         { rank: 5, cohort: "Influenza Seasonal", timepoint: "Post-Vaccine D21", day: 21, freq: 78, target: "Influenza HA Stem Group 1", v_h: "humIGHV1-69*01", j_h: "humIGHJ6*01", cdr3_h: "CARHYNWYYGMDVW", v_l: "humIGKV3-20*01", j_l: "humIGKJ1*01", cdr3_l: "CQKYNSAPFTF", shm_h: 18, shm_l: 9, boundary_h: "TVSS", boundary_l: "VEIK", px: 16.4, py: -5.8 },
@@ -1108,7 +1099,7 @@ DIQMTQSPSSLSASVGDRVTITCRASQDVNTAVAWYQQKPGKAPKLLIYSASFLYSGVPSRFSGSRSGTDFTLTISSLQP
       ]
     };
 
-    let currentDataset = SAMPLE_DATASETS.her2;
+    let currentDataset = SAMPLE_DATASETS.viral;
     let filteredDataset = currentDataset;
 
     function initPage() {
@@ -1151,8 +1142,8 @@ DIQMTQSPSSLSASVGDRVTITCRASQDVNTAVAWYQQKPGKAPKLLIYSASFLYSGVPSRFSGSRSGTDFTLTISSLQP
 
     const FORMAT_EXAMPLES = {
       airr: `sequence_id\tv_call\tj_call\tjunction_aa\tduplicate_count\tlocus\ttimepoint\ttarget
-donor_cell_01_H\thumIGHV3-23*01\thumIGHJ4*02\tCSRWGGDGFYAMDYW\t112\tIGH\tDay 0\tHER2 Domain IV
-donor_cell_01_L\thumIGKV1-39*01\thumIGKJ1*01\tCQQHYTTPPTF\t112\tIGK\tDay 0\tHER2 Domain IV
+donor_cell_01_H\thumIGHV1-69*01\thumIGHJ4*01\tCARDGYYDILTGYYFDYW\t112\tIGH\tDay 0\tHealthy Baseline
+donor_cell_01_L\thumIGKV1-39*01\thumIGKJ1*01\tCQQSYSTPPTF\t112\tIGK\tDay 0\tHealthy Baseline
 donor_cell_02_H\thumIGHV1-69*01\thumIGHJ6*01\tCARDKGYSYGYW\t94\tIGH\tDay 28\tSARS-CoV-2 S2
 donor_cell_02_L\thumIGKV3-20*01\thumIGKJ2*01\tCQQYGSSPLTF\t94\tIGK\tDay 28\tSARS-CoV-2 S2
 donor_cell_03_H\thumIGHV3-53*01\thumIGHJ4*02\tCARDLDYFDFW\t52\tIGH\tDay 7\tRBD Class 1
@@ -1161,8 +1152,8 @@ donor_cell_04_H\thumTRBV6-5*01\thumTRBJ1-2*01\tCASSIYSGNTIYF\t68\tTRB\tPost-Tx\t
 donor_cell_04_L\thumTRAV8-4*01\thumTRAJ42*01\tCAVSDGGSQGNLIF\t68\tTRA\tPost-Tx\tMAGE-A3 / HLA-A*01`,
 
       cellranger: `barcode,chain,v_gene,j_gene,cdr3,reads,productive,is_cell
-AAACCTGAGAAACCGA-1,IGH,IGHV3-23,IGHJ4,CSRWGGDGFYAMDYW,42,True,True
-AAACCTGAGAAACCGA-1,IGK,IGKV1-39,IGKJ1,CQQHYTTPPTF,38,True,True
+AAACCTGAGAAACCGA-1,IGH,IGHV1-69,IGHJ4,CARDGYYDILTGYYFDYW,42,True,True
+AAACCTGAGAAACCGA-1,IGK,IGKV1-39,IGKJ1,CQQSYSTPPTF,38,True,True
 AAACCTGAGAAACCGT-1,IGH,IGHV1-69,IGHJ6,CARDKGYSYGYW,55,True,True
 AAACCTGAGAAACCGT-1,IGK,IGKV3-20,IGKJ2,CQQYGSSPLTF,49,True,True
 AAACCTGAGAAACCGG-1,IGH,IGHV3-53,IGHJ4,CARDLDYFDFW,32,True,True
@@ -1171,15 +1162,15 @@ AAACCTGAGAAACCAT-1,TRB,TRBV6-5,TRBJ1-2,CASSIYSGNTIYF,70,True,True
 AAACCTGAGAAACCAT-1,TRA,TRAV8-4,TRAJ42,CAVSDGGSQGNLIF,64,True,True`,
 
       simple: `cell_id\theavy_v\tlight_v\theavy_cdr3\tlight_cdr3\tfreq\ttimepoint\ttarget
-clone_1\thumIGHV3-23*01\thumIGKV1-39*01\tCSRWGGDGFYAMDYW\tCQQHYTTPPTF\t120\tPre-Bleed\tHER2 Domain IV
+clone_1\thumIGHV1-69*01\thumIGKV1-39*01\tCARDGYYDILTGYYFDYW\tCQQSYSTPPTF\t120\tPre-Bleed\tHealthy Baseline
 clone_2\thumIGHV1-69*01\thumIGKV3-20*01\tCARDKGYSYGYW\tCQQYGSSPLTF\t85\tDay 28\tSpike S2 Stem
 clone_3\thumIGHV3-53*01\thumIGKV1-9*01\tCARDLDYFDFW\tCQQYDTYPLTF\t64\tDay 7\tRBD Class 1
 clone_4\thumTRBV6-5*01\thumTRAV8-4*01\tCASSIYSGNTIYF\tCAVSDGGSQGNLIF\t45\tPost-Tx\tMAGE-A3 / HLA-A*01`,
 
-      fasta: `>clone1_heavy humIGHV3-23*01
-EVQLVESGGGLVQPGGSLRLSCAASGFNIKDTYIHWVRQAPGKGLEWVARIYPTNGYTRYADSVKGRFTISADTSKNTAYLQMNSLRAEDTAVYYCSRWGGDGFYAMDYWGQGTLVTVSS
+      fasta: `>clone1_heavy humIGHV1-69*01
+QVQLVQSGAEVKKPGASVKVSCKASGYTFTSYYMHWVRQAPGQGLEWMGIINPSGGSTSYAQKFQGRVTMTRDTSTSTVYMELSSLRSEDTAVYYCARDGYYDILTGYYFDYWGQGTLVTVSS
 >clone1_light humIGKV1-39*01
-DIQMTQSPSSLSASVGDRVTITCRASQDVNTAVAWYQQKPGKAPKLLIYSASFLYSGVPSRFSGSRSGTDFTLTISSLQPEDFATYYCQQHYTTPPTFGQGTKVEIK
+DIQMTQSPSSLSASVGDRVTITCRASQSISSYLNWYQQKPGKAPKLLIYAASSLQSGVPSRFSGSGSGTDFTLTISSLQPEDFATYYCQQSYSTPPTFGQGTKVEIK
 >clone2_heavy humIGHV1-69*01
 QVQLVQSGAEVKKPGSSVKVSCKASGGTFSSYAISWVRQAPGQGLEWMGGIIPIFGTANYAQKFQGRVTITADESTSTAYMELSSLRSEDTAVYYCARDKGYSYGYWGQGTLVTVSS
 >clone2_light humIGKV3-20*01
@@ -1737,12 +1728,7 @@ EIVLTQSPGTLSLSPGERATLSCRASQSVSSSYLAWYQQKPGQAPRLLIYGASSRATGIPDRFSGSGSGTDFTLTISRLE
       const filterBadge = document.getElementById("filterCountBadge");
       if (filterBadge) filterBadge.style.display = "none";
 
-      if (key === 'her2') {
-        document.getElementById("sampleIdInput").value = "DONOR_HER2_PBL_EXP01";
-        document.getElementById("donorIdInput").value = "PATIENT_D044";
-        document.getElementById("projectInput").value = "HER2_CONVERGENT_CAMPAIGN";
-        document.getElementById("platformInput").value = "Single-Cell 5' Paired V(D)J (BCR)";
-      } else if (key === 'viral') {
+      if (key === 'viral') {
         document.getElementById("sampleIdInput").value = "COV2_CONVALESCENT_PBMC";
         document.getElementById("donorIdInput").value = "DONOR_COV_08";
         document.getElementById("projectInput").value = "SARS_S2_NEUTRALIZER_SURVEY";
@@ -2882,7 +2868,7 @@ EIVLTQSPGTLSLSPGERATLSCRASQSVSSSYLAWYQQKPGQAPRLLIYGASSRATGIPDRFSGSGSGTDFTLTISRLE
         `;
       } else if (isMultiCohort) {
         legendDiv.innerHTML = `
-          <span style="display:inline-flex; align-items:center; gap:4px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#ec4899;"></span> HER2 Cohort</span>
+          <span style="display:inline-flex; align-items:center; gap:4px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#ec4899;"></span> Healthy Donor Cohort</span>
           <span style="display:inline-flex; align-items:center; gap:4px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#38bdf8;"></span> SARS-CoV-2 Cohort</span>
           <span style="display:inline-flex; align-items:center; gap:4px;"><span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#f59e0b;"></span> Influenza Cohort</span>
         `;
@@ -3048,7 +3034,7 @@ EIVLTQSPGTLSLSPGERATLSCRASQSVSSSYLAWYQQKPGQAPRLLIYGASSRATGIPDRFSGSGSGTDFTLTISRLE
           else if (d.day === 28) fill = "#10b981";
           else if (d.day === 180) fill = "#f59e0b";
         } else if (isMultiCohort) {
-          if (d.cohort.includes("HER2")) fill = "#ec4899";
+          if (d.cohort.includes("Healthy")) fill = "#ec4899";
           else if (d.cohort.includes("SARS")) fill = "#38bdf8";
           else if (d.cohort.includes("Influenza")) fill = "#f59e0b";
         } else {
