@@ -64,3 +64,35 @@ All data listed below are **100% public**, derived exclusively from open-access 
    - Every single-cell pair, benchmark clone, and repertoire read links directly to an NCBI SRA run, GenBank accession, RCSB PDB structure, DrugBank regulatory entry, or WHO INN disclosure.
 3. **Open-Access Academic Distribution**:
    - All underlying datasets are released under **Creative Commons Attribution 4.0 International (CC-BY 4.0)** or exist in the international public domain (NCBI GenBank/PDB).
+
+---
+
+## 3. Community Contributions & Guidelines for Open Benchmark Datasets
+
+To ensure the VBASE3 web analyzers and interactive single-cell studios continually reflect the frontier of immunological discovery across diverse taxa and disease models, we actively invite the global scientific community to contribute open-access benchmark datasets.
+
+### Contribution Criteria
+Any dataset proposed for inclusion as a featured tutorial preset on the VBASE3 web portals must fulfill the following mandatory standards:
+
+1. **Authentic Biological Origin**:
+   - Sequences must derive from genuine biological samples (human donors, animal models, or veterinary patients).
+   - In accordance with our **Authentic Biological Data Mandate**, simulated, mock, or synthetic sequences are strictly prohibited for tutorial and educational presets.
+2. **Verifiable Peer-Reviewed Provenance**:
+   - The dataset must be published in a peer-reviewed journal or archived in a recognized open-access preprint server (bioRxiv/medRxiv) with a valid digital object identifier (DOI).
+3. **Public Repository Archival**:
+   - Raw or processed sequence files must be permanently hosted in an open primary data archive (e.g., NCBI SRA, NCBI GenBank, EMBL-EBI ENA, RCSB PDB, Observed Antibody Space, or VDJdb) with clear accession numbers.
+4. **Open Permissive Licensing**:
+   - Data must be licensed under **Creative Commons Attribution 4.0 International (CC-BY 4.0)**, **Creative Commons Zero (CC0)**, or exist in the international **Public Domain**. Proprietary, confidential, or restrictive commercial-use-only data cannot be accepted.
+5. **Chain Pairing & Metadata Completeness**:
+   - For single-cell BCR/TCR datasets, genuine paired-chain assemblies (VH:VL or TRB:TRA) with associated cell barcodes, isotype designations, and estimated somatic hypermutation metrics are preferred.
+
+### How to Submit an Open Dataset
+Researchers wishing to feature their published datasets on VBASE3 can submit a proposal through GitHub:
+- **GitHub Issue Tracker**: Submit an issue tagged `[Open Dataset Contribution]` at `https://github.com/vbase3/vbase3_database/issues/new`
+- **Required Metadata**:
+  - Dataset Title & Biological Summary
+  - Primary Peer-Reviewed Citation & DOI
+  - Host Organism / Taxon (e.g., *Homo sapiens*, *Camelus dromedarius*, *Danio rerio*)
+  - Receptor Modality (BCR heavy/light, scFv, single-domain VHH, TCR $\alpha\beta$ or $\gamma\delta$)
+  - Public Repository Accessions (SRA, BioProject, PDB, GenBank)
+  - Applicable Open License Confirmation

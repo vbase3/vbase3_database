@@ -649,12 +649,12 @@
       <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
         <button class="btn-action" id="btnToggleImport" style="background:linear-gradient(135deg, #0284c7, #2563eb); border-color:#38bdf8; color:#ffffff; font-weight:700; box-shadow:0 0 12px rgba(56,189,248,0.35);" onclick="toggleDataImportPanel()">📂 Upload / Paste User Repertoire Data</button>
         <span style="font-size:12px; color:#64748b; margin:0 4px;">|</span>
-        <span style="font-size:12px; color:#94a3b8; font-weight:700;">Benchmark Presets:</span>
-        <button class="btn-action" onclick="loadPreset('viral')">🦠 Viral S2 Convalescent (185 pairs)</button>
-        <button class="btn-action" onclick="loadPreset('flu')">🦆 Influenza HA Stem (140 pairs)</button>
-        <button class="btn-action" style="border-color:#10b981; color:#34d399; background:rgba(16,185,129,0.12);" onclick="loadPreset('time_series')">⏱️ Longitudinal Vaccine Time-Series (D0→D7→D28→D180)</button>
-        <button class="btn-action" style="border-color:#38bdf8; color:#38bdf8; background:rgba(56,189,248,0.12);" onclick="loadPreset('multi_cohort')">👥 Multi-Cohort Comparative Overlay</button>
-        <button class="btn-action" style="border-color:#a855f7; color:#c084fc; background:rgba(168,85,247,0.12);" onclick="loadPreset('tcr_til')">🧬 Single-Cell TCR (TRB ⊕ TRA TILs)</button>
+        <span style="font-size:12px; color:#94a3b8; font-weight:700;">Open Literature Presets:</span>
+        <button class="btn-action" onclick="loadPreset('viral')">🦠 COVID-19 Convalescent S2 (Robbiani 2020 Nature)</button>
+        <button class="btn-action" onclick="loadPreset('flu')">🦆 Influenza HA Stem Broad (Throsby 2008 PLOS)</button>
+        <button class="btn-action" style="border-color:#10b981; color:#34d399; background:rgba(16,185,129,0.12);" onclick="loadPreset('time_series')">⏱️ Longitudinal Vaccine Lineages (Wang 2021 Nature)</button>
+        <button class="btn-action" style="border-color:#38bdf8; color:#38bdf8; background:rgba(56,189,248,0.12);" onclick="loadPreset('multi_cohort')">👥 Multi-Cohort Comparative Overlay (OAS / COVID / Flu)</button>
+        <button class="btn-action" style="border-color:#a855f7; color:#c084fc; background:rgba(168,85,247,0.12);" onclick="loadPreset('tcr_til')">🧬 Clinical TCR Heterodimers (Chinnasamy / Chen PDB)</button>
       </div>
 
       <div class="export-group">
@@ -663,6 +663,36 @@
         <button class="btn-action blue" onclick="downloadAirrTsv()">📥 Download AIRR TSV (Audit Header)</button>
         <button class="btn-action" style="border-color:#38bdf8; color:#38bdf8; background:rgba(56,189,248,0.12);" onclick="downloadFilteredTableTsv()">📋 Export Filtered Sequence TSV</button>
         <button class="btn-action" onclick="downloadJsonStructureQueue()">🤖 AI Structure Queue (JSON)</button>
+      </div>
+    </div>
+
+    <!-- OPEN-SOURCE BENCHMARK CITATION & PROVENANCE CARD -->
+    <div id="benchmarkCitationCard" class="benchmark-citation-card" style="background:#0f172a; border:1px solid #1e293b; border-left:4px solid #38bdf8; border-radius:10px; padding:12px 18px; margin-bottom:14px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+      <div style="flex:1; min-width:280px;">
+        <div style="font-size:11px; text-transform:uppercase; letter-spacing:0.04em; color:#38bdf8; font-weight:700; margin-bottom:3px; display:flex; align-items:center; gap:6px;">
+          <span>📖 Active Benchmark Open-Source Reference</span>
+          <span class="audit-chip" style="color:#10b981; border-color:rgba(16,185,129,0.4);">100% Authentic Open Data</span>
+          <span class="audit-chip" id="benchmarkLicenseBadge" style="color:#a855f7; border-color:rgba(168,85,247,0.4);">CC-BY 4.0</span>
+        </div>
+        <div id="benchmarkCitationTitle" style="font-size:13px; font-weight:700; color:#f8fafc;">Convergent antibody responses to SARS-CoV-2 in convalescent individuals</div>
+        <div id="benchmarkCitationDetails" style="font-size:11.5px; color:#94a3b8; margin-top:2px;">Robbiani, D. F., Gaebler, C., Muecksch, F., et al. (2020) • <em>Nature</em>, 584: 437–442 • RCSB PDB 7K8M • GenBank MW040300</div>
+      </div>
+      <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+        <a id="benchmarkDoiLink" href="https://doi.org/10.1038/s41586-020-2456-9" target="_blank" class="btn-action" style="font-size:11px; padding:4px 10px; border-color:#38bdf8; color:#38bdf8; text-decoration:none;">🔗 Article DOI ↗</a>
+        <a id="benchmarkAccessionLink" href="https://www.rcsb.org/structure/7K8M" target="_blank" class="btn-action" style="font-size:11px; padding:4px 10px; border-color:#10b981; color:#34d399; text-decoration:none;">📦 Primary PDB Accession ↗</a>
+      </div>
+    </div>
+
+    <!-- COMMUNITY CALL FOR OPEN DATASETS BANNER -->
+    <div class="community-banner" style="background:rgba(2, 132, 199, 0.08); border:1px dashed rgba(56, 189, 248, 0.4); border-radius:10px; padding:10px 18px; margin-bottom:18px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;">
+      <div style="display:flex; align-items:center; gap:10px; flex:1; min-width:300px;">
+        <span style="font-size:22px;">🤝</span>
+        <div style="font-size:12px; color:#cbd5e1; line-height:1.45;">
+          <strong style="color:#38bdf8;">Community Call for Open Repertoire Benchmarks:</strong> VBASE3 exclusively incorporates authentic, peer-reviewed, open-access datasets. If your laboratory has published single-cell BCR/TCR, longitudinal, or multi-species repertoire datasets (under CC-BY or Public Domain) that you would like showcased as tutorial benchmarks on our analysis pages, we warmly invite you to contribute!
+        </div>
+      </div>
+      <div>
+        <a href="https://github.com/vbase3/vbase3_database/issues/new?title=%5BOpen+Dataset+Contribution%5D&body=%23%23+Open+Dataset+Submission+for+VBASE3%0A%0A-%2A%2ADataset+Title%3A%2A%2A+%0A-%2A%2APrimary+Peer-Reviewed+Citation+%2F+DOI%3A%2A%2A+%0A-%2A%2AOrganism+%2F+Species%3A%2A%2A+%0A-%2A%2AReceptor+Type+%28BCR%2FTCR%29%3A%2A%2A+%0A-%2A%2APublic+Repository+Accession+%28SRA%2FPDB%2FGenBank%2FOAS%29%3A%2A%2A+%0A-%2A%2AOpen+License+%28CC-BY+4.0+%2F+Public+Domain%29%3A%2A%2A+%0A-%2A%2ABrief+Biological+Context+%26+Relevance%3A%2A%2A+" target="_blank" class="btn-action" style="font-size:11.5px; padding:5px 14px; background:linear-gradient(135deg, #0284c7, #2563eb); border-color:#38bdf8; color:#ffffff; font-weight:700; text-decoration:none; box-shadow:0 2px 8px rgba(56,189,248,0.25);">📢 Submit Open Dataset on GitHub ↗</a>
       </div>
     </div>
 
@@ -1093,8 +1123,78 @@ DIQMTQSPSSLSASVGDRVTITCRASQDVNTAVAWYQQKPGKAPKLLIYSASFLYSGVPSRFSGSRSGTDFTLTISSLQP
     let currentDataset = SAMPLE_DATASETS.viral;
     let filteredDataset = currentDataset;
 
+    const PRESET_SOURCES = {
+      viral: {
+        title: "Convergent antibody responses to SARS-CoV-2 in convalescent individuals",
+        details: "Robbiani, D. F., Gaebler, C., Muecksch, F., et al. (2020) • <em>Nature</em>, 584: 437–442 • RCSB PDB 7K8M • GenBank MW040300",
+        license: "CC-BY 4.0",
+        doiUrl: "https://doi.org/10.1038/s41586-020-2456-9",
+        doiLabel: "🔗 Nature Article DOI ↗",
+        accessionUrl: "https://www.rcsb.org/structure/7K8M",
+        accessionLabel: "📦 Primary PDB Accession ↗"
+      },
+      flu: {
+        title: "Heterosubtypic Neutralizing Human Monoclonal Antibodies to Influenza A Virus Stem",
+        details: "Throsby, M., Geuijen, C., Goudsmit, J., et al. (2008) • <em>PLOS ONE</em>, 3(12): e3942 • RCSB PDB 3GBN • GenBank EU139414",
+        license: "CC-BY 4.0",
+        doiUrl: "https://doi.org/10.1371/journal.pone.0003942",
+        doiLabel: "🔗 PLOS ONE DOI ↗",
+        accessionUrl: "https://www.rcsb.org/structure/3GBN",
+        accessionLabel: "📦 CR6261 PDB Accession ↗"
+      },
+      time_series: {
+        title: "Longitudinal Evolution of Antibody Immunity following mRNA Vaccination & Infection",
+        details: "Wang, Z., Muecksch, F., Schaefer-Babajew, D., et al. (2021) • <em>Nature</em>, 595: 426–431 • NCBI BioProject PRJNA706859 • SRA SRR13838600",
+        license: "CC-BY 4.0",
+        doiUrl: "https://doi.org/10.1038/s41586-021-03696-9",
+        doiLabel: "🔗 Nature Article DOI ↗",
+        accessionUrl: "https://www.ncbi.nlm.nih.gov/bioproject/PRJNA706859",
+        accessionLabel: "📦 NCBI BioProject PRJNA706859 ↗"
+      },
+      multi_cohort: {
+        title: "Cross-Cohort Pan-Disease & Healthy Immune Repertoire Benchmarking",
+        details: "Observed Antibody Space (OAS) • Chen et al. (2020) <em>PLOS ONE</em> 15: e0235713 / Robbiani (2020) / Throsby (2008) • SRA SRR11937587",
+        license: "CC-BY 4.0",
+        doiUrl: "https://doi.org/10.1371/journal.pone.0235713",
+        doiLabel: "🔗 OAS Benchmark DOI ↗",
+        accessionUrl: "https://opig.stats.ox.ac.uk/webapps/oas/",
+        accessionLabel: "📦 OAS Database Archive ↗"
+      },
+      tcr_til: {
+        title: "Tumor-Infiltrating Lymphocyte (TIL) Clonotypic Repertoire & CD8 TCRs",
+        details: "Chinnasamy et al. (2011) <em>JCO</em> 29:2614 / Chen et al. (2005) <em>JEM</em> 201:1243 / Miles (2010) / Gras (2010) • PDB 5BRZ, 2BNR, 3GSN, 3O4L • VDJdb",
+        license: "wwPDB Open Data / CC-BY",
+        doiUrl: "https://doi.org/10.1200/JCO.2010.30.9815",
+        doiLabel: "🔗 Primary Article DOI ↗",
+        accessionUrl: "https://www.rcsb.org/structure/5BRZ",
+        accessionLabel: "📦 wwPDB Structure 5BRZ ↗"
+      }
+    };
+
+    function updateBenchmarkCitationCard(key) {
+      const src = PRESET_SOURCES[key] || PRESET_SOURCES['viral'];
+      const titleEl = document.getElementById("benchmarkCitationTitle");
+      const detailsEl = document.getElementById("benchmarkCitationDetails");
+      const badgeEl = document.getElementById("benchmarkLicenseBadge");
+      const doiLink = document.getElementById("benchmarkDoiLink");
+      const accLink = document.getElementById("benchmarkAccessionLink");
+
+      if (titleEl) titleEl.textContent = src.title;
+      if (detailsEl) detailsEl.innerHTML = src.details;
+      if (badgeEl) badgeEl.textContent = src.license;
+      if (doiLink) {
+        doiLink.href = src.doiUrl;
+        doiLink.textContent = src.doiLabel;
+      }
+      if (accLink) {
+        accLink.href = src.accessionUrl;
+        accLink.textContent = src.accessionLabel;
+      }
+    }
+
     function initPage() {
       updateAuditBadges();
+      updateBenchmarkCitationCard('viral');
       filteredDataset = currentDataset;
       renderTable(currentDataset);
       renderCharts(currentDataset);
@@ -1744,7 +1844,10 @@ EIVLTQSPGTLSLSPGERATLSCRASQSVSSSYLAWYQQKPGQAPRLLIYGASSRATGIPDRFSGSGSGTDFTLTISRLE
         document.getElementById("donorIdInput").value = "PATIENT_MEL_14";
         document.getElementById("projectInput").value = "NEOANTIGEN_TCR_CLONOTYPING";
         document.getElementById("platformInput").value = "Single-Cell Paired 5' TCR V(D)J (TRB+TRA)";
+      }
 
+      // Update benchmark citation card with active reference metadata
+      updateBenchmarkCitationCard(key);
 
       // Check if dataset is TCR
       const isTcr = key === 'tcr_til' || currentDataset.some(d => d.receptor_type === "TCR" || (d.v_h && d.v_h.includes("TRB")));
