@@ -258,7 +258,7 @@
       "tag_5p_aa_15": "ASTKGPSVFPLAPSS",
       "tag_5p_aa_30": "ASTKGPSVFPLAPSSKSTSGGTAALGCLVK",
       "diagnostic_motif": "Engineered triple mutation: L234A, L235A, and P329G in CH2 completely ablate Fc-gamma receptor and C1q binding.",
-      "genomic_locus_order": "Synthetic (derived from Cgamma1)",
+      "genomic_locus_order": "Engineered variant (derived from GenBank J00228 Cgamma1)",
       "genbank_definition": "Engineered derivative of GenBank J00228 with L234A, L235A, P329G mutations.",
       "description": "Engineered derivative of GenBank J00228 with L234A, L235A, P329G mutations.",
       "notes": "Engineered effector-silent Fc standard. Eliminates ADCC, ADCP, and CDC for receptor-blocking therapeutics."
@@ -517,7 +517,7 @@
       "tag_5p_aa_15": "ASTKGPSVFPLAPCS",
       "tag_5p_aa_30": "ASTKGPSVFPLAPCSRSTSESTAALGCLVK",
       "diagnostic_motif": "S228P core hinge mutation (CPPC) prevents intra-chain disulfide isomerism and abolishes in vivo Fab-arm exchange.",
-      "genomic_locus_order": "Synthetic (derived from Cgamma4)",
+      "genomic_locus_order": "Engineered variant (derived from GenBank K01316 Cgamma4)",
       "genbank_definition": "Engineered derivative of GenBank K01316 with S228P core hinge stabilizing mutation.",
       "description": "Engineered derivative of GenBank K01316 with S228P core hinge stabilizing mutation.",
       "notes": "Engineered IgG4 therapeutic standard. Backbone of Pembrolizumab (Keytruda) and Nivolumab (Opdivo)."
